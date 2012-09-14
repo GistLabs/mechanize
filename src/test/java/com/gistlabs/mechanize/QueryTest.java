@@ -47,6 +47,7 @@ public class QueryTest {
 		assertEquals("<value,[height]>", QueryBuilder.byHeight("value").toString());
 		assertEquals("<value,[value]>", QueryBuilder.byValue("value").toString()); 
 		assertEquals("<value,[type]>", QueryBuilder.byType("value").toString());
+		assertEquals("<value,[text]>", QueryBuilder.byText("value").toString());
 		assertEquals("<value,[innerHtml]>", QueryBuilder.byInnerHtml("value").toString());
 		assertEquals("<value,[html]>", QueryBuilder.byHtml("value").toString());
 	}
@@ -66,6 +67,7 @@ public class QueryTest {
 		assertEquals("<regEx(pattern),[height]>", QueryBuilder.byHeight(regEx("pattern")).toString());
 		assertEquals("<regEx(pattern),[value]>", QueryBuilder.byValue(regEx("pattern")).toString());
 		assertEquals("<regEx(pattern),[type]>", QueryBuilder.byType(regEx("pattern")).toString());
+		assertEquals("<regEx(pattern),[text]>", QueryBuilder.byText(regEx("pattern")).toString());
 		assertEquals("<regEx(pattern),[html]>", QueryBuilder.byHtml(regEx("pattern")).toString());
 	}
 	
@@ -90,6 +92,8 @@ public class QueryTest {
 		assertTrue(QueryBuilder.byHeight("value").matches(newElement("<a height='value'/>")));
 		assertTrue(QueryBuilder.byValue("value").matches(newElement("<a value='value'/>")));
 		assertTrue(QueryBuilder.byType("value").matches(newElement("<a type='value'/>")));
+		assertTrue(QueryBuilder.byText("value").matches(
+				newElement("<a><b>v</b><strong>a<i>l</i>u</strong><b>e</b>")));
 		assertTrue(QueryBuilder.byInnerHtml("value").matches(newElement("<a>value</a>")));
 		assertTrue(QueryBuilder.byHtml("<a></a>").matches(newElement("<a></a>")));
 	}

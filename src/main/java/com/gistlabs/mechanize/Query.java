@@ -101,6 +101,10 @@ public class Query {
 		return add(string, Selector.TYPE);
 	}
 
+	public Query byText(String string) {
+		return add(string, Selector.TEXT);
+	}
+
 	public Query byInnerHtml(String string) {
 		return add(string, Selector.INNER_HTML);
 	}
@@ -159,6 +163,10 @@ public class Query {
 
 	public Query byType(Pattern pattern) {
 		return add(pattern, Selector.TYPE);
+	}
+
+	public Query byText(Pattern pattern) {
+		return add(pattern, Selector.TEXT);
 	}
 	
 	public Query byInnerHtml(Pattern pattern) {
@@ -285,6 +293,9 @@ public class Query {
 			
 			if(!isMatch && selector.includesType()) 
 				isMatch = pattern.doesMatch(element.attr("type"));
+
+			if(!isMatch && selector.includesText()) 
+				isMatch = pattern.doesMatch(element.text());
 
 			if(!isMatch && selector.includesInnerHtml()) 
 				isMatch = pattern.doesMatch(element.html());

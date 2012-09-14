@@ -75,6 +75,10 @@ public class QueryBuilder {
 	public static Query byType(String string) {
 		return new Query().byType(string);
 	}
+
+	public static Query byText(String string) {
+		return new Query().byText(string);
+	}
 	
 	public static Query byInnerHtml(String string) {
 		return new Query().byInnerHtml(string);
@@ -134,6 +138,10 @@ public class QueryBuilder {
 	
 	public static Query byType(Pattern pattern) {
 		return new Query().byType(pattern); 
+	}
+
+	public static Query byText(Pattern pattern) {
+		return new Query().byText(pattern); 
 	}
 	
 	public static Query byInnerHtml(Pattern pattern) {

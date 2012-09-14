@@ -33,8 +33,9 @@ public class Selector {
 	public static final Selector HEIGHT = new Selector(1<<10);
 	public static final Selector TYPE = new Selector(1<<11);
 	public static final Selector VALUE = new Selector(1<<12);
-	public static final Selector INNER_HTML = new Selector(1<<13);
-	public static final Selector HTML = new Selector(1<<14);
+	public static final Selector TEXT = new Selector(1<<13);
+	public static final Selector INNER_HTML = new Selector(1<<14);
+	public static final Selector HTML = new Selector(1<<15);
 	
 	private Selector(int mask) {
 		this.mask = mask;
@@ -91,6 +92,10 @@ public class Selector {
 		return (mask & TYPE.mask) != 0;
 	}
 
+	public boolean includesText() {
+		return (mask & TEXT.mask) != 0;
+	}
+
 	public boolean includesInnerHtml() {
 		return (mask & INNER_HTML.mask) != 0;
 	}
@@ -115,6 +120,7 @@ public class Selector {
 		append(toString, "height", includesHeight()); 
 		append(toString, "value", includesValue()); 
 		append(toString, "type", includesType()); 
+		append(toString, "text", includesText()); 
 		append(toString, "innerHtml", includesInnerHtml());
 		append(toString, "html", includesHtml());
 		toString.append("]");
