@@ -8,7 +8,28 @@
   <packaging>jar</packaging>
 
   <name>mechanize</name>
+  <description>mechanize for java: stateful HTTP/HTML client</description>
   <url>http://gistlabs.com/software/mechanize</url>
+  <inceptionYear>2012</inceptionYear>
+  <issueManagement>
+  	<system>GitHub</system>
+  	<url>https://github.com/GistLabs/mechanize/issues</url>
+  </issueManagement>
+  <licenses>
+  	<license>
+  		<name>Mozilla Public Licence 2.0</name>
+  		<url>http://mozilla.org/MPL/2.0/</url>
+  		<distribution>repo</distribution>
+  	</license>  
+  </licenses>
+  <scm>
+  	<url>https://github.com/GistLabs/mechanize</url>
+    <connection>scm:git:https://github.com/GistLabs/mechanize</connection>
+  </scm>
+  <organization>
+  	<name>Gist Labs</name>
+  	<url>http://gistlabs.com/</url>
+  </organization>  
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
