@@ -23,7 +23,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-/** Represents a HTML page.  
+/** Represents an HTML page.  
  *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @version 1.0
