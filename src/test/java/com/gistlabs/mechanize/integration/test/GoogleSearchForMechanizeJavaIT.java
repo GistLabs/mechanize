@@ -21,15 +21,15 @@ import static com.gistlabs.mechanize.QueryBuilder.*;
  * @version 1.0
  * @since 2012-09-12
  */
-public class GoogleSearchForAngelaMerkelIT {
+public class GoogleSearchForMechanizeJavaIT {
 
 	@Test
 	public void testGooglePageSearchForm() {
 		MechanizeAgent agent = new MechanizeAgent();
 		Page page = agent.get("http://www.google.com");
 		Form form = page.forms().get(byName("f"));
-		form.get("q").set("Angela Merkel");
+		form.get("q").set("mechanize java");
 		Page response = form.submit();
-		assertTrue(response.getTitle().startsWith("Angela Merkel"));
+		assertTrue(response.getTitle().startsWith("mechanize java"));
 	}
 }
