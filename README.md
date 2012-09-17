@@ -30,3 +30,6 @@ Other implementations of mechanize include:
 * Perl http://search.cpan.org/dist/WWW-Mechanize/
 * Python http://pypi.python.org/pypi/mechanize/
 * Ruby http://mechanize.rubyforge.org/
+
+
+See http://gistlabs.com/software/mechanize-for-java/ for more information.
