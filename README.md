@@ -23,8 +23,8 @@ Here is a sample testcase showing the framework as work:
 ```
 
 Because mechanize is stateful if will by default support cookies and hidden 
-form parameters (like Rails CSRF protection). This enables client code to more
-easily follow links and behave like a RESTful hypermedia client more easily.
+form parameters (like Rails CSRF protection). This enables client code to follow links 
+and behave like a RESTful hypermedia client more easily.
 
 Other implementations of mechanize include:
 * Perl http://search.cpan.org/dist/WWW-Mechanize/
