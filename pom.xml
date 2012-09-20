@@ -1,10 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+      <groupId>org.sonatype.oss</groupId>
+      <artifactId>oss-parent</artifactId>
+      <version>7</version>
+  </parent>
+  
   <groupId>com.gistlabs</groupId>
   <artifactId>mechanize</artifactId>
-  <version>0.8.0</version>
+  <version>0.8.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>mechanize</name>
@@ -23,13 +28,33 @@
   	</license>  
   </licenses>
   <scm>
-  	<url>https://github.com/GistLabs/mechanize</url>
-    <connection>scm:git:https://github.com/GistLabs/mechanize</connection>
+    <connection>scm:git:https://github.com/GistLabs/mechanize.git</connection>
+    <url>https://github.com/GistLabs/mechanize</url>
+    <developerConnection>scm:git:git@github.com:GistLabs/mechanize.git</developerConnection>
   </scm>
+  
   <organization>
   	<name>Gist Labs</name>
   	<url>http://gistlabs.com/</url>
-  </organization>  
+  </organization>
+  
+  <developers>
+    <developer>
+        <id>jheintz</id>
+        <name>John Heintz</name>
+        <email>john@gistlabs.com</email>
+        <organization>Gist Labs</organization>
+        <organizationUrl>http://gistlabs.com</organizationUrl>
+        <properties>
+            <picUrl>https://secure.gravatar.com/avatar/15ddd8dcfa09fcffa836c7a5b17573fa</picUrl>
+        </properties>
+    </developer>
+    <developer>
+        <id>Martin.Kersten.mk</id>
+        <name>Martin Kersten</name>
+        <email>Martin.Kersten.mk@gmail.com</email>
+    </developer>
+    </developers>
   
   <distributionManagement>
     <snapshotRepository>
@@ -68,6 +93,19 @@
             <configuration>
                 <header>src/etc/header.txt</header>
             </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>sign-artifacts</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
   </build>  
