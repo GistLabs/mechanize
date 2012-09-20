@@ -4,13 +4,16 @@ mechanize for java
 mechanize is a stateful HTTP/HTML client library. This implementation of mechanize is 
 written in Java to be available on the JVM. It utilizes 
 [HttpClient](http://hc.apache.org/httpcomponents-client-ga/index.html) for HTTP handling 
-and [JSoup]](http://jsoup.org) for HTML parsing.
+and [JSoup]](http://jsoup.org) for HTML parsing. Because mechanize is stateful if will by 
+default support cookies and hidden form parameters (like Rails CSRF protection). 
+This enables client code to follow links  and behave like a RESTful hypermedia client more easily.
 
-* Project Home Page: http://gistlabs.com/software/mechanize
+
+* Project Home Page: http://gistlabs.com/software/mechanize-for-java/
 * GitHub: https://github.com/GistLabs/mechanize
 * License: [MPL 2.0](http://mozilla.org/MPL/2.0/)
 
-Here is a sample testcase showing the framework as work:
+Here is a sample testcase showing the mechanize at work:
 ```java
 	@Test public void testGooglePageSearchForm() {
 		MechanizeAgent agent = new MechanizeAgent();
@@ -22,14 +25,16 @@ Here is a sample testcase showing the framework as work:
 	}
 ```
 
-Because mechanize is stateful if will by default support cookies and hidden 
-form parameters (like Rails CSRF protection). This enables client code to follow links 
-and behave like a RESTful hypermedia client more easily.
+Download the code from https://github.com/GistLabs/mechanize/downloads, or use a Maven repository client:
+```
+  <dependency>
+    <groupId>com.gistlabs</groupId>
+    <artifactId>mechanize</artifactId>
+    <version>0.8.0</version>
+  </dependency>
+```
 
 Other implementations of mechanize include:
 * Perl http://search.cpan.org/dist/WWW-Mechanize/
 * Python http://pypi.python.org/pypi/mechanize/
 * Ruby http://mechanize.rubyforge.org/
-
-
-See http://gistlabs.com/software/mechanize-for-java/ for more information.
