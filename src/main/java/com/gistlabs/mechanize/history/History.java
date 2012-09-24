@@ -61,7 +61,7 @@ public class History {
 	public Page reload() {
 		if(!isEmpty()) {
 			Page pageToReload = pop();
-			return agent.get(pageToReload.getRequest());
+			return agent.request(pageToReload.getRequest());
 		}
 		else
 			return null;

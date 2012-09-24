@@ -87,7 +87,7 @@ public class MechanizeAgent {
 		return history;
 	}
 	
-	public Page get(HttpRequestBase request) {
+	public Page request(HttpRequestBase request) {
 		try {
 			HttpResponse response = execute(client, request);
 			Page page = toPage(request, response);
@@ -101,7 +101,7 @@ public class MechanizeAgent {
 	}
 	
 	public Page get(String uri) {
-		return get(new HttpGet(uri));
+		return request(new HttpGet(uri));
 	}
 		
 	public void addInterceptor(Interceptor interceptor) {
@@ -291,7 +291,7 @@ public class MechanizeAgent {
 	/** Returns the page object received as response to the form submit action. */
 	public Page submit(Form form, FormParams formParams) {
 		try {
-			return get(createSubmitRequest(form, formParams));
+			return request(createSubmitRequest(form, formParams));
 		} catch (UnsupportedEncodingException e) {
 			throw new MechanizeUnsupportedEncodingException(e);
 		}
