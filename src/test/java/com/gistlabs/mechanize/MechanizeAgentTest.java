@@ -8,6 +8,7 @@
 package com.gistlabs.mechanize;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -32,6 +33,15 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", newHtml("Test Page", ""));
 		Page page = agent.get("http://test.com");
 		assertEquals("Test Page", page.getTitle());
+	}
+	
+	@Test
+	public void testPostMethod() {
+		MechanizeAgent agent = new MechanizeAgent();
+		Parameters parameters = new Parameters().add("param1", "value").add("param2", "value2");
+		Page page = agent.post("http://posttestserver.com/post.php", parameters);
+		System.out.println(page.getDocument().toString());
+		assertTrue(page.getDocument().toString().contains(" Successfully dumped 2 post variables"));
 	}
 	
 	@Test

@@ -22,9 +22,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -106,14 +105,22 @@ public class MechanizeAgent {
 	}
 	
 
-	public Page post(String uri, HashMap<String, String> params) throws UnsupportedEncodingException {
+	public Page post(String uri, Map<String, String> params) throws UnsupportedEncodingException {
+		return post(uri, new Parameters(unsafeCast(params)));
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private Map<String, Object> unsafeCast(Map<String, String> params) {
+		return (Map<String,Object>)(Map)params;
+	}
+	
+	public Page post(String uri, Parameters params) {
 		HttpPost request = new HttpPost(uri);
-		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-		for (Entry<String, String> entry : params.entrySet()) {
-			formparams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));			
+		try {
+			composePostRequest(params, request);
+		} catch (UnsupportedEncodingException e) {
+			throw new MechanizeUnsupportedEncodingException(e);
 		}
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
-		request.setEntity(entity);
 
 		return request(request);
 	}
@@ -353,10 +360,10 @@ public class MechanizeAgent {
 		return request;
 	}
 
-	private void composePostRequest(Parameters formParams,
+	private void composePostRequest(Parameters parameters,
 			HttpRequestBase request) throws UnsupportedEncodingException {
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-		for(Parameters.FormHttpParameter param : formParams) {
+		for(Parameters.FormHttpParameter param : parameters) {
 			if(param.isSingleValue())
 				formparams.add(new BasicNameValuePair(param.getName(), param.getValue()));
 			else {
@@ -368,12 +375,12 @@ public class MechanizeAgent {
 		((HttpPost)request).setEntity(entity);
 	}
 
-	private void composeMultiPartFormRequest(Form form, Parameters formParams,
+	private void composeMultiPartFormRequest(Form form, Parameters parameters,
 			HttpRequestBase request) throws UnsupportedEncodingException {
 		MultipartEntity multiPartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 		
 		Charset utf8 = Charset.forName("UTF-8");
-		for(Parameters.FormHttpParameter param : formParams) {
+		for(Parameters.FormHttpParameter param : parameters) {
 			if(param.isSingleValue())
 				multiPartEntity.addPart(param.getName(), new StringBody(param.getValue(), utf8));
 			else 
