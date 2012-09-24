@@ -40,7 +40,6 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		MechanizeAgent agent = new MechanizeAgent();
 		Parameters parameters = new Parameters().add("param1", "value").add("param2", "value2");
 		Page page = agent.post("http://posttestserver.com/post.php", parameters);
-		System.out.println(page.getDocument().toString());
 		assertTrue(page.getDocument().toString().contains(" Successfully dumped 2 post variables"));
 	}
 	
