@@ -28,8 +28,7 @@ import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
 
-import com.gistlabs.mechanize.form.FormParams;
-import com.gistlabs.mechanize.form.FormParams.FormHttpParameter;
+import com.gistlabs.mechanize.Parameters.FormHttpParameter;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -153,9 +152,9 @@ public class MechanizeMock extends MechanizeAgent {
 		}
 
 		private String getRequestUri(HttpRequestBase request) {
-			if(request instanceof HttpGet && request.getParams() instanceof FormParams) {
+			if(request instanceof HttpGet && request.getParams() instanceof Parameters) {
 				StringBuilder queryString = new StringBuilder();
-				for(FormHttpParameter parameter : ((FormParams)request.getParams())) {
+				for(FormHttpParameter parameter : ((Parameters)request.getParams())) {
 					if(queryString.length() > 0)
 						queryString.append("&");
 					String name = parameter.getName();

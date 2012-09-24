@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
+import com.gistlabs.mechanize.Parameters;
 import com.gistlabs.mechanize.Query;
 import com.gistlabs.mechanize.QueryBuilder;
 import com.gistlabs.mechanize.Util;
@@ -261,45 +262,46 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	}
 	
 	public Page submit() {
-		return page.getAgent().submit(this, getFormParams(null, null, 0, 0));
+		return page.getAgent().submit(this, composeParameters(null, null, 0, 0));
 	}
 
 	public Page submit(SubmitButton button) {
-		return page.getAgent().submit(this, getFormParams(button, null, 0, 0));
+		return page.getAgent().submit(this, composeParameters(button, null, 0, 0));
 	}
 
 	public Page submit(SubmitImage image, int x, int y) {
-		return page.getAgent().submit(this, getFormParams(null, image, x, y));
+		return page.getAgent().submit(this, composeParameters(null, image, x, y));
 	} 
 
-	/** Returns the form params containing all name value params beside submit button, image button, unchecked radio buttons and checkboxes and without Upload information. */
-	private FormParams getFormParams(SubmitButton button, SubmitImage image, int x, int y) {
-		FormParams params = new FormParams();
+	/** Returns the parameters containing all name value params beside submit button, image button, unchecked radio 
+	 *  buttons and checkboxes and without Upload information. */
+	private Parameters composeParameters(SubmitButton button, SubmitImage image, int x, int y) {
+		Parameters params = new Parameters();
 		for(FormElement element : this) {
 			String name = element.getName();
 			String value = element.getValue();
 			if(element instanceof Checkable) {
 				if(((Checkable)element).isChecked())
-					params.setFormParameter(name, value != null ? value : "");
+					params.add(name, value != null ? value : "");
 			}
 			else if(element instanceof Select) {
 				Select select = (Select)element;
 				for(Select.Option option : select.getOptions())
 					if(option.isSelected())
-						params.setFormParameter(select.getName(), option.getValue() != null ? option.getValue() : "");
+						params.add(select.getName(), option.getValue() != null ? option.getValue() : "");
 			}
 			else if(!(element instanceof SubmitButton) && !(element instanceof SubmitImage) && !(element instanceof Upload)) {
 				if(name != null)
-					params.setFormParameter(name, value != null ? value : "");
+					params.add(name, value != null ? value : "");
 			}
 		}
 		if(button != null && button.getName() != null)
-			params.setFormParameter(button.getName(), button.getValue() != null ? button.getValue() : "");
+			params.add(button.getName(), button.getValue() != null ? button.getValue() : "");
 		if(image != null) {
 			if(image.getValue() != null && image.getValue().length() > 1)
-				params.setFormParameter(image.getName(), image.getValue());
-			params.setFormParameter(image.getName() + ".x", "" + x);
-			params.setFormParameter(image.getName() + ".y", "" + y);
+				params.add(image.getName(), image.getValue());
+			params.add(image.getName() + ".x", "" + x);
+			params.add(image.getName() + ".y", "" + y);
 		}
 		return params;
 	}

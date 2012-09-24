@@ -55,7 +55,6 @@ import com.gistlabs.mechanize.exceptions.MechanizeURISyntaxException;
 import com.gistlabs.mechanize.exceptions.MechanizeUnsupportedEncodingException;
 import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.FormElement;
-import com.gistlabs.mechanize.form.FormParams;
 import com.gistlabs.mechanize.form.Upload;
 import com.gistlabs.mechanize.history.History;
 
@@ -305,7 +304,7 @@ public class MechanizeAgent {
 	}
 
 	/** Returns the page object received as response to the form submit action. */
-	public Page submit(Form form, FormParams formParams) {
+	public Page submit(Form form, Parameters formParams) {
 		try {
 			return request(createSubmitRequest(form, formParams));
 		} catch (UnsupportedEncodingException e) {
@@ -313,7 +312,7 @@ public class MechanizeAgent {
 		}
 	}
 
-	private HttpRequestBase createSubmitRequest(Form form, FormParams formParams)
+	private HttpRequestBase createSubmitRequest(Form form, Parameters formParams)
 			throws UnsupportedEncodingException {
 
 		String uri = form.getUri();
@@ -331,12 +330,12 @@ public class MechanizeAgent {
 		return request;
 	}
 
-	private HttpRequestBase composeFormGetSubmit(FormParams formParams,
+	private HttpRequestBase composeFormGetSubmit(Parameters formParams,
 			String uri, HttpRequestBase request) {
 		try {
 			URIBuilder builder = new URIBuilder(uri);
 			
-			for(FormParams.FormHttpParameter param : formParams) {
+			for(Parameters.FormHttpParameter param : formParams) {
 				if(param.isSingleValue())
 					builder.setParameter(param.getName(), param.getValue());
 				else
@@ -354,10 +353,10 @@ public class MechanizeAgent {
 		return request;
 	}
 
-	private void composePostRequest(FormParams formParams,
+	private void composePostRequest(Parameters formParams,
 			HttpRequestBase request) throws UnsupportedEncodingException {
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-		for(FormParams.FormHttpParameter param : formParams) {
+		for(Parameters.FormHttpParameter param : formParams) {
 			if(param.isSingleValue())
 				formparams.add(new BasicNameValuePair(param.getName(), param.getValue()));
 			else {
@@ -369,12 +368,12 @@ public class MechanizeAgent {
 		((HttpPost)request).setEntity(entity);
 	}
 
-	private void composeMultiPartFormRequest(Form form, FormParams formParams,
+	private void composeMultiPartFormRequest(Form form, Parameters formParams,
 			HttpRequestBase request) throws UnsupportedEncodingException {
 		MultipartEntity multiPartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 		
 		Charset utf8 = Charset.forName("UTF-8");
-		for(FormParams.FormHttpParameter param : formParams) {
+		for(Parameters.FormHttpParameter param : formParams) {
 			if(param.isSingleValue())
 				multiPartEntity.addPart(param.getName(), new StringBody(param.getValue(), utf8));
 			else 
