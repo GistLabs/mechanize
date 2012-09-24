@@ -80,6 +80,23 @@ public class Form extends PageElement implements Iterable<FormElement> {
 			return null;
 	}
 	
+	public boolean isDoPost() {
+		return getElement().hasAttr("method") && getElement().attr("method").equalsIgnoreCase("post");
+	}
+	
+	public boolean isMultiPart() {
+		return getElement().hasAttr("enctype") && getElement().attr("enctype").equalsIgnoreCase("multipart/form-data");
+	}
+	
+	public String getUri() {
+		String uri = null;
+		if(getElement().hasAttr("action"))
+			uri = getElement().absUrl("action");
+		else 
+			uri = getPage().getUri().toString();
+		return uri;
+	}
+	
 	/** Returns the element with the given name (case sensitive) or null. */
 	public FormElement get(String nameOrId) {
 		return get(QueryBuilder.byNameOrId(nameOrId));

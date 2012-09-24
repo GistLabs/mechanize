@@ -27,7 +27,7 @@ import static com.gistlabs.mechanize.QueryBuilder.*;
 public class FormTest extends MechanizeTestCase {
 	
 	@Test
-	public void testEmptyForm() {
+	public void testEmptyFormWithGetMethod() {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", newForm("form").id("form")));
 		agent.addPageRequest("http://test.com/form", newHtml("OK", ""));
@@ -36,6 +36,20 @@ public class FormTest extends MechanizeTestCase {
 		Form form = page.forms().get(byId("form"));
 		Page response = form.submit();
 		assertEquals("OK", response.getTitle());
+		assertFalse(form.isDoPost());
+	}
+
+	@Test
+	public void testEmptyFormWithPostMethod() {
+		agent.addPageRequest("http://test.com", 
+				newHtml("Test Page", newForm("form", true).id("form")));
+		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
+		
+		Page page = agent.get("http://test.com");
+		Form form = page.forms().get(byId("form"));
+		Page response = form.submit();
+		assertEquals("OK", response.getTitle());
+		assertTrue(form.isDoPost());
 	}
 
 	@Test

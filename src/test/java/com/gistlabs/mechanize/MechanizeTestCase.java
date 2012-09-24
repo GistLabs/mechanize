@@ -50,15 +50,25 @@ public class MechanizeTestCase {
 	protected FormBuilder newForm(String action) {
 		return new FormBuilder(action);
 	}
+
+	protected FormBuilder newForm(String action, boolean doPost) {
+		return new FormBuilder(action, doPost);
+	}
 	
 	public static class FormBuilder {
 		StringBuilder content = new StringBuilder();
 		String action;
 		String id = null;
 		String name = null;
+		private final boolean doPost;
 		 
 		public FormBuilder(String action) {
+			this(action, false);
+		}
+
+		public FormBuilder(String action, boolean doPost) {
 			this.action = action;
+			this.doPost = doPost;
 		}
 		
 		public FormBuilder id(String id) {
@@ -157,6 +167,8 @@ public class MechanizeTestCase {
 			appendIfSet(form, "action", action);
 			appendIfSet(form, "id", id);
 			appendIfSet(form, "name", name);
+			if(doPost)
+				form.append("method='post' ");
 			form.append(">");
 			form.append(content.toString());
 			form.append("</form>");
