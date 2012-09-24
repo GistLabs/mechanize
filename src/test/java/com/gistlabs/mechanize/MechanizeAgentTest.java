@@ -35,6 +35,16 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		assertEquals("Test Page", page.getTitle());
 	}
 	
+    @Test(expected=IllegalArgumentException.class)
+    public void testExpectPostButReceiveGetRequestFails() throws Exception {
+        agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
+        disableAfterTest();
+        
+        Page result = agent.get("http://test.com/form");
+        assertEquals("OK", result.getTitle());
+
+    }   
+    
 	@Test
 	public void testPostMethod() {
 		MechanizeAgent agent = new MechanizeAgent();

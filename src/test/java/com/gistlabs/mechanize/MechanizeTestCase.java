@@ -12,11 +12,11 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import com.gistlabs.mechanize.MechanizeMock.PageRequest;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.junit.After;
+
+import com.gistlabs.mechanize.MechanizeMock.PageRequest;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -25,12 +25,19 @@ import org.junit.After;
  */
 public class MechanizeTestCase {
 	protected MechanizeMock agent = new MechanizeMock();
+	protected boolean doAfterTest = true;
+	
+	public void disableAfterTest() {
+		doAfterTest = false;
+	}
 	
 	@After
 	public void afterTest() {
-		PageRequest next = agent.nextUnexecutedPageRequest();
-		if(next != null) 
-			Assert.fail("Unexecuted page request: " + next.toString());
+		if(doAfterTest) {
+			PageRequest next = agent.nextUnexecutedPageRequest();
+			if(next != null) 
+				Assert.fail("Unexecuted page request: " + next.toString());
+		}
 	}
 	
 	protected String newHtml(String title, String bodyHtml) {
