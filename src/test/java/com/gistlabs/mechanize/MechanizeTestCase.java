@@ -7,10 +7,15 @@
  */
 package com.gistlabs.mechanize;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Assert;
 
 import com.gistlabs.mechanize.MechanizeMock.PageRequest;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.junit.After;
 
 /**
@@ -34,6 +39,12 @@ public class MechanizeTestCase {
 
 	protected String newHtml(String title, FormBuilder form) {
 		return "<html><head><title>" + title + "</title></head><body>" + form.toString() + "</body></html>";
+	}
+	
+	public List<NameValuePair> parameter(String name, String value) {
+		List<NameValuePair> result = new ArrayList<NameValuePair>();
+		result.add(new BasicNameValuePair(name, value));
+		return result;
 	}
 	
 	protected FormBuilder newForm(String action) {

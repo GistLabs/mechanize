@@ -22,19 +22,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
-
-import com.gistlabs.mechanize.cookie.Cookies;
-import com.gistlabs.mechanize.exceptions.MechanizeIOException;
-import com.gistlabs.mechanize.exceptions.MechanizeURISyntaxException;
-import com.gistlabs.mechanize.exceptions.MechanizeUnsupportedEncodingException;
-import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.form.FormElement;
-import com.gistlabs.mechanize.form.FormParams;
-import com.gistlabs.mechanize.form.Upload;
-import com.gistlabs.mechanize.history.History;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -56,6 +48,16 @@ import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+
+import com.gistlabs.mechanize.cookie.Cookies;
+import com.gistlabs.mechanize.exceptions.MechanizeIOException;
+import com.gistlabs.mechanize.exceptions.MechanizeURISyntaxException;
+import com.gistlabs.mechanize.exceptions.MechanizeUnsupportedEncodingException;
+import com.gistlabs.mechanize.form.Form;
+import com.gistlabs.mechanize.form.FormElement;
+import com.gistlabs.mechanize.form.FormParams;
+import com.gistlabs.mechanize.form.Upload;
+import com.gistlabs.mechanize.history.History;
 
 /**
  * Mechanize agent.
@@ -103,6 +105,20 @@ public class MechanizeAgent {
 	public Page get(String uri) {
 		return request(new HttpGet(uri));
 	}
+	
+
+	public Page post(String uri, HashMap<String, String> params) throws UnsupportedEncodingException {
+		HttpPost request = new HttpPost(uri);
+		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+		for (Entry<String, String> entry : params.entrySet()) {
+			formparams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));			
+		}
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
+		request.setEntity(entity);
+
+		return request(request);
+	}
+
 		
 	public void addInterceptor(Interceptor interceptor) {
 		if(!interceptors.contains(interceptor))

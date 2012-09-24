@@ -11,16 +11,14 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import junit.framework.Assert;
 
-import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.form.FormParams;
-import com.gistlabs.mechanize.form.FormParams.FormHttpParameter;
-
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -29,6 +27,9 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
+
+import com.gistlabs.mechanize.form.FormParams;
+import com.gistlabs.mechanize.form.FormParams.FormHttpParameter;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -40,7 +41,17 @@ public class MechanizeMock extends MechanizeAgent {
 	private List<PageRequest> requests = new ArrayList<PageRequest>();
 	
 	public PageRequest addPageRequest(String uri, String html) {
-		PageRequest request = new PageRequest(uri, html);
+		return addPageRequest("GET", uri, html);
+	}
+
+	public PageRequest addPageRequest(String method, String uri, String html) {
+		PageRequest request = new PageRequest(method, uri, html);
+		requests.add(request);
+		return request;
+	}
+
+	public PageRequest addPageRequest(String method, String uri, List<NameValuePair> params, String html) {
+		PageRequest request = new PageRequest(method, uri, params, html);
 		requests.add(request);
 		return request;
 	}
@@ -64,7 +75,9 @@ public class MechanizeMock extends MechanizeAgent {
 	}
 	
 	public class PageRequest {
+		public final String httpMethod;
 		public final String uri;
+		public final List<NameValuePair> params;
 		public final String html;
 		public boolean wasExecuted = false;
 		public HttpClient client = null;
@@ -73,7 +86,20 @@ public class MechanizeMock extends MechanizeAgent {
 		private String contentLocation = null;
 		
 		public PageRequest(String uri, String html) {
+			this("GET", uri, html);
+		}
+		
+		public PageRequest(String method, String uri, String html) {
+			this.httpMethod = method;
 			this.uri = uri;
+			this.params = Collections.emptyList();
+			this.html = html;
+		}
+		
+		public PageRequest(String method, String uri, List<NameValuePair> params, String html) {
+			this.httpMethod = method;
+			this.uri = uri;
+			this.params = params;
 			this.html = html;
 		}
 
@@ -93,6 +119,10 @@ public class MechanizeMock extends MechanizeAgent {
 			if(!wasExecuted) {
 				this.client = client;
 				this.request = request;
+				
+				if(!request.getMethod().equalsIgnoreCase(httpMethod)) {
+					throw new IllegalArgumentException(String.format("Expected %s, but was %s", httpMethod, request.getMethod()));
+				}
 				
 				if(getRequestUri(request).equals(uri)) {
 					HttpResponse response = new BasicHttpResponse(new ProtocolVersion("HTTP", 1, 1), 200, "OK");
@@ -115,7 +145,8 @@ public class MechanizeMock extends MechanizeAgent {
 					Assert.assertEquals("URI of the next PageRequest does not match", uri, request.getURI().toString());
 					return null;
 				}
-					
+				
+				// TODO check parameters
 			}
 			else
 				throw new UnsupportedOperationException("Request already executed");
