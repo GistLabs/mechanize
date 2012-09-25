@@ -312,106 +312,24 @@ public class MechanizeAgent {
 
 	/** Returns the page object received as response to the form submit action. */
 	public Page submit(Form form, Parameters parameters) {
-		return request(createSubmitRequest(form, parameters));
+		RequestBuilder request = doRequest(form.getUri()).set(parameters);
+		if(form.isDoPost() && form.isMultiPart()) {
+			request.multiPart();
+			addFiles(request, form);
+		}
+		return form.isDoPost() ? request.post() : request.get(); 
 	}
 
-	private HttpRequestBase createSubmitRequest(Form form, Parameters formParams) {
-		String uri = form.getUri();
-		HttpRequestBase request = null;
-		
-		if(form.isDoPost()) {
-			if(form.isMultiPart()) 
-				request = composeMultiPartFormRequest(uri, form, formParams);
-			else
-				request = composePostRequest(uri, formParams);
-		}
-		else
-			request = composeGetRequest(uri, formParams);
-		return request;
-	}
-
-	private HttpRequestBase composeGetRequest(String uri, Parameters parameters) {
-		try {
-			URIBuilder builder = new URIBuilder(uri);
-			
-			for(Parameters.FormHttpParameter param : parameters) {
-				if(param.isSingleValue())
-					builder.setParameter(param.getName(), param.getValue());
-				else
-					for(String value : param.getValues())
-						builder.addParameter(param.getName(), value);
-			}
-			
-			URI requestURI = builder.build();
-			uri = requestURI.toString();
-			return new HttpGet(requestURI);
-		}
-		catch(URISyntaxException e) {
-			throw new MechanizeURISyntaxException(e);
-		}
-	}
-
-	private HttpPost composeMultiPartFormRequest(String uri, Form form, Parameters parameters) {
-		Map<String, File> files = new HashMap<String, File>();
+	private void addFiles(RequestBuilder request, Form form) {
 		for(FormElement formElement : form) {
 			if(formElement instanceof Upload) {
 				Upload upload = (Upload)formElement;
 				File file = upload.hasFileValue() ? upload.getFileValue() : new File(upload.getValue());
-				files.put(upload.getName(), file);
+				request.set(upload.getName(), file);
 			}
 		}
-		return composeMultiPartFormRequest(uri, parameters, files);
-	}
-	
-	private HttpPost composePostRequest(String uri, Parameters parameters) {
-		HttpPost request = new HttpPost(uri);
-		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-		for(Parameters.FormHttpParameter param : parameters) {
-			if(param.isSingleValue())
-				formparams.add(new BasicNameValuePair(param.getName(), param.getValue()));
-			else {
-				for(String value : param.getValues())
-					formparams.add(new BasicNameValuePair(param.getName(), value));
-			}
-		}
-		try {
-			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
-			((HttpPost)request).setEntity(entity);
-		} catch (UnsupportedEncodingException e) {
-			throw new MechanizeUnsupportedEncodingException(e);
-		}
-		
-		return request;
 	}
 
-	private HttpPost composeMultiPartFormRequest(String uri, Parameters parameters, Map<String, File> files) {
-		HttpPost request = new HttpPost(uri);
-		MultipartEntity multiPartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-		
-		try {
-			Charset utf8 = Charset.forName("UTF-8");
-			for(Parameters.FormHttpParameter param : parameters) {
-				if(param.isSingleValue())
-					multiPartEntity.addPart(param.getName(), new StringBody(param.getValue(), utf8));
-				else 
-					for(String value : param.getValues())
-							multiPartEntity.addPart(param.getName(), new StringBody(value, utf8));
-			}
-		} catch (UnsupportedEncodingException e) {
-			throw new MechanizeUnsupportedEncodingException(e); 
-		}
-
-		List<String> fileNames = new ArrayList<String>(files.keySet());
-		Collections.sort(fileNames);
-		for(String name : fileNames) {
-			File file = files.get(name);
-			if(file != null)
-				multiPartEntity.addPart(name, new FileBody(file));
-		}
-		((HttpPost)request).setEntity(multiPartEntity);
-		return request;
-	}
-	
 	public class RequestBuilder {
 		private final String uri;
 		private final Parameters parameters;
@@ -443,7 +361,7 @@ public class MechanizeAgent {
 		}
 		
 		public RequestBuilder set(Parameters parameters) {
-			for(String name :parameters.getNames()) 
+			for(String name : parameters.getNames()) 
 				set(name, parameters.get(name));
 			
 			return this;
@@ -488,6 +406,76 @@ public class MechanizeAgent {
 			HttpPost request = (!hasFiles()) || isMultiPart ? composePostRequest(getBaseUri(), parameters) : 
 				composeMultiPartFormRequest(getBaseUri(), parameters, files);
 			return MechanizeAgent.this.request(request);
+		}
+		
+		private HttpRequestBase composeGetRequest(String uri, Parameters parameters) {
+			try {
+				URIBuilder builder = new URIBuilder(uri);
+				
+				for(Parameters.FormHttpParameter param : parameters) {
+					if(param.isSingleValue())
+						builder.setParameter(param.getName(), param.getValue());
+					else
+						for(String value : param.getValues())
+							builder.addParameter(param.getName(), value);
+				}
+				
+				URI requestURI = builder.build();
+				uri = requestURI.toString();
+				return new HttpGet(requestURI);
+			}
+			catch(URISyntaxException e) {
+				throw new MechanizeURISyntaxException(e);
+			}
+		}
+		
+		private HttpPost composePostRequest(String uri, Parameters parameters) {
+			HttpPost request = new HttpPost(uri);
+			List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+			for(Parameters.FormHttpParameter param : parameters) {
+				if(param.isSingleValue())
+					formparams.add(new BasicNameValuePair(param.getName(), param.getValue()));
+				else {
+					for(String value : param.getValues())
+						formparams.add(new BasicNameValuePair(param.getName(), value));
+				}
+			}
+			try {
+				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
+				((HttpPost)request).setEntity(entity);
+			} catch (UnsupportedEncodingException e) {
+				throw new MechanizeUnsupportedEncodingException(e);
+			}
+			
+			return request;
+		}
+
+		private HttpPost composeMultiPartFormRequest(String uri, Parameters parameters, Map<String, File> files) {
+			HttpPost request = new HttpPost(uri);
+			MultipartEntity multiPartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+			
+			try {
+				Charset utf8 = Charset.forName("UTF-8");
+				for(Parameters.FormHttpParameter param : parameters) {
+					if(param.isSingleValue())
+						multiPartEntity.addPart(param.getName(), new StringBody(param.getValue(), utf8));
+					else 
+						for(String value : param.getValues())
+								multiPartEntity.addPart(param.getName(), new StringBody(value, utf8));
+				}
+			} catch (UnsupportedEncodingException e) {
+				throw new MechanizeUnsupportedEncodingException(e); 
+			}
+
+			List<String> fileNames = new ArrayList<String>(files.keySet());
+			Collections.sort(fileNames);
+			for(String name : fileNames) {
+				File file = files.get(name);
+				if(file != null)
+					multiPartEntity.addPart(name, new FileBody(file));
+			}
+			((HttpPost)request).setEntity(multiPartEntity);
+			return request;
 		}
 	}
 }

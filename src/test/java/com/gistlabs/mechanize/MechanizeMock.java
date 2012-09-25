@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpRequest;
@@ -167,9 +168,14 @@ public class MechanizeMock extends MechanizeAgent {
 				UrlEncodedFormEntity entity = (UrlEncodedFormEntity)post.getEntity();
 				Parameters actualParameters = extractParameters(entity); 
 				
-				Assert.assertArrayEquals("Expected and actual parameters should equal by available parameter names", parameters.getNames(), actualParameters.getNames());
+				String [] expectedNames = parameters.getNames();
+				String [] actualNames = actualParameters.getNames();
+				Arrays.sort(expectedNames);
+				Arrays.sort(actualNames);
+				Assert.assertArrayEquals("Expected and actual parameters should equal by available parameter names", 
+						expectedNames, actualNames);
 				
-				for(String name : parameters.getNames()) {
+				for(String name : expectedNames) {
 					String [] expectedValue = parameters.get(name);
 					String [] actualValue = actualParameters.get(name);
 					Assert.assertArrayEquals("Expected parameter of next PageRequest '" + uri + "' must match", expectedValue, actualValue);

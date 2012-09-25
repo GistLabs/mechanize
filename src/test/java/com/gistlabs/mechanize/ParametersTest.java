@@ -55,8 +55,8 @@ public class ParametersTest {
 	}
 
 	@Test
-	public void testGetNames() {
+	public void testGetNamesReturnsTheParametersInTheOrderTheyWhereFirstAdded() {
 		Parameters parameters = new Parameters().add("name2", "value").add("name", "value");
-		assertArrayEquals(new String [] {"name", "name2"}, parameters.getNames());
+		assertArrayEquals(new String [] {"name2", "name"}, parameters.getNames());
 	}
 }
