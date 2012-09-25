@@ -53,4 +53,10 @@ public class ParametersTest {
 		assertTrue(parameters.has(name));
 		assertArrayEquals(new String [] {"value1", "value2"}, parameters.get(name));
 	}
+
+	@Test
+	public void testGetNames() {
+		Parameters parameters = new Parameters().add("name2", "value").add("name", "value");
+		assertArrayEquals(new String [] {"name", "name2"}, parameters.getNames());
+	}
 }

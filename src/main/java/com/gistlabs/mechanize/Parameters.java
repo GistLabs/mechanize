@@ -59,6 +59,13 @@ public class Parameters implements Iterable<FormHttpParameter> {
 			return null;
 	}
 	
+	/** Returns the parameter names in sorted order. */
+	public String [] getNames() {
+		List<String> names = new ArrayList<String>(parameterNames.keySet());
+		Collections.sort(names);
+		return names.toArray(new String [names.size()]);
+	}
+	
 	public Parameters set(String name, String ... values) {
 		remove(name);
 		add(name, values);
