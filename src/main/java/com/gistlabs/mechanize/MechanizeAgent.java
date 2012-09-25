@@ -22,6 +22,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +67,8 @@ import com.gistlabs.mechanize.history.History;
  * 
  * <p>NOTE: The mechanize library is not synchronized and should be used in a single thread environment or with custom synchronization.</p>
  * 
+ * TODO Add a test case for the doRequest multi part form sending a file.
+ * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @version 1.0
  * @since 2012-09-12
@@ -102,7 +106,7 @@ public class MechanizeAgent {
 	}
 	
 	public Page get(String uri) {
-		return request(new HttpGet(uri));
+		return doRequest(uri).get();
 	}
 	
 	public RequestBuilder doRequest(String uri) {
@@ -119,8 +123,7 @@ public class MechanizeAgent {
 	}
 	
 	public Page post(String uri, Parameters params) {
-		HttpPost request = composePostRequest(uri, params);
-		return request(request);
+		return doRequest(uri).set(params).post();
 	}
 		
 	public void addInterceptor(Interceptor interceptor) {
@@ -308,12 +311,11 @@ public class MechanizeAgent {
 	}
 
 	/** Returns the page object received as response to the form submit action. */
-	public Page submit(Form form, Parameters formParams) {
-		return request(createSubmitRequest(form, formParams));
+	public Page submit(Form form, Parameters parameters) {
+		return request(createSubmitRequest(form, parameters));
 	}
 
 	private HttpRequestBase createSubmitRequest(Form form, Parameters formParams) {
-
 		String uri = form.getUri();
 		HttpRequestBase request = null;
 		
@@ -349,6 +351,18 @@ public class MechanizeAgent {
 		}
 	}
 
+	private HttpPost composeMultiPartFormRequest(String uri, Form form, Parameters parameters) {
+		Map<String, File> files = new HashMap<String, File>();
+		for(FormElement formElement : form) {
+			if(formElement instanceof Upload) {
+				Upload upload = (Upload)formElement;
+				File file = upload.hasFileValue() ? upload.getFileValue() : new File(upload.getValue());
+				files.put(upload.getName(), file);
+			}
+		}
+		return composeMultiPartFormRequest(uri, parameters, files);
+	}
+	
 	private HttpPost composePostRequest(String uri, Parameters parameters) {
 		HttpPost request = new HttpPost(uri);
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
@@ -370,7 +384,7 @@ public class MechanizeAgent {
 		return request;
 	}
 
-	private HttpPost composeMultiPartFormRequest(String uri, Form form, Parameters parameters) {
+	private HttpPost composeMultiPartFormRequest(String uri, Parameters parameters, Map<String, File> files) {
 		HttpPost request = new HttpPost(uri);
 		MultipartEntity multiPartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 		
@@ -387,21 +401,22 @@ public class MechanizeAgent {
 			throw new MechanizeUnsupportedEncodingException(e); 
 		}
 
-		for(FormElement formElement : form) {
-			if(formElement instanceof Upload) {
-				Upload upload = (Upload)formElement;
-				File file = upload.hasFileValue() ? upload.getFileValue() : new File(upload.getValue());
-				multiPartEntity.addPart(upload.getName(), new FileBody(file));
-			}
+		List<String> fileNames = new ArrayList<String>(files.keySet());
+		Collections.sort(fileNames);
+		for(String name : fileNames) {
+			File file = files.get(name);
+			if(file != null)
+				multiPartEntity.addPart(name, new FileBody(file));
 		}
 		((HttpPost)request).setEntity(multiPartEntity);
-
 		return request;
 	}
 	
 	public class RequestBuilder {
 		private final String uri;
 		private final Parameters parameters;
+		private final Map<String, File> files = new HashMap<String, File>();
+		private boolean isMultiPart = false;
 		
 		private RequestBuilder(String uri) {
 			this.uri = uri;
@@ -410,6 +425,11 @@ public class MechanizeAgent {
 			if(uri.contains("?")) 
 				for(NameValuePair param : URLEncodedUtils.parse(uri.substring(uri.indexOf('?') + 1), Charset.forName("UTF-8"))) 
 					parameters.add(param.getName(), param.getValue());
+		}
+		
+		public RequestBuilder multiPart() {
+			this.isMultiPart = true;
+			return this;
 		}
 		
 		public RequestBuilder add(String name, String ... values) {
@@ -422,20 +442,52 @@ public class MechanizeAgent {
 			return this;
 		}
 		
+		public RequestBuilder set(Parameters parameters) {
+			for(String name :parameters.getNames()) 
+				set(name, parameters.get(name));
+			
+			return this;
+		}
+
+		public RequestBuilder add(Parameters parameters) {
+			for(String name :parameters.getNames()) 
+				add(name, parameters.get(name));
+			
+			return this;
+		}
+		
+		/** Adds a file to the request also making the request to become a multi-part post request or removes any file registered
+		 *  under the given name if the file value is null. */
+		public RequestBuilder set(String name, File file) {
+			if(file != null)
+				files.put(name, file);
+			else
+				files.remove(name);
+			return this;
+		}
+		
 		public Parameters parameters() {
 			return parameters;
 		}
 		
 		public Page get() {
+			if(hasFiles())
+				throw new UnsupportedOperationException("Files can not be send using a get request");
 			return MechanizeAgent.this.request(composeGetRequest(uri, parameters));
 		}
 		
+		private boolean hasFiles() {
+			return !files.isEmpty();
+		}
+
 		private String getBaseUri() {
 			return uri.contains("?") ? uri.substring(0, uri.indexOf('?')) : uri;
 		}
 		
 		public Page post() {
-			return MechanizeAgent.this.request(composePostRequest(getBaseUri(), parameters));
+			HttpPost request = (!hasFiles()) || isMultiPart ? composePostRequest(getBaseUri(), parameters) : 
+				composeMultiPartFormRequest(getBaseUri(), parameters, files);
+			return MechanizeAgent.this.request(request);
 		}
 	}
 }
