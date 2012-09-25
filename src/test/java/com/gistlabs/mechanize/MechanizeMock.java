@@ -7,14 +7,18 @@
  */
 package com.gistlabs.mechanize;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import junit.framework.Assert;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
@@ -22,13 +26,19 @@ import org.apache.http.NameValuePair;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
+import org.junit.Assert;
+import org.junit.internal.ArrayComparisonFailure;
 
 import com.gistlabs.mechanize.Parameters.FormHttpParameter;
+import com.gistlabs.mechanize.exceptions.MechanizeIOException;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -49,8 +59,8 @@ public class MechanizeMock extends MechanizeAgent {
 		return request;
 	}
 
-	public PageRequest addPageRequest(String method, String uri, List<NameValuePair> params, String html) {
-		PageRequest request = new PageRequest(method, uri, params, html);
+	public PageRequest addPageRequest(String method, String uri, Parameters parameters, String html) {
+		PageRequest request = new PageRequest(method, uri, parameters, html);
 		requests.add(request);
 		return request;
 	}
@@ -61,7 +71,7 @@ public class MechanizeMock extends MechanizeAgent {
 		if(pageRequest != null)
 			return pageRequest.consume(client, request);
 		else {
-			Assert.fail("No open page requests");
+			fail("No open page requests");
 			return null;
 		}
 	}
@@ -76,7 +86,7 @@ public class MechanizeMock extends MechanizeAgent {
 	public class PageRequest {
 		public final String httpMethod;
 		public final String uri;
-		public final List<NameValuePair> params;
+		public final Parameters parameters;
 		public final String html;
 		public boolean wasExecuted = false;
 		public HttpClient client = null;
@@ -91,14 +101,14 @@ public class MechanizeMock extends MechanizeAgent {
 		public PageRequest(String method, String uri, String html) {
 			this.httpMethod = method;
 			this.uri = uri;
-			this.params = Collections.emptyList();
+			this.parameters = new Parameters();
 			this.html = html;
 		}
 		
-		public PageRequest(String method, String uri, List<NameValuePair> params, String html) {
+		public PageRequest(String method, String uri, Parameters parameters, String html) {
 			this.httpMethod = method;
 			this.uri = uri;
-			this.params = params;
+			this.parameters = parameters;
 			this.html = html;
 		}
 
@@ -137,18 +147,60 @@ public class MechanizeMock extends MechanizeAgent {
 						throw new UnsupportedOperationException("Encoding not supported", e);
 					}
 					
+					assertParameters(request);
+					
 					this.wasExecuted = true;
 					return response;
 				}
 				else {
-					Assert.assertEquals("URI of the next PageRequest does not match", uri, request.getURI().toString());
+					assertEquals("URI of the next PageRequest does not match", uri, request.getURI().toString());
 					return null;
 				}
-				
-				// TODO check parameters
 			}
 			else
 				throw new UnsupportedOperationException("Request already executed");
+		}
+
+		private void assertParameters(HttpRequestBase request) throws ArrayComparisonFailure {
+			if(request instanceof HttpPost) {
+				HttpPost post = (HttpPost)request;
+				UrlEncodedFormEntity entity = (UrlEncodedFormEntity)post.getEntity();
+				Parameters actualParameters = extractParameters(entity); 
+				
+				Assert.assertArrayEquals("Expected and actual parameters should equal by available parameter names", parameters.getNames(), actualParameters.getNames());
+				
+				for(String name : parameters.getNames()) {
+					String [] expectedValue = parameters.get(name);
+					String [] actualValue = actualParameters.get(name);
+					Assert.assertArrayEquals("Expected parameter of next PageRequest '" + uri + "' must match", expectedValue, actualValue);
+				}
+			}
+		}
+
+		private Parameters extractParameters(UrlEncodedFormEntity entity) {
+			try {
+				InputStream stream = entity.getContent();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+				StringBuilder content = new StringBuilder();
+				while(true) {
+					String line = reader.readLine();
+					if(line != null) {
+						if(content.length() > 0) 
+							content.append("\n");
+						content.append(line);
+					}
+					else 
+						break;
+				}
+				
+				Parameters parameters = new Parameters();
+				for(NameValuePair param : URLEncodedUtils.parse(content.toString(), Charset.forName("UTF-8")))
+					parameters.add(param.getName(), param.getValue());
+				return parameters;
+			}
+			catch(IOException e) {
+				throw new MechanizeIOException(e);
+			}
 		}
 
 		private String getRequestUri(HttpRequestBase request) {

@@ -37,6 +37,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
@@ -104,7 +105,10 @@ public class MechanizeAgent {
 		return request(new HttpGet(uri));
 	}
 	
-
+	public RequestBuilder doRequest(String uri) {
+		return new RequestBuilder(uri);
+	}
+	
 	public Page post(String uri, Map<String, String> params) throws UnsupportedEncodingException {
 		return post(uri, new Parameters(unsafeCast(params)));
 	}
@@ -115,16 +119,9 @@ public class MechanizeAgent {
 	}
 	
 	public Page post(String uri, Parameters params) {
-		HttpPost request = new HttpPost(uri);
-		try {
-			composePostRequest(params, request);
-		} catch (UnsupportedEncodingException e) {
-			throw new MechanizeUnsupportedEncodingException(e);
-		}
-
+		HttpPost request = composePostRequest(uri, params);
 		return request(request);
 	}
-
 		
 	public void addInterceptor(Interceptor interceptor) {
 		if(!interceptors.contains(interceptor))
@@ -326,23 +323,21 @@ public class MechanizeAgent {
 		HttpRequestBase request = null;
 		
 		if(form.isDoPost()) {
-			request = new HttpPost(uri);
 			if(form.isMultiPart()) 
-				composeMultiPartFormRequest(form, formParams, request);
+				request = composeMultiPartFormRequest(uri, form, formParams);
 			else
-				composePostRequest(formParams, request);
+				request = composePostRequest(uri, formParams);
 		}
 		else
-			request = composeFormGetSubmit(formParams, uri, request);
+			request = composeGetRequest(uri, formParams);
 		return request;
 	}
 
-	private HttpRequestBase composeFormGetSubmit(Parameters formParams,
-			String uri, HttpRequestBase request) {
+	private HttpRequestBase composeGetRequest(String uri, Parameters parameters) {
 		try {
 			URIBuilder builder = new URIBuilder(uri);
 			
-			for(Parameters.FormHttpParameter param : formParams) {
+			for(Parameters.FormHttpParameter param : parameters) {
 				if(param.isSingleValue())
 					builder.setParameter(param.getName(), param.getValue());
 				else
@@ -352,16 +347,15 @@ public class MechanizeAgent {
 			
 			URI requestURI = builder.build();
 			uri = requestURI.toString();
-			request = new HttpGet(requestURI);
+			return new HttpGet(requestURI);
 		}
 		catch(URISyntaxException e) {
 			throw new MechanizeURISyntaxException(e);
 		}
-		return request;
 	}
 
-	private void composePostRequest(Parameters parameters,
-			HttpRequestBase request) throws UnsupportedEncodingException {
+	private HttpPost composePostRequest(String uri, Parameters parameters) {
+		HttpPost request = new HttpPost(uri);
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 		for(Parameters.FormHttpParameter param : parameters) {
 			if(param.isSingleValue())
@@ -371,21 +365,31 @@ public class MechanizeAgent {
 					formparams.add(new BasicNameValuePair(param.getName(), value));
 			}
 		}
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
-		((HttpPost)request).setEntity(entity);
+		try {
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
+			((HttpPost)request).setEntity(entity);
+		} catch (UnsupportedEncodingException e) {
+			throw new MechanizeUnsupportedEncodingException(e);
+		}
+		
+		return request;
 	}
 
-	private void composeMultiPartFormRequest(Form form, Parameters parameters,
-			HttpRequestBase request) throws UnsupportedEncodingException {
+	private HttpPost composeMultiPartFormRequest(String uri, Form form, Parameters parameters) {
+		HttpPost request = new HttpPost(uri);
 		MultipartEntity multiPartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 		
-		Charset utf8 = Charset.forName("UTF-8");
-		for(Parameters.FormHttpParameter param : parameters) {
-			if(param.isSingleValue())
-				multiPartEntity.addPart(param.getName(), new StringBody(param.getValue(), utf8));
-			else 
-				for(String value : param.getValues())
-					multiPartEntity.addPart(param.getName(), new StringBody(value, utf8));
+		try {
+			Charset utf8 = Charset.forName("UTF-8");
+			for(Parameters.FormHttpParameter param : parameters) {
+				if(param.isSingleValue())
+					multiPartEntity.addPart(param.getName(), new StringBody(param.getValue(), utf8));
+				else 
+					for(String value : param.getValues())
+							multiPartEntity.addPart(param.getName(), new StringBody(value, utf8));
+			}
+		} catch (UnsupportedEncodingException e) {
+			throw new MechanizeUnsupportedEncodingException(e); 
 		}
 
 		for(FormElement formElement : form) {
@@ -395,7 +399,48 @@ public class MechanizeAgent {
 				multiPartEntity.addPart(upload.getName(), new FileBody(file));
 			}
 		}
-
 		((HttpPost)request).setEntity(multiPartEntity);
+
+		return request;
+	}
+	
+	public class RequestBuilder {
+		private final String uri;
+		private final Parameters parameters;
+		
+		private RequestBuilder(String uri) {
+			this.uri = uri;
+			this.parameters = new Parameters();
+			
+			if(uri.contains("?")) 
+				for(NameValuePair param : URLEncodedUtils.parse(uri.substring(uri.indexOf('?') + 1), Charset.forName("UTF-8"))) 
+					parameters.add(param.getName(), param.getValue());
+		}
+		
+		public RequestBuilder add(String name, String ... values) {
+			parameters.add(name, values);
+			return this;
+		}
+		
+		public RequestBuilder set(String name, String ... values) {
+			parameters.set(name, values);
+			return this;
+		}
+		
+		public Parameters parameters() {
+			return parameters;
+		}
+		
+		public Page get() {
+			return MechanizeAgent.this.request(composeGetRequest(uri, parameters));
+		}
+		
+		private String getBaseUri() {
+			return uri.contains("?") ? uri.substring(0, uri.indexOf('?')) : uri;
+		}
+		
+		public Page post() {
+			return MechanizeAgent.this.request(composePostRequest(getBaseUri(), parameters));
+		}
 	}
 }

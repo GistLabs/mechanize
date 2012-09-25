@@ -42,8 +42,36 @@ public class MechanizeAgentTest extends MechanizeTestCase {
         
         Page result = agent.get("http://test.com/form");
         assertEquals("OK", result.getTitle());
-
     }   
+    
+    @Test
+    public void testRequestParametersExtractedFromUri() {
+    	Parameters parameters = agent.doRequest("http://www.test.com/index.html?query=ab+cd&page=1").parameters();
+    	assertEquals("ab cd", parameters.get("query")[0]);
+    	assertEquals("1", parameters.get("page")[0]);
+    }
+    
+	@Test
+	public void testDoRequestGet() {
+		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", ""));
+		Page page = agent.doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").get();
+		assertEquals("Test Page", page.getTitle());
+	}
+
+	@Test
+	public void testDoRequestGetWithExistingQueryParameters() {
+		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=2", newHtml("Test Page", ""));
+		Page page = agent.doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").get();
+		assertEquals("Test Page", page.getTitle());
+	}
+
+	@Test
+	public void testDoRequestPostWithExistingQueryParameters() {
+		Parameters expectedParameters = new Parameters().add("query","ab cd").add("page", "2");
+		agent.addPageRequest("Post", "http://test.com/index.html", expectedParameters, newHtml("Test Page", ""));
+		Page page = agent.doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").post();
+		assertEquals("Test Page", page.getTitle());
+	}
     
 	@Test
 	public void testPostMethod() {
