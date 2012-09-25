@@ -42,6 +42,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.AbstractHttpClient;
@@ -333,7 +334,7 @@ public class MechanizeAgent {
 	public class RequestBuilder {
 		private final String uri;
 		private final Parameters parameters;
-		private final Map<String, File> files = new HashMap<String, File>();
+		private final Map<String, ContentBody> files = new HashMap<String, ContentBody>();
 		private boolean isMultiPart = false;
 		
 		private RequestBuilder(String uri) {
@@ -377,12 +378,19 @@ public class MechanizeAgent {
 		/** Adds a file to the request also making the request to become a multi-part post request or removes any file registered
 		 *  under the given name if the file value is null. */
 		public RequestBuilder set(String name, File file) {
-			if(file != null)
-				files.put(name, file);
+			return set(name, (ContentBody) file != null ? new FileBody(file) : null);
+		}
+		
+		/** Adds an ContentBody object. */
+		public RequestBuilder set(String name, ContentBody contentBody) {
+			if(contentBody != null)
+				files.put(name, contentBody);
 			else
 				files.remove(name);
 			return this;
 		}
+		
+		
 		
 		public Parameters parameters() {
 			return parameters;
@@ -450,7 +458,7 @@ public class MechanizeAgent {
 			return request;
 		}
 
-		private HttpPost composeMultiPartFormRequest(String uri, Parameters parameters, Map<String, File> files) {
+		private HttpPost composeMultiPartFormRequest(String uri, Parameters parameters, Map<String, ContentBody> files) {
 			HttpPost request = new HttpPost(uri);
 			MultipartEntity multiPartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 			
@@ -470,9 +478,8 @@ public class MechanizeAgent {
 			List<String> fileNames = new ArrayList<String>(files.keySet());
 			Collections.sort(fileNames);
 			for(String name : fileNames) {
-				File file = files.get(name);
-				if(file != null)
-					multiPartEntity.addPart(name, new FileBody(file));
+				ContentBody contentBody = files.get(name);
+				multiPartEntity.addPart(name, contentBody);
 			}
 			((HttpPost)request).setEntity(multiPartEntity);
 			return request;
