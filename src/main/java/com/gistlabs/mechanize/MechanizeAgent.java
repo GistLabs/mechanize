@@ -309,15 +309,10 @@ public class MechanizeAgent {
 
 	/** Returns the page object received as response to the form submit action. */
 	public Page submit(Form form, Parameters formParams) {
-		try {
-			return request(createSubmitRequest(form, formParams));
-		} catch (UnsupportedEncodingException e) {
-			throw new MechanizeUnsupportedEncodingException(e);
-		}
+		return request(createSubmitRequest(form, formParams));
 	}
 
-	private HttpRequestBase createSubmitRequest(Form form, Parameters formParams)
-			throws UnsupportedEncodingException {
+	private HttpRequestBase createSubmitRequest(Form form, Parameters formParams) {
 
 		String uri = form.getUri();
 		HttpRequestBase request = null;
