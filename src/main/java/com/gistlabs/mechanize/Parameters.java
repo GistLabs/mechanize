@@ -43,6 +43,22 @@ public class Parameters implements Iterable<FormHttpParameter> {
 		}
 	}
 	
+	/** Returns true if at least one value is present for the given parameter name. */
+	public boolean has(String name) {
+		return get(name) != null;
+	}
+	
+	/** Returns the current values of the parameters in natural sort order or null if none. */
+	public String [] get(String name) {
+		if(parameterNames.containsKey(name)) {
+			List<String> values = parameterNames.get(name).getValues();
+			Collections.sort(values);
+			return values.toArray(new String [values.size()]);
+		}
+		else
+			return null;
+	}
+	
 	public Parameters set(String name, String ... values) {
 		remove(name);
 		add(name, values);

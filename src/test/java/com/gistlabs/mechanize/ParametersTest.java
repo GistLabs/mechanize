@@ -1,6 +1,10 @@
 package com.gistlabs.mechanize;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -32,5 +36,21 @@ public class ParametersTest {
 		
 		parameters.remove("name");
 		assertEquals(0, parameters.getValueCount());
+	}
+	
+	@Test
+	public void testHasAndGet() {
+		Parameters parameters = new Parameters();
+		String name = "name";
+		assertFalse(parameters.has(name));
+		assertNull(parameters.get(name));
+		
+		parameters.add("name", "value2");
+		assertTrue(parameters.has(name));
+		assertArrayEquals(new String [] {"value2"}, parameters.get(name));
+
+		parameters.add("name", "value1");
+		assertTrue(parameters.has(name));
+		assertArrayEquals(new String [] {"value1", "value2"}, parameters.get(name));
 	}
 }
