@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -96,6 +97,18 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		assertEquals(200, image.getWidth());
 		assertEquals(200, image.getHeight());
 	}
+	
+	@Test
+	public void testDownloadPage() throws Exception {
+		String wikipediaLogoUri = "http://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png";
+		File file = File.createTempFile("mechanize", "png");
+		file.delete();
+
+		new MechanizeAgent().get(wikipediaLogoUri).saveToFile(file);
+		assertEquals(45283, file.length());
+		file.delete();
+	}
+	
 
 	@Test
 	public void testDownloadToFile() {
