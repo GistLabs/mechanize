@@ -30,4 +30,11 @@ public class Link extends PageElement {
 			return page.getAgent().click(page, element);
 		return null;
 	}
+	
+	public String href() {
+		if(element.hasAttr("href")) {
+			return element.absUrl("href");
+		}
+		return null;
+	}
 }

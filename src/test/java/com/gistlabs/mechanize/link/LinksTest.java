@@ -7,16 +7,14 @@
  */
 package com.gistlabs.mechanize.link;
 
-import static org.junit.Assert.assertEquals;
 import static com.gistlabs.mechanize.QueryBuilder.*;
-
-import static org.junit.Assert.assertNotNull;
-import com.gistlabs.mechanize.MechanizeTestCase;
-import com.gistlabs.mechanize.Page;
-import com.gistlabs.mechanize.MechanizeMock.PageRequest;
-import com.gistlabs.mechanize.link.Link;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.gistlabs.mechanize.MechanizeMock.PageRequest;
+import com.gistlabs.mechanize.MechanizeTestCase;
+import com.gistlabs.mechanize.Page;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -76,4 +74,5 @@ public class LinksTest extends MechanizeTestCase {
 		Page myPage = link.click();
 		assertEquals("My Page", myPage.getTitle());
 	}
+
 }

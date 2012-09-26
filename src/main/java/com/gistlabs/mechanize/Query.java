@@ -60,6 +60,10 @@ public class Query {
 		return add(string, Selector.ID);
 	}
 
+	public Query byIdOrClass(String string) {
+		return add(string, Selector.ID_OR_CLASZ);
+	}
+
 	public Query byNameOrId(String string) {
 		return add(string, Selector.NAME_OR_ID);
 	}
