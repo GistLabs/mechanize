@@ -7,19 +7,18 @@
  */
 package com.gistlabs.mechanize.integration.test;
 
+import static com.gistlabs.mechanize.QueryBuilder.byId;
+import static com.gistlabs.mechanize.QueryBuilder.byName;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+
+import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.cookie.Cookie;
 import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.form.SubmitImage;
-
-import org.junit.Test;
-
-import static com.gistlabs.mechanize.QueryBuilder.*;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>

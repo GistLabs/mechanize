@@ -12,16 +12,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.Test;
-
-import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Page;
-import com.gistlabs.mechanize.RequestInterceptor;
-import com.gistlabs.mechanize.ResponseInterceptor;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -43,7 +37,13 @@ public class MechanizeAgentTest extends MechanizeTestCase {
         
         Page result = agent.get("http://test.com/form");
         assertEquals("OK", result.getTitle());
-    }   
+    }
+	
+	@Test
+	public void testHtmlContentType() throws Exception {
+		Page page = new MechanizeAgent().get("http://wikimedia.org");
+		assertTrue(page.getContentType().startsWith("text/html"));
+	}
     
     @Test
     public void testRequestParametersExtractedFromUri() {
@@ -97,27 +97,26 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		assertEquals(200, image.getWidth());
 		assertEquals(200, image.getHeight());
 	}
+		
+		@Test
+		public void testDownloadPage() throws Exception {
+			String wikipediaLogoUri = "http://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png";
+			File file = File.createTempFile("mechanize", "png");
+			file.delete();
 	
+			Page page = new MechanizeAgent().get(wikipediaLogoUri);
+			assertEquals("image/png", page.getContentType());
+			page.saveToFile(file);
+			assertEquals(45283, file.length());
+			file.delete();
+		}	
+
 	@Test
-	public void testDownloadPage() throws Exception {
+	public void testDownloadToFile() throws Exception {
 		String wikipediaLogoUri = "http://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png";
 		File file = File.createTempFile("mechanize", "png");
 		file.delete();
 
-		new MechanizeAgent().get(wikipediaLogoUri).saveToFile(file);
-		assertEquals(45283, file.length());
-		file.delete();
-	}
-	
-
-	@Test
-	public void testDownloadToFile() {
-		String wikipediaLogoUri = "http://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png";
-		String path = MechanizeAgentTest.class.getResource(".").getFile();
-
-		File file = new File(path + "/" + "wikipedialogo.png");
-		if(file.exists())
-			file.delete();
 		new MechanizeAgent().getToFile(wikipediaLogoUri, file);
 		assertEquals(45283, file.length());
 		file.delete();

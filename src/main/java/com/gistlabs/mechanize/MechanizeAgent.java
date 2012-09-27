@@ -9,14 +9,12 @@ package com.gistlabs.mechanize;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,7 +27,6 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -48,8 +45,6 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.gistlabs.mechanize.cookie.Cookies;
@@ -262,22 +257,8 @@ public class MechanizeAgent {
 	
 	private Page toPage(HttpRequestBase request, HttpResponse response)
 			throws IOException, UnsupportedEncodingException {
-		InputStream in = response.getEntity().getContent();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in, getEncoding(response)));
-		String line;
-		StringBuilder contentBuilder = new StringBuilder();
-		while((line = reader.readLine()) != null) {
-			contentBuilder.append(line);
-			contentBuilder.append('\n');
-		}
-		String content = contentBuilder.toString();
-		
-		String baseUri = request.getURI().toString();
-		Header contentLocation = Util.findHeader(response, "content-location");
-		if(contentLocation != null && contentLocation.getValue() != null)
-			baseUri = contentLocation.getValue();
-		Document document = Jsoup.parse(content, baseUri);
-		return new Page(this, baseUri, document, content, request, response);
+
+		return new Page(this, request, response);
 	}
 
 	protected HttpResponse execute(HttpClient client, HttpRequestBase request) throws IOException, ClientProtocolException {
@@ -296,11 +277,6 @@ public class MechanizeAgent {
 			if(clazz.isInstance(interceptor))
 				result.add(clazz.cast(interceptor));
 		return result;
-	}
-	
-	private String getEncoding(HttpResponse response) {
-		Header encoding = response.getEntity().getContentEncoding();
-		return encoding != null ? encoding.getValue() : Charset.defaultCharset().name();
 	}
 
 	public Page click(Page page, Element link) {
@@ -398,7 +374,7 @@ public class MechanizeAgent {
 		
 		public Page get() {
 			if(hasFiles())
-				throw new UnsupportedOperationException("Files can not be send using a get request");
+				throw new UnsupportedOperationException("Files can not be sent using a get request");
 			return MechanizeAgent.this.request(composeGetRequest(uri, parameters));
 		}
 		
