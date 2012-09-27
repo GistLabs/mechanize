@@ -7,8 +7,7 @@
  */
 package com.gistlabs.mechanize;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -23,6 +22,17 @@ import org.junit.Test;
  * @since 2012-09-12
  */
 public class MechanizeAgentTest extends MechanizeTestCase {
+	
+	@Test
+	public void testNullGet() {
+		assertNull(agent.get(null));
+	}
+	
+	@Test
+	public void testEmtpyGet() {
+		assertNull(agent.get(""));
+	}
+	
 	@Test
 	public void testReceivingAPage() {
 		agent.addPageRequest("http://test.com", newHtml("Test Page", ""));

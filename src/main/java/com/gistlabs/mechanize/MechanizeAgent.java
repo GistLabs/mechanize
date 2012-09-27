@@ -45,7 +45,6 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.jsoup.nodes.Element;
 
 import com.gistlabs.mechanize.cookie.Cookies;
 import com.gistlabs.mechanize.exceptions.MechanizeIOException;
@@ -101,7 +100,17 @@ public class MechanizeAgent {
 		}
 	}
 	
+	/**
+	 * GET a Page for a given URI
+	 * 
+	 * @param uri
+	 * @return Page, or null if uri is null or empty
+	 */
 	public Page get(String uri) {
+		if (uri==null || "".equals(uri)) {
+			return null;
+		}
+		
 		return doRequest(uri).get();
 	}
 	
@@ -277,14 +286,6 @@ public class MechanizeAgent {
 			if(clazz.isInstance(interceptor))
 				result.add(clazz.cast(interceptor));
 		return result;
-	}
-
-	public Page click(Page page, Element link) {
-		if(link.hasAttr("href")) {
-			String uri = link.absUrl("href");
-			return get(uri);
-		}
-		return null;
 	}
 
 	/** Returns the page object received as response to the form submit action. */
