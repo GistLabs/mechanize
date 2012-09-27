@@ -17,11 +17,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
-import com.gistlabs.mechanize.exceptions.MechanizeIOException;
-import com.gistlabs.mechanize.form.Forms;
-import com.gistlabs.mechanize.image.Images;
-import com.gistlabs.mechanize.link.Links;
-
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -29,6 +24,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import static com.gistlabs.mechanize.QueryBuilder.*;
+
+import com.gistlabs.mechanize.exceptions.MechanizeIOException;
+import com.gistlabs.mechanize.form.Form;
+import com.gistlabs.mechanize.form.Forms;
+import com.gistlabs.mechanize.image.Images;
+import com.gistlabs.mechanize.link.Link;
+import com.gistlabs.mechanize.link.Links;
 
 /** Represents an HTML Page.  
  *  
@@ -85,7 +89,17 @@ public class Page {
 		Header encoding = response.getEntity().getContentEncoding();
 		return encoding != null ? encoding.getValue() : Charset.defaultCharset().name();
 	}
-
+	
+	/**
+	 *  Query for a matching link, find first match by either id or by class attributes.
+	 * 
+	 * @param query wrapped with byIdOrClass()
+	 * @return first Link found
+	 */
+	public Link link(String query) {
+		return links().get(byIdOrClass(query));
+	}
+	
 	public Links links() {
 		if(this.links == null) {
 			Elements links = document.getElementsByTag("a");
@@ -93,7 +107,17 @@ public class Page {
 		}
 		return this.links;
 	}
-	
+
+	/**
+	 *  Query for a matching form, find first match by either id or by class attributes.
+	 * 
+	 * @param query wrapped with byIdOrClass()
+	 * @return first Form found
+	 */
+	public Form form(String query) {
+		return forms().get(byIdOrClass(query));
+	}
+
 	public Forms forms() {
 		if(this.forms == null) {
 			Elements forms = document.getElementsByTag("form");
