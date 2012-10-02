@@ -333,8 +333,10 @@ public class MechanizeAgent {
 		for(FormElement formElement : form) {
 			if(formElement instanceof Upload) {
 				Upload upload = (Upload)formElement;
-				File file = upload.hasFileValue() ? upload.getFileValue() : new File(upload.getValue());
-				request.set(upload.getName(), file);
+				if (upload.hasValue()) {
+					File file = upload.hasFileValue() ? upload.getFileValue() : new File(upload.getValue());
+					request.set(upload.getName(), file);					
+				}
 			}
 		}
 	}
