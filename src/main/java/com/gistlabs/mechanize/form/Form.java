@@ -15,8 +15,8 @@ import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
 import com.gistlabs.mechanize.Query;
 import com.gistlabs.mechanize.QueryBuilder;
-import com.gistlabs.mechanize.Util;
 import com.gistlabs.mechanize.parameters.Parameters;
+import com.gistlabs.mechanize.util.Util;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

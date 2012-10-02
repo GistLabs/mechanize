@@ -27,6 +27,7 @@ import com.gistlabs.mechanize.form.Forms;
 import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.link.Links;
+import com.gistlabs.mechanize.util.Util;
 
 /** Represents an HTML page.  
  *  

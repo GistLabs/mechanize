@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.gistlabs.mechanize.Query;
 import com.gistlabs.mechanize.QueryBuilder;
-import com.gistlabs.mechanize.Util;
+import com.gistlabs.mechanize.util.Util;
 
 import org.jsoup.nodes.Element;
 

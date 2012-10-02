@@ -9,7 +9,7 @@ package com.gistlabs.mechanize;
 
 import static org.junit.Assert.*;
 
-import com.gistlabs.mechanize.Util;
+import com.gistlabs.mechanize.util.Util;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

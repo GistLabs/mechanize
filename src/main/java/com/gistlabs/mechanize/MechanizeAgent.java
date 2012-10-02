@@ -60,6 +60,7 @@ import com.gistlabs.mechanize.history.History;
 import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.parameters.Parameter;
 import com.gistlabs.mechanize.parameters.Parameters;
+import com.gistlabs.mechanize.util.Util;
 
 /**
  * Mechanize agent.
