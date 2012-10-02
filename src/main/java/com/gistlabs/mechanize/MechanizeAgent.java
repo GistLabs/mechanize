@@ -60,6 +60,8 @@ import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.FormElement;
 import com.gistlabs.mechanize.form.Upload;
 import com.gistlabs.mechanize.history.History;
+import com.gistlabs.mechanize.parameters.Parameter;
+import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
  * Mechanize agent.
@@ -430,7 +432,7 @@ public class MechanizeAgent {
 			try {
 				URIBuilder builder = new URIBuilder(uri);
 				
-				for(Parameters.FormHttpParameter param : parameters) {
+				for(Parameter param : parameters) {
 					if(param.isSingleValue())
 						builder.setParameter(param.getName(), param.getValue());
 					else
@@ -450,7 +452,7 @@ public class MechanizeAgent {
 		private HttpPost composePostRequest(String uri, Parameters parameters) {
 			HttpPost request = new HttpPost(uri);
 			List<NameValuePair> formparams = new ArrayList<NameValuePair>();
-			for(Parameters.FormHttpParameter param : parameters) {
+			for(Parameter param : parameters) {
 				if(param.isSingleValue())
 					formparams.add(new BasicNameValuePair(param.getName(), param.getValue()));
 				else {
@@ -474,7 +476,7 @@ public class MechanizeAgent {
 			
 			try {
 				Charset utf8 = Charset.forName("UTF-8");
-				for(Parameters.FormHttpParameter param : parameters) {
+				for(Parameter param : parameters) {
 					if(param.isSingleValue())
 						multiPartEntity.addPart(param.getName(), new StringBody(param.getValue(), utf8));
 					else 

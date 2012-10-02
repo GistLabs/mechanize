@@ -28,7 +28,6 @@ import org.apache.http.ProtocolVersion;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -38,8 +37,8 @@ import org.apache.http.message.BasicHttpResponse;
 import org.junit.Assert;
 import org.junit.internal.ArrayComparisonFailure;
 
-import com.gistlabs.mechanize.Parameters.FormHttpParameter;
 import com.gistlabs.mechanize.exceptions.MechanizeIOException;
+import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -134,7 +133,7 @@ public class MechanizeMock extends MechanizeAgent {
 					throw new IllegalArgumentException(String.format("Expected %s, but was %s", httpMethod, request.getMethod()));
 				}
 				
-				if(getRequestUri(request).equals(uri)) {
+				if(request.getURI().toString().equals(uri)) {
 					HttpResponse response = new BasicHttpResponse(new ProtocolVersion("HTTP", 1, 1), 200, "OK");
 					BasicHttpEntity entity = new BasicHttpEntity();
 					response.setEntity(entity);
@@ -207,23 +206,6 @@ public class MechanizeMock extends MechanizeAgent {
 			catch(IOException e) {
 				throw new MechanizeIOException(e);
 			}
-		}
-
-		private String getRequestUri(HttpRequestBase request) {
-			if(request instanceof HttpGet && request.getParams() instanceof Parameters) {
-				StringBuilder queryString = new StringBuilder();
-				for(FormHttpParameter parameter : ((Parameters)request.getParams())) {
-					if(queryString.length() > 0)
-						queryString.append("&");
-					String name = parameter.getName();
-					String value = parameter.getValue();
-					queryString.append(name + "=" + (value != null ? value : ""));
-				}
-				return request.getURI().toString() + "?" + queryString.toString();
-			}
-			else 
-				return request.getURI().toString();
-				
 		}
 	}
 }

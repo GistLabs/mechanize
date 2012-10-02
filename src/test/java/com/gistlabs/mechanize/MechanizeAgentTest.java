@@ -21,6 +21,7 @@ import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.RequestInterceptor;
 import com.gistlabs.mechanize.ResponseInterceptor;
+import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>

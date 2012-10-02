@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.gistlabs.mechanize.parameters.Parameters;
+
 
 public class ParametersTest {
 	
