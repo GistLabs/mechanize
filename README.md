@@ -35,7 +35,7 @@ Download the code from https://github.com/GistLabs/mechanize/downloads, or use a
   <dependency>
     <groupId>com.gistlabs</groupId>
     <artifactId>mechanize</artifactId>
-    <version>0.9.0</version>
+    <version>0.9.1</version>
   </dependency>
 ```
 
