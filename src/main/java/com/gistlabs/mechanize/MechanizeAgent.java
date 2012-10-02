@@ -158,6 +158,9 @@ public class MechanizeAgent {
 	}
 	
 	/** Returns the content received as a byte buffer. 
+	 * 
+	 * TODO: Move body into util somewhere
+	 * 
 	 * @throws IllegalArgumentException If file exists. */
 	public byte [] getToBuffer(String uri) {
 		InputStream content = null;
@@ -215,6 +218,9 @@ public class MechanizeAgent {
 
 	/** Writes the content received to file. 
 	 * This method has a very small memory footprint by using a 4KB buffer.  
+	 * 
+	 * TODO move body into util somewhere
+	 * 
 	 * @throws IllegalArgumentException If file exists. */
 	public void getToFile(String uri, File file) {
 		if(file.exists())
@@ -291,19 +297,23 @@ public class MechanizeAgent {
 	/** Returns the page object received as response to the form submit action. */
 	public Page submit(Form form, Parameters parameters) {
 		RequestBuilder request = doRequest(form.getUri()).set(parameters);
-		if(form.isDoPost() && form.isMultiPart()) {
+		boolean doPost = form.isDoPost();
+		boolean multiPart = form.isMultiPart();
+		if(doPost && multiPart) {
 			request.multiPart();
 			addFiles(request, form);
 		}
-		return form.isDoPost() ? request.post() : request.get(); 
+		return doPost ? request.post() : request.get(); 
 	}
 
 	private void addFiles(RequestBuilder request, Form form) {
 		for(FormElement formElement : form) {
 			if(formElement instanceof Upload) {
 				Upload upload = (Upload)formElement;
-				File file = upload.hasFileValue() ? upload.getFileValue() : new File(upload.getValue());
-				request.set(upload.getName(), file);
+				if (upload.hasValue()) {
+					File file = upload.hasFileValue() ? upload.getFileValue() : new File(upload.getValue());
+					request.set(upload.getName(), file);					
+				}
 			}
 		}
 	}
@@ -355,7 +365,7 @@ public class MechanizeAgent {
 		/** Adds a file to the request also making the request to become a multi-part post request or removes any file registered
 		 *  under the given name if the file value is null. */
 		public RequestBuilder set(String name, File file) {
-			return set(name, (ContentBody) file != null ? new FileBody(file) : null);
+			return set(name, file != null ? new FileBody(file) : null);
 		}
 		
 		/** Adds an ContentBody object. */
@@ -427,7 +437,7 @@ public class MechanizeAgent {
 			}
 			try {
 				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
-				((HttpPost)request).setEntity(entity);
+				request.setEntity(entity);
 			} catch (UnsupportedEncodingException e) {
 				throw new MechanizeUnsupportedEncodingException(e);
 			}
