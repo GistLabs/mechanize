@@ -331,15 +331,14 @@ public class FormTest extends MechanizeTestCase {
 	}
 
 	/**
-	 * TODO: Confirm if this test should indeed pass (it does...)
-	 * See https://github.com/GistLabs/mechanize/pull/23 for request
+	 * This commit does fail on this text case, with null default value
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testFileUploadWithNoFile() throws Exception {
 		agent.addPageRequest("http://test.com", 
-				newHtml("Test Page", newForm("form").method("post").id("form").enctype("multipart/form-data").addFileInput("fileUpload", "")));
+				newHtml("Test Page", newForm("form").method("post").id("form").enctype("multipart/form-data").addFileInput("fileUpload", null)));
 		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
 		
 		Page page = agent.get("http://test.com");

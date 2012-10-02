@@ -52,6 +52,10 @@ public class FormElement extends PageElement {
 		this.value = value;
 	}
 	
+	public boolean hasValue() {
+		return this.value != null && !"".equals(this.value);
+	}
+	
 	public String get() {
 		return getValue();
 	}
