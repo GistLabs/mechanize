@@ -460,7 +460,7 @@ public class MechanizeAgent {
 			}
 			try {
 				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
-				((HttpPost)request).setEntity(entity);
+				request.setEntity(entity);
 			} catch (UnsupportedEncodingException e) {
 				throw new MechanizeUnsupportedEncodingException(e);
 			}
