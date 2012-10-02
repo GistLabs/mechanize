@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -45,10 +46,10 @@ public class Page {
 	private Forms forms;
 	private Images images;
 	
-	public Page(MechanizeAgent agent, String uri, Document document, String content, HttpRequestBase request, HttpResponse response) {
+	public Page(MechanizeAgent agent, String uri, String content, HttpRequestBase request, HttpResponse response) {
 		this.agent = agent;
 		this.uri = uri;
-		this.document = document;
+		this.document = Jsoup.parse(content, uri);
 		this.originalContent = content;
 		this.request = request;
 		this.response = response;

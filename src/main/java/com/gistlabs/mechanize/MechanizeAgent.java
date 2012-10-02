@@ -48,9 +48,6 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import com.gistlabs.mechanize.cookie.Cookies;
 import com.gistlabs.mechanize.exceptions.MechanizeIOException;
@@ -285,8 +282,7 @@ public class MechanizeAgent {
 		Header contentLocation = Util.findHeader(response, "content-location");
 		if(contentLocation != null && contentLocation.getValue() != null)
 			baseUri = contentLocation.getValue();
-		Document document = Jsoup.parse(content, baseUri);
-		return new Page(this, baseUri, document, content, request, response);
+		return new Page(this, baseUri, content, request, response);
 	}
 
 	protected HttpResponse execute(HttpClient client, HttpRequestBase request) throws IOException, ClientProtocolException {
