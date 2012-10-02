@@ -60,6 +60,7 @@ import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.FormElement;
 import com.gistlabs.mechanize.form.Upload;
 import com.gistlabs.mechanize.history.History;
+import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.parameters.Parameter;
 import com.gistlabs.mechanize.parameters.Parameters;
 
@@ -311,12 +312,8 @@ public class MechanizeAgent {
 		return encoding != null ? encoding.getValue() : Charset.defaultCharset().name();
 	}
 
-	public Page click(Page page, Element link) {
-		if(link.hasAttr("href")) {
-			String uri = link.absUrl("href");
-			return get(uri);
-		}
-		return null;
+	public Page click(Page page, Link link) {
+		return get(link.href());
 	}
 
 	/** Returns the page object received as response to the form submit action. */
