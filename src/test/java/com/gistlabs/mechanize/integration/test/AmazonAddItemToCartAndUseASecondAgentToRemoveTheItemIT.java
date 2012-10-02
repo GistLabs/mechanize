@@ -15,7 +15,6 @@ import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.cookie.Cookie;
 import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.form.SubmitImage;
 
 import org.junit.Test;
 

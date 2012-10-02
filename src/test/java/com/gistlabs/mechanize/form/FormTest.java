@@ -10,6 +10,9 @@ package com.gistlabs.mechanize.form;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.form.Form;
@@ -42,7 +45,7 @@ public class FormTest extends MechanizeTestCase {
 	@Test
 	public void testEmptyFormWithPostMethod() {
 		agent.addPageRequest("http://test.com", 
-				newHtml("Test Page", newForm("form", true).id("form")));
+				newHtml("Test Page", newForm("form", "post").id("form")));
 		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
 		
 		Page page = agent.get("http://test.com");
@@ -312,6 +315,41 @@ public class FormTest extends MechanizeTestCase {
 		form.getSubmitImage(byName("submitImage")).setValue("shouldFail");
 	}
 
+	@Test
+	public void testSimpleFileUpload() throws Exception {
+		File tmpFile = File.createTempFile("mechanize", "tmp");
+		
+		agent.addPageRequest("http://test.com", 
+				newHtml("Test Page", newForm("form").method("post").id("form").enctype("multipart/form-data").addFileInput("fileUpload", "")));
+		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
+		
+		Page page = agent.get("http://test.com");
+		Form form = page.forms().get(byId("form"));
+		form.getUpload(byName("fileUpload")).setValue(tmpFile);
+		Page response = form.submit();
+		assertEquals("OK", response.getTitle());
+	}
+
+	/**
+	 * TODO: Confirm if this test should indeed pass (it does...)
+	 * See https://github.com/GistLabs/mechanize/pull/23 for request
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testFileUploadWithNoFile() throws Exception {
+		agent.addPageRequest("http://test.com", 
+				newHtml("Test Page", newForm("form").method("post").id("form").enctype("multipart/form-data").addFileInput("fileUpload", "")));
+		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
+		
+		Page page = agent.get("http://test.com");
+		Form form = page.forms().get(byId("form"));
+
+		Page response = form.submit();
+		assertEquals("OK", response.getTitle());
+	}
+
+	
 	//TODO Find a better test
 //	@Test
 //	public void testFileUploadingByUsingMegaFileUpload() {

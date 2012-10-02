@@ -58,24 +58,47 @@ public class MechanizeTestCase {
 		return new FormBuilder(action);
 	}
 
-	protected FormBuilder newForm(String action, boolean doPost) {
-		return new FormBuilder(action, doPost);
+	protected FormBuilder newForm(String action, String method) {
+		return new FormBuilder(action, method);
 	}
 	
 	public static class FormBuilder {
 		StringBuilder content = new StringBuilder();
 		String action;
-		String id = null;
-		String name = null;
-		private final boolean doPost;
+		String id;
+		String name;
+		String method;
+		private String enctype;
 		 
 		public FormBuilder(String action) {
-			this(action, false);
+			this.action = action;
 		}
 
-		public FormBuilder(String action, boolean doPost) {
-			this.action = action;
-			this.doPost = doPost;
+		public FormBuilder(String action, String method) {
+			this(action);
+			method(method);
+		}
+		
+		public String getAction() {
+			return this.action;
+		}
+		
+		public FormBuilder method(String method) {
+			this.method = method;
+			return this;
+		}
+		
+		public String getMethod() {
+			return this.method;
+		}
+
+		public FormBuilder enctype(String enctype) {
+			this.enctype = enctype;
+			return this;
+		}
+		
+		public String getEnctype() {
+			return this.enctype;
 		}
 		
 		public FormBuilder id(String id) {
@@ -107,6 +130,11 @@ public class MechanizeTestCase {
 			for(String toAdd : additionals) 
 				content.append(" " + toAdd);
 			content.append("/>");
+		}
+		
+		public FormBuilder addFileInput(String name, String value) {
+			appendSimpleInput("file", name, value);
+			return this;
 		}
 
 		public FormBuilder addTextArea(String name, String value) {
@@ -174,8 +202,8 @@ public class MechanizeTestCase {
 			appendIfSet(form, "action", action);
 			appendIfSet(form, "id", id);
 			appendIfSet(form, "name", name);
-			if(doPost)
-				form.append("method='post' ");
+			appendIfSet(form, "enctype", enctype);
+			appendIfSet(form, "method", method);
 			form.append(">");
 			form.append(content.toString());
 			form.append("</form>");
