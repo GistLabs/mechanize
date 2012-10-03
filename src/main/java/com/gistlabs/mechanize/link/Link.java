@@ -27,7 +27,7 @@ public class Link extends PageElement {
 	/** Follows the link by using the original agent. */
 	public Page click() {
 		if(element.hasAttr("href"))
-			return requestBuilder(href()).get();
+			return doRequest(href()).get();
 //			return getAgent().click(page, this);
 		return null;
 	}

@@ -7,12 +7,14 @@
  */
 package com.gistlabs.mechanize.form;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
+import com.gistlabs.mechanize.RequestBuilder;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryBuilder;
@@ -262,16 +264,40 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	}
 	
 	public Page submit() {
-		return page.getAgent().submit(this, composeParameters(null, null, 0, 0));
+		return submit(this, composeParameters(null, null, 0, 0));
 	}
 
 	public Page submit(SubmitButton button) {
-		return page.getAgent().submit(this, composeParameters(button, null, 0, 0));
+		return submit(this, composeParameters(button, null, 0, 0));
 	}
 
 	public Page submit(SubmitImage image, int x, int y) {
-		return page.getAgent().submit(this, composeParameters(null, image, x, y));
+		return submit(this, composeParameters(null, image, x, y));
 	} 
+
+	/** Returns the page object received as response to the form submit action. */
+	private Page submit(Form form, Parameters parameters) {
+		RequestBuilder request = doRequest(form.getUri()).set(parameters);
+		boolean doPost = form.isDoPost();
+		boolean multiPart = form.isMultiPart();
+		if(doPost && multiPart) {
+			request.multiPart();
+			addFiles(request, form);
+		}
+		return doPost ? request.post() : request.get(); 
+	}
+
+	private void addFiles(RequestBuilder request, Form form) {
+		for(FormElement formElement : form) {
+			if(formElement instanceof Upload) {
+				Upload upload = (Upload)formElement;
+				if (upload.hasValue()) {
+					File file = upload.hasFileValue() ? upload.getFileValue() : new File(upload.getValue());
+					request.set(upload.getName(), file);					
+				}
+			}
+		}
+	}
 
 	/** Returns the parameters containing all name value params beside submit button, image button, unchecked radio 
 	 *  buttons and checkboxes and without Upload information. */

@@ -7,11 +7,16 @@
  */
 package com.gistlabs.mechanize;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.jsoup.Jsoup;
@@ -21,6 +26,7 @@ import org.jsoup.select.Elements;
 
 import static com.gistlabs.mechanize.query.QueryBuilder.*;
 
+import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.exceptions.MechanizeIOException;
 import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.Forms;
@@ -47,18 +53,47 @@ public class Page implements RequestBuilderFactory {
 	private Forms forms;
 	private Images images;
 	
-	public Page(MechanizeAgent agent, String uri, String content, HttpRequestBase request, HttpResponse response) {
+	public Page(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
 		this.agent = agent;
-		this.uri = uri;
-		this.document = Jsoup.parse(content, uri);
-		this.originalContent = content;
 		this.request = request;
 		this.response = response;
+
+		this.uri = inspectUri(request, response);
+		
+		try {
+			InputStream in = response.getEntity().getContent();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in, getEncoding(response)));
+			String line;
+			StringBuilder contentBuilder = new StringBuilder();
+			while((line = reader.readLine()) != null) {
+				contentBuilder.append(line);
+				contentBuilder.append('\n');
+			}
+			this.originalContent = contentBuilder.toString();
+			this.document = Jsoup.parse(this.originalContent, this.uri);
+		} catch(RuntimeException rex) {
+			throw rex;
+		} catch(Throwable th) {
+			throw new MechanizeException(th);
+		}
+	}
+
+	private String inspectUri(HttpRequestBase request, HttpResponse response) {
+		Header contentLocation = Util.findHeader(response, "content-location");
+		if(contentLocation != null && contentLocation.getValue() != null)
+			return contentLocation.getValue();
+		else
+			return request.getURI().toString();
 	}
 	
+	private String getEncoding(HttpResponse response) {
+		Header encoding = response.getEntity().getContentEncoding();
+		return encoding != null ? encoding.getValue() : Charset.defaultCharset().name();
+	}
+
 	@Override
-	public RequestBuilder requestBuilder(String uri) {
-		return getAgent().requestBuilder(uri);
+	public RequestBuilder doRequest(String uri) {
+		return getAgent().doRequest(uri);
 	}
 
 	/**

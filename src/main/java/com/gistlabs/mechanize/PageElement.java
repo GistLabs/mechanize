@@ -32,7 +32,7 @@ public abstract class PageElement implements RequestBuilderFactory {
 	}
 	
 	@Override
-	public RequestBuilder requestBuilder(String uri) {
-		return getPage().requestBuilder(uri);
+	public RequestBuilder doRequest(String uri) {
+		return getPage().doRequest(uri);
 	}
 }

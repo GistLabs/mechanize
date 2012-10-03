@@ -9,23 +9,19 @@ package com.gistlabs.mechanize;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -36,13 +32,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.gistlabs.mechanize.cookie.Cookies;
 import com.gistlabs.mechanize.exceptions.MechanizeIOException;
-import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.form.FormElement;
-import com.gistlabs.mechanize.form.Upload;
 import com.gistlabs.mechanize.history.History;
-import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.parameters.Parameters;
-import com.gistlabs.mechanize.util.Util;
 
 /**
  * Mechanize agent acts as a focal point for HTTP interactions and also as a factor for Page objects from responses.
@@ -72,12 +63,16 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 		this.cookies = new Cookies(client);
 	}
 	
+	public AbstractHttpClient getClient() {
+		return client;
+	}
+	
 	public History history() {
 		return history;
 	}
 	
 	@Override
-	public RequestBuilder requestBuilder(String uri) {
+	public RequestBuilder doRequest(String uri) {
 		return new RequestBuilder(this, uri);
 	}
 
@@ -99,10 +94,6 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 		return doRequest(uri).get();
 	}
 	
-	public RequestBuilder doRequest(String uri) {
-		return new RequestBuilder(this, uri);
-	}
-	
 	public Page post(String uri, Map<String, String> params) throws UnsupportedEncodingException {
 		return post(uri, new Parameters(unsafeCast(params)));
 	}
@@ -112,6 +103,12 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 		return (Map<String,Object>)(Map)params;
 	}
 	
+	/**
+	 * POST either URL encoded or multi-part encoded content body, based on presence of file content body parameters
+	 * @param uri
+	 * @param params
+	 * @return
+	 */
 	public Page post(String uri, Parameters params) {
 		return doRequest(uri).set(params).post();
 	}
@@ -251,27 +248,9 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 		}
 	}
 	
-	public AbstractHttpClient getClient() {
-		return client;
-	}
-	
 	private Page toPage(HttpRequestBase request, HttpResponse response)
 			throws IOException, UnsupportedEncodingException {
-		InputStream in = response.getEntity().getContent();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in, getEncoding(response)));
-		String line;
-		StringBuilder contentBuilder = new StringBuilder();
-		while((line = reader.readLine()) != null) {
-			contentBuilder.append(line);
-			contentBuilder.append('\n');
-		}
-		String content = contentBuilder.toString();
-		
-		String baseUri = request.getURI().toString();
-		Header contentLocation = Util.findHeader(response, "content-location");
-		if(contentLocation != null && contentLocation.getValue() != null)
-			baseUri = contentLocation.getValue();
-		return new Page(this, baseUri, content, request, response);
+		return new Page(this, request, response);
 	}
 
 	protected HttpResponse execute(HttpClient client, HttpRequestBase request) throws IOException, ClientProtocolException {
@@ -290,38 +269,5 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 			if(clazz.isInstance(interceptor))
 				result.add(clazz.cast(interceptor));
 		return result;
-	}
-	
-	private String getEncoding(HttpResponse response) {
-		Header encoding = response.getEntity().getContentEncoding();
-		return encoding != null ? encoding.getValue() : Charset.defaultCharset().name();
-	}
-
-	public Page click(Page page, Link link) {
-		return get(link.href());
-	}
-
-	/** Returns the page object received as response to the form submit action. */
-	public Page submit(Form form, Parameters parameters) {
-		RequestBuilder request = doRequest(form.getUri()).set(parameters);
-		boolean doPost = form.isDoPost();
-		boolean multiPart = form.isMultiPart();
-		if(doPost && multiPart) {
-			request.multiPart();
-			addFiles(request, form);
-		}
-		return doPost ? request.post() : request.get(); 
-	}
-
-	private void addFiles(RequestBuilder request, Form form) {
-		for(FormElement formElement : form) {
-			if(formElement instanceof Upload) {
-				Upload upload = (Upload)formElement;
-				if (upload.hasValue()) {
-					File file = upload.hasFileValue() ? upload.getFileValue() : new File(upload.getValue());
-					request.set(upload.getName(), file);					
-				}
-			}
-		}
 	}
 }
