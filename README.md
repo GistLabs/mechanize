@@ -5,7 +5,7 @@ mechanize for java
 mechanize is a stateful HTTP/HTML client library. This implementation of mechanize is 
 written in Java to be available on the JVM. It utilizes 
 [HttpClient](http://hc.apache.org/httpcomponents-client-ga/index.html) for HTTP handling 
-and [JSoup]](http://jsoup.org) for HTML parsing. Because mechanize is stateful, it will by 
+and [JSoup](http://jsoup.org) for HTML parsing. Because mechanize is stateful, it will by 
 default support cookies and hidden form parameters (like Rails CSRF protection). 
 This enables client code to follow links  and behave like a RESTful hypermedia client more easily.
 
