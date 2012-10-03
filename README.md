@@ -27,6 +27,7 @@ Here is a sample testcase showing the mechanize at work:
 
 Release log:
 
+* 0.9.1 on Oct 3rd, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=6&state=closed for list of resolved issues.
 * 0.9.0 on Sept 28th, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=2&page=1&state=closed for list of resolved issues.
 * 0.8.0 on Sept 20th, 2012.
 
