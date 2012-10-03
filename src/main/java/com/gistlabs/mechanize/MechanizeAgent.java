@@ -78,16 +78,17 @@ import com.gistlabs.mechanize.util.Util;
 public class MechanizeAgent {
 	
 	private AbstractHttpClient client;
-	private final Cookies cookies = new Cookies(this);
+	private final Cookies cookies;
 	private final List<Interceptor> interceptors = new ArrayList<Interceptor>();
 	private final History history = new History(this);
 
 	public MechanizeAgent() {
-		client = new DefaultHttpClient();
+		this(new DefaultHttpClient());
 	}
 	
 	public MechanizeAgent(AbstractHttpClient client) {
 		this.client = client;
+		this.cookies = new Cookies(client);
 	}
 	
 	public History history() {
