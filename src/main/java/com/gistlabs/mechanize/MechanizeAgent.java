@@ -75,7 +75,7 @@ import com.gistlabs.mechanize.util.Util;
  * @version 1.0
  * @since 2012-09-12
  */
-public class MechanizeAgent {
+public class MechanizeAgent implements PageRequestor {
 	
 	private AbstractHttpClient client;
 	private final Cookies cookies;
@@ -94,7 +94,8 @@ public class MechanizeAgent {
 	public History history() {
 		return history;
 	}
-	
+
+	@Override
 	public Page request(HttpRequestBase request) {
 		try {
 			HttpResponse response = execute(client, request);
@@ -113,7 +114,7 @@ public class MechanizeAgent {
 	}
 	
 	public RequestBuilder doRequest(String uri) {
-		return new RequestBuilder(uri);
+		return new RequestBuilder(this, uri);
 	}
 	
 	public Page post(String uri, Map<String, String> params) throws UnsupportedEncodingException {
@@ -339,14 +340,23 @@ public class MechanizeAgent {
 	}
 
 	public class RequestBuilder {
-		private final String uri;
-		private final Parameters parameters;
+		private final PageRequestor requestor;
+		private String uri;
+		private final Parameters parameters = new Parameters();
 		private final Map<String, ContentBody> files = new HashMap<String, ContentBody>();
 		private boolean isMultiPart = false;
+
+		public RequestBuilder(PageRequestor requestor) {
+			this.requestor = requestor;
+		}
 		
-		private RequestBuilder(String uri) {
+		private RequestBuilder(PageRequestor requestor, String uri) {
+			this(requestor);
+			setUri(uri);
+		}
+
+		private void setUri(String uri) {
 			this.uri = uri;
-			this.parameters = new Parameters();
 			
 			if(uri.contains("?")) 
 				for(NameValuePair param : URLEncodedUtils.parse(uri.substring(uri.indexOf('?') + 1), Charset.forName("UTF-8"))) 
@@ -406,7 +416,13 @@ public class MechanizeAgent {
 		public Page get() {
 			if(hasFiles())
 				throw new UnsupportedOperationException("Files can not be send using a get request");
-			return MechanizeAgent.this.request(composeGetRequest(uri, parameters));
+			return requestor.request(composeGetRequest(uri, parameters));
+		}
+		
+		public Page post() {
+			HttpPost request = (!hasFiles()) || isMultiPart ? composePostRequest(getBaseUri(), parameters) : 
+				composeMultiPartFormRequest(getBaseUri(), parameters, files);
+			return requestor.request(request);
 		}
 		
 		private boolean hasFiles() {
@@ -415,12 +431,6 @@ public class MechanizeAgent {
 
 		private String getBaseUri() {
 			return uri.contains("?") ? uri.substring(0, uri.indexOf('?')) : uri;
-		}
-		
-		public Page post() {
-			HttpPost request = (!hasFiles()) || isMultiPart ? composePostRequest(getBaseUri(), parameters) : 
-				composeMultiPartFormRequest(getBaseUri(), parameters, files);
-			return MechanizeAgent.this.request(request);
 		}
 		
 		private HttpRequestBase composeGetRequest(String uri, Parameters parameters) {
