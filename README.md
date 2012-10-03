@@ -11,9 +11,10 @@ This enables client code to follow links  and behave like a RESTful hypermedia c
 
 * Project Home Page: http://gistlabs.com/software/mechanize-for-java/
 * GitHub: https://github.com/GistLabs/mechanize
+* Jenkins CI: https://gistlabs.ci.cloudbees.com/job/mechanize/
 * License: [MPL 2.0](http://mozilla.org/MPL/2.0/)
 
-Here is a sample testcase showing the mechanize at work:
+Here is a sample testcase showing mechanize at work:
 ```java
 	@Test public void testGooglePageSearchForm() {
 		MechanizeAgent agent = new MechanizeAgent();
