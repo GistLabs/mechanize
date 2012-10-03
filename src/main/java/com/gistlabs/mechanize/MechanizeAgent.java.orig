@@ -54,8 +54,10 @@ import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.FormElement;
 import com.gistlabs.mechanize.form.Upload;
 import com.gistlabs.mechanize.history.History;
+import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.parameters.Parameter;
 import com.gistlabs.mechanize.parameters.Parameters;
+import com.gistlabs.mechanize.util.Util;
 
 /**
  * Mechanize agent.
@@ -110,6 +112,10 @@ public class MechanizeAgent {
 	 * @return Page, or null if uri is null or empty
 	 */
 	public Page get(String uri) {
+		if (uri==null || "".equals(uri)) {
+			return null;
+		}
+		
 		return doRequest(uri).get();
 	}
 	
@@ -271,8 +277,26 @@ public class MechanizeAgent {
 	
 	private Page toPage(HttpRequestBase request, HttpResponse response)
 			throws IOException, UnsupportedEncodingException {
+<<<<<<< HEAD
 
 		return new Page(this, request, response);
+=======
+		InputStream in = response.getEntity().getContent();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in, getEncoding(response)));
+		String line;
+		StringBuilder contentBuilder = new StringBuilder();
+		while((line = reader.readLine()) != null) {
+			contentBuilder.append(line);
+			contentBuilder.append('\n');
+		}
+		String content = contentBuilder.toString();
+		
+		String baseUri = request.getURI().toString();
+		Header contentLocation = Util.findHeader(response, "content-location");
+		if(contentLocation != null && contentLocation.getValue() != null)
+			baseUri = contentLocation.getValue();
+		return new Page(this, baseUri, content, request, response);
+>>>>>>> master
 	}
 
 	protected HttpResponse execute(HttpClient client, HttpRequestBase request) throws IOException, ClientProtocolException {
@@ -292,7 +316,19 @@ public class MechanizeAgent {
 				result.add(clazz.cast(interceptor));
 		return result;
 	}
+<<<<<<< HEAD
+=======
 	
+	private String getEncoding(HttpResponse response) {
+		Header encoding = response.getEntity().getContentEncoding();
+		return encoding != null ? encoding.getValue() : Charset.defaultCharset().name();
+	}
+
+	public Page click(Page page, Link link) {
+		return get(link.href());
+	}
+>>>>>>> master
+
 	/** Returns the page object received as response to the form submit action. */
 	public Page submit(Form form, Parameters parameters) {
 		RequestBuilder request = doRequest(form.getUri()).set(parameters);
@@ -324,9 +360,6 @@ public class MechanizeAgent {
 		private boolean isMultiPart = false;
 		
 		private RequestBuilder(String uri) {
-			if (uri==null) {
-				throw new NullPointerException("uri can't be null");
-			}
 			this.uri = uri;
 			this.parameters = new Parameters();
 			

@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.image;
 
-import static com.gistlabs.mechanize.QueryBuilder.bySrc;
+import static com.gistlabs.mechanize.query.QueryBuilder.bySrc;
 import static org.junit.Assert.assertEquals;
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Page;

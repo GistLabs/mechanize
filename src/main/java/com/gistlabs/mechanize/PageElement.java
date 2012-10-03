@@ -30,4 +30,8 @@ public abstract class PageElement {
 	public Page getPage() {
 		return page;
 	}
+	
+	protected MechanizeAgent getAgent() {
+		return getPage().getAgent();
+	}
 }

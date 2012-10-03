@@ -13,7 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.WeakHashMap;
 
-import com.gistlabs.mechanize.MechanizeAgent;
+import org.apache.http.client.CookieStore;
+import org.apache.http.impl.client.AbstractHttpClient;
 
 /**
  *  Collection of the current available cookies. 
@@ -23,16 +24,16 @@ import com.gistlabs.mechanize.MechanizeAgent;
  * @since 2012-09-12
  */
 public class Cookies implements Iterable<Cookie> {
-	private final MechanizeAgent agent;
+	private final AbstractHttpClient client;
 	
 	private final WeakHashMap<org.apache.http.cookie.Cookie, Cookie> cookieRepresentationCache = new WeakHashMap<org.apache.http.cookie.Cookie, Cookie>();
-	
-	public Cookies(MechanizeAgent agent) {
-		this.agent = agent;
+
+	public Cookies(AbstractHttpClient client) {
+		this.client = client;
 	}
-	
-	public MechanizeAgent getAgent() {
-		return agent;
+
+	private CookieStore getStore() {
+		return client.getCookieStore();
 	}
 	
 	private Cookie getCookie(org.apache.http.cookie.Cookie cookie) {
@@ -56,21 +57,21 @@ public class Cookies implements Iterable<Cookie> {
 	/** Returns a list of all cookies currently managed by the underlying http client. */ 
 	public List<Cookie> getAll() {
 		List<Cookie> cookies = new ArrayList<Cookie>();
-		for(org.apache.http.cookie.Cookie cookie : agent.getClient().getCookieStore().getCookies()) 
+		for(org.apache.http.cookie.Cookie cookie : getStore().getCookies()) 
 			cookies.add(getCookie(cookie));
 		return cookies;
 	}
 	
 	/** Returns the number of currently existing cookies. */ 
 	public int getCount() {
-		return agent.getClient().getCookieStore().getCookies().size();
+		return getStore().getCookies().size();
 	}
 	
 	public Cookie addNewCookie(String name, String value, String domain) {
 		Cookie cookie = new Cookie(name, value);
 		cookie.getHttpCookie().setDomain(domain);
 		cookieRepresentationCache.put(cookie.getHttpCookie(), cookie);
-		agent.getClient().getCookieStore().addCookie(cookie.getHttpCookie());
+		getStore().addCookie(cookie.getHttpCookie());
 		return cookie;
 	}
 
@@ -78,20 +79,20 @@ public class Cookies implements Iterable<Cookie> {
 	public void addAllCloned(List<Cookie> cookies) {
 		for(Cookie cookie : cookies) {
 			Cookie clone = new Cookie(cookie);
-			agent.getClient().getCookieStore().addCookie(clone.getHttpCookie());
+			getStore().addCookie(clone.getHttpCookie());
 		}
 	}
 	
 	/** Removes all current managed cookies. */
 	public void removeAll() {
-		agent.getClient().getCookieStore().clear();
+		getStore().clear();
 	}
 	
 	/** Removes the current cookie by changing the expired date and force the store to remove all expired for a given date. The date will be set to a time of 1970. */
 	public void remove(Cookie cookie) {
 		cookie.getHttpCookie().setExpiryDate(new Date(0));
 		cookieRepresentationCache.remove(cookie.getHttpCookie());
-		agent.getClient().getCookieStore().clearExpired(new Date(1));
+		getStore().clearExpired(new Date(1));
 	}
 	
 	public Iterator<Cookie> iterator() {

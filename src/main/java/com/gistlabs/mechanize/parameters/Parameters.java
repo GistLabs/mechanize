@@ -5,28 +5,29 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize;
+package com.gistlabs.mechanize.parameters;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.gistlabs.mechanize.Parameters.FormHttpParameter;
 
 /**
  * Representation of a parameter list being able to use multiple String values for a single parameter.
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
+ * @author John Heintz <john@gistlabs.com>
  * @version 1.0
  * @since 2012-09-12
  */
-public class Parameters implements Iterable<FormHttpParameter> {
+public class Parameters implements Iterable<Parameter> {
 
-	private final List<FormHttpParameter> formParameters = new ArrayList<FormHttpParameter>();
-	private final Map<String, FormHttpParameter> parameterNames = new HashMap<String, FormHttpParameter>();
+	private final LinkedHashMap<String, Parameter> parameters = new LinkedHashMap<String, Parameter>();
+//	private final List<Parameter> formParameters = new ArrayList<Parameter>();
+//	private final Map<String, Parameter> parameterNames = new HashMap<String, Parameter>();
 	
 	public Parameters() {
 	}
@@ -45,13 +46,13 @@ public class Parameters implements Iterable<FormHttpParameter> {
 	
 	/** Returns true if at least one value is present for the given parameter name. */
 	public boolean has(String name) {
-		return get(name) != null;
+		return this.parameters.containsKey(name);
 	}
 	
 	/** Returns the current values of the parameters in natural sort order or null if none. */
 	public String [] get(String name) {
-		if(parameterNames.containsKey(name)) {
-			List<String> values = parameterNames.get(name).getValues();
+		if(has(name)) {
+			List<String> values = parameters.get(name).getValues();
 			Collections.sort(values);
 			return values.toArray(new String [values.size()]);
 		}
@@ -61,11 +62,9 @@ public class Parameters implements Iterable<FormHttpParameter> {
 	
 	/** Returns the parameter names in the order they where added. */
 	public String [] getNames() {
-		String [] names = new String[formParameters.size()];
-		int index = 0;
-		for(FormHttpParameter parameter : formParameters) 
-			names[index++] = parameter.getName();
-		return names;
+		String [] result = new String[parameters.size()];
+		parameters.keySet().toArray(result);
+		return result;
 	}
 	
 	public Parameters set(String name, String ... values) {
@@ -75,11 +74,7 @@ public class Parameters implements Iterable<FormHttpParameter> {
 	}
 
 	public Parameters remove(String name) {
-		FormHttpParameter formHttpParameter = parameterNames.get(name);
-		if(formHttpParameter != null) {
-			formParameters.remove(formHttpParameter);
-			parameterNames.remove(name);
-		}
+		parameters.remove(name);
 		return this;
 	}
 	
@@ -96,60 +91,28 @@ public class Parameters implements Iterable<FormHttpParameter> {
 	}
 	
 	public Parameters add(String name, String value) {
-		if(!parameterNames.containsKey(name)) {
-			FormHttpParameter param = new FormHttpParameter(name, value);
-			formParameters.add(param);
-			parameterNames.put(name, param);
+		if(has(name)) {
+			parameters.get(name).addValue(value);
+		} else {
+			parameters.put(name, new Parameter(name, value));
 		}
-		else
-			parameterNames.get(name).addValue(value);
 		return this;
 	}
 	
-	public List<FormHttpParameter> getFormHParameters() {
-		return formParameters;
+	public Collection<Parameter> getParameters() {
+		return parameters.values();
 	}
 	
-	public Iterator<FormHttpParameter> iterator() {
-		return formParameters.iterator();
+	public Iterator<Parameter> iterator() {
+		return parameters.values().iterator();
 	}
 	
 	/** Returns the sum of all values within the parameters. */
 	public int getValueCount() {
 		int count = 0;
-		for(FormHttpParameter parameter : this) 
+		for (Parameter parameter : this) {
 			count += parameter.getValues().size();
+		}
 		return count;
-	}
-	
-	public static class FormHttpParameter {
-		private final String name;
-		private final List<String> values = new ArrayList<String>();
-		
-		public FormHttpParameter(String name, String value) {
-			this.name = name;
-			this.values.add(value);
-		}
-		
-		public String getName() {
-			return name;
-		}
-		
-		public boolean isSingleValue() {
-			return values.size() == 1;
-		}
-		
-		public void addValue(String value) {
-			if(!values.contains(value))
-				values.add(value);
-		}
-		
-		public String getValue() {
-			return values.get(0);
-		}
-		
-		public List<String> getValues() {
-			return values;
-		}
 	}
 }

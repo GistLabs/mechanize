@@ -14,7 +14,7 @@ import com.gistlabs.mechanize.form.Form;
 
 import org.junit.Test;
 
-import static com.gistlabs.mechanize.QueryBuilder.*;
+import static com.gistlabs.mechanize.query.QueryBuilder.*;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>

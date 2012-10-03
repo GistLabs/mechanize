@@ -5,9 +5,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize;
+package com.gistlabs.mechanize.query;
 
-import com.gistlabs.mechanize.Query.Pattern;
+import com.gistlabs.mechanize.query.Query.Pattern;
 
 /** 
  * Contains all the static methods to start and extend a query.

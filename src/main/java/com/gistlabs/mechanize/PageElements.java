@@ -16,6 +16,8 @@ import java.util.Map;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.gistlabs.mechanize.query.Query;
+
 /**
  * Abstract implementation stub for page elements implementing dynamic caching of representations of DOM elements. 
  *  

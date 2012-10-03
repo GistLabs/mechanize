@@ -16,12 +16,15 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.Test;
 
+<<<<<<< HEAD
+=======
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.RequestInterceptor;
 import com.gistlabs.mechanize.ResponseInterceptor;
 import com.gistlabs.mechanize.parameters.Parameters;
 
+>>>>>>> master
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @version 1.0
@@ -29,7 +32,7 @@ import com.gistlabs.mechanize.parameters.Parameters;
  */
 public class MechanizeAgentTest extends MechanizeTestCase {
 	
-	@Test(expected=NullPointerException.class)
+	@Test
 	public void testNullGet() {
 		assertNull(agent.get(null));
 	}

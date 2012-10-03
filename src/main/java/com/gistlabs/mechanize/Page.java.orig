@@ -53,8 +53,16 @@ public class Page {
 	private Forms forms;
 	private Images images;
 	
+<<<<<<< HEAD
 	public Page(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) throws IOException, UnsupportedEncodingException {
 		this.agent = agent;
+=======
+	public Page(MechanizeAgent agent, String uri, String content, HttpRequestBase request, HttpResponse response) {
+		this.agent = agent;
+		this.uri = uri;
+		this.document = Jsoup.parse(content, uri);
+		this.originalContent = content;
+>>>>>>> master
 		this.request = request;
 		this.response = response;
 		

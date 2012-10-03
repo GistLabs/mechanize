@@ -1,9 +1,9 @@
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.QueryBuilder.byClass;
-import static com.gistlabs.mechanize.QueryBuilder.byId;
-import static com.gistlabs.mechanize.QueryBuilder.byIdOrClass;
-import static com.gistlabs.mechanize.QueryBuilder.byName;
+import static com.gistlabs.mechanize.query.QueryBuilder.byClass;
+import static com.gistlabs.mechanize.query.QueryBuilder.byId;
+import static com.gistlabs.mechanize.query.QueryBuilder.byIdOrClass;
+import static com.gistlabs.mechanize.query.QueryBuilder.byName;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
