@@ -14,7 +14,7 @@ import org.jsoup.nodes.Element;
  * @version 1.0
  * @since 2012-09-12
  */
-public abstract class PageElement {
+public abstract class PageElement implements RequestBuilderFactory {
 	protected final Page page;
 	protected final Element element;
 	
@@ -31,7 +31,8 @@ public abstract class PageElement {
 		return page;
 	}
 	
-	protected MechanizeAgent getAgent() {
-		return getPage().getAgent();
+	@Override
+	public RequestBuilder requestBuilder(String uri) {
+		return getPage().requestBuilder(uri);
 	}
 }

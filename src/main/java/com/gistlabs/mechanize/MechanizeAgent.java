@@ -45,19 +45,18 @@ import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.util.Util;
 
 /**
- * Mechanize agent.
+ * Mechanize agent acts as a focal point for HTTP interactions and also as a factor for Page objects from responses.
  * 
  * <p>Interesting resources: http://en.wikipedia.org/wiki/List_of_HTTP_header_fields</p>
  * 
  * <p>NOTE: The mechanize library is not synchronized and should be used in a single thread environment or with custom synchronization.</p>
  * 
- * TODO Add a test case for the doRequest multi part form sending a file.
- * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
+ * @author John Heintz <john@gistlabs.com>
  * @version 1.0
  * @since 2012-09-12
  */
-public class MechanizeAgent implements PageRequestor {
+public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 	
 	private AbstractHttpClient client;
 	private final Cookies cookies;
@@ -75,6 +74,11 @@ public class MechanizeAgent implements PageRequestor {
 	
 	public History history() {
 		return history;
+	}
+	
+	@Override
+	public RequestBuilder requestBuilder(String uri) {
+		return new RequestBuilder(this, uri);
 	}
 
 	@Override

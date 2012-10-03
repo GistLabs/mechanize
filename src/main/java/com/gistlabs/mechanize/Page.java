@@ -35,7 +35,7 @@ import com.gistlabs.mechanize.util.Util;
  * @version 1.0
  * @since 2012-09-12
  */
-public class Page {
+public class Page implements RequestBuilderFactory {
 	private final MechanizeAgent agent;
 	private final String originalContent;
 	private final String uri;
@@ -54,6 +54,11 @@ public class Page {
 		this.originalContent = content;
 		this.request = request;
 		this.response = response;
+	}
+	
+	@Override
+	public RequestBuilder requestBuilder(String uri) {
+		return getAgent().requestBuilder(uri);
 	}
 
 	/**
