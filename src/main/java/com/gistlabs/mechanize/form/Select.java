@@ -10,8 +10,8 @@ package com.gistlabs.mechanize.form;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gistlabs.mechanize.Query;
-import com.gistlabs.mechanize.QueryBuilder;
+import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.query.QueryBuilder;
 import com.gistlabs.mechanize.util.Util;
 
 import org.jsoup.nodes.Element;

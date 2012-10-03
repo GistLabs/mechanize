@@ -7,11 +7,11 @@
  */
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.QueryBuilder.byId;
-import static com.gistlabs.mechanize.QueryBuilder.byName;
-import static com.gistlabs.mechanize.QueryBuilder.caseInsensitive;
-import static com.gistlabs.mechanize.QueryBuilder.everything;
-import static com.gistlabs.mechanize.QueryBuilder.regEx;
+import static com.gistlabs.mechanize.query.QueryBuilder.byId;
+import static com.gistlabs.mechanize.query.QueryBuilder.byName;
+import static com.gistlabs.mechanize.query.QueryBuilder.caseInsensitive;
+import static com.gistlabs.mechanize.query.QueryBuilder.everything;
+import static com.gistlabs.mechanize.query.QueryBuilder.regEx;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -21,8 +21,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.Test;
 
-import com.gistlabs.mechanize.QueryBuilder;
-import com.gistlabs.mechanize.Query.Pattern;
+import com.gistlabs.mechanize.query.QueryBuilder;
+import com.gistlabs.mechanize.query.Query.Pattern;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>

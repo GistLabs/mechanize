@@ -19,7 +19,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import static com.gistlabs.mechanize.QueryBuilder.*;
+import static com.gistlabs.mechanize.query.QueryBuilder.*;
 
 import com.gistlabs.mechanize.exceptions.MechanizeIOException;
 import com.gistlabs.mechanize.form.Form;
