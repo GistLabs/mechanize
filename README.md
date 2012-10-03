@@ -1,5 +1,6 @@
 mechanize for java
 ==========
+[![Build Status](https://gistlabs.ci.cloudbees.com/job/mechanize/badge/icon)](https://gistlabs.ci.cloudbees.com/job/mechanize/)
 
 mechanize is a stateful HTTP/HTML client library. This implementation of mechanize is 
 written in Java to be available on the JVM. It utilizes 
