@@ -12,6 +12,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -76,7 +79,7 @@ public class MechanizeAgentTest extends MechanizeTestCase {
     
 	@Test
 	public void testPostMethod() {
-		MechanizeAgent agent = new MechanizeAgent();
+		MechanizeAgent agent = agent();
 		Parameters parameters = new Parameters().add("param1", "value").add("param2", "value2");
 		Page page = agent.post("http://posttestserver.com/post.php", parameters);
 		String pageString = page.asString();
@@ -84,17 +87,10 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 	}
 	
 	@Test
-	public void testDownloadToBuffer() {
+	public void testDownloadToImage() throws IOException {
 		String wikipediaLogoUri = "http://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png";
-		byte [] logo = new MechanizeAgent().getToBuffer(wikipediaLogoUri);
-		assertEquals(45283, logo.length);
-	}
-	
-	@Test
-	public void testDownloadToImage() {
-		String wikipediaLogoUri = "http://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png";
-		BufferedImage image = new MechanizeAgent().getImage(wikipediaLogoUri);
-		
+		BufferedImage image = ImageIO.read(agent().get(wikipediaLogoUri).getInputStream());
+				
 		assertEquals(200, image.getWidth());
 		assertEquals(200, image.getHeight());
 	}
@@ -107,7 +103,7 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		File file = new File(path + "/" + "wikipedialogo.png");
 		if(file.exists())
 			file.delete();
-		new MechanizeAgent().getToFile(wikipediaLogoUri, file);
+		agent().get(wikipediaLogoUri).saveTo(file);
 		assertEquals(45283, file.length());
 		file.delete();
 	}
@@ -119,7 +115,7 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		File file = File.createTempFile("mechanize", ".png");
 		file.delete();
 
-		Page page = new MechanizeAgent().get(wikipediaLogoUri);
+		Page page = agent().get(wikipediaLogoUri);
 		
 		assertTrue(page instanceof ContentPage);
 		
@@ -138,10 +134,14 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 	@Test
 	public void testPreAndPostRequestInterceptor() {
 		Interceptor interceptor = new Interceptor();
-		MechanizeAgent agent = new MechanizeAgent();
+		MechanizeAgent agent = agent();
 		agent.addInterceptor(interceptor);
 		agent.get("http://wikipedia.org");
 		assertEquals(2, interceptor.getCount());
+	}
+
+	protected MechanizeAgent agent() {
+		return new MechanizeAgent();
 	}
 	
 	public static class Interceptor implements RequestInterceptor, ResponseInterceptor {

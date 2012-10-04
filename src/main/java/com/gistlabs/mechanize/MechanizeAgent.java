@@ -7,25 +7,15 @@
  */
 package com.gistlabs.mechanize;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -129,116 +119,7 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 	
 	public Cookies cookies() {
 		return cookies;
-	}
-	
-	/** Returns the content received as a byte buffer. 
-	 * 
-	 * TODO: Move body into util somewhere
-	 * 
-	 * @throws IllegalArgumentException If file exists. */
-	public byte [] getToBuffer(String uri) {
-		InputStream content = null;
-		ByteArrayOutputStream out = null;
-		
-		try {
-			HttpGet request = new HttpGet(uri);
-			HttpResponse response = execute(client, request);
-			content = response.getEntity().getContent();
-			out = new ByteArrayOutputStream();
-			
-			byte [] buffer = new byte[4096];
-			while(true) {
-				int read = content.read(buffer);	
-				if(read > 0) 
-					out.write(buffer, 0, read);
-				else if(read == -1)
-					break;
-			}
-			return out.toByteArray();
-		} catch (ClientProtocolException e) {
-			throw new com.gistlabs.mechanize.exceptions.MechanizeClientProtocolException(e);
-		} catch (IOException e) {
-			throw new MechanizeIOException(e);
-		}
-		finally {
-			try {
-				if(out != null)
-					out.close();
-			}
-			catch(IOException e) {
-			}
-			finally {
-				try {
-					if(content != null)
-						content.close();
-				}
-				catch(IOException e) {
-				}
-			}
-		}
-	}
-	
-
-	/** Returns the image received by the URI. */
-	public BufferedImage getImage(String uri) {
-		try {
-			byte [] buffer = getToBuffer(uri);
-			BufferedImage image = ImageIO.read(new ByteArrayInputStream(buffer));
-			return image;
-		} catch (IOException e) {
-			throw new MechanizeIOException(e);
-		}
-	}
-
-	/** Writes the content received to file. 
-	 * This method has a very small memory footprint by using a 4KB buffer.  
-	 * 
-	 * TODO move body into util somewhere
-	 * 
-	 * @throws IllegalArgumentException If file exists. */
-	public void getToFile(String uri, File file) {
-		if(file.exists())
-			throw new IllegalArgumentException("File '" + file.toString() + "' already exists");
-		
-		InputStream content = null;
-		BufferedOutputStream out = null;
-		
-		try {
-			HttpGet request = new HttpGet(uri);
-			HttpResponse response = execute(client, request);
-			content = response.getEntity().getContent();
-			out = new BufferedOutputStream(new FileOutputStream(file));
-			
-			byte [] buffer = new byte[4096];
-			while(true) {
-				int read = content.read(buffer);	
-				if(read > 0) 
-					out.write(buffer, 0, read);
-				else if(read == -1)
-					break;
-			}
-		} catch (ClientProtocolException e) {
-			throw new com.gistlabs.mechanize.exceptions.MechanizeClientProtocolException(e);
-		} catch (IOException e) {
-			throw new MechanizeIOException(e);
-		}
-		finally {
-			try {
-				if(out != null)
-					out.close();
-			}
-			catch(IOException e) {
-			}
-			finally {
-				try {
-					if(content != null)
-						content.close();
-				}
-				catch(IOException e) {
-				}
-			}
-		}
-	}
+	}	
 	
 	private Page toPage(HttpRequestBase request, HttpResponse response)
 			throws IOException, UnsupportedEncodingException {

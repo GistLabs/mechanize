@@ -7,22 +7,21 @@
  */
 package com.gistlabs.mechanize.integration.test;
 
+import static com.gistlabs.mechanize.query.QueryBuilder.byClass;
+import static com.gistlabs.mechanize.query.QueryBuilder.byName;
+import static com.gistlabs.mechanize.query.QueryBuilder.byTitle;
+import static com.gistlabs.mechanize.query.QueryBuilder.regEx;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
+import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.image.Image;
 import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.link.Links;
-
-import org.junit.Test;
-
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -66,15 +65,4 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 		Page response = form.getSubmitButton(byName("go")).submit();
 		assertTrue(response.getTitle().startsWith("Angela Merkel"));
 	}
-
-	@Test
-	public void testDownloadWikipediaLogoImagesToBuffer() {
-		MechanizeAgent agent = new MechanizeAgent();
-		Page page = agent.get("http://www.wikipedia.org");
-		List<Image> images = page.images().getAll(byHtml(regEx(".*Wikipedia.*")));
-		assertEquals(2, images.size());
-		assertEquals(2479, agent.getToBuffer(images.get(0).getAbsoluteSrc()).length);
-		assertEquals(45283, agent.getToBuffer(images.get(1).getAbsoluteSrc()).length);
-	}
-
 }
