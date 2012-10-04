@@ -19,7 +19,7 @@ Here is a sample testcase showing mechanize at work:
 	@Test public void testGooglePageSearchForm() {
 		MechanizeAgent agent = new MechanizeAgent();
 		Page page = agent.get("http://www.google.com");
-		Form form = page.forms().get(byName("f"));
+		Form form = page.form("f");
 		form.get("q").set("mechanize java");
 		Page response = form.submit();
 		assertTrue(response.getTitle().startsWith("mechanize java"));

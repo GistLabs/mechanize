@@ -8,13 +8,12 @@
 package com.gistlabs.mechanize.integration.test;
 
 import static org.junit.Assert.assertTrue;
-import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Page;
-import com.gistlabs.mechanize.form.Form;
 
 import org.junit.Test;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.form.Form;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -27,7 +26,7 @@ public class GoogleSearchForMechanizeJavaIT {
 	public void testGooglePageSearchForm() {
 		MechanizeAgent agent = new MechanizeAgent();
 		Page page = agent.get("http://www.google.com");
-		Form form = page.forms().get(byName("f"));
+		Form form = page.form("f");
 		form.get("q").set("mechanize java");
 		Page response = form.submit();
 		assertTrue(response.getTitle().startsWith("mechanize java"));

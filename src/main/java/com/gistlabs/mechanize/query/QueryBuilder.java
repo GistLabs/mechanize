@@ -35,6 +35,10 @@ public class QueryBuilder {
 		return new Query().byId(string);
 	}
 
+	public static Query byIdOrClassOrName(String string) {
+		return new Query().byIdOrClassOrName(string);
+	}
+
 	public static Query byIdOrClass(String string) {
 		return new Query().byIdOrClass(string);
 	}

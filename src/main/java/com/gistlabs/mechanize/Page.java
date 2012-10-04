@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.byIdOrClass;
+import static com.gistlabs.mechanize.query.QueryBuilder.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -143,7 +143,7 @@ public class Page implements RequestBuilderFactory {
 	 * @return first Form found
 	 */
 	public Form form(String query) {
-		return forms().get(byIdOrClass(query));
+		return forms().get(byIdOrClassOrName(query));
 	}
 
 	public Forms forms() {

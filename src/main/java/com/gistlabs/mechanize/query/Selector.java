@@ -21,6 +21,7 @@ public class Selector {
 	public static final Selector ANY = new Selector(1<<0);
 	public static final Selector NAME = new Selector(1<<1);
 	public static final Selector ID = new Selector(1<<2);
+	public static final Selector ID_OR_CLASZ_OR_NAME = new Selector((1<<1) + (1<<2) + (1<<4));
 	public static final Selector ID_OR_CLASZ = new Selector((1<<2) + (1<<4));
 	public static final Selector NAME_OR_ID = new Selector((1<<1) + (1<<2));
 	public static final Selector TAG = new Selector(1<<3);
