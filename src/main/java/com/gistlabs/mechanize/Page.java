@@ -7,22 +7,21 @@
  */
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import static com.gistlabs.mechanize.query.QueryBuilder.byIdOrClass;
+import static com.gistlabs.mechanize.query.QueryBuilder.byIdOrClassOrName;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.form.Form;
@@ -42,13 +41,11 @@ import com.gistlabs.mechanize.util.Util;
  */
 public class Page implements RequestBuilderFactory {
 	private final MechanizeAgent agent;
-	private final String uri;
+	protected final String uri;
 	private final HttpRequestBase request;
-	private final HttpResponse response;
+	protected final HttpResponse response;
 
 	private ByteArrayOutputStream originalContent;
-	private Document document;
-
 	private Links links;
 	private Forms forms;
 	private Images images;
@@ -68,11 +65,10 @@ public class Page implements RequestBuilderFactory {
 		}
 	}
 
-	protected void loadPage() throws IOException {
-		this.document = Jsoup.parse(getInputStream(), getContentEncoding(response), this.uri);
+	protected void loadPage() throws Exception {
 	}
 
-	private String getContentEncoding(HttpResponse response) {
+	protected String getContentEncoding(HttpResponse response) {
 		return JsoupDataUtil.getCharsetFromContentType(response.getEntity().getContentType());
 	}
 
@@ -82,7 +78,7 @@ public class Page implements RequestBuilderFactory {
 	 * @return
 	 * @throws IOException
 	 */
-	private InputStream getInputStream() throws IOException {
+	protected InputStream getInputStream() throws IOException {
 		if (this.originalContent==null) {
 			this.originalContent = new ByteArrayOutputStream(getIntContentLength(this.response));
 			return new CopyInputStream(response.getEntity().getContent(), this.originalContent);
@@ -91,7 +87,7 @@ public class Page implements RequestBuilderFactory {
 		}
 	}
 
-	private int getIntContentLength(HttpResponse response) {
+	protected int getIntContentLength(HttpResponse response) {
 		long longLength = response.getEntity().getContentLength();
 		if (longLength<0)
 			return 0;
@@ -101,7 +97,7 @@ public class Page implements RequestBuilderFactory {
 			return (int)longLength;
 	}
 
-	private String inspectUri(HttpRequestBase request, HttpResponse response) {
+	protected String inspectUri(HttpRequestBase request, HttpResponse response) {
 		Header contentLocation = Util.findHeader(response, "content-location");
 		if(contentLocation != null && contentLocation.getValue() != null)
 			return contentLocation.getValue();
@@ -116,6 +112,14 @@ public class Page implements RequestBuilderFactory {
 	@Override
 	public RequestBuilder doRequest(String uri) {
 		return getAgent().doRequest(uri);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String getTitle() {
+		return "";
 	}
 
 	/**
@@ -136,8 +140,7 @@ public class Page implements RequestBuilderFactory {
 	}
 
 	protected Links loadLinks() {
-		Elements links = document.getElementsByTag("a");
-		return new Links(this, links);
+		return new Links(this, null);
 	}
 
 	/**
@@ -158,10 +161,9 @@ public class Page implements RequestBuilderFactory {
 	}
 
 	protected Forms loadForms() {
-		Elements forms = document.getElementsByTag("form");
-		return new Forms(this, forms);
+		return new Forms(this, null);
 	}
-	
+
 	public Images images() {
 		if(this.images == null) {
 			this.images = loadImages();
@@ -170,22 +172,11 @@ public class Page implements RequestBuilderFactory {
 	}
 
 	protected Images loadImages() {
-		Elements images = document.getElementsByTag("img");
-		return new Images(this, images);
+		return new Images(this, null);
 	}
-	
-	public Document getDocument() {
-		return document;
-	}
-	
+
 	public String getUri() {
 		return uri;
-	}
-	
-	/** Returns the title of the page or null. */
-	public String getTitle() {
-		Element title = Util.findFirstByTag(document, "title");
-		return title != null ? title.html() : null; 
 	}
 	
 	public int size() {
@@ -203,15 +194,42 @@ public class Page implements RequestBuilderFactory {
 	public MechanizeAgent getAgent() {
 		return agent;
 	}
+	
+	/**
+	 * Serialize the contents of this page into a string
+	 * 
+	 * @return
+	 */
+	public String asString() {
+		ByteArrayOutputStream result = new ByteArrayOutputStream(getIntContentLength(this.response));
+		saveTo(result);
+		return result.toString();
+	}
 
 	/** Writes the page document content to file. 
 	 * @throws IOException 
 	 * @throws IllegalArgumentException If file already exists
 	 */
-	public void saveTo(File file) throws IOException {
+	public void saveTo(File file) {
 		if(file.exists())
 			throw new IllegalArgumentException("File '" + file.toString() + "' already exists.");
 		
-		Util.copy(getInputStream(), new FileOutputStream(file));
+		try {
+			saveTo(new FileOutputStream(file));
+		} catch (FileNotFoundException e) {
+			throw new MechanizeException(e);
+		}
+	}
+
+	/** Writes the page document content to file. 
+	 * @throws IOException 
+	 * @throws IllegalArgumentException If file already exists
+	 */
+	public void saveTo(OutputStream out) {		
+		try {
+			Util.copy(getInputStream(), out);
+		} catch (IOException e) {
+			throw new MechanizeException(e);
+		}
 	}
 }

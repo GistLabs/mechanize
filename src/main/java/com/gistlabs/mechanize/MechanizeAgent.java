@@ -242,7 +242,7 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 	
 	private Page toPage(HttpRequestBase request, HttpResponse response)
 			throws IOException, UnsupportedEncodingException {
-		return new Page(this, request, response);
+		return new HtmlPage(this, request, response);
 	}
 
 	protected HttpResponse execute(HttpClient client, HttpRequestBase request) throws IOException, ClientProtocolException {

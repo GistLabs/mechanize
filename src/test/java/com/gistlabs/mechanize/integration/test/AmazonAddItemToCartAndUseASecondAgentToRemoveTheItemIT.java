@@ -11,6 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import com.gistlabs.mechanize.HtmlPage;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.cookie.Cookie;
@@ -57,7 +58,7 @@ public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT {
 		Form cartForm = cart.forms().get(byName("cartViewForm"));
 		cartForm.get("quantity.C35RMYTCMZTEKE").setValue("0");
 		agentB.idle(200);
-		Page response = cartForm.submit();
+		HtmlPage response = (HtmlPage)cartForm.submit();
 		assertTrue(response.getDocument().outerHtml().contains("Your Shopping Cart is empty."));
 	}
 }
