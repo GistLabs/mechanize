@@ -107,16 +107,17 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	
 	public FormElement get(Query query) {
 		for(FormElement element : elements)
-			if(query.matches(element.getElement()))
+			if(element.matches(query))
 				return element;
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T get(Query query, Class<T> clazz) {
-		for(FormElement element : elements)
-			if((clazz == null || clazz.isInstance(element)) && query.matches(element.getElement()))
+		for(FormElement element : elements) {
+			if(clazz == null || clazz.isInstance(element) && element.matches(query))
 				return (T)element;
+		}
 		return null;
 	}
 
@@ -124,7 +125,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	public <T> List<T> getAll(Query query, Class<T> clazz) {
 		List<T> result = new ArrayList<T>();
 		for(FormElement element : elements)
-			if((clazz == null || clazz.isInstance(element)) && query.matches(element.getElement()))
+			if((clazz == null || clazz.isInstance(element)) && element.matches(query))
 				result.add((T)element);
 		return result;
 	}
@@ -132,7 +133,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	public List<FormElement> getAll(Query query) {
 		List<FormElement> result = new ArrayList<FormElement>();
 		for(FormElement element : elements)
-			if(query.matches(element.getElement()))
+			if(element.matches(query))
 				result.add(element);
 		return result;
 	}

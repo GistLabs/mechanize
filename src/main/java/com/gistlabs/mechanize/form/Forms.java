@@ -7,13 +7,11 @@
  */
 package com.gistlabs.mechanize.form;
 
-import java.util.List;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
-
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /** 
  * A collection of Form objects. 
@@ -30,24 +28,5 @@ public class Forms extends PageElements<Form> {
 	@Override
 	protected Form newRepresentation(Element element) {
 		return new Form(getPage(), element);
-	}
-	
-	/** Writes all forms and form elements to System.out including all the outer HTML. */
-	public void dumpAllToSystemOut() 	{
-		dumpToSystemOut(getAll());
-	}
-
-	public void dumpToSystemOut(List<Form> forms) {
-		for(Form form : forms) {
-			System.out.println("form: " + form);
-			System.out.println(form.getElement().outerHtml());
-			System.out.println();
-			for(FormElement element : form) {
-				System.out.println("formElement: " + element);
-				System.out.println("    * " + element.getElement().outerHtml());
-			}
-			System.out.println();
-			System.out.println();
-		}
 	}
 }

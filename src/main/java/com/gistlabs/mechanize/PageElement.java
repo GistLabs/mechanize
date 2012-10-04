@@ -23,7 +23,7 @@ public abstract class PageElement implements RequestBuilderFactory {
 		this.element = element;
 	}
 
-	public Element getElement() {
+	protected Element getElement() {
 		return element;
 	}
 	

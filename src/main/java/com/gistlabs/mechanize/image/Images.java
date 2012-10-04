@@ -7,13 +7,11 @@
  */
 package com.gistlabs.mechanize.image;
 
-import java.util.List;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
-
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /** 
  * A collection of Image objects.  
@@ -30,17 +28,5 @@ public class Images extends PageElements<Image> {
 	@Override
 	protected Image newRepresentation(Element element) {
 		return new Image(page, element);
-	}
-	
-	/** Writes all forms and form elements to System.out including all the outer HTML. */
-	public void dumpAllToSystemOut() {
-		dumpToSystemOut(getAll());
-	}
-		
-	public void dumpToSystemOut(List<Image> images) {
-		for(Image image : this) {
-			System.out.println("image: " + image);
-			System.out.println("   * " + image.getElement().outerHtml());
-		}
 	}
 }

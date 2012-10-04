@@ -7,13 +7,11 @@
  */
 package com.gistlabs.mechanize.link;
 
-import java.util.List;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
-
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /** 
  * A collection of Link objects. 
@@ -30,17 +28,5 @@ public class Links extends PageElements<Link> {
 	@Override
 	protected Link newRepresentation(Element element) {
 		return new Link(getPage(), element);
-	}
-	
-	/** Writes all forms and form elements to System.out including all the outer HTML. */
-	public void dumpAllToSystemOut() {
-		dumpToSystemOut(getAll());
-	}
-	
-	public void dumpToSystemOut(List<Link> links) {
-		for(Link link : links) {
-			System.out.println("link: " + link);
-			System.out.println("   * " + link.getElement().outerHtml());
-		}
 	}
 }

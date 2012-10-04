@@ -8,6 +8,7 @@
 package com.gistlabs.mechanize.form;
 
 import com.gistlabs.mechanize.PageElement;
+import com.gistlabs.mechanize.query.Query;
 
 import org.jsoup.nodes.Element;
 
@@ -66,5 +67,9 @@ public class FormElement extends PageElement {
 
 	protected String getDefaultValue() {
 		return element.hasAttr("value") ? element.attr("value") : null;
+	}
+
+	public boolean matches(Query query) {
+		return query.matches(getElement());
 	}
 }

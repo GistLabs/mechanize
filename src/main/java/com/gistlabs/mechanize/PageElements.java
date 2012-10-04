@@ -35,10 +35,6 @@ public abstract class PageElements<T> implements Iterable<T> {
 		this.page = page;
 		this.elements = elements;
 	}
-
-	public Elements getElements() {
-		return elements;
-	}
 	
 	public Page getPage() {
 		return page;
