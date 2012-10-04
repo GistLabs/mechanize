@@ -331,7 +331,6 @@ public class FormTest extends MechanizeTestCase {
 	}
 
 	/**
-	 * This commit does fail on this text case, with null default value
 	 * 
 	 * @throws Exception
 	 */
