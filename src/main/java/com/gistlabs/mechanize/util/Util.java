@@ -8,6 +8,7 @@
 package com.gistlabs.mechanize.util;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -80,10 +81,14 @@ public class Util {
 			file.delete();
 		return file;
 	}
+
+	public static void copy(InputStream in, File outFile) throws IOException {
+		copy(in, new FileOutputStream(outFile));
+	}
 	
 	public static void copy(InputStream in, OutputStream out) throws IOException {
 		try {
-			byte[] buffer = new byte[1024*1024];
+			byte[] buffer = new byte[1024*16];
 			int len = in.read(buffer);
 			while (len != -1) {
 			    out.write(buffer, 0, len);

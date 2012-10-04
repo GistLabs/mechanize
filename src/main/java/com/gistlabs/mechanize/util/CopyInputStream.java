@@ -28,7 +28,8 @@ public class CopyInputStream extends InputStream {
 
     public int read() throws IOException {
         int result = input.read();
-        copy.write(result);
+        if (result != -1)
+        	copy.write(result);
         return result;
     }
 
@@ -51,13 +52,15 @@ public class CopyInputStream extends InputStream {
 
     public int read(byte[] b, int off, int len) throws IOException {
         int result = input.read(b, off, len);
-        copy.write(b, off, len);
+        if (result != -1)
+        	copy.write(b, off, len);
         return result;
     }
 
     public int read(byte[] b) throws IOException {
         int result = input.read(b);
-        copy.write(b);
+        if (result != -1)
+        	copy.write(b, 0, result);
         return result;
     }
 

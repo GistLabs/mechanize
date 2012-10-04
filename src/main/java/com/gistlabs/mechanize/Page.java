@@ -109,6 +109,10 @@ public class Page implements RequestBuilderFactory {
 			return request.getURI().toString();
 	}
 
+	public String getContentType() {
+		return response.getEntity().getContentType().getValue();
+	}
+
 	@Override
 	public RequestBuilder doRequest(String uri) {
 		return getAgent().doRequest(uri);

@@ -111,6 +111,26 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		file.delete();
 	}
 	
+	
+	@Test
+	public void testDownloadPage() throws Exception {
+		String wikipediaLogoUri = "http://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png";
+		File file = File.createTempFile("mechanize", ".png");
+		file.delete();
+
+		Page page = new MechanizeAgent().get(wikipediaLogoUri);
+		assertEquals("image/png", page.getContentType());
+		page.saveTo(file);
+		assertEquals(45283, file.length());
+		file.delete();
+		
+		// in here my copied stream doesn't get the right bytes...
+		
+		page.saveTo(file);
+		assertEquals(45283, file.length());
+		file.delete();
+	}
+	
 	@Test
 	public void testPreAndPostRequestInterceptor() {
 		Interceptor interceptor = new Interceptor();
