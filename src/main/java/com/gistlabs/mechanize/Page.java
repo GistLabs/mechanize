@@ -9,10 +9,10 @@ package com.gistlabs.mechanize;
 
 import static com.gistlabs.mechanize.query.QueryBuilder.byIdOrClass;
 
-import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,7 +25,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
-import com.gistlabs.mechanize.exceptions.MechanizeIOException;
 import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.Forms;
 import com.gistlabs.mechanize.image.Images;
@@ -47,8 +46,8 @@ public class Page implements RequestBuilderFactory {
 	private final HttpRequestBase request;
 	private final HttpResponse response;
 
-	private final ByteArrayOutputStream originalContent;
-	private final Document document;
+	private ByteArrayOutputStream originalContent;
+	private Document document;
 
 	private Links links;
 	private Forms forms;
@@ -58,17 +57,37 @@ public class Page implements RequestBuilderFactory {
 		this.agent = agent;
 		this.request = request;
 		this.response = response;
-
 		this.uri = inspectUri(request, response);
 		
 		try {
-			originalContent = new ByteArrayOutputStream(getIntContentLength(response));
-			InputStream in = new CopyInputStream(response.getEntity().getContent(), originalContent);
-			this.document = Jsoup.parse(in, JsoupDataUtil.getCharsetFromContentType(response.getEntity().getContentType()), this.uri);
+			loadPage();
 		} catch(RuntimeException rex) {
 			throw rex;
 		} catch(Throwable th) {
 			throw new MechanizeException(th);
+		}
+	}
+
+	protected void loadPage() throws IOException {
+		this.document = Jsoup.parse(getInputStream(), getContentEncoding(response), this.uri);
+	}
+
+	private String getContentEncoding(HttpResponse response) {
+		return JsoupDataUtil.getCharsetFromContentType(response.getEntity().getContentType());
+	}
+
+	/**
+	 * This will return (and cache) the response entity content input stream, or return a stream from the previously cached value.
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	private InputStream getInputStream() throws IOException {
+		if (this.originalContent==null) {
+			this.originalContent = new ByteArrayOutputStream(getIntContentLength(this.response));
+			return new CopyInputStream(response.getEntity().getContent(), this.originalContent);
+		} else { // use cached data
+			return new ByteArrayInputStream(this.originalContent.toByteArray());
 		}
 	}
 
@@ -107,10 +126,14 @@ public class Page implements RequestBuilderFactory {
 	
 	public Links links() {
 		if(this.links == null) {
-			Elements links = document.getElementsByTag("a");
-			this.links = new Links(this, links);
+			this.links = loadLinks();
 		}
 		return this.links;
+	}
+
+	protected Links loadLinks() {
+		Elements links = document.getElementsByTag("a");
+		return new Links(this, links);
 	}
 
 	/**
@@ -125,18 +148,26 @@ public class Page implements RequestBuilderFactory {
 
 	public Forms forms() {
 		if(this.forms == null) {
-			Elements forms = document.getElementsByTag("form");
-			this.forms = new Forms(this, forms);
+			this.forms = loadForms();
 		}
 		return this.forms;
+	}
+
+	protected Forms loadForms() {
+		Elements forms = document.getElementsByTag("form");
+		return new Forms(this, forms);
 	}
 	
 	public Images images() {
 		if(this.images == null) {
-			Elements images = document.getElementsByTag("img");
-			this.images = new Images(this, images);
+			this.images = loadImages();
 		}
 		return this.images;
+	}
+
+	protected Images loadImages() {
+		Elements images = document.getElementsByTag("img");
+		return new Images(this, images);
 	}
 	
 	public Document getDocument() {
@@ -170,22 +201,13 @@ public class Page implements RequestBuilderFactory {
 	}
 
 	/** Writes the page document content to file. 
-	 * @throws IllegalArgumentException If file already exists */
-	public void saveToFile(File file) {
+	 * @throws IOException 
+	 * @throws IllegalArgumentException If file already exists
+	 */
+	public void saveTo(File file) throws IOException {
 		if(file.exists())
 			throw new IllegalArgumentException("File '" + file.toString() + "' already exists.");
-		BufferedWriter writer = null;
-		try {
-			writer = new BufferedWriter(new FileWriter(file));
-			writer.write(getDocument().outerHtml());
-		} catch (IOException e) {
-			throw new MechanizeIOException(e);
-		}
-		finally {
-			try {
-				writer.close();
-			} catch (IOException e) {
-			}
-		}
+		
+		Util.copy(getInputStream(), new FileOutputStream(file));
 	}
 }

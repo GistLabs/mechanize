@@ -8,6 +8,9 @@
 package com.gistlabs.mechanize.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -76,5 +79,23 @@ public class Util {
 		if(file.exists())
 			file.delete();
 		return file;
+	}
+	
+	public static void copy(InputStream in, OutputStream out) throws IOException {
+		try {
+			byte[] buffer = new byte[1024*1024];
+			int len = in.read(buffer);
+			while (len != -1) {
+			    out.write(buffer, 0, len);
+			    len = in.read(buffer);
+			}			
+		} finally {
+			try {
+				in.close();
+			} catch(Throwable t) {}
+			try {
+				out.close();
+			} catch(Throwable t) {}
+		}
 	}
 }
