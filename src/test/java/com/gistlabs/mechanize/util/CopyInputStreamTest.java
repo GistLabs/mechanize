@@ -31,7 +31,7 @@ public class CopyInputStreamTest {
 	}
 
 	@Test
-	public void testDirectDirectStreams() throws IOException {
+	public void testDirectStreams() throws IOException {
 		File temp = createTempFile();
 		Util.copy(logo.openStream(), temp);
 		assertEquals(resourceSize, getLength(temp));
