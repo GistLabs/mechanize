@@ -24,11 +24,12 @@ public class Link extends PageElement {
 		super(page, link);
 	}
 
-	/** Follows the link by using the original agent. */
+	/**
+	 * Follows the link by using the original agent.
+	 */
 	public Page click() {
 		if(element.hasAttr("href"))
 			return doRequest(href()).get();
-//			return getAgent().click(page, this);
 		return null;
 	}
 	

@@ -31,6 +31,7 @@ import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.link.Links;
 import com.gistlabs.mechanize.util.CopyInputStream;
 import com.gistlabs.mechanize.util.JsoupDataUtil;
+import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
 
 /** Represents an HTML page.  
@@ -66,6 +67,11 @@ public class Page implements RequestBuilderFactory {
 	}
 
 	protected void loadPage() throws Exception {
+//		preLoadContent();
+	}
+
+	protected void preLoadContent() throws IOException {
+		Util.copy(getInputStream(), new NullOutputStream());
 	}
 
 	protected String getContentEncoding(HttpResponse response) {
@@ -78,7 +84,7 @@ public class Page implements RequestBuilderFactory {
 	 * @return
 	 * @throws IOException
 	 */
-	protected InputStream getInputStream() throws IOException {
+	public InputStream getInputStream() throws IOException {
 		if (this.originalContent==null) {
 			this.originalContent = new ByteArrayOutputStream(getIntContentLength(this.response));
 			return new CopyInputStream(response.getEntity().getContent(), this.originalContent);
@@ -87,6 +93,18 @@ public class Page implements RequestBuilderFactory {
 		}
 	}
 
+	/**
+     * (From HttpEntity) Tells the length of the content, if known.
+     *
+     * @return  the number of bytes of the content, or
+     *          a negative number if unknown. If the content length is known
+     *          but exceeds {@link java.lang.Long#MAX_VALUE Long.MAX_VALUE},
+     *          a negative number is returned.
+     */
+	public long getLength() {
+		return this.response.getEntity().getContentLength();
+	}
+	
 	protected int getIntContentLength(HttpResponse response) {
 		long longLength = response.getEntity().getContentLength();
 		if (longLength<0)

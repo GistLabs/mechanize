@@ -24,6 +24,17 @@ public class Image extends PageElement {
 		super(page, image);
 	}
 	
+
+	/**
+	 * Get the image, can then saveTo()
+	 */
+	public Page get() {
+		if(element.hasAttr("src"))
+			return doRequest(getAbsoluteSrc()).get();
+		return null;
+	}
+
+	
 	/** Returns the absolute url for the given image or null if no src-attribute is provided. */
 	public String getAbsoluteSrc() {
 		if(getElement().hasAttr("src"))
