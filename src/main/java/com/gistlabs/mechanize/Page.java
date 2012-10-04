@@ -7,14 +7,14 @@
  */
 package com.gistlabs.mechanize;
 
-import java.io.BufferedReader;
+import static com.gistlabs.mechanize.query.QueryBuilder.byIdOrClass;
+
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -24,8 +24,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
-
 import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.exceptions.MechanizeIOException;
 import com.gistlabs.mechanize.form.Form;
@@ -33,6 +31,8 @@ import com.gistlabs.mechanize.form.Forms;
 import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.link.Links;
+import com.gistlabs.mechanize.util.CopyInputStream;
+import com.gistlabs.mechanize.util.JsoupDataUtil;
 import com.gistlabs.mechanize.util.Util;
 
 /** Represents an HTML page.  
@@ -43,12 +43,13 @@ import com.gistlabs.mechanize.util.Util;
  */
 public class Page implements RequestBuilderFactory {
 	private final MechanizeAgent agent;
-	private final String originalContent;
 	private final String uri;
-	private final Document document;
 	private final HttpRequestBase request;
 	private final HttpResponse response;
-	
+
+	private final ByteArrayOutputStream originalContent;
+	private final Document document;
+
 	private Links links;
 	private Forms forms;
 	private Images images;
@@ -61,21 +62,24 @@ public class Page implements RequestBuilderFactory {
 		this.uri = inspectUri(request, response);
 		
 		try {
-			InputStream in = response.getEntity().getContent();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in, getEncoding(response)));
-			String line;
-			StringBuilder contentBuilder = new StringBuilder();
-			while((line = reader.readLine()) != null) {
-				contentBuilder.append(line);
-				contentBuilder.append('\n');
-			}
-			this.originalContent = contentBuilder.toString();
-			this.document = Jsoup.parse(this.originalContent, this.uri);
+			originalContent = new ByteArrayOutputStream(getIntContentLength(response));
+			InputStream in = new CopyInputStream(response.getEntity().getContent(), originalContent);
+			this.document = Jsoup.parse(in, JsoupDataUtil.getCharsetFromContentType(response.getEntity().getContentType()), this.uri);
 		} catch(RuntimeException rex) {
 			throw rex;
 		} catch(Throwable th) {
 			throw new MechanizeException(th);
 		}
+	}
+
+	private int getIntContentLength(HttpResponse response) {
+		long longLength = response.getEntity().getContentLength();
+		if (longLength<0)
+			return 0;
+		else if (longLength>Integer.MAX_VALUE)
+			return Integer.MAX_VALUE;
+		else
+			return (int)longLength;
 	}
 
 	private String inspectUri(HttpRequestBase request, HttpResponse response) {
@@ -84,11 +88,6 @@ public class Page implements RequestBuilderFactory {
 			return contentLocation.getValue();
 		else
 			return request.getURI().toString();
-	}
-	
-	private String getEncoding(HttpResponse response) {
-		Header encoding = response.getEntity().getContentEncoding();
-		return encoding != null ? encoding.getValue() : Charset.defaultCharset().name();
 	}
 
 	@Override
@@ -155,11 +154,7 @@ public class Page implements RequestBuilderFactory {
 	}
 	
 	public int size() {
-		return originalContent.length();
-	}
-	
-	public String getOriginalContent() {
-		return originalContent;
+		return originalContent.size();
 	}
 	
 	public HttpRequestBase getRequest() {

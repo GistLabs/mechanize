@@ -31,6 +31,7 @@ import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.gistlabs.mechanize.cookie.Cookies;
+import com.gistlabs.mechanize.exceptions.MechanizeClientProtocolException;
 import com.gistlabs.mechanize.exceptions.MechanizeIOException;
 import com.gistlabs.mechanize.history.History;
 import com.gistlabs.mechanize.parameters.Parameters;
@@ -84,7 +85,7 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 			history.add(page);
 			return page;
 		} catch (ClientProtocolException e) {
-			throw new com.gistlabs.mechanize.exceptions.MechanizeClientProtocolException(e);
+			throw new MechanizeClientProtocolException(e);
 		} catch (IOException e) {
 			throw new MechanizeIOException(e);
 		}
@@ -112,11 +113,6 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 	public Page post(String uri, Parameters params) {
 		return doRequest(uri).set(params).post();
 	}
-		
-	public void addInterceptor(Interceptor interceptor) {
-		if(!interceptors.contains(interceptor))
-			interceptors.add(interceptor);
-	}
 	
 	/** Idles / Waits for the given amount of milliseconds useful to prevent being blocked by mass sending 
 	 *  requests or to appear as a artificial user. */
@@ -129,10 +125,6 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 			catch(InterruptedException e) {
 			}
 		}
-	}
-
-	public void removeInterceptor(Interceptor interceptor) {
-		interceptors.remove(interceptor);
 	}
 	
 	public Cookies cookies() {
@@ -261,6 +253,15 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 		for(ResponseInterceptor interceptor : filterInterceptors(ResponseInterceptor.class))
 			interceptor.intercept(this, response, request);
 		return response;
+	}
+	
+	public void addInterceptor(Interceptor interceptor) {
+		if(!interceptors.contains(interceptor))
+			interceptors.add(interceptor);
+	}
+
+	public void removeInterceptor(Interceptor interceptor) {
+		interceptors.remove(interceptor);
 	}
 
 	private <T extends Interceptor> List<T> filterInterceptors(Class<T> clazz) {
