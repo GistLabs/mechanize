@@ -67,7 +67,7 @@ public class Page implements RequestBuilderFactory {
 	}
 
 	protected void loadPage() throws Exception {
-//		preLoadContent();
+		preLoadContent();
 	}
 
 	protected void preLoadContent() throws IOException {
