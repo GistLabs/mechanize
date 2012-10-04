@@ -58,6 +58,9 @@ public abstract class PageElements<T> implements Iterable<T> {
 	protected abstract T newRepresentation(Element element);
 	
 	public T get(Query query) {
+		if (elements==null)
+			return null;
+
 		for(Element element : elements)
 			if(query.matches(element))
 				return getCachedOrNewRepresentation(element);
@@ -66,25 +69,30 @@ public abstract class PageElements<T> implements Iterable<T> {
 	
 	public List<T> getAll(Query query) {
 		List<T> result = new ArrayList<T>();
-		for(Element element : elements)
-			if(query.matches(element))
-				result.add(getCachedOrNewRepresentation(element));
+		if (elements!=null)
+			for(Element element : elements)
+				if(query.matches(element))
+					result.add(getCachedOrNewRepresentation(element));
 		return result;
 	}
 	
 	/** Returns a list with all representations of all elements. */
 	public List<T> getAll() {
 		List<T> result = new ArrayList<T>();
-		for(Element element : elements) 
-			result.add(getCachedOrNewRepresentation(element));
+		if (elements!=null)
+			for(Element element : elements) 
+				result.add(getCachedOrNewRepresentation(element));
 		return result;
 	}
 	
 	public int size() {
-		return elements.size();
+		return elements==null ? 0 : elements.size();
 	}
 	
 	public T get(int index) {
+		if (elements==null)
+			return null;
+
 		return getCachedOrNewRepresentation(elements.get(index));
 	}
 		

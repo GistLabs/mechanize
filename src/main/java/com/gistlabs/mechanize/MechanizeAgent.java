@@ -242,7 +242,20 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 	
 	private Page toPage(HttpRequestBase request, HttpResponse response)
 			throws IOException, UnsupportedEncodingException {
-		return new HtmlPage(this, request, response);
+		String contentType = getContentType(response);
+		
+		if (contentType==null || "".equals(contentType) || contentType.contains("html"))
+			return new HtmlPage(this, request, response);
+		else
+			return new ContentPage(this, request, response);
+	}
+
+	protected String getContentType(HttpResponse response) {
+		try {
+			return response.getEntity().getContentType().getValue();
+		} catch (NullPointerException ex) {
+			return null;
+		}
 	}
 
 	protected HttpResponse execute(HttpClient client, HttpRequestBase request) throws IOException, ClientProtocolException {

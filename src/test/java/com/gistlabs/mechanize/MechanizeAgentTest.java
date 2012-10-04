@@ -120,6 +120,9 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		file.delete();
 
 		Page page = new MechanizeAgent().get(wikipediaLogoUri);
+		
+		assertTrue(page instanceof ContentPage);
+		
 		assertEquals("image/png", page.getContentType());
 		page.saveTo(file);
 		assertEquals(45283, file.length());
