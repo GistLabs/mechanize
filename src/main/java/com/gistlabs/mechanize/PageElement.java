@@ -35,4 +35,12 @@ public abstract class PageElement implements RequestBuilderFactory {
 	public RequestBuilder doRequest(String uri) {
 		return getPage().doRequest(uri);
 	}
+	
+	public boolean hasAttribute(String key) {
+		return element.hasAttr(key);
+	}
+	
+	public String getAttribute(String key) {
+		return element.attr(key);
+	}
 }
