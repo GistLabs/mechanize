@@ -15,12 +15,14 @@ import java.util.Random;
 public class SequenceCollection implements Iterable<Sequence> {
 	private final List<Sequence> sequences = new ArrayList<Sequence>();
 	
-	public void add(Sequence ... sequences) {
+	public SequenceCollection add(Sequence ... sequences) {
 		add(Arrays.asList(sequences));
+		return this;
 	}
 	
-	public void add(Collection<Sequence> sequences) {
+	public SequenceCollection add(Collection<Sequence> sequences) {
 		this.sequences.addAll(sequences);
+		return this;
 	}
 	
 	public Sequence getRandom() {
