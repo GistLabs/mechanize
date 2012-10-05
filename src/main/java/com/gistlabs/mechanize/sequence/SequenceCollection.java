@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize;
+package com.gistlabs.mechanize.sequence;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +31,13 @@ public class SequenceCollection implements Iterable<Sequence> {
 	
 	public Sequence get(int index) {
 		return sequences.get(index);
+	}
+	
+	public Sequence getByName(String name) {
+		for(Sequence sequence : this)
+			if(sequence.getName().equals(name))
+				return sequence;
+		return null;
 	}
 	
 	public int size() {

@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize;
+package com.gistlabs.mechanize.sequence;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
+
+import com.gistlabs.mechanize.sequence.Sequence;
+import com.gistlabs.mechanize.sequence.SequenceCollection;
 
 /**
  * 
@@ -46,9 +49,9 @@ public class SequenceCollectionTest {
 	}
 
 	private Sequence newSequence() {
-		return new Sequence() {
+		return new AbstractSequence() {
 			@Override
-			public void run(MechanizeAgent agent) {
+			public void run() {
 			}
 		};
 	}
