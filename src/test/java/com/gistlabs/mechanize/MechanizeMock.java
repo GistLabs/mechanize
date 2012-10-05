@@ -32,6 +32,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.entity.ContentType;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
 import org.junit.Assert;
@@ -91,6 +92,7 @@ public class MechanizeMock extends MechanizeAgent {
 		public boolean wasExecuted = false;
 		public HttpClient client = null;
 		public HttpRequest request = null;
+		public String contentType = ContentType.TEXT_HTML.toString();
 		public String charset = "utf-8";
 		private String contentLocation = null;
 		
@@ -140,6 +142,7 @@ public class MechanizeMock extends MechanizeAgent {
 					if(contentLocation != null)
 						response.addHeader(new BasicHeader("Content-Location", contentLocation));
 					entity.setContentEncoding(charset);
+					entity.setContentType(this.contentType);
 					try {
 						entity.setContent(new ByteArrayInputStream(html.getBytes(charset)));
 					}

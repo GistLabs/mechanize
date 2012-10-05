@@ -17,6 +17,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -27,7 +28,13 @@ import com.gistlabs.mechanize.history.History;
 import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
- * Mechanize agent acts as a focal point for HTTP interactions and also as a factor for Page objects from responses.
+ * Mechanize agent acts as a focal point for HTTP interactions and also as a factory for Page objects from responses.
+ * 
+ * <p>Mechanize supports different Page types, mapped by ContentType. The system property "mechanize.pagetypes" is a 
+ * comma-separated list of classnames for the default Page types. Today this is com.gistlabs.mechanize.HtmlPage and 
+ * com.gistlabs.mechanize.ContentPage. Modify this property ONLY if you want to change the default loaded Page types.
+ * The system property "mechanize.pagetype.ext" is a also loaded, and provides the typical way for framework extenders
+ * to add custom content types, or MechanizeAgent.registerPageType(Class).</p>
  * 
  * <p>Interesting resources: http://en.wikipedia.org/wiki/List_of_HTTP_header_fields</p>
  * 
@@ -39,7 +46,7 @@ import com.gistlabs.mechanize.parameters.Parameters;
  * @since 2012-09-12
  */
 public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
-	
+		
 	private AbstractHttpClient client;
 	private final Cookies cookies;
 	private final List<Interceptor> interceptors = new ArrayList<Interceptor>();
@@ -123,20 +130,16 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 	
 	private Page toPage(HttpRequestBase request, HttpResponse response)
 			throws IOException, UnsupportedEncodingException {
-		String contentType = getContentType(response);
+		ContentType contentType = getContentType(response);
 		
-		if (contentType==null || "".equals(contentType) || contentType.contains("html"))
+		if (HtmlPage.CONTENT_MATCHERS.contains(contentType.getMimeType()))
 			return new HtmlPage(this, request, response);
 		else
 			return new ContentPage(this, request, response);
 	}
 
-	protected String getContentType(HttpResponse response) {
-		try {
-			return response.getEntity().getContentType().getValue();
-		} catch (NullPointerException ex) {
-			return null;
-		}
+	protected ContentType getContentType(HttpResponse response) {
+		return ContentType.getOrDefault(response.getEntity());
 	}
 
 	protected HttpResponse execute(HttpClient client, HttpRequestBase request) throws IOException, ClientProtocolException {

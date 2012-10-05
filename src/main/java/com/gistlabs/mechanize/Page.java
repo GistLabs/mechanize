@@ -7,17 +7,11 @@
  */
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.byIdOrClass;
-import static com.gistlabs.mechanize.query.QueryBuilder.byIdOrClassOrName;
+import static com.gistlabs.mechanize.query.QueryBuilder.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -34,13 +28,16 @@ import com.gistlabs.mechanize.util.JsoupDataUtil;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
 
-/** Represents an HTML page.  
+/** Represents an HTML page.
  *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @version 1.0
  * @since 2012-09-12
  */
-public class Page implements RequestBuilderFactory {
+public abstract class Page implements RequestBuilderFactory {
+	@SuppressWarnings("unchecked")
+	public static Collection<String> CONTENT_MATCHERS = Collections.EMPTY_LIST;
+
 	private final MechanizeAgent agent;
 	protected final String uri;
 	private final HttpRequestBase request;

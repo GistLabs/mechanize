@@ -7,8 +7,11 @@
  */
 package com.gistlabs.mechanize;
 
+import java.util.Collection;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.ContentType;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,9 +20,17 @@ import org.jsoup.select.Elements;
 import com.gistlabs.mechanize.form.Forms;
 import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Links;
+import com.gistlabs.mechanize.util.Collections;
 import com.gistlabs.mechanize.util.Util;
 
 public class HtmlPage extends Page {
+	public static Collection<String> CONTENT_MATCHERS = 
+		Collections.collection(
+				ContentType.TEXT_HTML.getMimeType(), 
+				ContentType.APPLICATION_ATOM_XML.getMimeType(), 
+				ContentType.APPLICATION_XHTML_XML.getMimeType(), 
+				ContentType.APPLICATION_XML.getMimeType());
+
 
 	private Document document;
 
