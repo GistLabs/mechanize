@@ -9,4 +9,3 @@ public interface Sequence {
 
 	public void run(MechanizeAgent agent);
 }
- 
