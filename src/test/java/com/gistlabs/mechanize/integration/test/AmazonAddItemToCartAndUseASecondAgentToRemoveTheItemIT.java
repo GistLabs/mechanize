@@ -7,19 +7,20 @@
  */
 package com.gistlabs.mechanize.integration.test;
 
+import static com.gistlabs.mechanize.query.QueryBuilder.byId;
+import static com.gistlabs.mechanize.query.QueryBuilder.byName;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+
+import org.junit.Test;
 
 import com.gistlabs.mechanize.HtmlPage;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.cookie.Cookie;
 import com.gistlabs.mechanize.form.Form;
-
-import org.junit.Test;
-
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import com.gistlabs.mechanize.sequence.AbstractSequence;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -35,30 +36,62 @@ public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT {
 	 */
 	@Test
 	public void testAddingAndRemovingAItemToAndFromShoppingCartUsingTwoAgents() {
+		AddItemToShoppingCartSequence addItemToShoppingCartSequence = new AddItemToShoppingCartSequence("B005UBNL0A");
+		RemoveItemFromShoppingCartSequence removeItemFromShoppingCartSequence = new RemoveItemFromShoppingCartSequence();
+
 		MechanizeAgent agentA = new MechanizeAgent();
 		MechanizeAgent agentB = new MechanizeAgent();
 		
-		agentA.get("http://www.amazon.com");
+		addItemToShoppingCartSequence.run(agentA);
+		
 		assertTrue("Ensure session cookie is used", agentA.cookies().getCount() > 0);
-		agentA.idle(200);
+		agentB.cookies().addAllCloned(agentA.cookies().getAll());
+		assertTrue("Ensure session cookies has been transfered", agentB.cookies().getCount() > 0);
 		
-		Page amdProcessorPage = agentA.get("http://www.amazon.com/gp/product/B005UBNL0A/");
-		agentA.idle(250);
-		Form form = amdProcessorPage.forms().get(byName("handleBuy"));
-		agentA.idle(200);
+		removeItemFromShoppingCartSequence.run(agentB);
+		assertTrue(removeItemFromShoppingCartSequence.wasShoppingCartEmpty());
+	}
+	
+	private static class AddItemToShoppingCartSequence extends AbstractSequence {
+		
+		private final String productCode;
+		
+		public AddItemToShoppingCartSequence(String productCodeToBuy) {
+			this.productCode = productCodeToBuy;
+		}
+		
+		@Override
+		protected void run() {
+			agent.get("http://www.amazon.com");
+			agent.idle(200);
+			
+			Page amdProcessorPage = agent.get("http://www.amazon.com/gp/product/" + productCode + "/");
+			agent.idle(250);
+			Form form = amdProcessorPage.forms().get(byName("handleBuy"));
+			agent.idle(200);
 
-		form.submit();
-		agentA.idle(200);
+			form.submit();
+			agent.idle(200);
+		}
+	}
+	
+	private static class RemoveItemFromShoppingCartSequence extends AbstractSequence {
+		private boolean wasShoppingCartEmpty;
 		
-		List<Cookie> cookies = agentA.cookies().getAll();
-		agentB.cookies().addAllCloned(cookies);
-		Page page = agentB.get("http://www.amazon.com");
-		agentB.idle(200);
-		Page cart = page.links().get(byId("nav-cart")).click();
-		Form cartForm = cart.forms().get(byName("cartViewForm"));
-		cartForm.get("quantity.C35RMYTCMZTEKE").setValue("0");
-		agentB.idle(200);
-		HtmlPage response = (HtmlPage)cartForm.submit();
-		assertTrue(response.getDocument().outerHtml().contains("Your Shopping Cart is empty."));
+		@Override
+		protected void run() {
+			Page page = agent.get("http://www.amazon.com");
+			agent.idle(200);
+			Page cart = page.links().get(byId("nav-cart")).click();
+			Form cartForm = cart.forms().get(byName("cartViewForm"));
+			cartForm.get("quantity.C35RMYTCMZTEKE").setValue("0");
+			agent.idle(200);
+			HtmlPage response = (HtmlPage)cartForm.submit();
+			wasShoppingCartEmpty = response.getDocument().outerHtml().contains("Your Shopping Cart is empty.");
+		}
+		
+		public boolean wasShoppingCartEmpty() {
+			return wasShoppingCartEmpty;
+		}
 	}
 }
