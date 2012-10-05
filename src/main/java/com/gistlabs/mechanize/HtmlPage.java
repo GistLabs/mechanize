@@ -18,6 +18,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.gistlabs.mechanize.form.Forms;
+import com.gistlabs.mechanize.html.HtmlElements;
 import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Links;
 import com.gistlabs.mechanize.util.Collections;
@@ -60,6 +61,15 @@ public class HtmlPage extends Page {
 	protected Images loadImages() {
 		Elements images = document.getElementsByTag("img");
 		return new Images(this, images);
+	}
+	
+	private HtmlElements htmlElements;
+	
+	//TODO move to Page
+	public HtmlElements htmlElements() {
+		if(htmlElements == null)
+			htmlElements = new HtmlElements(this, document);
+		return htmlElements;
 	}
 
 	/**
