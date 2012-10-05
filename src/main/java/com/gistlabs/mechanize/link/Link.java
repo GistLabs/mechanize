@@ -28,13 +28,13 @@ public class Link extends PageElement {
 	 * Follows the link by using the original agent.
 	 */
 	public Page click() {
-		if(element.hasAttr("href"))
+		if(hasAttribute("href"))
 			return doRequest(href()).get();
 		return null;
 	}
 	
 	public String href() {
-		if(element.hasAttr("href")) {
+		if(hasAttribute("href")) {
 			return element.absUrl("href");
 		}
 		return null;

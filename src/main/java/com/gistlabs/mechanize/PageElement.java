@@ -31,16 +31,16 @@ public abstract class PageElement implements RequestBuilderFactory {
 		return page;
 	}
 	
-	public boolean hasAttribute(String attributeName) {
-		return element.hasAttr(attributeName);
-	}
-	
-	public String getAttribute(String attributeName) {
-		return element.attr(attributeName);
-	}
-	
 	@Override
 	public RequestBuilder doRequest(String uri) {
 		return getPage().doRequest(uri);
+	}
+	
+	public boolean hasAttribute(String key) {
+		return element.hasAttr(key);
+	}
+	
+	public String getAttribute(String key) {
+		return element.attr(key);
 	}
 }
