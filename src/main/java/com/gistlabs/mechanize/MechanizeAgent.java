@@ -61,6 +61,11 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 	public History history() {
 		return history;
 	}
+
+	/** Process the sequence by using this agent. */
+	public void process(Sequence sequence) {
+		sequence.run(this);
+	}
 	
 	@Override
 	public RequestBuilder doRequest(String uri) {

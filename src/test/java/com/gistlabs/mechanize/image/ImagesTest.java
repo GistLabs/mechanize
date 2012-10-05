@@ -8,12 +8,13 @@
 package com.gistlabs.mechanize.image;
 
 import static com.gistlabs.mechanize.query.QueryBuilder.bySrc;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
-import com.gistlabs.mechanize.MechanizeTestCase;
-import com.gistlabs.mechanize.Page;
-import com.gistlabs.mechanize.image.Image;
 
 import org.junit.Test;
+
+import com.gistlabs.mechanize.MechanizeTestCase;
+import com.gistlabs.mechanize.Page;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -29,5 +30,41 @@ public class ImagesTest extends MechanizeTestCase {
 		Page page = agent.get("http://www.test.com");
 		Image image = page.images().get(bySrc("test.png")); 
 		assertEquals("http://www.test.com/test.png", image.getAbsoluteSrc());
+	}
+	
+	@Test
+	public void testLoadingAllImages() {
+		agent.addPageRequest("http://www.test.com", 
+				newHtml("Test Page", "<img src=\"test.png\"/><img src=\"test2.png\"/>"));
+		agent.addPageRequest("http://www.test.com/test.png", "ImageContent");
+		agent.addPageRequest("http://www.test.com/test2.png", "ImageContent");
+		
+		Page page = agent.get("http://www.test.com");
+		ImageCollection imageCollection = page.images().loadAll();
+		assertEquals(2, imageCollection.size());
+		assertTrue(imageCollection.hasLoaded(page.images().get(0)));
+		assertTrue(imageCollection.hasLoaded(page.images().get(1)));
+	}
+	
+	@Test
+	public void tesLoadingAllMissingImages() {
+		agent.addPageRequest("http://www.test.com", 
+				newHtml("Test Page", "<img src=\"test.png\"/>"));
+		
+		agent.addPageRequest("http://www.test.com/test.png", "ImageContent");
+		
+		agent.addPageRequest("http://www.test.com/2",  
+				newHtml("Test Page", "<img src=\"test.png\"/><img src=\"test2.png\"/>"));
+
+		agent.addPageRequest("http://www.test.com/test2.png", "ImageContent");
+		
+		Page page = agent.get("http://www.test.com");
+		ImageCollection imageCollection = new ImageCollection();
+		page.images().loadAllMissing(imageCollection);
+		assertEquals(1, imageCollection.size());
+		
+		page = agent.get("http://www.test.com/2");
+		page.images().loadAllMissing(imageCollection);
+		assertEquals(2, imageCollection.size());
 	}
 }

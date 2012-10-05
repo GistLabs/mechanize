@@ -59,10 +59,10 @@ public class Page implements RequestBuilderFactory {
 		
 		try {
 			loadPage();
-		} catch(RuntimeException rex) {
-			throw rex;
-		} catch(Throwable th) {
-			throw new MechanizeException(th);
+		} catch(RuntimeException e) {
+			throw e;
+		} catch(Exception e) {
+			throw new MechanizeException(e);
 		}
 	}
 
