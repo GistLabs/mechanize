@@ -7,7 +7,6 @@
  */
 package com.gistlabs.mechanize.image;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
 import org.jsoup.nodes.Element;
