@@ -7,11 +7,15 @@
  */
 package com.gistlabs.mechanize.image;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
+import com.gistlabs.mechanize.util.NullOutputStream;
 
 /** 
  * A collection of Image objects.  
@@ -28,5 +32,22 @@ public class Images extends PageElements<Image> {
 	@Override
 	protected Image newRepresentation(Element element) {
 		return new Image(page, element);
+	}
+	
+	public ImageCollection loadAll() {
+		return loadAllMissing(new ImageCollection());
+	}
+	
+	/** Returns the given image collection after loading all missing images that are present within the 
+	 *  page but not marked as being already loaded within the image collection. */
+	public ImageCollection loadAllMissing(ImageCollection imageCollection) {
+		for(Image image : this) {
+			if(!imageCollection.hasLoaded(image)) {
+				OutputStream out = new NullOutputStream();
+				getPage().getAgent().get(image.getAbsoluteSrc()).saveTo(out);
+				imageCollection.markAsLoaded(image);
+			}
+		}
+		return imageCollection;
 	}
 }
