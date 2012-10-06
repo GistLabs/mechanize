@@ -61,9 +61,15 @@ public class HtmlElement extends HtmlNode {
 		return getElement().text();
 	}
 	
-	/** Returns the inner html string of this element including all child html as well. */
+	/** Returns the inner HTML string of this element including all child HTML but not the 
+	 *  element's own HTML representation. */
 	public String getInnerHtml() {
-		return getElement().html();
+		return getElement().html(); 
+	}
+	
+	/** Returns the HTML string including this element. */ 
+	public String getHtml() {
+		return getElement().outerHtml();
 	}
 	
 	/** Returns the name of the tag of this element. */

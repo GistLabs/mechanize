@@ -22,30 +22,82 @@ public class Query {
 	
 	private final List<QueryPart> parts = new ArrayList<QueryPart>(); 
 	public final Query or;
+	public final Query and;
 	
 	Query() {
 		this.or = this;
+		this.and = new AndQuery(this);
+	}
+	
+	Query(Query parent) {
+		this.or = parent.or;
+		this.and = this;
 	}
 	
 	Query add(QueryPart part) {
-		parts.add(part);
-		return this;
+		if(this instanceof AndQuery) {
+			((AndQuery)this).parent.parts.add(part);
+			return ((AndQuery)this).parent;
+		}
+		else {
+			this.parts.add(part);
+			return this;
+		}
+	}
+	
+	private static class AndQuery extends Query {
+		private final Query parent; 
+		public AndQuery(Query parentQuery) {
+			super(parentQuery);
+			this.parent = parentQuery;
+		}
+		
+		@Override
+		public String toString() {
+			return parent.toString();
+		}
 	}
 
 	Query add(Object stringOrPattern, Selector selector) {
 		Pattern pattern = stringOrPattern instanceof String ? new Pattern((String)stringOrPattern, false) : (Pattern)stringOrPattern;
-		return add(new QueryPart(pattern, selector));
+		return this.add(new QueryPart(this instanceof AndQuery, pattern, selector));
 	}
 	
 	public boolean matches(Element element) {
-		for(QueryPart part : parts) 
-			if(part.matches(element))
-				return true;
-		return false;
+		if(this instanceof AndQuery) {
+			return ((AndQuery)this).parent.matches(element);
+		}
+		else {
+			boolean last = false;
+			for(QueryPart part : parts) {
+				if(part.isAnd() && last == true) {
+					boolean current = part.matches(element);
+					last = current;
+				}
+				else if(part.isAnd() && last == false) {
+					last = false;
+				}
+				else if(!part.isAnd() && last == true) {
+					return true;
+				}
+				else {
+					last = part.matches(element);
+				}
+			}
+			return last;
+		}
 	}
 	
 	public Query everything() {
-		return add(new EverythingQueryPart());
+		return add(new EverythingQueryPart(this instanceof AndQuery));
+	}
+	
+	public Query inBrackets(Query query) {
+		return add(new InBracketsQueryPart(this instanceof AndQuery, query));
+	}
+
+	public Query not(Query query) {
+		return add(new NotQueryPart(this instanceof AndQuery, query));
 	}
 
 	public Query byAny(String string) {
@@ -188,7 +240,7 @@ public class Query {
 		StringBuilder toString = new StringBuilder();
 		for(QueryPart part : parts) {
 			if(toString.length() > 0)
-				toString.append("or");
+				toString.append(part.isAnd() ? "and" : "or");
 			toString.append(part);
 		}
 		return toString.toString();
@@ -241,10 +293,12 @@ public class Query {
 	}
 	
 	private static class QueryPart {
+		private final boolean isAnd;
 		private final Pattern pattern;
 		private final Selector selector;
 		
-		public QueryPart(Pattern pattern, Selector selector) {
+		public QueryPart(boolean isAnd, Pattern pattern, Selector selector) {
+			this.isAnd = isAnd;
 			this.pattern = pattern;
 			this.selector = selector;
 		}
@@ -312,12 +366,16 @@ public class Query {
 			
 			return isMatch; 
 		}
+		
+		public boolean isAnd() {
+			return isAnd;
+		}
 	}
 	
 	/** Query part to match every element. */
 	private static class EverythingQueryPart extends QueryPart {
-		public EverythingQueryPart() {
-			super(null, null);
+		public EverythingQueryPart(boolean isAnd) {
+			super(isAnd, null, null);
 		}
 		
 		@Override
@@ -328,6 +386,46 @@ public class Query {
 		@Override
 		public String toString() {
 			return "<everything>";
+		}
+	}
+
+	/** Query part in brackets. */
+	private static class InBracketsQueryPart extends QueryPart {
+		private final Query query;
+		
+		public InBracketsQueryPart(boolean isAnd, Query query) {
+			super(isAnd, null, null);
+			this.query = query;
+		}
+		
+		@Override
+		public boolean matches(Element element) {
+			return query.matches(element);
+		}
+		
+		@Override
+		public String toString() {
+			return "(" + query.toString() + ")";
+		}
+	}
+
+	/** Query part being a negation. */
+	private static class NotQueryPart extends QueryPart {
+		private final Query query;
+		
+		public NotQueryPart(boolean isAnd, Query query) {
+			super(isAnd, null, null);
+			this.query = query;
+		}
+		
+		@Override
+		public boolean matches(Element element) {
+			return !query.matches(element);
+		}
+		
+		@Override
+		public String toString() {
+			return "<not" + query.toString() + ">";
 		}
 	}
 }
