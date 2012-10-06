@@ -7,6 +7,8 @@
  */
 package com.gistlabs.mechanize.query;
 
+import static com.gistlabs.mechanize.query.QueryBuilder.inBrackets;
+import static com.gistlabs.mechanize.query.QueryBuilder.not;
 import static com.gistlabs.mechanize.query.QueryBuilder.byId;
 import static com.gistlabs.mechanize.query.QueryBuilder.byName;
 import static com.gistlabs.mechanize.query.QueryBuilder.caseInsensitive;
@@ -33,6 +35,8 @@ public class QueryTest {
 
 	@Test
 	public void testSinglePartQueryWithString() {
+		assertEquals("(<value,[any]>)", QueryBuilder.inBrackets(QueryBuilder.byAny("value")).toString());
+		assertEquals("<not<value,[any]>>", QueryBuilder.not(QueryBuilder.byAny("value")).toString());
 		assertEquals("<value,[any]>", QueryBuilder.byAny("value").toString());
 		assertEquals("<value,[name]>", QueryBuilder.byName("value").toString());
 		assertEquals("<value,[id]>", QueryBuilder.byId("value").toString());
@@ -71,8 +75,23 @@ public class QueryTest {
 	}
 	
 	@Test
-	public void testCompositions() {
-		assertEquals("<name,[name]>or<regEx(id),[id]>", byName("name").or.byId(regEx("id")).toString());
+	public void testComposition() {
+		assertEquals("<name,[name]>or<regEx(id),[id]>or<text,[text]>", byName("name").or.byId(regEx("id")).or.byText("text").toString());
+	}
+
+	@Test
+	public void testAndComposition() {
+		assertEquals("<name,[name]>and<regEx(id),[id]>and<text,[text]>", byName("name").and.byId(regEx("id")).and.byText("text").toString());
+	}
+	
+	@Test
+	public void testOrIsDefaultComposition() {
+		assertEquals("<name,[name]>or<regEx(id),[id]>or<text,[text]>", byName("name").byId(regEx("id")).byText("text").toString());
+	}
+	
+	@Test
+	public void testOrIsStillStandardCompositionAfterAnd() {
+		assertEquals("<name,[name]>and<regEx(id),[id]>or<text,[text]>", byName("name").and.byId(regEx("id")).byText("text").toString());
 	}
 	
 	@Test
@@ -108,7 +127,27 @@ public class QueryTest {
 		Document document = Jsoup.parse("<html><body>" + string + "</body></html>");
 		return document.getElementsByTag("body").get(0).child(0);
 	}
+	
+	@Test
+	public void testAndCombination() {
+		assertFalse(byId("myId").and.bySrc("test.png").matches(newElement("<img id='myId'/>")));
+		assertFalse(byId("myId").and.bySrc("test.png").matches(newElement("<img src='test.png'/>")));
+		assertTrue(byId("myId").and.bySrc("test.png").matches(newElement("<img id='myId' src='test.png'/>")));
+		assertFalse(byId("myId").and.bySrc("test.png").matches(newElement("<img/>")));
+	}
 
+	@Test
+	public void testInBracketsNot() {
+		assertTrue(inBrackets(byId("myId")).matches(newElement("<img id='myId'/>")));
+		assertFalse(inBrackets(byId("myId")).matches(newElement("<img id='otherId'/>")));
+	}
+
+	@Test
+	public void testNot() {
+		assertFalse(not(byId("myId")).matches(newElement("<img id='myId'/>")));
+		assertTrue(not(byId("myId")).matches(newElement("<img id='otherId'/>")));
+	}
+	
 	@Test
 	public void testEverything() {
 		assertEquals("<everything>", QueryBuilder.everything().toString());

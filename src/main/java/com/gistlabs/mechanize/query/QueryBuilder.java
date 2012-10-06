@@ -23,6 +23,14 @@ public class QueryBuilder {
 		return new Query().everything();
 	}
 	
+	public static Query inBrackets(Query query) {
+		return new Query().inBrackets(query);
+	}
+
+	public static Query not(Query query) {
+		return new Query().not(query);
+	}
+
 	public static Query byAny(String string) {
 		return new Query().byAny(string);
 	}
