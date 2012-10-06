@@ -74,6 +74,8 @@
   </properties>
 
   <build>
+    <defaultGoal>verify</defaultGoal>
+
     <plugins>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
@@ -95,6 +97,41 @@
             </configuration>
         </plugin>
         <plugin>
+          <inherited>true</inherited>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <excludedResources>true</excludedResources>
+            <useDefaultExcludes>true</useDefaultExcludes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <inherited>true</inherited>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>bundle-sources</id>
+              <phase>package</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <encoding>UTF-8</encoding>
+            <show>protected</show>
+          </configuration>
+        </plugin>
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
           <executions>
@@ -107,7 +144,7 @@
             </execution>
           </executions>
         </plugin>
-      </plugins>
+        </plugins>
   </build>  
 
   <dependencies>
