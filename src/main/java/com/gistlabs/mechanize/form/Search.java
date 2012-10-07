@@ -13,7 +13,6 @@ import org.jsoup.nodes.Element;
  * Represents an input element of type 'text'.  
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
  * @since 2012-09-12
  */
 public class Search extends FormElement {
