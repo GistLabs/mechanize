@@ -54,6 +54,8 @@ public class Form extends PageElement implements Iterable<FormElement> {
 				return new Text(this, element);
 			else if(type.equalsIgnoreCase("search"))
 				return new Search(this, element);
+			else if(type.equalsIgnoreCase("email"))
+				return new Email(this, element);
 			else if(type.equalsIgnoreCase("password"))
 				return new Password(this, element);
 			else if(type.equalsIgnoreCase("file"))
@@ -152,6 +154,14 @@ public class Form extends PageElement implements Iterable<FormElement> {
 
 	public List<Search> getSearchFields(Query query) {
 		return getAll(query, Search.class);
+	}
+
+	public Email getEmail(Query query) {
+		return get(query, Email.class);
+	}
+	
+	public List<Email> getEmailFields(Query query) {
+		return getAll(query, Email.class);
 	}
 
 	public TextArea getTextArea(Query query) {

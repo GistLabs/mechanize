@@ -7,20 +7,15 @@
  */
 package com.gistlabs.mechanize.form;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import static org.junit.Assert.*;
 
 import java.io.File;
 
-import com.gistlabs.mechanize.MechanizeTestCase;
-import com.gistlabs.mechanize.Page;
-import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.form.Select;
-
 import org.junit.Test;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import com.gistlabs.mechanize.MechanizeTestCase;
+import com.gistlabs.mechanize.Page;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -87,6 +82,22 @@ public class FormTest extends MechanizeTestCase {
 		Form form = page.forms().get(byId("form"));
 		form.get("text").set("123456789");
 		assertEquals("12345", form.get("text").get());
+	}
+	
+	@Test
+	public void testEmailInputFieldWithNoText() {
+		agent.addPageRequest("http://test.com", 
+				newHtml("Test Page", newForm("form").id("form").addInput("mail", "email", null)));
+		agent.addPageRequest("http://test.com/form?mail=", newHtml("OK", ""));
+		
+		Page page = agent.get("http://test.com");
+		Form form = page.forms().get(byId("form"));
+		FormElement email = form.get("mail");
+		assertTrue(email instanceof Email);
+		assertSame(email, form.getEmail(byName("mail")));
+		assertSame(email, form.getEmailFields(byName("mail")).get(0));
+		Page response = form.submit();
+		assertEquals("OK", response.getTitle());
 	}
 	
 	@Test
