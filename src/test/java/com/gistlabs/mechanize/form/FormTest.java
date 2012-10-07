@@ -99,6 +99,22 @@ public class FormTest extends MechanizeTestCase {
 		Page response = form.submit();
 		assertEquals("OK", response.getTitle());
 	}
+
+	@Test
+	public void testUnrecognizedInputFieldWithNoText() {
+		agent.addPageRequest("http://test.com", 
+				newHtml("Test Page", newForm("form").id("form").addInput("unknown", "unknownType", null)));
+		agent.addPageRequest("http://test.com/form?unknown=test", newHtml("OK", ""));
+		
+		Page page = agent.get("http://test.com");
+		Form form = page.forms().get(byId("form"));
+		FormElement unknown = form.get("unknown");
+		assertNotNull(unknown);
+		assertTrue(unknown instanceof FormElement);
+		unknown.setValue("test");
+		Page response = form.submit();
+		assertEquals("OK", response.getTitle());
+	}
 	
 	@Test
 	public void testTextAreaInputWithDefaultText() {

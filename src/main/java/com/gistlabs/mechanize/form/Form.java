@@ -71,7 +71,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 			else if(type.equalsIgnoreCase("radio"))
 				return new RadioButton(this, element);
 			else
-				return null;
+				return new FormElement(this, element);
 		}
 		else if(element.tagName().equalsIgnoreCase("input") && !element.hasAttr("type")) {
 			//Used to map input without type to text field (as required by google.com search form)
