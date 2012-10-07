@@ -210,5 +210,10 @@ public class MechanizeMock extends MechanizeAgent {
 				throw new MechanizeIOException(e);
 			}
 		}
+		
+		@Override
+		public String toString() {
+			return "<" + httpMethod + ":" + uri + "{" + parameters + "}" + ">";
+		}
 	}
 }
