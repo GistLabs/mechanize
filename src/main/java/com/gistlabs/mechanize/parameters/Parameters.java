@@ -110,9 +110,14 @@ public class Parameters implements Iterable<Parameter> {
 	/** Returns the sum of all values within the parameters. */
 	public int getValueCount() {
 		int count = 0;
-		for (Parameter parameter : this) {
+		for (Parameter parameter : this) 
 			count += parameter.getValues().size();
-		}
+
 		return count;
+	}
+	
+	@Override
+	public String toString() {
+		return parameters.toString();
 	}
 }

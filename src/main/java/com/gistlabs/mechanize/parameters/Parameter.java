@@ -10,6 +10,10 @@ package com.gistlabs.mechanize.parameters;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implements a multi-value parameter. 
+ * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
+ */
 public class Parameter {
 	private final String name;
 	private final List<String> values = new ArrayList<String>();
