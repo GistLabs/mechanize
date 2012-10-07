@@ -63,16 +63,22 @@ public class MechanizeTestCase {
 	}
 	
 	public static class FormBuilder {
-		StringBuilder content = new StringBuilder();
-		String action;
-		String id;
-		String name;
-		String method;
+		
+		private StringBuilder content = new StringBuilder();
+		
+		private String action;
+		
+		private String id;
+		
+		private String name;
+		
+		private String method;
+		
 		private String enctype;
 		 
 		public FormBuilder(String action) {
 			this.action = action;
-		}
+		} 
 
 		public FormBuilder(String action, String method) {
 			this(action);
@@ -108,6 +114,11 @@ public class MechanizeTestCase {
 
 		public FormBuilder name(String name) {
 			this.name = name;
+			return this;
+		}
+
+		public FormBuilder addInput(String name, String type, String defaultValue) {
+			appendSimpleInput(type, name, defaultValue);
 			return this;
 		}
 
