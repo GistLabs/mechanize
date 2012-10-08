@@ -20,6 +20,8 @@ public class Link<Page extends RequestBuilderFactory<Page>> extends DelegatingEl
 	}
 	
 	public String href() {
-		return getPage().absoluteUrl(getAttribute("href"));
+		if (hasAttribute("href"))
+			return getPage().absoluteUrl(getAttribute("href"));
+		return null;
 	}
 }
