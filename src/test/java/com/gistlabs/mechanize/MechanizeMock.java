@@ -9,12 +9,7 @@ package com.gistlabs.mechanize;
 
 import static junit.framework.Assert.*;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,18 +44,24 @@ public class MechanizeMock extends MechanizeAgent {
 	
 	private List<PageRequest> requests = new ArrayList<PageRequest>();
 	
-	public PageRequest addPageRequest(String uri, String html) {
-		return addPageRequest("GET", uri, html);
+	public PageRequest addPageRequest(String uri, String body) {
+		return addPageRequest("GET", uri, body);
 	}
 
-	public PageRequest addPageRequest(String method, String uri, String html) {
-		PageRequest request = new PageRequest(method, uri, html);
+	public PageRequest addPageRequest(String method, String uri, String body) {
+		PageRequest request = new PageRequest(method, uri, body);
 		requests.add(request);
 		return request;
 	}
 
-	public PageRequest addPageRequest(String method, String uri, Parameters parameters, String html) {
-		PageRequest request = new PageRequest(method, uri, parameters, html);
+	public PageRequest addPageRequest(String method, String uri, InputStream body) {
+		PageRequest request = new PageRequest(method, uri, body);
+		requests.add(request);
+		return request;
+	}
+
+	public PageRequest addPageRequest(String method, String uri, Parameters parameters, String body) {
+		PageRequest request = new PageRequest(method, uri, parameters, body);
 		requests.add(request);
 		return request;
 	}
@@ -87,30 +88,35 @@ public class MechanizeMock extends MechanizeAgent {
 		public final String httpMethod;
 		public final String uri;
 		public final Parameters parameters;
-		public final String html;
+		public final InputStream body;
 		public boolean wasExecuted = false;
 		public HttpClient client = null;
 		public HttpRequest request = null;
-		public String contentType = ContentType.TEXT_HTML.toString();
+		public String contentType = ContentType.TEXT_HTML.getMimeType();
 		public String charset = "utf-8";
 		private String contentLocation = null;
 		
-		public PageRequest(String uri, String html) {
-			this("GET", uri, html);
+		public PageRequest(String uri, String body) {
+			this("GET", uri, body);
 		}
 		
-		public PageRequest(String method, String uri, String html) {
-			this.httpMethod = method;
-			this.uri = uri;
-			this.parameters = new Parameters();
-			this.html = html;
+		public PageRequest(String method, String uri, String body) {
+			this(method, uri, new Parameters(), body);
 		}
 		
-		public PageRequest(String method, String uri, Parameters parameters, String html) {
+		public PageRequest(String method, String uri, InputStream body) {
+			this(method, uri, new Parameters(), body);
+		}
+		
+		public PageRequest(String method, String uri, Parameters parameters, String body) {
+			this(method, uri, parameters, new ByteArrayInputStream(body.getBytes()));
+		}
+		
+		public PageRequest(String method, String uri, Parameters parameters, InputStream body) {
 			this.httpMethod = method;
 			this.uri = uri;
 			this.parameters = parameters;
-			this.html = html;
+			this.body = body;
 		}
 
 		public boolean wasExecuted() {
@@ -142,12 +148,7 @@ public class MechanizeMock extends MechanizeAgent {
 						response.addHeader(new BasicHeader("Content-Location", contentLocation));
 					entity.setContentEncoding(charset);
 					entity.setContentType(this.contentType);
-					try {
-						entity.setContent(new ByteArrayInputStream(html.getBytes(charset)));
-					}
-					catch(UnsupportedEncodingException e) {
-						throw new UnsupportedOperationException("Encoding not supported", e);
-					}
+					entity.setContent(body);
 					
 					assertParameters(request);
 					
@@ -213,6 +214,10 @@ public class MechanizeMock extends MechanizeAgent {
 		@Override
 		public String toString() {
 			return "<" + httpMethod + ":" + uri + "{" + parameters + "}" + ">";
+		}
+
+		public void setContentType(String mimeType) {
+			this.contentType = mimeType;	
 		}
 	}
 }

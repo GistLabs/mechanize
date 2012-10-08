@@ -39,7 +39,7 @@ public class MechanizeTestCase {
 				Assert.fail("Unexecuted page request: " + next.toString());
 		}
 	}
-	
+		
 	protected String newHtml(String title, String bodyHtml) {
 		return "<html><head><title>" + title + "</title></head><body>" + bodyHtml + "</body></html>";
 	}
