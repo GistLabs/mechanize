@@ -3,6 +3,8 @@ package com.gistlabs.mechanize.elements;
 import java.util.Collection;
 import java.util.List;
 
+import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
+
 /**
  * An abstraction over HTML, XML, and JSON element/node types.
  * 
@@ -11,9 +13,9 @@ import java.util.List;
  * @author jheintz
  *
  */
-public interface Element<Source> {
+public interface Element<Page extends RequestBuilderFactory<Page>> {
 
-	public Source getSource();
+	public Page getPage();
 	
 	public String getAttribute(String key);
 	public void setAttribute(String key, String value);
@@ -23,6 +25,6 @@ public interface Element<Source> {
 	public String getValue();
 	public void setValue();
 	
-	public List<Element<Source>> getChildren();
+	public List<Element<Page>> getChildren();
 	
 }

@@ -9,5 +9,6 @@ package com.gistlabs.mechanize.requestor;
 
 
 public interface RequestBuilderFactory<Page> {
+	public String absoluteUrl(String uri);
 	public RequestBuilder<Page> doRequest(String uri);
 }

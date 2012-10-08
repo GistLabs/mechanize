@@ -10,6 +10,9 @@ package com.gistlabs.mechanize;
 import static com.gistlabs.mechanize.query.QueryBuilder.*;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -19,6 +22,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
+import com.gistlabs.mechanize.exceptions.MechanizeURISyntaxException;
 import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.Forms;
 import com.gistlabs.mechanize.image.Images;
@@ -74,7 +78,10 @@ public abstract class Page implements RequestBuilderFactory<Page> {
 	}
 
 	protected String getContentEncoding(HttpResponse response) {
-		return ContentType.get(response.getEntity()).getCharset().displayName();
+		ContentType contentType = ContentType.get(response.getEntity());
+		Charset charset = contentType.getCharset();
+		
+		return charset==null ? "UTF-8" : charset.displayName();
 	}
 
 	/**
@@ -126,6 +133,16 @@ public abstract class Page implements RequestBuilderFactory<Page> {
 		return response.getEntity().getContentType().getValue();
 	}
 
+	@Override
+	public String absoluteUrl(String uri) {
+		try {
+			URL baseUrl = new URL(this.uri);
+			return new URL(baseUrl, uri).toExternalForm();
+		} catch (MalformedURLException e) {
+			throw new MechanizeURISyntaxException(e);
+		}
+	}
+	
 	@Override
 	public RequestBuilder<Page> doRequest(String uri) {
 		return getAgent().doRequest(uri);

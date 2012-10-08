@@ -35,6 +35,11 @@ public abstract class PageElement implements RequestBuilderFactory<Page> {
 	}
 	
 	@Override
+	public String absoluteUrl(String uri) {
+		return getPage().absoluteUrl(uri);
+	}
+	
+	@Override
 	public RequestBuilder<Page> doRequest(String uri) {
 		return getPage().doRequest(uri);
 	}

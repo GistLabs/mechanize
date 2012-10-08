@@ -80,6 +80,11 @@ public class MechanizeAgent implements PageRequestor<Page>, RequestBuilderFactor
 	}
 
 	@Override
+	public String absoluteUrl(String uri) {
+		return uri;
+	}
+	
+	@Override
 	public RequestBuilder<Page> doRequest(String uri) {
 		return new RequestBuilder<Page>(this, uri);
 	}
