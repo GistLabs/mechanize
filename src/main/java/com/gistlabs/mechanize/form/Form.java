@@ -17,11 +17,11 @@ import org.jsoup.select.Elements;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
-import com.gistlabs.mechanize.RequestBuilder;
 import com.gistlabs.mechanize.html.JsoupDataUtil;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryBuilder;
+import com.gistlabs.mechanize.requestor.RequestBuilder;
 
 /** 
  * Represents a form. 
@@ -288,7 +288,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 
 	/** Returns the page object received as response to the form submit action. */
 	private Page submit(Form form, Parameters parameters) {
-		RequestBuilder request = doRequest(form.getUri()).set(parameters);
+		RequestBuilder<Page> request = doRequest(form.getUri()).set(parameters);
 		boolean doPost = form.isDoPost();
 		boolean multiPart = form.isMultiPart();
 		if(doPost && multiPart) {
@@ -298,7 +298,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return doPost ? request.post() : request.get(); 
 	}
 
-	private void addFiles(RequestBuilder request, Form form) {
+	private void addFiles(RequestBuilder<Page> request, Form form) {
 		for(FormElement formElement : form) {
 			if(formElement instanceof Upload) {
 				Upload upload = (Upload)formElement;

@@ -24,6 +24,9 @@ import com.gistlabs.mechanize.exceptions.MechanizeClientProtocolException;
 import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.exceptions.MechanizeIOException;
 import com.gistlabs.mechanize.parameters.Parameters;
+import com.gistlabs.mechanize.requestor.PageRequestor;
+import com.gistlabs.mechanize.requestor.RequestBuilder;
+import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 
 /**
  * Mechanize agent acts as a focal point for HTTP interactions and also as a factory for Page objects from responses.
@@ -37,7 +40,7 @@ import com.gistlabs.mechanize.parameters.Parameters;
  * @version 1.0
  * @since 2012-09-12
  */
-public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
+public class MechanizeAgent implements PageRequestor<Page>, RequestBuilderFactory<Page> {
 	
 	static final Map<String,PageFactory> PAGE_FACTORIES = new HashMap<String, PageFactory>();
 	static PageFactory lookupFactory(String mimeType) {
@@ -77,8 +80,8 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 	}
 
 	@Override
-	public RequestBuilder doRequest(String uri) {
-		return new RequestBuilder(this, uri);
+	public RequestBuilder<Page> doRequest(String uri) {
+		return new RequestBuilder<Page>(this, uri);
 	}
 
 	@Override

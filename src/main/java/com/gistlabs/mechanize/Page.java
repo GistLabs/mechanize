@@ -16,14 +16,16 @@ import java.util.Collections;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.ContentType;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.Forms;
-import com.gistlabs.mechanize.html.JsoupDataUtil;
 import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.link.Links;
+import com.gistlabs.mechanize.requestor.RequestBuilder;
+import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 import com.gistlabs.mechanize.util.CopyInputStream;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
@@ -34,7 +36,7 @@ import com.gistlabs.mechanize.util.Util;
  * @version 1.0
  * @since 2012-09-12
  */
-public abstract class Page implements RequestBuilderFactory {
+public abstract class Page implements RequestBuilderFactory<Page> {
 	@SuppressWarnings("unchecked")
 	public static Collection<String> CONTENT_MATCHERS = Collections.EMPTY_LIST;
 
@@ -72,7 +74,7 @@ public abstract class Page implements RequestBuilderFactory {
 	}
 
 	protected String getContentEncoding(HttpResponse response) {
-		return JsoupDataUtil.getCharsetFromContentType(response.getEntity().getContentType());
+		return ContentType.get(response.getEntity()).getCharset().displayName();
 	}
 
 	/**
@@ -125,7 +127,7 @@ public abstract class Page implements RequestBuilderFactory {
 	}
 
 	@Override
-	public RequestBuilder doRequest(String uri) {
+	public RequestBuilder<Page> doRequest(String uri) {
 		return getAgent().doRequest(uri);
 	}
 

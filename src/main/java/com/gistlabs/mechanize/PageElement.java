@@ -9,12 +9,15 @@ package com.gistlabs.mechanize;
 
 import org.jsoup.nodes.Element;
 
+import com.gistlabs.mechanize.requestor.RequestBuilder;
+import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
+
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @version 1.0
  * @since 2012-09-12
  */
-public abstract class PageElement implements RequestBuilderFactory {
+public abstract class PageElement implements RequestBuilderFactory<Page> {
 	protected final Page page;
 	protected final Element element;
 	
@@ -32,7 +35,7 @@ public abstract class PageElement implements RequestBuilderFactory {
 	}
 	
 	@Override
-	public RequestBuilder doRequest(String uri) {
+	public RequestBuilder<Page> doRequest(String uri) {
 		return getPage().doRequest(uri);
 	}
 	

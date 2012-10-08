@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize;
+package com.gistlabs.mechanize.requestor;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -37,18 +37,18 @@ import com.gistlabs.mechanize.exceptions.MechanizeUnsupportedEncodingException;
 import com.gistlabs.mechanize.parameters.Parameter;
 import com.gistlabs.mechanize.parameters.Parameters;
 
-public class RequestBuilder {
-	private final PageRequestor requestor;
+public class RequestBuilder<Page> {
+	private final PageRequestor<Page> requestor;
 	private String uri;
 	private final Parameters parameters = new Parameters();
 	private final Map<String, ContentBody> files = new HashMap<String, ContentBody>();
 	private boolean isMultiPart = false;
 
-	public RequestBuilder(PageRequestor requestor) {
+	public RequestBuilder(PageRequestor<Page> requestor) {
 		this.requestor = requestor;
 	}
 	
-	public RequestBuilder(PageRequestor requestor, String uri) {
+	public RequestBuilder(PageRequestor<Page> requestor, String uri) {
 		this(requestor);
 		setUri(uri);
 	}
@@ -61,29 +61,29 @@ public class RequestBuilder {
 				parameters.add(param.getName(), param.getValue());
 	}
 	
-	public RequestBuilder multiPart() {
+	public RequestBuilder<Page> multiPart() {
 		this.isMultiPart = true;
 		return this;
 	}
 	
-	public RequestBuilder add(String name, String ... values) {
+	public RequestBuilder<Page> add(String name, String ... values) {
 		parameters.add(name, values);
 		return this;
 	}
 	
-	public RequestBuilder set(String name, String ... values) {
+	public RequestBuilder<Page> set(String name, String ... values) {
 		parameters.set(name, values);
 		return this;
 	}
 	
-	public RequestBuilder set(Parameters parameters) {
+	public RequestBuilder<Page> set(Parameters parameters) {
 		for(String name : parameters.getNames()) 
 			set(name, parameters.get(name));
 		
 		return this;
 	}
 
-	public RequestBuilder add(Parameters parameters) {
+	public RequestBuilder<Page> add(Parameters parameters) {
 		for(String name :parameters.getNames()) 
 			add(name, parameters.get(name));
 		
@@ -92,12 +92,12 @@ public class RequestBuilder {
 	
 	/** Adds a file to the request also making the request to become a multi-part post request or removes any file registered
 	 *  under the given name if the file value is null. */
-	public RequestBuilder set(String name, File file) {
+	public RequestBuilder<Page> set(String name, File file) {
 		return set(name, file != null ? new FileBody(file) : null);
 	}
 	
 	/** Adds an ContentBody object. */
-	public RequestBuilder set(String name, ContentBody contentBody) {
+	public RequestBuilder<Page> set(String name, ContentBody contentBody) {
 		if(contentBody != null)
 			files.put(name, contentBody);
 		else

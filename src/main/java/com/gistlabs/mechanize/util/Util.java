@@ -7,20 +7,10 @@
  */
 package com.gistlabs.mechanize.util;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.*;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
