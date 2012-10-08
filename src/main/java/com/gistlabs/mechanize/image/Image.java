@@ -9,8 +9,7 @@ package com.gistlabs.mechanize.image;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
-
-import org.jsoup.nodes.Element;
+import com.gistlabs.mechanize.html.HtmlElement;
 
 /** 
  * Represents an image within a page.  
@@ -20,26 +19,21 @@ import org.jsoup.nodes.Element;
  * @since 2012-09-12
  */
 public class Image extends PageElement {
-	public Image(Page page, Element image) {
+	
+	public Image(Page page, HtmlElement image) {
 		super(page, image);
 	}
-	
 
 	/**
 	 * Get the image, can then saveTo()
 	 */
 	public Page get() {
-		if(element.hasAttr("src"))
-			return doRequest(getAbsoluteSrc()).get();
-		return null;
+		return element.hasAttribute("src") ? doRequest(getAbsoluteSrc()).get() : null;
 	}
 
 	
 	/** Returns the absolute url for the given image or null if no src-attribute is provided. */
 	public String getAbsoluteSrc() {
-		if(getElement().hasAttr("src"))
-			return getElement().absUrl("src");
-		else
-			return null;
+		return getElement().hasAttribute("src") ? getElement().getAbsoluteUrl("src") : null;
 	}
 }

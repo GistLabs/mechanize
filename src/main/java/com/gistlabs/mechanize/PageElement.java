@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize;
 
-import org.jsoup.nodes.Element;
+import com.gistlabs.mechanize.html.HtmlElement;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -16,14 +16,14 @@ import org.jsoup.nodes.Element;
  */
 public abstract class PageElement implements RequestBuilderFactory {
 	protected final Page page;
-	protected final Element element;
+	protected final HtmlElement element;
 	
-	public PageElement(Page page, Element element) {
+	public PageElement(Page page, HtmlElement element) {
 		this.page = page;
 		this.element = element;
 	}
 
-	protected Element getElement() {
+	protected HtmlElement getElement() {
 		return element;
 	}
 	
@@ -37,10 +37,10 @@ public abstract class PageElement implements RequestBuilderFactory {
 	}
 	
 	public boolean hasAttribute(String key) {
-		return element.hasAttr(key);
+		return element.hasAttribute(key);
 	}
 	
 	public String getAttribute(String key) {
-		return element.attr(key);
+		return element.getAttribute(key);
 	}
 }

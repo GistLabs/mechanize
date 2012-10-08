@@ -7,18 +7,19 @@
  */
 package com.gistlabs.mechanize.html;
 
+import static com.gistlabs.mechanize.query.QueryBuilder.*;
+
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.form.Forms;
 import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Links;
@@ -32,8 +33,7 @@ public class HtmlPage extends Page {
 				ContentType.APPLICATION_XHTML_XML.getMimeType(), 
 				ContentType.APPLICATION_XML.getMimeType());
 
-
-	private Document document;
+	private HtmlElements htmlElements;
 
 	public HtmlPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
 		super(agent, request, response);
@@ -41,34 +41,35 @@ public class HtmlPage extends Page {
 
 	@Override
 	protected void loadPage() throws Exception {
-		this.document = Jsoup.parse(getInputStream(), getContentEncoding(response), this.uri);
-	}
-
-	public Document getDocument() {
-		return document;
+		htmlElements = new HtmlElements(this, Jsoup.parse(getInputStream(), getContentEncoding(response), this.uri));
 	}
 	
+	@Override
 	protected Links loadLinks() {
-		Elements links = document.getElementsByTag("a");
+		List<HtmlElement> links = htmlElements().getAll(byTag("a"));
 		return new Links(this, links);
 	}
 	
+	@Override
 	protected Forms loadForms() {
-		Elements forms = document.getElementsByTag("form");
+		List<HtmlElement> forms = htmlElements().getAll(byTag("form"));
 		return new Forms(this, forms);
 	}
 	
+	@Override
 	protected Images loadImages() {
-		Elements images = document.getElementsByTag("img");
+		List<HtmlElement> images = htmlElements().getAll(byTag("img"));
 		return new Images(this, images);
 	}
 	
-	private HtmlElements htmlElements;
 	
-	//TODO move to Page
 	public HtmlElements htmlElements() {
 		if(htmlElements == null)
-			htmlElements = new HtmlElements(this, document);
+			try {
+				loadPage();
+			} catch (Exception e) {
+				throw MechanizeExceptionFactory.newException(e);
+			}
 		return htmlElements;
 	}
 
@@ -76,8 +77,8 @@ public class HtmlPage extends Page {
 	 * Returns the title of the page or null.
 	 */
 	public String getTitle() {
-		Element title = JsoupDataUtil.findFirstByTag(document, "title");
-		return title != null ? title.html() : null; 
+		HtmlElement title = htmlElements().get(byTag("title"));
+		return title != null ? title.getText() : null; 
 	}
 	
 	/**
@@ -86,7 +87,7 @@ public class HtmlPage extends Page {
 	 * @return
 	 */
 	public String asString() {
-		return getDocument().toString();
+		return htmlElements.toString();
 	}
 
 }

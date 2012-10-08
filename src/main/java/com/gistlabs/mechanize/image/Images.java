@@ -8,12 +8,12 @@
 package com.gistlabs.mechanize.image;
 
 import java.io.OutputStream;
-
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
+import com.gistlabs.mechanize.html.HtmlElement;
 import com.gistlabs.mechanize.util.NullOutputStream;
 
 /** 
@@ -24,15 +24,17 @@ import com.gistlabs.mechanize.util.NullOutputStream;
  * @since 2012-09-12
  */
 public class Images extends PageElements<Image> {
+	
 	public Images(Page page) {
-		this(page, null);
+		this(page, new ArrayList<HtmlElement>());
 	}
-	public Images (Page page, Elements forms) {
+	
+	public Images (Page page, List<HtmlElement> forms) {
 		super(page, forms);
 	}
 
 	@Override
-	protected Image newRepresentation(Element element) {
+	protected Image newRepresentation(HtmlElement element) {
 		return new Image(page, element);
 	}
 	

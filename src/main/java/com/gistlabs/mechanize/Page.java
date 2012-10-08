@@ -18,6 +18,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
+import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.Forms;
 import com.gistlabs.mechanize.html.JsoupDataUtil;
@@ -35,6 +36,7 @@ import com.gistlabs.mechanize.util.Util;
  * @since 2012-09-12
  */
 public abstract class Page implements RequestBuilderFactory {
+	
 	@SuppressWarnings("unchecked")
 	public static Collection<String> CONTENT_MATCHERS = Collections.EMPTY_LIST;
 
@@ -59,7 +61,7 @@ public abstract class Page implements RequestBuilderFactory {
 		} catch(RuntimeException e) {
 			throw e;
 		} catch(Exception e) {
-			throw new MechanizeException(e);
+			throw MechanizeExceptionFactory.newException(e);
 		}
 	}
 
@@ -232,7 +234,7 @@ public abstract class Page implements RequestBuilderFactory {
 		try {
 			saveTo(new FileOutputStream(file));
 		} catch (FileNotFoundException e) {
-			throw new MechanizeException(e);
+			throw MechanizeExceptionFactory.newException(e);
 		}
 	}
 

@@ -13,6 +13,8 @@ import java.util.List;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Element;
 
+import com.gistlabs.mechanize.html.HtmlElement;
+
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @version 1.0
@@ -61,6 +63,10 @@ public class Query {
 	Query add(Object stringOrPattern, Selector selector) {
 		Pattern pattern = stringOrPattern instanceof String ? new Pattern((String)stringOrPattern, false) : (Pattern)stringOrPattern;
 		return this.add(new QueryPart(this instanceof AndQuery, pattern, selector));
+	}
+	
+	public boolean matches(HtmlElement element) {
+		return matches(element.getElement());
 	}
 	
 	public boolean matches(Element element) {

@@ -7,11 +7,11 @@
  */
 package com.gistlabs.mechanize.link;
 
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import java.util.List;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
+import com.gistlabs.mechanize.html.HtmlElement;
 
 /** 
  * A collection of Link objects. 
@@ -24,12 +24,13 @@ public class Links extends PageElements<Link> {
 	public Links(Page page) {
 		this(page, null);
 	}
-	public Links(Page page, Elements links) {
+	
+	public Links(Page page, List<HtmlElement> links) {
 		super(page, links);
 	}
 	
 	@Override
-	protected Link newRepresentation(Element element) {
+	protected Link newRepresentation(HtmlElement element) {
 		return new Link(getPage(), element);
 	}
 }

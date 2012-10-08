@@ -9,7 +9,11 @@ package com.gistlabs.mechanize;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -20,9 +24,7 @@ import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.gistlabs.mechanize.cookie.Cookies;
-import com.gistlabs.mechanize.exceptions.MechanizeClientProtocolException;
-import com.gistlabs.mechanize.exceptions.MechanizeException;
-import com.gistlabs.mechanize.exceptions.MechanizeIOException;
+import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
@@ -89,9 +91,9 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 			history.add(page);
 			return page;
 		} catch (ClientProtocolException e) {
-			throw new MechanizeClientProtocolException(e);
+			throw MechanizeExceptionFactory.newException(e);
 		} catch (IOException e) {
-			throw new MechanizeIOException(e);
+			throw MechanizeExceptionFactory.newException(e);
 		}
 	}
 	
@@ -144,7 +146,7 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 			factory = lookupFactory(ContentType.WILDCARD.getMimeType());
 		
 		if (factory == null)
-			throw new MechanizeException("No viable page type found, and no wildcard mime type factory registered.");
+			throw MechanizeExceptionFactory.newMechanizeException("No viable page type found, and no wildcard mime type factory registered.");
 
 		return factory.buildPage(this, request, response);
 	}

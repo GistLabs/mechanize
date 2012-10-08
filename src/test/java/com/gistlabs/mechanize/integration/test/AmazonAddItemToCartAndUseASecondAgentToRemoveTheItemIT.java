@@ -83,7 +83,7 @@ public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT {
 			cartForm.get("quantity.C35RMYTCMZTEKE").setValue("0");
 			agent.idle(200);
 			HtmlPage response = (HtmlPage)cartForm.submit();
-			wasShoppingCartEmpty = response.getDocument().outerHtml().contains("Your Shopping Cart is empty.");
+			wasShoppingCartEmpty = response.htmlElements().getRoot().getHtml().contains("Your Shopping Cart is empty.");
 		}
 		
 		public boolean wasShoppingCartEmpty() {

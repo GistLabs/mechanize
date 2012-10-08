@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import com.gistlabs.mechanize.exceptions.MechanizeInitializationException;
+import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 
 /**
  * <p>This will initialize Mechanize (at static load time) with Page types identified by content matches.</p>
@@ -40,7 +40,7 @@ public class MechanizeInitializer {
 				MechanizeAgent.registerFactory(pageFactory);
 			} catch (Exception e) {
 				// TODO add logging...
-				throw new MechanizeInitializationException(e);
+				throw MechanizeExceptionFactory.newInitializationException(e);
 			}
 		}
 	}

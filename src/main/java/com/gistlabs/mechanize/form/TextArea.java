@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import org.jsoup.nodes.Element;
+import com.gistlabs.mechanize.html.HtmlElement;
 
 /** Represents an text area element.
  * 
@@ -17,12 +17,12 @@ import org.jsoup.nodes.Element;
  */
 public class TextArea extends FormElement {
 
-	public TextArea(Form form, Element element) {
+	public TextArea(Form form, HtmlElement element) {
 		super(form, element);
 	}
 	
 	@Override
 	protected String getDefaultValue() {
-		return element.html();
+		return element.getInnerHtml();
 	}
 }

@@ -8,9 +8,8 @@
 package com.gistlabs.mechanize.form;
 
 import com.gistlabs.mechanize.PageElement;
+import com.gistlabs.mechanize.html.HtmlElement;
 import com.gistlabs.mechanize.query.Query;
-
-import org.jsoup.nodes.Element;
 
 /**
  *  
@@ -23,7 +22,7 @@ public class FormElement extends PageElement {
 	private final Form form;
 	private String value = null;
 	
-	public FormElement(Form form, Element element) {
+	public FormElement(Form form, HtmlElement element) {
 		super(form.getPage(), element);
 		this.form = form;
 	}
@@ -33,16 +32,16 @@ public class FormElement extends PageElement {
 	}
 	
 	public String getType() {
-		return element.attr("type");
+		return element.getAttribute("type");
 	}
 	
 	public String getName() {
-		return element.hasAttr("name") ? element.attr("name") : null;
+		return element.hasAttribute("name") ? element.getAttribute("name") : null;
 	}
 
 	/** Returns the id of the element or null. */
 	public String getId() {
-		return getElement().hasAttr("id") ? getElement().attr("id") : null;
+		return getElement().hasAttribute("id") ? getElement().getAttribute("id") : null;
 	}
 
 	public void set(String value) {
@@ -66,7 +65,7 @@ public class FormElement extends PageElement {
 	}
 
 	protected String getDefaultValue() {
-		return element.hasAttr("value") ? element.attr("value") : null;
+		return element.hasAttribute("value") ? element.getAttribute("value") : null;
 	}
 
 	public boolean matches(Query query) {

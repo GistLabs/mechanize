@@ -7,8 +7,7 @@
  */
 package com.gistlabs.mechanize;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
+import static junit.framework.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -38,7 +37,7 @@ import org.apache.http.message.BasicHttpResponse;
 import org.junit.Assert;
 import org.junit.internal.ArrayComparisonFailure;
 
-import com.gistlabs.mechanize.exceptions.MechanizeIOException;
+import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
@@ -207,7 +206,7 @@ public class MechanizeMock extends MechanizeAgent {
 				return parameters;
 			}
 			catch(IOException e) {
-				throw new MechanizeIOException(e);
+				throw MechanizeExceptionFactory.newException(e);
 			}
 		}
 		

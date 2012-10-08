@@ -32,8 +32,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.gistlabs.mechanize.exceptions.MechanizeURISyntaxException;
-import com.gistlabs.mechanize.exceptions.MechanizeUnsupportedEncodingException;
+import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.parameters.Parameter;
 import com.gistlabs.mechanize.parameters.Parameters;
 
@@ -148,7 +147,7 @@ public class RequestBuilder {
 			return new HttpGet(requestURI);
 		}
 		catch(URISyntaxException e) {
-			throw new MechanizeURISyntaxException(e);
+			throw MechanizeExceptionFactory.newException(e);
 		}
 	}
 	
@@ -167,7 +166,7 @@ public class RequestBuilder {
 			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
 			request.setEntity(entity);
 		} catch (UnsupportedEncodingException e) {
-			throw new MechanizeUnsupportedEncodingException(e);
+			throw MechanizeExceptionFactory.newException(e);
 		}
 		
 		return request;
@@ -187,7 +186,7 @@ public class RequestBuilder {
 							multiPartEntity.addPart(param.getName(), new StringBody(value, utf8));
 			}
 		} catch (UnsupportedEncodingException e) {
-			throw new MechanizeUnsupportedEncodingException(e); 
+			throw MechanizeExceptionFactory.newException(e); 
 		}
 
 		List<String> fileNames = new ArrayList<String>(files.keySet());

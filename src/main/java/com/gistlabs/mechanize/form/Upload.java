@@ -9,7 +9,7 @@ package com.gistlabs.mechanize.form;
 
 import java.io.File;
 
-import org.jsoup.nodes.Element;
+import com.gistlabs.mechanize.html.HtmlElement;
 
 /** Represents an input element of type 'file' used for uploading data. 
  * 
@@ -21,7 +21,7 @@ public class Upload extends FormElement {
 	
 	private File fileValue = null; 
 	
-	public Upload(Form form, Element element) {
+	public Upload(Form form, HtmlElement element) {
 		super(form, element);
 	}
 	

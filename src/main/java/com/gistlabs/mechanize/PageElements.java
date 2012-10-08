@@ -13,10 +13,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
+import com.gistlabs.mechanize.html.HtmlElement;
 import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.util.Assert;
 
 /**
  * Abstract implementation stub for page elements implementing dynamic caching of representations of DOM elements. 
@@ -27,11 +26,13 @@ import com.gistlabs.mechanize.query.Query;
  */
 public abstract class PageElements<T> implements Iterable<T> {
 	protected final Page page;
-	protected final Elements elements;
+	protected final List<HtmlElement> elements;
 	
-	private final Map<Element, T> representations = new HashMap<Element, T>();
+	private final Map<HtmlElement, T> representations = new HashMap<HtmlElement, T>();
 	
-	public PageElements(Page page, Elements elements) {
+	public PageElements(Page page, List<HtmlElement> elements) {
+		Assert.notNull(elements, "Elements may not be null");
+		
 		this.page = page;
 		this.elements = elements;
 	}
@@ -40,7 +41,7 @@ public abstract class PageElements<T> implements Iterable<T> {
 		return page;
 	}
 	
-	protected T getCachedOrNewRepresentation(Element element) {
+	protected T getCachedOrNewRepresentation(HtmlElement element) {
 		if(element != null) {
 			if(!representations.containsKey(element))
 				representations.put(element, newRepresentation(element));
@@ -51,13 +52,10 @@ public abstract class PageElements<T> implements Iterable<T> {
 			return null;
 	}
 
-	protected abstract T newRepresentation(Element element);
+	protected abstract T newRepresentation(HtmlElement element);
 	
 	public T get(Query query) {
-		if (elements==null)
-			return null;
-
-		for(Element element : elements)
+		for(HtmlElement element : elements)
 			if(query.matches(element))
 				return getCachedOrNewRepresentation(element);
 		return null;
@@ -65,8 +63,8 @@ public abstract class PageElements<T> implements Iterable<T> {
 	
 	public List<T> getAll(Query query) {
 		List<T> result = new ArrayList<T>();
-		if (elements!=null)
-			for(Element element : elements)
+		if (elements != null)
+			for(HtmlElement element : elements)
 				if(query.matches(element))
 					result.add(getCachedOrNewRepresentation(element));
 		return result;
@@ -75,20 +73,17 @@ public abstract class PageElements<T> implements Iterable<T> {
 	/** Returns a list with all representations of all elements. */
 	public List<T> getAll() {
 		List<T> result = new ArrayList<T>();
-		if (elements!=null)
-			for(Element element : elements) 
+		if (elements != null)
+			for(HtmlElement element : elements) 
 				result.add(getCachedOrNewRepresentation(element));
 		return result;
 	}
 	
 	public int size() {
-		return elements==null ? 0 : elements.size();
+		return elements.size();
 	}
 	
 	public T get(int index) {
-		if (elements==null)
-			return null;
-
 		return getCachedOrNewRepresentation(elements.get(index));
 	}
 		

@@ -13,14 +13,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -28,6 +24,10 @@ import org.jsoup.select.Elements;
  * @since 2012-09-12
  */
 public class Util {
+	
+	public static <T> List<T> newEmptyList() {
+		return new ArrayList<T>();
+	}
 	
 	/** Returns the first header with the given name (case-insensitive) or null. */
 	public static Header findHeader(HttpResponse response, String headerName) {

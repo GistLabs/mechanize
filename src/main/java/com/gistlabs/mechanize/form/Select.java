@@ -10,9 +10,7 @@ package com.gistlabs.mechanize.form;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.nodes.Element;
-
-import com.gistlabs.mechanize.html.JsoupDataUtil;
+import com.gistlabs.mechanize.html.HtmlElement;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryBuilder;
 
@@ -26,12 +24,12 @@ public class Select extends FormElement {
 	private final boolean isMultiple;
 	private final List<Option> options;
 	
-	public Select(Form form, Element element) {
+	public Select(Form form, HtmlElement element) {
 		super(form, element);
-		isMultiple = element.hasAttr("multiple");
+		isMultiple = element.hasAttribute("multiple");
 		options = new ArrayList<Option>();
 		
-		for(Element optionElement : JsoupDataUtil.findElementsByTag(element, "option"))
+		for(HtmlElement optionElement : element.getAll(QueryBuilder.byTag("option")))
 			options.add(new Option(optionElement));
 	}
 	
@@ -73,20 +71,20 @@ public class Select extends FormElement {
 	
 	public class Option {
 
-		private final Element element;
+		private final HtmlElement element;
 		private final String text;
 		private final String value;
 		
 		private boolean isSelected;
 		
-		public Option(Element element) {
+		public Option(HtmlElement element) {
 			this.element = element;
-			text = element.html();
-			value = element.hasAttr("value") ? element.attr("value") : text;
-			isSelected = element.hasAttr("selected");
+			text = element.getInnerHtml();
+			value = element.hasAttribute("value") ? element.getAttribute("value") : text;
+			isSelected = element.hasAttribute("selected");
 		}
 
-		public Element getElement() {
+		public HtmlElement getElement() {
 			return element;
 		}
 		

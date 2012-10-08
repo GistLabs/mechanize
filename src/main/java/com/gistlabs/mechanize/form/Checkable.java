@@ -7,22 +7,21 @@
  */
 package com.gistlabs.mechanize.form;
 
-import org.jsoup.nodes.Element;
+import com.gistlabs.mechanize.html.HtmlElement;
 
 /**
  * Base class for Checkbox and RadioButton.
  *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
  * @since 2012-09-12
  */
 public abstract class Checkable extends FormElement {
 
 	protected boolean isChecked = false;
 
-	public Checkable(Form form, Element element) {
+	public Checkable(Form form, HtmlElement element) {
 		super(form, element);
-		if(element.hasAttr("checked"))
+		if(element.hasAttribute("checked"))
 			isChecked = true;
 	}
 

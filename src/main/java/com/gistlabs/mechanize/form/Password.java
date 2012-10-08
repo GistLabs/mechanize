@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import org.jsoup.nodes.Element;
+import com.gistlabs.mechanize.html.HtmlElement;
 
 /** 
  * Represents an input element of type 'password'. 
@@ -18,7 +18,7 @@ import org.jsoup.nodes.Element;
  */
 public class Password extends FormElement {
 
-	public Password(Form form, Element element) {
+	public Password(Form form, HtmlElement element) {
 		super(form, element);
 	}
 }

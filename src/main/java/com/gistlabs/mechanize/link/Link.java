@@ -7,10 +7,9 @@
  */
 package com.gistlabs.mechanize.link;
 
-import org.jsoup.nodes.Element;
-
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
+import com.gistlabs.mechanize.html.HtmlElement;
 
 /** 
  * Represents a link within a page.  
@@ -20,7 +19,7 @@ import com.gistlabs.mechanize.PageElement;
  * @since 2012-09-12
  */
 public class Link extends PageElement {
-	public Link(Page page, Element link) {
+	public Link(Page page, HtmlElement link) {
 		super(page, link);
 	}
 
@@ -28,15 +27,10 @@ public class Link extends PageElement {
 	 * Follows the link by using the original agent.
 	 */
 	public Page click() {
-		if(hasAttribute("href"))
-			return doRequest(href()).get();
-		return null;
+		return hasAttribute("href") ? doRequest(href()).get() : null;
 	}
 	
 	public String href() {
-		if(hasAttribute("href")) {
-			return element.absUrl("href");
-		}
-		return null;
+		return hasAttribute("href") ? element.getAbsoluteUrl("href") : null;
 	}
 }

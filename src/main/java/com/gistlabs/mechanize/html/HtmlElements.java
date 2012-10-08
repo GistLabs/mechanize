@@ -1,7 +1,8 @@
 package com.gistlabs.mechanize.html;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,24 +17,47 @@ import com.gistlabs.mechanize.query.Query;
 //TODO check for extension of PageElements
 public class HtmlElements {
 
-	private Document document;
 	private HtmlPage page; 
+	
+	private HtmlElement root;
+
+	//TODO May increase memory footprint when html code changes
+	private final Map<Element, HtmlElement> elementCache = new HashMap<Element, HtmlElement>();
 
 	public HtmlElements(HtmlPage page, Document document) {
 		this.page = page;
-		this.document = document;
+		this.root = getHtmlElement(document);
+	}
+	
+	/** Returns the root element representing the org.jsoup.Document page element. */ 
+	public HtmlElement getRoot() {
+		return root;
 	}
 	
 	/** Returns the first element matching the query in a deep first left right search. */ 
 	public HtmlElement get(Query query) {
-		return get(page, query, document.childNodes());
+		return root.get(query);
 	}
 	
 	/** Returns the elements matching the query in a deep first left right search. */ 
 	public List<HtmlElement> getAll(Query query) {
-		List<HtmlElement> result = new ArrayList<HtmlElement>();
-		getAll(page, result, query, document.childNodes());
-		return result;
+		return root.getAll(query);
+	}
+	
+	public HtmlElement getHtmlElement(Element element) {
+		HtmlElement htmlElement = elementCache.get(element);
+		
+		if(htmlElement == null) {
+			htmlElement = new HtmlElement(page, element);
+			elementCache.put(element, htmlElement);
+		}
+		
+		return htmlElement;
+	}
+	
+	@Override
+	public String toString() {
+		return root.toString();
 	}
 
 	static HtmlElement get(HtmlPage page, Query query, List<Node> nodes) {

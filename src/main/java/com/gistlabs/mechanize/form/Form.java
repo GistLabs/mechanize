@@ -7,18 +7,17 @@
  */
 package com.gistlabs.mechanize.form;
 
+import static com.gistlabs.mechanize.query.QueryBuilder.*;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
 import com.gistlabs.mechanize.RequestBuilder;
-import com.gistlabs.mechanize.html.JsoupDataUtil;
+import com.gistlabs.mechanize.html.HtmlElement;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryBuilder;
@@ -27,29 +26,28 @@ import com.gistlabs.mechanize.query.QueryBuilder;
  * Represents a form. 
  *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
  * @since 2012-09-12
  */
 public class Form extends PageElement implements Iterable<FormElement> {
 	private List<FormElement> elements = new ArrayList<FormElement>();
 	
-	public Form(Page page, Element formElement) {
+	public Form(Page page, HtmlElement formElement) {
 		super(page, formElement);
 		analyse();
 	}
 
 	private void analyse() {
-		Elements elements = JsoupDataUtil.findElementsByTag(getElement(), new String [] {"input", "textarea", "select"});
-		for(Element element : elements) {
+		List<HtmlElement> elements = getElement().getAll(byTag("input").or.byTag("textarea").or.byTag("select"));
+		for(HtmlElement element : elements) {
 			FormElement formElement = newFormElement(element);
 			if(formElement != null)
 				this.elements.add(formElement);
 		}
 	}
 	
-	private FormElement newFormElement(Element element) {
-		if(element.tagName().equalsIgnoreCase("input") && element.hasAttr("type")) {
-			String type = element.attr("type");
+	private FormElement newFormElement(HtmlElement element) {
+		if(element.getTagName().equalsIgnoreCase("input") && element.hasAttribute("type")) {
+			String type = element.getAttribute("type");
 			if(type.equalsIgnoreCase("text"))
 				return new Text(this, element);
 			else if(type.equalsIgnoreCase("search"))
@@ -73,30 +71,30 @@ public class Form extends PageElement implements Iterable<FormElement> {
 			else
 				return new FormElement(this, element);
 		}
-		else if(element.tagName().equalsIgnoreCase("input") && !element.hasAttr("type")) {
+		else if(element.getTagName().equalsIgnoreCase("input") && !element.hasAttribute("type")) {
 			//Used to map input without type to text field (as required by google.com search form)
 			return new Text(this, element);
 		}
-		else if(element.tagName().equalsIgnoreCase("textarea"))
+		else if(element.getTagName().equalsIgnoreCase("textarea"))
 			return new TextArea(this, element);
-		else if(element.tagName().equalsIgnoreCase("select"))
+		else if(element.getTagName().equalsIgnoreCase("select"))
 			return new Select(this, element);
 		else
 			return null;
 	}
 	
 	public boolean isDoPost() {
-		return getElement().hasAttr("method") && getElement().attr("method").equalsIgnoreCase("post");
+		return getElement().hasAttribute("method") && getElement().getAttribute("method").equalsIgnoreCase("post");
 	}
 	
 	public boolean isMultiPart() {
-		return getElement().hasAttr("enctype") && getElement().attr("enctype").equalsIgnoreCase("multipart/form-data");
+		return getElement().hasAttribute("enctype") && getElement().getAttribute("enctype").equalsIgnoreCase("multipart/form-data");
 	}
 	
 	public String getUri() {
 		String uri = null;
-		if(getElement().hasAttr("action"))
-			uri = getElement().absUrl("action");
+		if(getElement().hasAttribute("action"))
+			uri = getElement().getAbsoluteUrl("action");
 		else 
 			uri = getPage().getUri().toString();
 		return uri;

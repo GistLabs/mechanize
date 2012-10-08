@@ -7,11 +7,11 @@
  */
 package com.gistlabs.mechanize.form;
 
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import java.util.List;
 
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
+import com.gistlabs.mechanize.html.HtmlElement;
 
 /** 
  * A collection of Form objects. 
@@ -24,12 +24,12 @@ public class Forms extends PageElements<Form> {
 	public Forms(Page page) {
 		this(page, null);
 	}
-	public Forms(Page page, Elements forms) {
+	public Forms(Page page, List<HtmlElement> forms) {
 		super(page, forms);
 	}
 	
 	@Override
-	protected Form newRepresentation(Element element) {
+	protected Form newRepresentation(HtmlElement element) {
 		return new Form(getPage(), element);
 	}
 }

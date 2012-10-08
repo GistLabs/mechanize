@@ -55,6 +55,10 @@ public class HtmlElement extends HtmlNode {
 		return getElement().attr(attributeKey);
 	}
 	
+	public String getAbsoluteUrl(String attributeKey) {
+		return getElement().absUrl(attributeKey);
+	}
+	
 	/** Returns the inner text of this element without style and tag information. */
 	public String getText() {
 		return getElement().text();
