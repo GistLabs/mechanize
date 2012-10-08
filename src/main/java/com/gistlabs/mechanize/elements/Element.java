@@ -13,17 +13,19 @@ import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
  * @author jheintz
  *
  */
-public interface Element<Page extends RequestBuilderFactory<Page>> {
+public interface Element<Page extends RequestBuilderFactory<Page>> extends Iterable<Element<Page>> {
 
 	public Page getPage();
+	
+	public String getElementName();
 	
 	public String getAttribute(String key);
 	public void setAttribute(String key, String value);
 	public boolean hasAttribute(String key);
 	public Collection<String> getAttributes();
 	
-	public String getValue();
-	public void setValue(String value);
+	public String getContent();
+	public void setContent(String value);
 	
 	public List<Element<Page>> getChildren();
 	

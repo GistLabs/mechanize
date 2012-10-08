@@ -6,23 +6,20 @@ import java.util.List;
 
 import org.jsoup.nodes.Attribute;
 
-import com.gistlabs.mechanize.elements.Element;
-import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
+import com.gistlabs.mechanize.elements.spi.Element;
 
-public class HtmlElement<Page extends RequestBuilderFactory<Page>> implements Element<Page> {
-	private final Page page;
+public class HtmlElement implements Element {
 	private org.jsoup.nodes.Element html;
 	
-	public HtmlElement(Page page, org.jsoup.nodes.Element html) {
-		this.page = page;
+	public HtmlElement(org.jsoup.nodes.Element html) {
 		this.html = html;
 	}
 
 	@Override
-	public Page getPage() {
-		return page;
+	public String getElementName() {
+		return this.html.tagName();
 	}
-
+	
 	@Override
 	public String getAttribute(String key) {
 		return this.html.attr(key);
@@ -48,40 +45,24 @@ public class HtmlElement<Page extends RequestBuilderFactory<Page>> implements El
 	}
 
 	@Override
-	public String getValue() {
-		return this.hasAttribute("value") ? this.getAttribute("value") : this.html.text();
+	public String getContent() {
+		return this.html.text();
 	}
 
 	/**
 	 * This becomes not good and weird if an element has both textual content and a value attribute...
 	 */
 	@Override
-	public void setValue(String value) {
-		if (hasAttribute("value"))
-			setAttribute("value", value);
-		else
-			this.html.text(value);
+	public void setContent(String content) {
+		this.html.text(content);
 	}
 
 	@Override
-	public List<Element<Page>> getChildren() {
-		List<Element<Page>> result = new ArrayList<Element<Page>>();
+	public List<HtmlElement> getChildren() {
+		List<HtmlElement> result = new ArrayList<HtmlElement>();
 		for (org.jsoup.nodes.Element htmlChild : this.html.children()) {
-			result.add(new HtmlElement<Page>(getPage(), htmlChild));
+			result.add(new HtmlElement(htmlChild));
 		}
 		return result;
 	}
-
-	@Override
-	public Element<Page> get(String query) {
-		// TODO Can a CSS query run directly against the com.gistlabs.mechanize.elements.Element type?
-		return null;
-	}
-
-	@Override
-	public List<Element<Page>> getAll(String query) {
-		// TODO Can a CSS query run directly against the com.gistlabs.mechanize.elements.Element type?
-		return null;
-	}
-
 }

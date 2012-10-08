@@ -1,11 +1,16 @@
 package com.gistlabs.mechanize.elements;
 
+import com.gistlabs.mechanize.elements.spi.Element;
 import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 
-public class Link<Page extends RequestBuilderFactory<Page>> extends AbstractElement<Page> {
+public class Link<Page extends RequestBuilderFactory<Page>> extends DelegatingElement<Page> {
 
-	public Link(Page page, Element<Page> delegate) {
+	public Link(Page page, Element delegate) {
 		super(page, delegate);
+	}
+
+	public Link(Page page, Element delegate, ElementFactory<Page> factory) {
+		super(page, delegate, factory);
 	}
 
 	public Page click() {
