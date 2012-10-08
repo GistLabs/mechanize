@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.HtmlPage;
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Page;
 

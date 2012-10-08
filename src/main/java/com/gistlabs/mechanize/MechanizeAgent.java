@@ -9,9 +9,7 @@ package com.gistlabs.mechanize;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -23,18 +21,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.gistlabs.mechanize.cookie.Cookies;
 import com.gistlabs.mechanize.exceptions.MechanizeClientProtocolException;
+import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.exceptions.MechanizeIOException;
-import com.gistlabs.mechanize.history.History;
 import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
  * Mechanize agent acts as a focal point for HTTP interactions and also as a factory for Page objects from responses.
- * 
- * <p>Mechanize supports different Page types, mapped by ContentType. The system property "mechanize.pagetypes" is a 
- * comma-separated list of classnames for the default Page types. Today this is com.gistlabs.mechanize.HtmlPage and 
- * com.gistlabs.mechanize.ContentPage. Modify this property ONLY if you want to change the default loaded Page types.
- * The system property "mechanize.pagetype.ext" is a also loaded, and provides the typical way for framework extenders
- * to add custom content types, or MechanizeAgent.registerPageType(Class).</p>
  * 
  * <p>Interesting resources: http://en.wikipedia.org/wiki/List_of_HTTP_header_fields</p>
  * 
@@ -46,7 +38,22 @@ import com.gistlabs.mechanize.parameters.Parameters;
  * @since 2012-09-12
  */
 public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
-		
+	
+	static final Map<String,PageFactory> PAGE_FACTORIES = new HashMap<String, PageFactory>();
+	static PageFactory lookupFactory(String mimeType) {
+		return PAGE_FACTORIES.get(mimeType);
+	}
+	static void registerFactory(PageFactory factory) {
+		Collection<String> contentMatches = factory.getContentMatches();
+		for (String mimeType : contentMatches) {
+			PAGE_FACTORIES.put(mimeType, factory);
+		}
+	}
+	static {
+		MechanizeInitializer.initialize();
+	}
+
+	
 	private AbstractHttpClient client;
 	private final Cookies cookies;
 	private final List<Interceptor> interceptors = new ArrayList<Interceptor>();
@@ -128,14 +135,18 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 		return cookies;
 	}	
 	
-	private Page toPage(HttpRequestBase request, HttpResponse response)
+	protected Page toPage(HttpRequestBase request, HttpResponse response)
 			throws IOException, UnsupportedEncodingException {
 		ContentType contentType = getContentType(response);
 		
-		if (HtmlPage.CONTENT_MATCHERS.contains(contentType.getMimeType()))
-			return new HtmlPage(this, request, response);
-		else
-			return new ContentPage(this, request, response);
+		PageFactory factory = lookupFactory(contentType.getMimeType());
+		if (factory == null)
+			factory = lookupFactory(ContentType.WILDCARD.getMimeType());
+		
+		if (factory == null)
+			throw new MechanizeException("No viable page type found, and no wildcard mime type factory registered.");
+
+		return factory.buildPage(this, request, response);
 	}
 
 	protected ContentType getContentType(HttpResponse response) {

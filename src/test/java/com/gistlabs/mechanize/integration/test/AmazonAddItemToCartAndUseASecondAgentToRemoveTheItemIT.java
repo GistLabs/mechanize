@@ -12,10 +12,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.HtmlPage;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.form.Form;
+import com.gistlabs.mechanize.html.HtmlPage;
 import com.gistlabs.mechanize.sequence.AbstractSequence;
 
 /**

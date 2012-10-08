@@ -2,7 +2,6 @@ package com.gistlabs.mechanize.html;
 
 import org.jsoup.nodes.Node;
 
-import com.gistlabs.mechanize.HtmlPage;
 
 /**
  * Represents a node.

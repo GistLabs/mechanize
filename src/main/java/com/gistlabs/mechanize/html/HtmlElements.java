@@ -7,7 +7,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 
-import com.gistlabs.mechanize.HtmlPage;
 import com.gistlabs.mechanize.query.Query;
 
 /**

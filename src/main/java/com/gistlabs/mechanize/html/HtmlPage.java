@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize;
+package com.gistlabs.mechanize.html;
 
 import java.util.Collection;
 
@@ -17,8 +17,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.form.Forms;
-import com.gistlabs.mechanize.html.HtmlElements;
 import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Links;
 import com.gistlabs.mechanize.util.Collections;

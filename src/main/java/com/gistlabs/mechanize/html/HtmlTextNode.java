@@ -2,7 +2,6 @@ package com.gistlabs.mechanize.html;
 
 import org.jsoup.nodes.TextNode;
 
-import com.gistlabs.mechanize.HtmlPage;
 
 /**
  * Implements a TextNode representation
