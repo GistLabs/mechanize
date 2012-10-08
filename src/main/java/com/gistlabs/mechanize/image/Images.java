@@ -24,6 +24,9 @@ import com.gistlabs.mechanize.util.NullOutputStream;
  * @since 2012-09-12
  */
 public class Images extends PageElements<Image> {
+	public Images(Page page) {
+		this(page, null);
+	}
 	public Images (Page page, Elements forms) {
 		super(page, forms);
 	}

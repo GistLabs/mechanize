@@ -21,6 +21,9 @@ import com.gistlabs.mechanize.PageElements;
  * @since 2012-09-12
  */
 public class Forms extends PageElements<Form> {
+	public Forms(Page page) {
+		this(page, null);
+	}
 	public Forms(Page page, Elements forms) {
 		super(page, forms);
 	}

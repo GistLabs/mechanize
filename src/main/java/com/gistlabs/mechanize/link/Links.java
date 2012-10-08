@@ -21,6 +21,9 @@ import com.gistlabs.mechanize.PageElements;
  * @since 2012-09-12
  */
 public class Links extends PageElements<Link> {
+	public Links(Page page) {
+		this(page, null);
+	}
 	public Links(Page page, Elements links) {
 		super(page, links);
 	}

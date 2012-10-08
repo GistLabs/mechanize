@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
 import com.gistlabs.mechanize.RequestBuilder;
+import com.gistlabs.mechanize.html.JsoupDataUtil;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryBuilder;
-import com.gistlabs.mechanize.util.Util;
-
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /** 
  * Represents a form. 
@@ -39,7 +39,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	}
 
 	private void analyse() {
-		Elements elements = Util.findElementsByTag(getElement(), new String [] {"input", "textarea", "select"});
+		Elements elements = JsoupDataUtil.findElementsByTag(getElement(), new String [] {"input", "textarea", "select"});
 		for(Element element : elements) {
 			FormElement formElement = newFormElement(element);
 			if(formElement != null)

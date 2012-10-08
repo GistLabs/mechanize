@@ -20,11 +20,11 @@ import org.apache.http.client.methods.HttpRequestBase;
 import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.Forms;
+import com.gistlabs.mechanize.html.JsoupDataUtil;
 import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.link.Links;
 import com.gistlabs.mechanize.util.CopyInputStream;
-import com.gistlabs.mechanize.util.JsoupDataUtil;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
 
@@ -155,7 +155,7 @@ public abstract class Page implements RequestBuilderFactory {
 	}
 
 	protected Links loadLinks() {
-		return new Links(this, null);
+		return new Links(this);
 	}
 
 	/**
@@ -176,7 +176,7 @@ public abstract class Page implements RequestBuilderFactory {
 	}
 
 	protected Forms loadForms() {
-		return new Forms(this, null);
+		return new Forms(this);
 	}
 
 	public Images images() {
@@ -187,7 +187,7 @@ public abstract class Page implements RequestBuilderFactory {
 	}
 
 	protected Images loadImages() {
-		return new Images(this, null);
+		return new Images(this);
 	}
 
 	public String getUri() {

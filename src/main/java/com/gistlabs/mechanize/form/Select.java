@@ -10,11 +10,11 @@ package com.gistlabs.mechanize.form;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jsoup.nodes.Element;
+
+import com.gistlabs.mechanize.html.JsoupDataUtil;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryBuilder;
-import com.gistlabs.mechanize.util.Util;
-
-import org.jsoup.nodes.Element;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -31,7 +31,7 @@ public class Select extends FormElement {
 		isMultiple = element.hasAttr("multiple");
 		options = new ArrayList<Option>();
 		
-		for(Element optionElement : Util.findElementsByTag(element, "option"))
+		for(Element optionElement : JsoupDataUtil.findElementsByTag(element, "option"))
 			options.add(new Option(optionElement));
 	}
 	
