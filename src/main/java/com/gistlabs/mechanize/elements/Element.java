@@ -23,8 +23,10 @@ public interface Element<Page extends RequestBuilderFactory<Page>> {
 	public Collection<String> getAttributes();
 	
 	public String getValue();
-	public void setValue();
+	public void setValue(String value);
 	
 	public List<Element<Page>> getChildren();
 	
+	public Element<Page> get(String query);
+	public List<Element<Page>> getAll(String query);
 }

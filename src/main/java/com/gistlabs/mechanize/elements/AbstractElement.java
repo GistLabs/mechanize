@@ -11,54 +11,64 @@ import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
  *
  * @param <Page>
  */
-public class AbstractElement<Page extends RequestBuilderFactory<Page>> implements Element<Page> {
+public abstract class AbstractElement<Page extends RequestBuilderFactory<Page>> implements Element<Page> {
+	private final Page page;
+	private final Element<Page> delegate;
+	
+	public AbstractElement(Page page, Element<Page> delegate) {
+		this.page = page;
+		this.delegate = delegate;
+	}
 
 	@Override
 	public Page getPage() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.page;
 	}
 
 	@Override
 	public String getAttribute(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.delegate.getAttribute(key);
 	}
 
 	@Override
 	public void setAttribute(String key, String value) {
-		// TODO Auto-generated method stub
-		
+		this.delegate.setAttribute(key, value);
 	}
 
 	@Override
 	public boolean hasAttribute(String key) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.delegate.hasAttribute(key);
 	}
 
 	@Override
 	public Collection<String> getAttributes() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.delegate.getAttributes();
 	}
 
 	@Override
 	public String getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.delegate.getValue();
 	}
 
 	@Override
-	public void setValue() {
-		// TODO Auto-generated method stub
-		
+	public void setValue(String value) {
+		this.delegate.setValue(value);
 	}
 
 	@Override
 	public List<Element<Page>> getChildren() {
+		return this.delegate.getChildren();
+	}
+
+	@Override
+	public Element<Page> get(String query) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@Override
+	public List<Element<Page>> getAll(String query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
