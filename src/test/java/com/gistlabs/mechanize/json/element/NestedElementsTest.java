@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json.impl;
+package com.gistlabs.mechanize.json.element;
 
 import static org.junit.Assert.*;
 
@@ -7,8 +7,9 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.json.JsonException;
+import com.gistlabs.mechanize.json.element.ElementImpl;
 
-public class ElementImplTest {
+public class NestedElementsTest {
 
 	@Test
 	public void testString() {
@@ -67,9 +68,7 @@ public class ElementImplTest {
 		
 		element.setAttribute("one", null);
 		assertNull(element.getAttribute("one"));
-		assertTrue(element.hasAttribute("one"));
-		
-		
+		assertTrue(element.hasAttribute("one"));	
 	}
 	
 	@Test

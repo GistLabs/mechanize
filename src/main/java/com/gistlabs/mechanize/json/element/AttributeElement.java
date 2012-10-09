@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json.impl;
+package com.gistlabs.mechanize.json.element;
 
 import java.util.Collection;
 import java.util.Collections;
