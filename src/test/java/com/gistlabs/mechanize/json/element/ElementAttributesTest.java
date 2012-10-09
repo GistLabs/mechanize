@@ -2,14 +2,10 @@ package com.gistlabs.mechanize.json.element;
 
 import static org.junit.Assert.*;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.JsonException;
-import com.gistlabs.mechanize.json.element.ElementImpl;
-
-public class ElementAttributesTest {
+public class ElementAttributesTest extends TestElementBaseClass {
 
 	@Test
 	public void testString() {
@@ -77,13 +73,4 @@ public class ElementAttributesTest {
 		
 		assertEquals(element.getChild("b"), element.getChild("b"));		
 	}
-	
-	protected JSONObject parseJson(String json) {
-		try {
-			return new JSONObject(json);
-		} catch (JSONException e) {
-			throw new JsonException(e);
-		}
-	}
-
 }

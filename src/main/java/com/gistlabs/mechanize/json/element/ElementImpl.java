@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,8 +14,8 @@ import com.gistlabs.mechanize.json.JsonException;
 
 public class ElementImpl extends AbstractElement implements Element {
 
-	private JSONObject obj;
-	private Map<String,AttributeElement> attributes = new HashMap<String, AttributeElement>();
+	private final JSONObject obj;
+	private Map<String,Element> children = new HashMap<String, Element>();
 
 	public ElementImpl(JSONObject obj) {
 		this("root", obj);
@@ -22,7 +23,11 @@ public class ElementImpl extends AbstractElement implements Element {
 	}
 	
 	public ElementImpl(String name, JSONObject obj) {
-		super(name);
+		this(null, name, obj);
+	}
+
+	public ElementImpl(Element parent, String name, JSONObject obj) {
+		super(parent, name);
 		this.obj = obj;
 	}
 
@@ -42,7 +47,6 @@ public class ElementImpl extends AbstractElement implements Element {
 	@Override
 	public void setAttribute(final String key, final String value) {
 		try {
-			
 			obj.put(key, value==null ? JSONObject.NULL : value);
 		} catch (JSONException e) {
 			throw new JsonException(e);
@@ -74,12 +78,26 @@ public class ElementImpl extends AbstractElement implements Element {
 
 	@Override
 	public Element getChild(final String key) {
-		if (!attributes.containsKey(key))
-			attributes.put(key, new AttributeElement(this, key));
+		if (!children.containsKey(key))
+			children.put(key, getElementByType(key));
 		
-		return attributes.get(key);
+		return children.get(key);
 	}
 	
+	protected Element getElementByType(String key) {
+		try {
+			Object obj = this.obj.get(key);
+			if (obj instanceof JSONObject)
+				return new ElementImpl(this, key, (JSONObject)obj);
+			else if (obj instanceof JSONArray)
+				return null;
+			else 
+				return new AttributeElement(this, key);
+		} catch (JSONException e) {
+			throw new JsonException(e);
+		}
+	}
+
 	@Override
 	public List<Element> getChildren() {
 		// TODO Auto-generated method stub
