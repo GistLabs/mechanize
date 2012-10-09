@@ -9,10 +9,13 @@ package com.gistlabs.mechanize.integration.test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.json.Element;
 import com.gistlabs.mechanize.json.impl.JsonPage;
 
 /**
@@ -25,6 +28,8 @@ public class AndroidJsonApiIT {
 		MechanizeAgent agent = new MechanizeAgent();
 		JsonPage page = (JsonPage) agent.get("http://api.androidhive.info/contacts/");
 		
-		assertNotNull(page.json().getJSONArray("contacts"));
+		List<Element> contacts = page.json().getChildren("contacts");
+		assertNotNull(contacts);
+		assertEquals("c200", contacts.get(0).getAttribute("id"));
 	}
 }

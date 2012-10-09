@@ -19,6 +19,8 @@ import org.json.JSONTokener;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
+import com.gistlabs.mechanize.json.Element;
+import com.gistlabs.mechanize.json.element.ElementImpl;
 import com.gistlabs.mechanize.util.Collections;
 
 public class JsonPage extends Page {
@@ -26,7 +28,7 @@ public class JsonPage extends Page {
 		Collections.collection(
 				ContentType.APPLICATION_JSON.getMimeType());
 	
-	private JSONObject json;
+	private Element json;
 	
 	public JsonPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
 		super(agent, request, response);
@@ -35,13 +37,13 @@ public class JsonPage extends Page {
 	@Override
 	protected void loadPage() throws Exception {
 		try {
-			this.json = new JSONObject(new JSONTokener(new InputStreamReader(getInputStream())));
+			this.json = new ElementImpl(new JSONObject(new JSONTokener(new InputStreamReader(getInputStream()))));
 		} catch (Exception e) {
 			throw MechanizeExceptionFactory.newException(e);
 		}	
 	}
 	
-	public JSONObject json() {
+	public Element json() {
 		return this.json;
 	}
 }
