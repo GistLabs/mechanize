@@ -18,8 +18,12 @@ public interface Element {
 	public String getContent();
 	public void setContent(String value);
 	
+	public Element getChild(String key);
 	public List<Element> getChildren();
+
 	
 	public Element find(String query);
 	public List<Element> findAll(String query);
+
+	public Element getParent();
 }
