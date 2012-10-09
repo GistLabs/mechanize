@@ -10,6 +10,7 @@ package com.gistlabs.mechanize.integration.test;
 import static com.gistlabs.mechanize.query.QueryBuilder.*;
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
@@ -23,8 +24,16 @@ import com.gistlabs.mechanize.sequence.AbstractSequence;
  * @version 1.0
  * @since 2012-09-12
  */
-public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT {
+public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends MozillaUserAgentTestClass {
+	static final String firefoxUserAgent = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.1) Gecko/20100122 firefox/3.6.1";
+	MechanizeAgent agent;
 
+	@Before
+	public void setUp() throws Exception {
+		agent = new MechanizeAgent().setUserAgent(null);
+	}
+
+	
 	/**
 	 * Adds the processor 'AMD FX 4100' to the shopping cart and using a second agent 
 	 * to remove it. This test also demonstrates how to copy session cookies (and other cookies)

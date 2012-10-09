@@ -76,6 +76,13 @@
   <build>
     <defaultGoal>verify</defaultGoal>
 
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    
     <plugins>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>

@@ -9,7 +9,11 @@ package com.gistlabs.mechanize;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.StringTokenizer;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 
@@ -27,6 +31,8 @@ import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
  *
  */
 public class MechanizeInitializer {
+    private static final Log log = LogFactory.getLog(MechanizeInitializer.class);
+
 	public static final String MECHANIZE_PAGE_FACTORIES = "mechanize.page.factories";
 	public static final String MECHANIZE_PAGE_FACTORIES_EXT = "mechanize.page.factories.ext";
 	public static final String DEFAULT_FACTORIES = "com.gistlabs.mechanize.html.HtmlPageFactory,com.gistlabs.mechanize.DefaultPageFactory,com.gistlabs.mechanize.json.impl.JsonPageFactory";
@@ -35,10 +41,21 @@ public class MechanizeInitializer {
 	static void initialize() {
 		processFactoriesClassNames(getClassNames(MECHANIZE_PAGE_FACTORIES, DEFAULT_FACTORIES));
 		processFactoriesClassNames(getClassNames(MECHANIZE_PAGE_FACTORIES_EXT, ""));
+		try {
+			loadProperties();
+		} catch (Exception e) {
+			log.fatal("Failed to load /mechanize.properties file", e);
+			throw MechanizeExceptionFactory.newException(e);
+		}
 	}
 
-	protected static void processFactoriesClassNames(
-			List<String> factoryClassNames) {
+	protected static void loadProperties() throws Exception {
+		Properties properties = new Properties();
+		properties.load(MechanizeInitializer.class.getResourceAsStream("/mechanize.properties"));
+		MechanizeAgent.setVersion(properties.getProperty("mechanize.version"));
+	}
+
+	protected static void processFactoriesClassNames(List<String> factoryClassNames) {
 		for (String factoryClassName : factoryClassNames) {
 			try {
 				@SuppressWarnings("unchecked")

@@ -9,11 +9,7 @@ package com.gistlabs.mechanize;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -22,6 +18,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpProtocolParams;
 
 import com.gistlabs.mechanize.cookie.Cookies;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
@@ -40,6 +37,7 @@ import com.gistlabs.mechanize.parameters.Parameters;
  * @since 2012-09-12
  */
 public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
+	static String VERSION;
 	
 	static final Map<String,PageFactory> PAGE_FACTORIES = new HashMap<String, PageFactory>();
 	static PageFactory lookupFactory(String mimeType) {
@@ -51,23 +49,52 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 			PAGE_FACTORIES.put(mimeType, factory);
 		}
 	}
+	public static void setVersion(String version) {
+		VERSION=version;
+	}
 	static {
 		MechanizeInitializer.initialize();
 	}
 
-	
-	private AbstractHttpClient client;
+	private final AbstractHttpClient client;
 	private final Cookies cookies;
 	private final List<Interceptor> interceptors = new ArrayList<Interceptor>();
 	private final History history = new History(this);
 
 	public MechanizeAgent() {
-		this(new DefaultHttpClient());
+		this.client = buildDefaultHttpClient();
+		this.cookies = new Cookies(client);
 	}
 	
 	public MechanizeAgent(AbstractHttpClient client) {
 		this.client = client;
 		this.cookies = new Cookies(client);
+	}
+	
+	/**
+	 * Configure the default HttpClient used by mechanize. 
+	 */
+	protected AbstractHttpClient buildDefaultHttpClient() {
+		DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+		return defaultHttpClient;
+	}
+	
+	/**
+	 * 
+	 * @param userAgent The value to set User-Agent HTTP parameter to for requests
+	 * @return
+	 */
+	public MechanizeAgent setUserAgent(String userAgent) {
+		HttpProtocolParams.setUserAgent(this.client.getParams(), userAgent);
+		return this;
+	}
+	
+	/**
+	 * 
+	 * @return the User-Agent that HttpClient is currently using.
+	 */
+	public String getUserAgent() {
+		return HttpProtocolParams.getUserAgent(this.client.getParams());
 	}
 	
 	public AbstractHttpClient getClient() {

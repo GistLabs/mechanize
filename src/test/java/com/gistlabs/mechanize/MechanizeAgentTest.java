@@ -32,6 +32,12 @@ import com.gistlabs.mechanize.parameters.Parameters;
  * @since 2012-09-12
  */
 public class MechanizeAgentTest extends MechanizeTestCase {
+	static final String firefoxUserAgent = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.1) Gecko/20100122 firefox/3.6.1";
+
+	protected MechanizeAgent agent() {
+		return new MechanizeAgent().setUserAgent(firefoxUserAgent);
+	}
+
 	@Test
 	public void testReceivingAPage() {
 		agent.addPageRequest("http://test.com", newHtml("Test Page", ""));
@@ -96,13 +102,11 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 	}
 
 	@Test
-	public void testDownloadToFile() {
+	public void testDownloadToFile() throws Exception {
 		String wikipediaLogoUri = "http://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png";
-		String path = MechanizeAgentTest.class.getResource(".").getFile();
+		File file = File.createTempFile("mechanize", ".png");
+		file.delete();
 
-		File file = new File(path + "/" + "wikipedialogo.png");
-		if(file.exists())
-			file.delete();
 		agent().get(wikipediaLogoUri).saveTo(file);
 		assertEquals(45283, file.length());
 		file.delete();
@@ -138,10 +142,6 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		agent.addInterceptor(interceptor);
 		agent.get("http://wikipedia.org");
 		assertEquals(2, interceptor.getCount());
-	}
-
-	protected MechanizeAgent agent() {
-		return new MechanizeAgent();
 	}
 	
 	public static class Interceptor implements RequestInterceptor, ResponseInterceptor {
