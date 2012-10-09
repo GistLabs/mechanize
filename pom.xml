@@ -159,6 +159,11 @@
     	<version>20090211</version>
     </dependency>
     <dependency>
+      <groupId>se.fishtank</groupId>
+      <artifactId>css-selectors</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.10</version>

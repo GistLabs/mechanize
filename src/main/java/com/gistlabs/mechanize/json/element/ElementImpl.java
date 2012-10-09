@@ -91,15 +91,6 @@ public class ElementImpl extends AbstractElement implements Element {
 		}
 	}
 
-	protected Element factory(String key, Object obj) {
-		if (obj instanceof JSONObject)
-			return new ElementImpl(this, key, (JSONObject)obj);
-		else if (obj instanceof JSONArray)
-			throw new JsonArrayException("Can't access a single array entry without index", (JSONArray)obj);
-		else 
-			return new AttributeElement(this, key);
-	}
-
 	@Override
 	public List<Element> getChildren() {
 		// TODO Auto-generated method stub
@@ -119,7 +110,7 @@ public class ElementImpl extends AbstractElement implements Element {
 				JSONArray array = e.getArray();
 				for(int i=0;i < array.length();i++){
 					Object obj = array.get(i);
-					result.add(factory(key, obj));
+					result.add(factory(key, obj, array, i));
 				}
 			}
 			return result;
@@ -128,15 +119,4 @@ public class ElementImpl extends AbstractElement implements Element {
 		}
 	}
 
-	@Override
-	public Element find(String query) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Element> findAll(String query) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
