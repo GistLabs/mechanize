@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.json;
+package com.gistlabs.mechanize.json.impl;
 
 import static org.junit.Assert.*;
 
@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.json.impl.JsonPage;
 
 /**
  */

@@ -22,9 +22,14 @@ public class JsonTest {
 	 */
 	@Test
 	public void testJsonParsing() throws Exception {
-		JSONObject json = new JSONObject(new JSONTokener(new InputStreamReader(getClass().getResourceAsStream("dropbox.account.info.json"))));
+		JSONObject json = new JSONObject(new JSONTokener(new InputStreamReader(getClass().getResourceAsStream("impl/dropbox.account.info.json"))));
 		assertNotNull(json);
 		assertEquals(12345678, json.getLong("uid"));
 	}
 
+	@Test
+	public void testEmptyKey() throws Exception {
+		JSONObject json = new JSONObject("{ \"one\" : \"two\", \"\" : \"four\" }");
+		assertEquals("four", json.getString(""));
+	}
 }

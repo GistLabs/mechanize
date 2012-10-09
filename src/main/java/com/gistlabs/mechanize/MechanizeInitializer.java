@@ -29,7 +29,7 @@ import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 public class MechanizeInitializer {
 	public static final String MECHANIZE_PAGE_FACTORIES = "mechanize.page.factories";
 	public static final String MECHANIZE_PAGE_FACTORIES_EXT = "mechanize.page.factories.ext";
-	public static final String DEFAULT_FACTORIES = "com.gistlabs.mechanize.html.HtmlPageFactory,com.gistlabs.mechanize.DefaultPageFactory,com.gistlabs.mechanize.json.JsonPageFactory";
+	public static final String DEFAULT_FACTORIES = "com.gistlabs.mechanize.html.HtmlPageFactory,com.gistlabs.mechanize.DefaultPageFactory,com.gistlabs.mechanize.json.impl.JsonPageFactory";
 	
 	
 	static void initialize() {
