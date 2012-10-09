@@ -53,6 +53,11 @@ public class AttributeElement extends AbstractElement implements Element {
 	}
 
 	@Override
+	public List<Element> getChildren(String key) {
+		return getChildren();
+	}
+
+	@Override
 	public Element find(String query) {
 		// TODO Auto-generated method stub
 		return null;
@@ -63,5 +68,4 @@ public class AttributeElement extends AbstractElement implements Element {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

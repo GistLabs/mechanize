@@ -20,6 +20,7 @@ public interface Element {
 	
 	public Element getChild(String key);
 	public List<Element> getChildren();
+	public List<Element> getChildren(String key);
 
 	
 	public Element find(String query);
