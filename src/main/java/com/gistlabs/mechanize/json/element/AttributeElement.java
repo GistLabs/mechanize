@@ -56,16 +56,4 @@ public class AttributeElement extends AbstractElement implements Element {
 	public List<Element> getChildren(String key) {
 		return getChildren();
 	}
-
-	@Override
-	public Element find(String query) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Element> findAll(String query) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

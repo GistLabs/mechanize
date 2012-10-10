@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json;
+package com.gistlabs.mechanize.json.exceptions;
 
 import org.json.JSONArray;
 

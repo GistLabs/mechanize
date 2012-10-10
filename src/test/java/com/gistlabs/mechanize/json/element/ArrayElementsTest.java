@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.json.Element;
-import com.gistlabs.mechanize.json.JsonArrayException;
 import com.gistlabs.mechanize.json.element.ElementImpl;
+import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
 
 public class ArrayElementsTest extends TestElementBaseClass {
 	

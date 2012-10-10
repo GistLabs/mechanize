@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.gistlabs.mechanize.json.Element;
-import com.gistlabs.mechanize.json.JsonArrayException;
+import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
 
 public abstract class AbstractElement implements Element {
 	protected final String name;

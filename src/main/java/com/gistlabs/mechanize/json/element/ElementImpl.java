@@ -7,8 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.gistlabs.mechanize.json.Element;
-import com.gistlabs.mechanize.json.JsonArrayException;
-import com.gistlabs.mechanize.json.JsonException;
+import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
+import com.gistlabs.mechanize.json.exceptions.JsonException;
 
 public class ElementImpl extends AbstractElement implements Element {
 
@@ -58,20 +58,29 @@ public class ElementImpl extends AbstractElement implements Element {
 
 	@Override
 	public Collection<String> getAttributes() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			List<String> result = new ArrayList<String>();
+			@SuppressWarnings("unchecked")
+			Iterator<String> keys = this.obj.keys();
+			while(keys.hasNext()) {
+				String key = keys.next();
+				if (isPrimitive(this.obj.get(key)))
+					result.add(key);
+			}
+			return result;
+		} catch (JSONException e) {
+			throw new JsonException(e);
+		}
 	}
 
 	@Override
 	public String getContent() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setContent(final String value) {
-		// TODO Auto-generated method stub
-		
+		throw new JsonException("JSON Objects can't directly have cpntent");
 	}
 
 	@Override
@@ -80,6 +89,10 @@ public class ElementImpl extends AbstractElement implements Element {
 			children.put(key, getElementByType(key));
 		
 		return children.get(key);
+	}
+	
+	protected boolean isPrimitive(Object jsonObject) {
+		return !(jsonObject instanceof JSONObject || jsonObject instanceof JSONArray);
 	}
 	
 	protected Element getElementByType(String key) {
@@ -93,8 +106,19 @@ public class ElementImpl extends AbstractElement implements Element {
 
 	@Override
 	public List<Element> getChildren() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			List<Element> result = new ArrayList<Element>();
+			@SuppressWarnings("unchecked")
+			Iterator<String> keys = this.obj.keys();
+			while(keys.hasNext()) {
+				String key = keys.next();
+				if (!isPrimitive(this.obj.get(key)))
+					result.addAll(getChildren(key));
+			}
+			return result;
+		} catch (JSONException e) {
+			throw new JsonException(e);
+		}
 	}
 
 	@Override

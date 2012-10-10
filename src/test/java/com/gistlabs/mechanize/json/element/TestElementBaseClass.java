@@ -3,7 +3,7 @@ package com.gistlabs.mechanize.json.element;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.gistlabs.mechanize.json.JsonException;
+import com.gistlabs.mechanize.json.exceptions.JsonException;
 
 public abstract class TestElementBaseClass {
 

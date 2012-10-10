@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.gistlabs.mechanize.json.Element;
-import com.gistlabs.mechanize.json.JsonException;
+import com.gistlabs.mechanize.json.exceptions.JsonException;
 
 public class IndexedAttributeElement extends AttributeElement implements Element {
 	
