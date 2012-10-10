@@ -6,7 +6,7 @@ import org.json.JSONException;
 import com.gistlabs.mechanize.json.Element;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
 
-public class IndexedAttributeElement extends AttributeElement implements Element {
+public class IndexedAttributeElement extends AttributeElement {
 	
 	private final int index;
 	private JSONArray array;

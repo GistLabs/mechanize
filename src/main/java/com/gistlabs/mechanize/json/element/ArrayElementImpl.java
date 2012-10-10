@@ -14,7 +14,7 @@ import com.gistlabs.mechanize.json.exceptions.JsonException;
 /**
  * Support for nested arrays
  */
-public class ArrayElementImpl extends AbstractElement implements Element {
+public class ArrayElementImpl extends AbstractElement {
 	private final JSONArray array;
 	private List<Element> children;
 

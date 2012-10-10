@@ -10,6 +10,7 @@ package com.gistlabs.mechanize.form;
 import com.gistlabs.mechanize.PageElement;
 import com.gistlabs.mechanize.html.HtmlElement;
 import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.query.QueryStrategy;
 
 /**
  *  
@@ -68,7 +69,7 @@ public class FormElement extends PageElement {
 		return element.hasAttribute("value") ? element.getAttribute("value") : null;
 	}
 
-	public boolean matches(Query query) {
-		return query.matches(getElement());
+	public boolean matches(QueryStrategy queryStrategy, Query query) {
+		return query.matches(queryStrategy, getElement());
 	}
 }

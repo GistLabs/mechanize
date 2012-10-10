@@ -10,7 +10,7 @@ import com.gistlabs.mechanize.json.Element;
 import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
 
-public class ElementImpl extends AbstractElement implements Element {
+public class ElementImpl extends AbstractElement {
 
 	private final JSONObject obj;
 	private Map<String,Element> children = new HashMap<String, Element>();

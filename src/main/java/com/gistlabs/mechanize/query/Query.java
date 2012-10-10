@@ -10,11 +10,6 @@ package com.gistlabs.mechanize.query;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.nodes.Attribute;
-import org.jsoup.nodes.Element;
-
-import com.gistlabs.mechanize.html.HtmlElement;
-
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @version 1.0
@@ -65,19 +60,15 @@ public class Query {
 		return this.add(new QueryPart(this instanceof AndQuery, pattern, selector));
 	}
 	
-	public boolean matches(HtmlElement element) {
-		return matches(element.getElement());
-	}
-	
-	public boolean matches(Element element) {
+	public boolean matches(QueryStrategy queryStrategy, Object object) {
 		if(this instanceof AndQuery) {
-			return ((AndQuery)this).parent.matches(element);
+			return ((AndQuery)this).parent.matches(queryStrategy, object);
 		}
 		else {
 			boolean last = false;
 			for(QueryPart part : parts) {
 				if(part.isAnd() && last == true) {
-					boolean current = part.matches(element);
+					boolean current = part.matches(queryStrategy, object);
 					last = current;
 				}
 				else if(part.isAnd() && last == false) {
@@ -87,7 +78,7 @@ public class Query {
 					return true;
 				}
 				else {
-					last = part.matches(element);
+					last = part.matches(queryStrategy, object);
 				}
 			}
 			return last;
@@ -314,61 +305,65 @@ public class Query {
 			return "<" + pattern.toString() + "," + selector.toString() + ">";
 		}
 		
-		public boolean matches(Element element) {
+		public boolean matches(QueryStrategy queryStrategy, Object object) {
 			boolean isMatch = false;
 
 			if(selector.includesAny()) {
-				for(Attribute attribute : element.attributes())
-					if(pattern.doesMatch(attribute.getValue()))
+				for(String attribute : queryStrategy.getAttributeNames(object))
+					if(pattern.doesMatch(queryStrategy.getAttributeValue(object, attribute)))
 						isMatch = true;
 			}
 
-			if(selector.includesClass() || selector.includesAny())
-				for(String className : element.classNames())
-					if(pattern.doesMatch(className))
-						isMatch = true;
+			if(selector.includesClass() || selector.includesAny()) {
+				String value = queryStrategy.getAttributeValue(object, QueryStrategy.SPECIAL_ATTRIBUTE_CLASS_NAMES);
+				if(value != null) {
+					for(String className : value.split("\\,"))
+						if(pattern.doesMatch(className))
+							isMatch = true;
+				}
+			}
 			
 			if(!isMatch && selector.includesId())
-				isMatch = pattern.doesMatch(element.id());
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, "id"));
 			
 			if(!isMatch && selector.includesName()) 
-				isMatch = pattern.doesMatch(element.attr("name"));
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, "name"));
 
 			if(!isMatch && selector.includesTag()) 
-				isMatch = pattern.doesMatch(element.tag().getName());
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, QueryStrategy.SPECIAL_ATTRIBUTE_TAG_NAME));
 			
 			if(!isMatch && selector.includesAction()) 
-				isMatch = pattern.doesMatch(element.attr("action"));
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, "action"));
 			
 			if(!isMatch && selector.includesHRef()) 
-				isMatch = pattern.doesMatch(element.attr("href"));
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, "href"));
 			
 			if(!isMatch && selector.includesSrc()) 
-				isMatch = pattern.doesMatch(element.attr("src"));
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, "src"));
 
 			if(!isMatch && selector.includesTitle()) 
-				isMatch = pattern.doesMatch(element.attr("title"));
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, "title"));
 			
 			if(!isMatch && selector.includesWidth()) 
-				isMatch = pattern.doesMatch(element.attr("width"));
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, "width"));
 
 			if(!isMatch && selector.includesHeight()) 
-				isMatch = pattern.doesMatch(element.attr("height"));
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, "height"));
 
 			if(!isMatch && selector.includesValue()) 
-				isMatch = pattern.doesMatch(element.attr("value"));
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, "value"));
 			
 			if(!isMatch && selector.includesType()) 
-				isMatch = pattern.doesMatch(element.attr("type"));
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, "type"));
 
 			if(!isMatch && selector.includesText()) 
-				isMatch = pattern.doesMatch(element.text());
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, QueryStrategy.SPECIAL_ATTRIBUTE_TEXT));
 
 			if(!isMatch && selector.includesInnerHtml()) 
-				isMatch = pattern.doesMatch(element.html());
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, QueryStrategy.SPECIAL_ATTRIBUTE_INNER_HTML));
 
 			if(!isMatch && selector.includesHtml()) 
-				isMatch = pattern.doesMatch(element.outerHtml());
+				isMatch = pattern.doesMatch(queryStrategy.getAttributeValue(object, QueryStrategy.SPECIAL_ATTRIBUTE_HTML));
 			
 			return isMatch; 
 		}
@@ -385,7 +380,7 @@ public class Query {
 		}
 		
 		@Override
-		public boolean matches(Element element) {
+		public boolean matches(QueryStrategy queryStrategy, Object object) {
 			return true;
 		}
 		
@@ -405,8 +400,8 @@ public class Query {
 		}
 		
 		@Override
-		public boolean matches(Element element) {
-			return query.matches(element);
+		public boolean matches(QueryStrategy queryStrategy, Object object) {
+			return query.matches(queryStrategy, object);
 		}
 		
 		@Override
@@ -425,8 +420,8 @@ public class Query {
 		}
 		
 		@Override
-		public boolean matches(Element element) {
-			return !query.matches(element);
+		public boolean matches(QueryStrategy queryStrategy, Object object) {
+			return !query.matches(queryStrategy, object);
 		}
 		
 		@Override

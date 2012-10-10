@@ -38,7 +38,7 @@ public class Parameters implements Iterable<Parameter> {
 		for(String name : sortedKeys) {
 			Object value = parameters.get(name);
 			if(value != null && !(value instanceof String []))
-				add(value.toString());
+				add(name, value.toString());
 			else if(value instanceof String [])
 				add(name, (String [])value);
 		}

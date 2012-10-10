@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.gistlabs.mechanize.json.Element;
 
-public class AttributeElement extends AbstractElement implements Element {
+public class AttributeElement extends AbstractElement {
 	
 	public AttributeElement(Element parent, String name) {
 		super(parent, name);

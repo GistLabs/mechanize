@@ -7,15 +7,18 @@
  */
 package com.gistlabs.mechanize.html;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
 
 import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.query.QueryStrategy;
+import com.gistlabs.mechanize.util.Util;
 
 /**
  * Collection of all HTML elements of a HtmlPage object and the underlying Jsoup DOM-Document. 
@@ -29,8 +32,8 @@ public class HtmlElements {
 	private HtmlElement root;
 
 	//TODO May increase memory footprint when html code changes
-	private final Map<Element, HtmlElement> elementCache = new HashMap<Element, HtmlElement>();
-
+	private final Map<org.jsoup.nodes.Node, HtmlNode> elementCache = new HashMap<org.jsoup.nodes.Node, HtmlNode>();
+	
 	public HtmlElements(HtmlPage page, Document document) {
 		this.page = page;
 		this.root = getHtmlElement(document);
@@ -51,15 +54,29 @@ public class HtmlElements {
 		return root.getAll(query);
 	}
 	
-	public HtmlElement getHtmlElement(Element element) {
-		HtmlElement htmlElement = elementCache.get(element);
-		
-		if(htmlElement == null) {
-			htmlElement = new HtmlElement(page, element);
-			elementCache.put(element, htmlElement);
+	public HtmlNode getHtmlNode(org.jsoup.nodes.Node node) {
+		if(elementCache.containsKey(node)) {
+			return elementCache.get(node);
 		}
-		
-		return htmlElement;
+		else {
+			HtmlNode htmlNode = null;
+			if(node instanceof Element)
+				htmlNode = new HtmlElement(page, (Element)node);
+			else if(node instanceof TextNode)
+				htmlNode = new HtmlTextNode(page, (TextNode)node);
+			else
+				htmlNode = new HtmlNode(page, node);
+			elementCache.put(node, htmlNode);
+			return htmlNode;
+		}
+	}
+	
+	public HtmlElement getHtmlElement(Element element) {
+		return (HtmlElement)getHtmlNode(element);
+	}
+
+	public HtmlTextNode getHtmlTextNode(TextNode node) {
+		return (HtmlTextNode)getHtmlNode(node);
 	}
 	
 	@Override
@@ -67,12 +84,23 @@ public class HtmlElements {
 		return root.toString();
 	}
 
-	static HtmlElement get(HtmlPage page, Query query, List<Node> nodes) {
-		for(Node node : nodes) {
+	public static HtmlElement getFormHtmlNodes(HtmlPage page, Query query, List<? extends HtmlNode> nodes) {
+		List<org.jsoup.nodes.Node> jsoupNodes = new ArrayList<org.jsoup.nodes.Node>();
+		for(HtmlNode node : nodes)
+			jsoupNodes.add(node.getNode());
+		return get(page, query, jsoupNodes);
+	}
+	
+	public static HtmlElement get(HtmlPage page, Query query, List<org.jsoup.nodes.Node> nodes) {
+		return get(page, query, new HtmlQueryStrategy(), nodes);
+	}
+	
+	public static HtmlElement get(HtmlPage page, Query query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
+		for(org.jsoup.nodes.Node node : nodes) {
 			if(node instanceof Element) {
-				if(query.matches((Element)node))
-					return new HtmlElement(page, (Element)node);
-				HtmlElement result = get(page, query, node.childNodes());
+				if(query.matches(queryStrategy, (Element)node))
+					return page.htmlElements().getHtmlElement((Element)node);
+				HtmlElement result = get(page, query, queryStrategy, node.childNodes());
 				if(result != null)
 					return result;
 			}
@@ -80,13 +108,49 @@ public class HtmlElements {
 		return null;
 	}
 
-	static void getAll(HtmlPage page, List<HtmlElement> result, Query query, List<Node> nodes) {
-		for(Node node : nodes) {
+	public static void getAll(HtmlPage page, List<HtmlElement> result, Query query, List<org.jsoup.nodes.Node> nodes) {
+		getAll(page, result, query, new HtmlQueryStrategy(), nodes);
+	}
+	
+	public static void getAll(HtmlPage page, List<HtmlElement> result, Query query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
+		for(org.jsoup.nodes.Node node : nodes) {
 			if(node instanceof Element) {
-				if(query.matches((Element)node))
-					result.add(new HtmlElement(page, (Element)node));
-				getAll(page, result, query, node.childNodes());
+				if(query.matches(queryStrategy, (Element)node))
+					result.add(page.htmlElements().getHtmlElement((Element)node));
+				getAll(page, result, query, queryStrategy, node.childNodes());
 			}
+		}
+	}
+	
+	public static class HtmlQueryStrategy implements QueryStrategy {
+
+		@Override
+		public String getAttributeValue(Object object, String attribute) {
+			if(object instanceof Node)
+				return ((Node)object).getAttribute(attribute);
+			else if(object instanceof Element) {
+				return HtmlElement.getAttributeValueOfJSoupElement((Element)object, attribute);
+			}
+			else if(object instanceof TextNode) {
+				return HtmlTextNode.getAttributeValueOfJSoupTextNode((TextNode)object, attribute);
+			}
+			else
+				return null;
+		}
+
+		@Override
+		public List<String> getAttributeNames(Object object) {
+			if(object instanceof Node) {
+				return ((Node)object).getAttributeNames();
+			}
+			else if(object instanceof Element) {
+				return HtmlElement.getAttributeNamesForJSoupElement((Element)object);
+			}
+			else if(object instanceof TextNode) {
+				return HtmlTextNode.getAttributeNamesOfJSoupTextNode((TextNode)object);
+			}
+			else
+				return Util.newEmptyList();
 		}
 	}
 }

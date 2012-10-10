@@ -39,6 +39,10 @@ public class HtmlPage extends Page {
 		super(agent, request, response);
 	}
 
+	public HtmlElement getRoot() {
+		return htmlElements().getRoot();
+	}
+	
 	@Override
 	protected void loadPage() throws Exception {
 		htmlElements = new HtmlElements(this, Jsoup.parse(getInputStream(), getContentEncoding(response), this.uri));
