@@ -5,9 +5,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize;
+package com.gistlabs.mechanize.requestor;
+
+import com.gistlabs.mechanize.requestor.RequestBuilder;
 
 
-public interface RequestBuilderFactory {
-	public RequestBuilder doRequest(String uri);
+public interface RequestBuilderFactory<Page> {
+	public String absoluteUrl(String uri);
+	public RequestBuilder<Page> doRequest(String uri);
 }

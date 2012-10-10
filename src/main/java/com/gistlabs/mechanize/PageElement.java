@@ -8,13 +8,15 @@
 package com.gistlabs.mechanize;
 
 import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.requestor.RequestBuilder;
+import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @version 1.0
  * @since 2012-09-12
  */
-public abstract class PageElement implements RequestBuilderFactory {
+public abstract class PageElement implements RequestBuilderFactory<Page> {
 	protected final Page page;
 	protected final HtmlElement element;
 	
@@ -32,7 +34,7 @@ public abstract class PageElement implements RequestBuilderFactory {
 	}
 	
 	@Override
-	public RequestBuilder doRequest(String uri) {
+	public RequestBuilder<Page> doRequest(String uri) {
 		return getPage().doRequest(uri);
 	}
 	
@@ -42,5 +44,11 @@ public abstract class PageElement implements RequestBuilderFactory {
 	
 	public String getAttribute(String key) {
 		return element.getAttribute(key);
+	}
+
+	@Override
+	public String absoluteUrl(String uri) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

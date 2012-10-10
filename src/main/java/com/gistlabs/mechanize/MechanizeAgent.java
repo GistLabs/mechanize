@@ -9,6 +9,8 @@ package com.gistlabs.mechanize;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 import org.apache.http.HttpResponse;
@@ -23,6 +25,9 @@ import org.apache.http.params.HttpProtocolParams;
 import com.gistlabs.mechanize.cookie.Cookies;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.parameters.Parameters;
+import com.gistlabs.mechanize.requestor.PageRequestor;
+import com.gistlabs.mechanize.requestor.RequestBuilder;
+import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 
 /**
  * Mechanize agent acts as a focal point for HTTP interactions and also as a factory for Page objects from responses.
@@ -36,7 +41,7 @@ import com.gistlabs.mechanize.parameters.Parameters;
  * @version 1.0
  * @since 2012-09-12
  */
-public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
+public class MechanizeAgent implements PageRequestor<Page>, RequestBuilderFactory<Page> {
 	static String VERSION;
 	
 	static final Map<String,PageFactory> PAGE_FACTORIES = new HashMap<String, PageFactory>();
@@ -106,8 +111,8 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 	}
 
 	@Override
-	public RequestBuilder doRequest(String uri) {
-		return new RequestBuilder(this, uri);
+	public RequestBuilder<Page> doRequest(String uri) {
+		return new RequestBuilder<Page>(this, uri);
 	}
 
 	@Override
@@ -207,5 +212,13 @@ public class MechanizeAgent implements PageRequestor, RequestBuilderFactory {
 			if(clazz.isInstance(interceptor))
 				result.add(clazz.cast(interceptor));
 		return result;
+	}
+	@Override
+	public String absoluteUrl(String uri) {
+		try {
+			return new URL(uri).toExternalForm();
+		} catch (MalformedURLException e) {
+			throw MechanizeExceptionFactory.newException(e);
+		}
 	}
 }

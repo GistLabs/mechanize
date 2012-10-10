@@ -10,6 +10,8 @@ package com.gistlabs.mechanize;
 import static com.gistlabs.mechanize.query.QueryBuilder.*;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -25,6 +27,8 @@ import com.gistlabs.mechanize.html.JsoupDataUtil;
 import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Link;
 import com.gistlabs.mechanize.link.Links;
+import com.gistlabs.mechanize.requestor.RequestBuilder;
+import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 import com.gistlabs.mechanize.util.CopyInputStream;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
@@ -35,7 +39,7 @@ import com.gistlabs.mechanize.util.Util;
  * @version 1.0
  * @since 2012-09-12
  */
-public abstract class Page implements RequestBuilderFactory {
+public abstract class Page implements RequestBuilderFactory<Page> {
 	
 	@SuppressWarnings("unchecked")
 	public static Collection<String> CONTENT_MATCHERS = Collections.EMPTY_LIST;
@@ -127,7 +131,7 @@ public abstract class Page implements RequestBuilderFactory {
 	}
 
 	@Override
-	public RequestBuilder doRequest(String uri) {
+	public RequestBuilder<Page> doRequest(String uri) {
 		return getAgent().doRequest(uri);
 	}
 
@@ -247,6 +251,16 @@ public abstract class Page implements RequestBuilderFactory {
 			Util.copy(getInputStream(), out);
 		} catch (IOException e) {
 			throw new MechanizeException(e);
+		}
+	}
+
+	@Override
+	public String absoluteUrl(String uri) {
+		try {
+			URL baseUrl = new URL(this.uri);
+			return new URL(baseUrl, uri).toExternalForm();
+		} catch (MalformedURLException e) {
+			throw MechanizeExceptionFactory.newException(e);
 		}
 	}
 }
