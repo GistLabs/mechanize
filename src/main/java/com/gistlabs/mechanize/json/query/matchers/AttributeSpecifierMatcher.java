@@ -6,10 +6,10 @@ import java.util.List;
 
 import se.fishtank.css.selectors.specifier.AttributeSpecifier;
 
-import com.gistlabs.mechanize.json.Element;
+import com.gistlabs.mechanize.json.Node;
 import com.gistlabs.mechanize.json.query.Matcher;
 
-public class AttributeSpecifierMatcher extends AbstractAttributeSpecifierMatcher<Element> implements Matcher<Element> {
+public class AttributeSpecifierMatcher extends AbstractAttributeSpecifierMatcher<Node> implements Matcher<Node> {
 	
     /**
      * Create a new instance.
@@ -20,16 +20,16 @@ public class AttributeSpecifierMatcher extends AbstractAttributeSpecifierMatcher
     	super(specifier);
     }
     
-    protected String getValue(Element element) {
+    protected String getValue(Node element) {
 		return element.getContent();
 	}
 	
-	protected boolean hasAttribute(Element element, String name) {
+	protected boolean hasAttribute(Node element, String name) {
 		return element.hasAttribute(name);
 	}
 
-	protected Collection<Element> getAttributes(Element element) {
-		List<Element> result = new ArrayList<Element>();
+	protected Collection<Node> getAttributes(Node element) {
+		List<Node> result = new ArrayList<Node>();
 		for(String key : element.getAttributes()) {
 			result.add(element.getChild(key));
 		}

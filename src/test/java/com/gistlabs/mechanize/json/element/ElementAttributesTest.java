@@ -5,12 +5,14 @@ import static org.junit.Assert.*;
 import org.json.JSONObject;
 import org.junit.Test;
 
+import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
+
 public class ElementAttributesTest extends TestElementBaseClass {
 
 	@Test
 	public void testString() {
 		JSONObject parsedJson = parseJson("{ \"one\" : \"two\", \"\" : \"four\", \"a:b\" : \"http://example.com\" }");
-		ElementImpl element = new ElementImpl(parsedJson);
+		ObjectNodeImpl element = new ObjectNodeImpl(parsedJson);
 		
 		assertEquals("two", element.getAttribute("one"));
 		assertEquals("four", element.getAttribute(""));
@@ -19,7 +21,7 @@ public class ElementAttributesTest extends TestElementBaseClass {
 	
 	@Test
 	public void testStringCasting() {
-		ElementImpl element = new ElementImpl(parseJson("{ \"one\" : \"two\", \"\" : \"four\", \"a:b\" : \"http://example.com\" }"));
+		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : \"two\", \"\" : \"four\", \"a:b\" : \"http://example.com\" }"));
 		
 		assertEquals("four", element.getAttribute(""));
 		assertEquals("two", element.getChild("one").getContent());
@@ -28,7 +30,7 @@ public class ElementAttributesTest extends TestElementBaseClass {
 
 	@Test
 	public void testNumber() {
-		ElementImpl element = new ElementImpl(parseJson("{ \"one\" : 2, \"b\" : 2.2 }"));
+		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"b\" : 2.2 }"));
 		
 		assertEquals("2", element.getAttribute("one"));
 		assertEquals("2.2", element.getChild("b").getContent());
@@ -36,7 +38,7 @@ public class ElementAttributesTest extends TestElementBaseClass {
 	
 	@Test
 	public void testParentage() {
-		ElementImpl element = new ElementImpl(parseJson("{ \"one\" : 2, \"b\" : 2.2 }"));
+		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"b\" : 2.2 }"));
 
 		assertNull(element.getParent());
 		assertEquals(element, element.getChild("one").getParent());	
@@ -44,7 +46,7 @@ public class ElementAttributesTest extends TestElementBaseClass {
 	
 	@Test
 	public void testSetAttributes() {
-		ElementImpl element = new ElementImpl(parseJson("{ \"one\" : 2, \"b\" : 2.2 }"));
+		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"b\" : 2.2 }"));
 
 		assertEquals("2", element.getAttribute("one"));
 		element.setAttribute("one", "new");
@@ -57,7 +59,7 @@ public class ElementAttributesTest extends TestElementBaseClass {
 	
 	@Test
 	public void confirmNullHandling() {
-		ElementImpl element = new ElementImpl(parseJson("{ \"one\" : 2, \"b\" : null }"));
+		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"b\" : null }"));
 		
 		assertNull(element.getAttribute("b"));
 		assertTrue(element.hasAttribute("b"));
@@ -69,7 +71,7 @@ public class ElementAttributesTest extends TestElementBaseClass {
 	
 	@Test
 	public void testStableChildren() {
-		ElementImpl element = new ElementImpl(parseJson("{ \"one\" : 2, \"b\" : 2.2 }"));
+		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"b\" : 2.2 }"));
 		
 		assertEquals(element.getChild("b"), element.getChild("b"));		
 	}

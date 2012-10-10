@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * JSON Element abstraction, like the DOM for XML
  */
-public interface Element {
+public interface Node {
 
 	public String getName();
 	
@@ -18,13 +18,13 @@ public interface Element {
 	public String getContent();
 	public void setContent(String value);
 	
-	public Element getChild(String key);
-	public List<Element> getChildren();
-	public List<Element> getChildren(String key);
+	public Node getChild(String key);
+	public List<Node> getChildren();
+	public List<Node> getChildren(String key);
 
 	
-	public Element find(String query);
-	public List<Element> findAll(String query);
+	public Node find(String query);
+	public List<Node> findAll(String query);
 
-	public Element getParent();
+	public Node getParent();
 }

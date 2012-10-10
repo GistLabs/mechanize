@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json.element;
+package com.gistlabs.mechanize.json.nodeImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,18 +8,18 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.gistlabs.mechanize.json.Element;
+import com.gistlabs.mechanize.json.Node;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
 
 /**
  * Support for nested arrays
  */
-public class ArrayElementImpl extends AbstractElement {
+public class ArrayNodeImpl extends AbstractNode {
 	private final JSONArray array;
-	private List<Element> children;
+	private List<Node> children;
 
 
-	public ArrayElementImpl(Element parent, String key, JSONArray array) {
+	public ArrayNodeImpl(Node parent, String key, JSONArray array) {
 		super(parent, key);
 		this.array = array;
 	}
@@ -53,15 +53,15 @@ public class ArrayElementImpl extends AbstractElement {
 	}
 
 	@Override
-	public Element getChild(final String key) {
+	public Node getChild(final String key) {
 		return null;
 	}
 
 	@Override
-	public List<Element> getChildren() {
+	public List<Node> getChildren() {
 		try {
 			if (children==null) {
-				children = new ArrayList<Element>();
+				children = new ArrayList<Node>();
 				for(int i=0;i < array.length();i++){
 					Object obj = array.get(i);
 					children.add(factory("array", obj, array, i));
@@ -75,7 +75,7 @@ public class ArrayElementImpl extends AbstractElement {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Element> getChildren(String key) {
+	public List<Node> getChildren(String key) {
 		return Collections.EMPTY_LIST;
 	}
 

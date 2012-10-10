@@ -8,15 +8,15 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.Element;
-import com.gistlabs.mechanize.json.element.ElementImpl;
+import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 
 public class MixedChildrenElementsTest extends TestElementBaseClass {
-	ElementImpl element = new ElementImpl(parseJson("{ \"a\" : 2, \"b\" : { \"a\" : \"x\", \"c\" : 4 }, \"c\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
+	ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"a\" : 2, \"b\" : { \"a\" : \"x\", \"c\" : 4 }, \"c\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
 	
 	@Test
 	public void testPrimitiveChild() {		
-		Element nested = element.getChild("a");
+		Node nested = element.getChild("a");
 		assertNotNull(nested);
 		
 		Collection<String> attributes = element.getAttributes();
@@ -26,9 +26,9 @@ public class MixedChildrenElementsTest extends TestElementBaseClass {
 	
 	@Test
 	public void testElementChild() {
-		Element nested = element.getChild("b");
+		Node nested = element.getChild("b");
 		assertNotNull(nested);
-		assertTrue(nested instanceof ElementImpl);
+		assertTrue(nested instanceof ObjectNodeImpl);
 		assertEquals("b", nested.getName());
 		assertEquals(element, nested.getParent());
 		assertEquals("x", nested.getAttribute("a"));
@@ -36,7 +36,7 @@ public class MixedChildrenElementsTest extends TestElementBaseClass {
 	
 	@Test
 	public void testChildren() {
-		List<Element> children = element.getChildren();
+		List<Node> children = element.getChildren();
 		assertEquals(3, children.size());
 		
 		Collection<String> names = new ArrayList<String>();

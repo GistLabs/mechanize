@@ -15,7 +15,7 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.json.Element;
+import com.gistlabs.mechanize.json.Node;
 import com.gistlabs.mechanize.json.impl.JsonPage;
 
 /**
@@ -28,7 +28,7 @@ public class AndroidJsonApiIT {
 		MechanizeAgent agent = new MechanizeAgent();
 		JsonPage page = (JsonPage) agent.get("http://api.androidhive.info/contacts/");
 		
-		List<Element> contacts = page.json().getChildren("contacts");
+		List<Node> contacts = page.json().getChildren("contacts");
 		assertNotNull(contacts);
 		assertEquals("c200", contacts.get(0).getAttribute("id"));
 	}

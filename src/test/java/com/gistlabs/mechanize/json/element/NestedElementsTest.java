@@ -4,18 +4,18 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.Element;
-import com.gistlabs.mechanize.json.element.ElementImpl;
+import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 
 public class NestedElementsTest extends TestElementBaseClass {
 	
 	@Test
 	public void testNestedElement() {
-		ElementImpl element = new ElementImpl(parseJson("{ \"one\" : 2, \"b\" : { \"a\" : \"x\", \"c\" : 4 } }"));
+		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"b\" : { \"a\" : \"x\", \"c\" : 4 } }"));
 		
-		Element nested = element.getChild("b");
+		Node nested = element.getChild("b");
 		assertNotNull(nested);
-		assertTrue(nested instanceof ElementImpl);
+		assertTrue(nested instanceof ObjectNodeImpl);
 		assertEquals("b", nested.getName());
 		assertEquals(element, nested.getParent());
 		assertEquals("x", nested.getAttribute("a"));

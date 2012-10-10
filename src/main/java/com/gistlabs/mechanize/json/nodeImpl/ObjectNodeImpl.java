@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json.element;
+package com.gistlabs.mechanize.json.nodeImpl;
 
 import java.util.*;
 
@@ -6,25 +6,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.gistlabs.mechanize.json.Element;
+import com.gistlabs.mechanize.json.Node;
 import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
 
-public class ElementImpl extends AbstractElement {
+public class ObjectNodeImpl extends AbstractNode {
 
 	private final JSONObject obj;
-	private Map<String,Element> children = new HashMap<String, Element>();
+	private Map<String,Node> children = new HashMap<String, Node>();
 
-	public ElementImpl(JSONObject obj) {
+	public ObjectNodeImpl(JSONObject obj) {
 		this("root", obj);
 		
 	}
 	
-	public ElementImpl(String name, JSONObject obj) {
+	public ObjectNodeImpl(String name, JSONObject obj) {
 		this(null, name, obj);
 	}
 
-	public ElementImpl(Element parent, String name, JSONObject obj) {
+	public ObjectNodeImpl(Node parent, String name, JSONObject obj) {
 		super(parent, name);
 		this.obj = obj;
 	}
@@ -84,7 +84,7 @@ public class ElementImpl extends AbstractElement {
 	}
 
 	@Override
-	public Element getChild(final String key) {
+	public Node getChild(final String key) {
 		if (!children.containsKey(key))
 			children.put(key, getElementByType(key));
 		
@@ -95,7 +95,7 @@ public class ElementImpl extends AbstractElement {
 		return !(jsonObject instanceof JSONObject || jsonObject instanceof JSONArray);
 	}
 	
-	protected Element getElementByType(String key) {
+	protected Node getElementByType(String key) {
 		try {
 			Object obj = this.obj.get(key);
 			return factory(key, obj);
@@ -105,9 +105,9 @@ public class ElementImpl extends AbstractElement {
 	}
 
 	@Override
-	public List<Element> getChildren() {
+	public List<Node> getChildren() {
 		try {
-			List<Element> result = new ArrayList<Element>();
+			List<Node> result = new ArrayList<Node>();
 			@SuppressWarnings("unchecked")
 			Iterator<String> keys = this.obj.keys();
 			while(keys.hasNext()) {
@@ -122,9 +122,9 @@ public class ElementImpl extends AbstractElement {
 	}
 
 	@Override
-	public List<Element> getChildren(String key) {
+	public List<Node> getChildren(String key) {
 		try {
-			ArrayList<Element> result = new ArrayList<Element>();
+			ArrayList<Node> result = new ArrayList<Node>();
 			try {
 				result.add(getChild(key));
 			} catch(JsonArrayException e) {

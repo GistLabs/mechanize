@@ -1,14 +1,14 @@
-package com.gistlabs.mechanize.json.element;
+package com.gistlabs.mechanize.json.nodeImpl;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import com.gistlabs.mechanize.json.Element;
+import com.gistlabs.mechanize.json.Node;
 
-public class AttributeElement extends AbstractElement {
+public class AttributeNode extends AbstractNode {
 	
-	public AttributeElement(Element parent, String name) {
+	public AttributeNode(Node parent, String name) {
 		super(parent, name);
 	}
 
@@ -42,18 +42,18 @@ public class AttributeElement extends AbstractElement {
 	}
 
 	@Override
-	public Element getChild(String key) {
+	public Node getChild(String key) {
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Element> getChildren() {
+	public List<Node> getChildren() {
 		return Collections.EMPTY_LIST;
 	}
 
 	@Override
-	public List<Element> getChildren(String key) {
+	public List<Node> getChildren(String key) {
 		return getChildren();
 	}
 }
