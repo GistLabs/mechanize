@@ -23,6 +23,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.junit.Test;
 
+import com.gistlabs.mechanize.html.HtmlElements.HtmlQueryStrategy;
 import com.gistlabs.mechanize.query.QueryBuilder;
 import com.gistlabs.mechanize.query.Query.Pattern;
 
@@ -33,6 +34,8 @@ import com.gistlabs.mechanize.query.Query.Pattern;
  */
 public class QueryTest {
 
+	HtmlQueryStrategy strategy = new HtmlQueryStrategy();
+	
 	@Test
 	public void testSinglePartQueryWithString() {
 		assertEquals("(<value,[any]>)", QueryBuilder.inBrackets(QueryBuilder.byAny("value")).toString());
@@ -96,31 +99,31 @@ public class QueryTest {
 	
 	@Test
 	public void testSimpleQueryMatchingTrue() {
-		assertTrue(QueryBuilder.byAny("value").matches(newElement("<a href='value'/>")));
-		assertTrue(QueryBuilder.byName("value").matches(newElement("<a name='value'/>")));
-		assertTrue(QueryBuilder.byId("value").matches(newElement("<a id='value'/>")));
-		assertTrue(QueryBuilder.byNameOrId("value").matches(newElement("<a name='value'/>")));
-		assertTrue(QueryBuilder.byNameOrId("value").matches(newElement("<a id='value'/>")));
-		assertTrue(QueryBuilder.byTag("p").matches(newElement("<p/>")));
-		assertTrue(QueryBuilder.byClass("value").matches(newElement("<a class='value'/>")));
-		assertTrue(QueryBuilder.byHRef("value").matches(newElement("<a href='value'/>")));
-		assertTrue(QueryBuilder.bySrc("value").matches(newElement("<a src='value'/>")));
-		assertTrue(QueryBuilder.byTitle("value").matches(newElement("<a title='value'/>")));
-		assertTrue(QueryBuilder.byWidth("value").matches(newElement("<a width='value'/>")));
-		assertTrue(QueryBuilder.byHeight("value").matches(newElement("<a height='value'/>")));
-		assertTrue(QueryBuilder.byValue("value").matches(newElement("<a value='value'/>")));
-		assertTrue(QueryBuilder.byType("value").matches(newElement("<a type='value'/>")));
-		assertTrue(QueryBuilder.byText("value").matches(
+		assertTrue(QueryBuilder.byAny("value").matches(strategy, newElement("<a href='value'/>")));
+		assertTrue(QueryBuilder.byName("value").matches(strategy, newElement("<a name='value'/>")));
+		assertTrue(QueryBuilder.byId("value").matches(strategy, newElement("<a id='value'/>")));
+		assertTrue(QueryBuilder.byNameOrId("value").matches(strategy, newElement("<a name='value'/>")));
+		assertTrue(QueryBuilder.byNameOrId("value").matches(strategy, newElement("<a id='value'/>")));
+		assertTrue(QueryBuilder.byTag("p").matches(strategy, newElement("<p/>")));
+		assertTrue(QueryBuilder.byClass("value").matches(strategy, newElement("<a class='value'/>")));
+		assertTrue(QueryBuilder.byHRef("value").matches(strategy, newElement("<a href='value'/>")));
+		assertTrue(QueryBuilder.bySrc("value").matches(strategy, newElement("<a src='value'/>")));
+		assertTrue(QueryBuilder.byTitle("value").matches(strategy, newElement("<a title='value'/>")));
+		assertTrue(QueryBuilder.byWidth("value").matches(strategy, newElement("<a width='value'/>")));
+		assertTrue(QueryBuilder.byHeight("value").matches(strategy, newElement("<a height='value'/>")));
+		assertTrue(QueryBuilder.byValue("value").matches(strategy, newElement("<a value='value'/>")));
+		assertTrue(QueryBuilder.byType("value").matches(strategy, newElement("<a type='value'/>")));
+		assertTrue(QueryBuilder.byText("value").matches(strategy, 
 				newElement("<a><b>v</b><strong>a<i>l</i>u</strong><b>e</b>")));
-		assertTrue(QueryBuilder.byInnerHtml("value").matches(newElement("<a>value</a>")));
-		assertTrue(QueryBuilder.byHtml("<a></a>").matches(newElement("<a></a>")));
+		assertTrue(QueryBuilder.byInnerHtml("value").matches(strategy, newElement("<a>value</a>")));
+		assertTrue(QueryBuilder.byHtml("<a></a>").matches(strategy, newElement("<a></a>")));
 	}
 	
 	@Test
 	public void testCombinationQueryMatchingTrue() {
-		assertTrue(byId("myId").or.bySrc("test.png").matches(newElement("<img id='myId'/>")));
-		assertTrue(byId("myId").or.bySrc("test.png").matches(newElement("<img src='test.png'/>")));
-		assertFalse(byId("myId").or.bySrc("test.png").matches(newElement("<img/>")));
+		assertTrue(byId("myId").or.bySrc("test.png").matches(strategy, newElement("<img id='myId'/>")));
+		assertTrue(byId("myId").or.bySrc("test.png").matches(strategy, newElement("<img src='test.png'/>")));
+		assertFalse(byId("myId").or.bySrc("test.png").matches(strategy, newElement("<img/>")));
 	}
 	
 	private Element newElement(String string) {
@@ -130,28 +133,28 @@ public class QueryTest {
 	
 	@Test
 	public void testAndCombination() {
-		assertFalse(byId("myId").and.bySrc("test.png").matches(newElement("<img id='myId'/>")));
-		assertFalse(byId("myId").and.bySrc("test.png").matches(newElement("<img src='test.png'/>")));
-		assertTrue(byId("myId").and.bySrc("test.png").matches(newElement("<img id='myId' src='test.png'/>")));
-		assertFalse(byId("myId").and.bySrc("test.png").matches(newElement("<img/>")));
+		assertFalse(byId("myId").and.bySrc("test.png").matches(strategy, newElement("<img id='myId'/>")));
+		assertFalse(byId("myId").and.bySrc("test.png").matches(strategy, newElement("<img src='test.png'/>")));
+		assertTrue(byId("myId").and.bySrc("test.png").matches(strategy, newElement("<img id='myId' src='test.png'/>")));
+		assertFalse(byId("myId").and.bySrc("test.png").matches(strategy, newElement("<img/>")));
 	}
 
 	@Test
 	public void testInBracketsNot() {
-		assertTrue(inBrackets(byId("myId")).matches(newElement("<img id='myId'/>")));
-		assertFalse(inBrackets(byId("myId")).matches(newElement("<img id='otherId'/>")));
+		assertTrue(inBrackets(byId("myId")).matches(strategy, newElement("<img id='myId'/>")));
+		assertFalse(inBrackets(byId("myId")).matches(strategy, newElement("<img id='otherId'/>")));
 	}
 
 	@Test
 	public void testNot() {
-		assertFalse(not(byId("myId")).matches(newElement("<img id='myId'/>")));
-		assertTrue(not(byId("myId")).matches(newElement("<img id='otherId'/>")));
+		assertFalse(not(byId("myId")).matches(strategy, newElement("<img id='myId'/>")));
+		assertTrue(not(byId("myId")).matches(strategy, newElement("<img id='otherId'/>")));
 	}
 	
 	@Test
 	public void testEverything() {
 		assertEquals("<everything>", QueryBuilder.everything().toString());
-		assertTrue(everything().matches(newElement("<a/>")));
+		assertTrue(everything().matches(strategy, newElement("<a/>")));
 	}
 	
 	@Test

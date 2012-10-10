@@ -18,6 +18,7 @@ import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
 import com.gistlabs.mechanize.RequestBuilder;
 import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.html.HtmlElements.HtmlQueryStrategy;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryBuilder;
@@ -94,7 +95,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	public String getUri() {
 		String uri = null;
 		if(getElement().hasAttribute("action"))
-			uri = getElement().getAbsoluteUrl("action");
+			uri = getElement().getAbsoluteAttribute("action");
 		else 
 			uri = getPage().getUri().toString();
 		return uri;
@@ -106,16 +107,18 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	}
 	
 	public FormElement get(Query query) {
+		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(FormElement element : elements)
-			if(element.matches(query))
+			if(element.matches(queryStrategy, query))
 				return element;
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T get(Query query, Class<T> clazz) {
+		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(FormElement element : elements) {
-			if(clazz == null || clazz.isInstance(element) && element.matches(query))
+			if(clazz == null || clazz.isInstance(element) && element.matches(queryStrategy, query))
 				return (T)element;
 		}
 		return null;
@@ -123,17 +126,20 @@ public class Form extends PageElement implements Iterable<FormElement> {
 
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getAll(Query query, Class<T> clazz) {
+		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		List<T> result = new ArrayList<T>();
 		for(FormElement element : elements)
-			if((clazz == null || clazz.isInstance(element)) && element.matches(query))
+			if((clazz == null || clazz.isInstance(element)) && element.matches(queryStrategy, query))
 				result.add((T)element);
 		return result;
 	}
 	
 	public List<FormElement> getAll(Query query) {
+		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
+		
 		List<FormElement> result = new ArrayList<FormElement>();
 		for(FormElement element : elements)
-			if(element.matches(query))
+			if(element.matches(queryStrategy, query))
 				result.add(element);
 		return result;
 	}

@@ -7,7 +7,11 @@
  */
 package com.gistlabs.mechanize.html;
 
+import java.util.List;
+
 import org.jsoup.nodes.TextNode;
+
+import com.gistlabs.mechanize.util.Util;
 
 
 /**
@@ -22,5 +26,32 @@ public class HtmlTextNode extends HtmlNode {
 	
 	public TextNode getTextNode() {
 		return (TextNode)getNode();
+	}
+	
+	@Override
+	public String getAttribute(String attributeKey) {
+		if(attributeKey.equals(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_TEXT))
+			return getTextNode().text();
+		else
+			return super.getAttribute(attributeKey);
+	}
+	
+	@Override
+	public List<String> getAttributeNames() {
+		return getAttributeNamesOfJSoupTextNode(getTextNode());
+	}
+
+	public static String getAttributeValueOfJSoupTextNode(TextNode textNode,
+			String attribute) {
+		if(attribute.equals(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_TEXT))
+			return textNode.text();
+		else
+			return null;
+	}
+	
+	public static List<String> getAttributeNamesOfJSoupTextNode(TextNode textNode) {
+		List<String> names = Util.newEmptyList();
+		names.add(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_TEXT);
+		return names;
 	}
 }

@@ -34,6 +34,6 @@ public class Image extends PageElement {
 	
 	/** Returns the absolute url for the given image or null if no src-attribute is provided. */
 	public String getAbsoluteSrc() {
-		return getElement().hasAttribute("src") ? getElement().getAbsoluteUrl("src") : null;
+		return getElement().hasAttribute("src") ? getElement().getAbsoluteAttribute("src") : null;
 	}
 }
