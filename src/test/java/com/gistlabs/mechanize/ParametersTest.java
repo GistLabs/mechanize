@@ -7,11 +7,10 @@
  */
 package com.gistlabs.mechanize;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -19,6 +18,19 @@ import com.gistlabs.mechanize.parameters.Parameters;
 
 
 public class ParametersTest {
+	
+	@Test
+	public void testConstructingParametersFromMap() {
+		Map<String, Object> parameterValues = new HashMap<String, Object>();
+		
+		parameterValues.put("name", "value");
+		parameterValues.put("array", new String [] {"value1", "value2"});
+		
+		Parameters parameters = new Parameters(parameterValues);
+		assertEquals(3, parameters.getValueCount());
+		assertEquals(1, parameters.get("name").length);
+		assertEquals(2, parameters.get("array").length);
+	}
 	
 	@Test
 	public void testAddAndSet() {
@@ -62,7 +74,19 @@ public class ParametersTest {
 		assertTrue(parameters.has(name));
 		assertArrayEquals(new String [] {"value1", "value2"}, parameters.get(name));
 	}
+	
+	@Test
+	public void testSettingSameValueASecondTimeIsIgnored() {
+		Parameters parameters = new Parameters().set("key", "value", "value");
+		assertEquals(1, parameters.getValueCount());
+	}
 
+	@Test
+	public void testAddingSameValueASecondTimeIsIgnored() {
+		Parameters parameters = new Parameters().set("key", "value").add("key", "value");
+		assertEquals(1, parameters.getValueCount());
+	}
+	
 	@Test
 	public void testGetNamesReturnsTheParametersInTheOrderTheyWhereFirstAdded() {
 		Parameters parameters = new Parameters().add("name2", "value").add("name", "value");
