@@ -11,9 +11,9 @@ import java.util.Collection;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.ContentType;
 
-import com.gistlabs.mechanize.util.*;
+import com.gistlabs.mechanize.util.Collections;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 public class ContentPage extends Page {
 	public static Collection<String> CONTENT_MATCHERS = 

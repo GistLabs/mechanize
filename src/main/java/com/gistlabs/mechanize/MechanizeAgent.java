@@ -17,7 +17,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpProtocolParams;
@@ -28,6 +27,7 @@ import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.requestor.PageRequestor;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
  * Mechanize agent acts as a focal point for HTTP interactions and also as a factory for Page objects from responses.

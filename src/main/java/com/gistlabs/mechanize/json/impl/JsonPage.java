@@ -12,7 +12,6 @@ import java.util.Collection;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.ContentType;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -22,6 +21,7 @@ import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.json.Node;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 import com.gistlabs.mechanize.util.Collections;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 public class JsonPage extends Page {
 	public static Collection<String> CONTENT_MATCHERS = 
