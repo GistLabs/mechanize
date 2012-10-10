@@ -1,4 +1,5 @@
 target/
+.settings/
 release.properties
 .DS_Store
 *~
