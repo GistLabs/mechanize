@@ -22,7 +22,7 @@ public abstract class AbstractAttributeSpecifierMatcher<Node> implements Matcher
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<Node> match(Collection<Node> nodes, Node root) {
+	public Collection<Node> match(Collection<Node> nodes) {
 	    Assert.notNull(nodes, "nodes is null!");
 	    Collection<Node> result = new ArrayList<Node>();
 	    for (Node node : nodes) {
