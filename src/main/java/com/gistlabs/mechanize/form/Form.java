@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
-import com.gistlabs.mechanize.html.HtmlElement;
 import com.gistlabs.mechanize.html.HtmlElements.HtmlQueryStrategy;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.query.Query;
@@ -32,70 +32,70 @@ import com.gistlabs.mechanize.requestor.RequestBuilder;
 public class Form extends PageElement implements Iterable<FormElement> {
 	private List<FormElement> elements = new ArrayList<FormElement>();
 	
-	public Form(Page page, HtmlElement formElement) {
-		super(page, formElement);
+	public Form(Page page, Node formNode) {
+		super(page, formNode);
 		analyse();
 	}
 
 	private void analyse() {
-		List<HtmlElement> elements = getElement().getAll(byTag("input").or.byTag("textarea").or.byTag("select"));
-		for(HtmlElement element : elements) {
-			FormElement formElement = newFormElement(element);
+		List<? extends Node> nodes = getNode().getAll(byTag("input").or.byTag("textarea").or.byTag("select"));
+		for(Node node : nodes) {
+			FormElement formElement = newFormElement(node);
 			if(formElement != null)
 				this.elements.add(formElement);
 		}
 	}
 	
-	private FormElement newFormElement(HtmlElement element) {
-		if(element.getTagName().equalsIgnoreCase("input") && element.hasAttribute("type")) {
-			String type = element.getAttribute("type");
+	private FormElement newFormElement(Node node) {
+		if(node.getName().equalsIgnoreCase("input") && node.hasAttribute("type")) {
+			String type = node.getAttribute("type");
 			if(type.equalsIgnoreCase("text"))
-				return new Text(this, element);
+				return new Text(this, node);
 			else if(type.equalsIgnoreCase("search"))
-				return new Search(this, element);
+				return new Search(this, node);
 			else if(type.equalsIgnoreCase("email"))
-				return new Email(this, element);
+				return new Email(this, node);
 			else if(type.equalsIgnoreCase("password"))
-				return new Password(this, element);
+				return new Password(this, node);
 			else if(type.equalsIgnoreCase("file"))
-				return new Upload(this, element);
+				return new Upload(this, node);
 			else if(type.equalsIgnoreCase("hidden"))
-				return new Hidden(this, element);
+				return new Hidden(this, node);
 			else if(type.equalsIgnoreCase("submit"))
-				return new SubmitButton(this, element);
+				return new SubmitButton(this, node);
 			else if(type.equalsIgnoreCase("image"))
-				return new SubmitImage(this, element);
+				return new SubmitImage(this, node);
 			else if(type.equalsIgnoreCase("checkbox"))
-				return new Checkbox(this, element);
+				return new Checkbox(this, node);
 			else if(type.equalsIgnoreCase("radio"))
-				return new RadioButton(this, element);
+				return new RadioButton(this, node);
 			else
-				return new FormElement(this, element);
+				return new FormElement(this, node);
 		}
-		else if(element.getTagName().equalsIgnoreCase("input") && !element.hasAttribute("type")) {
+		else if(node.getName().equalsIgnoreCase("input") && !node.hasAttribute("type")) {
 			//Used to map input without type to text field (as required by google.com search form)
-			return new Text(this, element);
+			return new Text(this, node);
 		}
-		else if(element.getTagName().equalsIgnoreCase("textarea"))
-			return new TextArea(this, element);
-		else if(element.getTagName().equalsIgnoreCase("select"))
-			return new Select(this, element);
+		else if(node.getName().equalsIgnoreCase("textarea"))
+			return new TextArea(this, node);
+		else if(node.getName().equalsIgnoreCase("select"))
+			return new Select(this, node);
 		else
 			return null;
 	}
 	
 	public boolean isDoPost() {
-		return getElement().hasAttribute("method") && getElement().getAttribute("method").equalsIgnoreCase("post");
+		return getNode().hasAttribute("method") && getNode().getAttribute("method").equalsIgnoreCase("post");
 	}
 	
 	public boolean isMultiPart() {
-		return getElement().hasAttribute("enctype") && getElement().getAttribute("enctype").equalsIgnoreCase("multipart/form-data");
+		return getNode().hasAttribute("enctype") && getNode().getAttribute("enctype").equalsIgnoreCase("multipart/form-data");
 	}
 	
 	public String getUri() {
 		String uri = null;
-		if(getElement().hasAttribute("action"))
-			uri = getElement().getAbsoluteAttribute("action");
+		if(getNode().hasAttribute("action"))
+			uri = getNode().getAbsoluteAttribute("action");
 		else 
 			uri = getPage().getUri().toString();
 		return uri;

@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.Node;
 
 /** 
  * Represents an input element of type 'text'.  
@@ -17,7 +17,7 @@ import com.gistlabs.mechanize.html.HtmlElement;
  */
 public class Search extends FormElement {
 
-	public Search(Form form, HtmlElement element) {
-		super(form, element);
+	public Search(Form form, Node node) {
+		super(form, node);
 	}
 }

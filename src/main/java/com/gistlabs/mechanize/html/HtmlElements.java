@@ -16,6 +16,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Util;

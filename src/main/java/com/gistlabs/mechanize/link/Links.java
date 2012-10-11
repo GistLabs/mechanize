@@ -9,9 +9,9 @@ package com.gistlabs.mechanize.link;
 
 import java.util.List;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
-import com.gistlabs.mechanize.html.HtmlElement;
 
 /** 
  * A collection of Link objects. 
@@ -25,12 +25,12 @@ public class Links extends PageElements<Link> {
 		this(page, null);
 	}
 	
-	public Links(Page page, List<HtmlElement> links) {
+	public Links(Page page, List<? extends Node> links) {
 		super(page, links);
 	}
 	
 	@Override
-	protected Link newRepresentation(HtmlElement element) {
-		return new Link(getPage(), element);
+	protected Link newRepresentation(Node node) {
+		return new Link(getPage(), node);
 	}
 }

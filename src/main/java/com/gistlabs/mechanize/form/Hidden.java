@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.Node;
 
 /** 
  * Represents an input element of type 'hidden'. 
@@ -18,8 +18,8 @@ import com.gistlabs.mechanize.html.HtmlElement;
  */
 public class Hidden extends FormElement {
 
-	public Hidden(Form form, HtmlElement element) {
-		super(form, element);
+	public Hidden(Form form, Node node) {
+		super(form, node);
 	}
 	
 	@Override

@@ -7,7 +7,6 @@
  */
 package com.gistlabs.mechanize;
 
-import com.gistlabs.mechanize.html.HtmlElement;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 
@@ -18,15 +17,15 @@ import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
  */
 public abstract class PageElement implements RequestBuilderFactory<Page> {
 	protected final Page page;
-	protected final HtmlElement element;
+	protected final Node node;
 	
-	public PageElement(Page page, HtmlElement element) {
+	public PageElement(Page page, Node node) {
 		this.page = page;
-		this.element = element;
+		this.node = node;
 	}
 
-	protected HtmlElement getElement() {
-		return element;
+	public Node getNode() {
+		return node;
 	}
 	
 	public Page getPage() {
@@ -39,11 +38,11 @@ public abstract class PageElement implements RequestBuilderFactory<Page> {
 	}
 	
 	public boolean hasAttribute(String key) {
-		return element.hasAttribute(key);
+		return node.hasAttribute(key);
 	}
 	
 	public String getAttribute(String key) {
-		return element.getAttribute(key);
+		return node.getAttribute(key);
 	}
 
 	@Override

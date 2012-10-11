@@ -18,6 +18,7 @@ import org.apache.http.entity.ContentType;
 import org.jsoup.Jsoup;
 
 import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.form.Forms;
@@ -50,14 +51,14 @@ public class HtmlPage extends Page {
 	
 	@Override
 	protected Links loadLinks() {
-		List<HtmlElement> links = htmlElements().getAll(byTag("a"));
+		List<? extends Node> links = htmlElements().getAll(byTag("a"));
 		return new Links(this, links);
 	}
 	
-	@Override
+	@Override 
 	protected Forms loadForms() {
-		List<HtmlElement> forms = htmlElements().getAll(byTag("form"));
-		return new Forms(this, forms);
+		List<? extends Node> forms = htmlElements().getAll(byTag("form"));
+		return new Forms((Page)this, forms);
 	}
 	
 	@Override

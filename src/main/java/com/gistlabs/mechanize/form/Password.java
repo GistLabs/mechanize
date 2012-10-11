@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.Node;
 
 /** 
  * Represents an input element of type 'password'. 
@@ -18,7 +18,7 @@ import com.gistlabs.mechanize.html.HtmlElement;
  */
 public class Password extends FormElement {
 
-	public Password(Form form, HtmlElement element) {
-		super(form, element);
+	public Password(Form form, Node node) {
+		super(form, node);
 	}
 }

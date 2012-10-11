@@ -29,6 +29,11 @@ public class HtmlTextNode extends HtmlNode {
 	}
 	
 	@Override
+	public String getValue() {
+		return getAttribute(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_TEXT);
+	}
+	
+	@Override
 	public String getAttribute(String attributeKey) {
 		if(attributeKey.equals(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_TEXT))
 			return getJsoupTextNode().text();

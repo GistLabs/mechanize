@@ -12,6 +12,7 @@ import java.util.List;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Element;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.util.Util;
 
@@ -27,6 +28,16 @@ public class HtmlElement extends HtmlNode implements Node {
 	
 	public Element getJsoupElement() {
 		return (Element)getJsoupNode();
+	}
+	
+	@Override
+	public String getName() {
+		return getAttribute(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_NODE_NAME);
+	}
+	
+	@Override
+	public String getValue() {
+		return getAttribute(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_VALUE);
 	}
 
 	@SuppressWarnings("unchecked")

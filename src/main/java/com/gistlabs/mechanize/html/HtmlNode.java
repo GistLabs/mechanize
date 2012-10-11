@@ -10,6 +10,7 @@ package com.gistlabs.mechanize.html;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.util.Util;
 
@@ -36,6 +37,16 @@ public class HtmlNode implements Node {
 	
 	public HtmlPage getPage() {
 		return page;
+	}
+	
+	@Override
+	public String getName() {
+		return null;
+	}
+	
+	@Override
+	public String getValue() {
+		return null;
 	}
 	
 	@Override
