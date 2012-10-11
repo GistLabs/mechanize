@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json.query.matchers;
+package com.gistlabs.mechanize.json.query;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -7,7 +7,6 @@ import se.fishtank.css.selectors.NodeSelectorException;
 import se.fishtank.css.selectors.Selector;
 import se.fishtank.css.util.Assert;
 
-import com.gistlabs.mechanize.json.query.NodeHelper;
 
 public class TagMatcher<Node> extends AbstractMatcher<Node> {
    

@@ -1,11 +1,9 @@
-package com.gistlabs.mechanize.json.query.matchers;
+package com.gistlabs.mechanize.json.query;
 
 import java.util.Collection;
 
 import se.fishtank.css.util.Assert;
 
-import com.gistlabs.mechanize.json.query.Matcher;
-import com.gistlabs.mechanize.json.query.NodeHelper;
 
 public abstract class AbstractMatcher<Node> implements Matcher<Node> {
 

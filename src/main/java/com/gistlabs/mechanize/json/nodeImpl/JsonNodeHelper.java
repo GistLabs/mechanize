@@ -1,8 +1,10 @@
-package com.gistlabs.mechanize.json.query;
+package com.gistlabs.mechanize.json.nodeImpl;
 
 import java.util.*;
 
 import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.query.NodeHelper;
+
 
 public class JsonNodeHelper implements NodeHelper<Node> {
 

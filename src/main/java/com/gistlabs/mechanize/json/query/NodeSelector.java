@@ -16,10 +16,6 @@ import se.fishtank.css.selectors.specifier.PseudoClassSpecifier;
 import se.fishtank.css.selectors.specifier.PseudoNthSpecifier;
 import se.fishtank.css.util.Assert;
 
-import com.gistlabs.mechanize.json.query.matchers.AttributeSpecifierMatcher;
-import com.gistlabs.mechanize.json.query.matchers.PseudoClassSpecifierMatcher;
-import com.gistlabs.mechanize.json.query.matchers.PseudoNthSpecifierMatcher;
-import com.gistlabs.mechanize.json.query.matchers.TagMatcher;
 
 public class NodeSelector<Node> {
 	

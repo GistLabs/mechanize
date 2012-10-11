@@ -9,7 +9,10 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.nodeImpl.JsonNodeHelper;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
+import com.gistlabs.mechanize.json.query.NodeSelector;
+
 
 public class PseudoNodeSelectorTest {
 

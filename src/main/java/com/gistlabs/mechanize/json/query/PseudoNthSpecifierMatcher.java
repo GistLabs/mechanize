@@ -1,10 +1,9 @@
-package com.gistlabs.mechanize.json.query.matchers;
+package com.gistlabs.mechanize.json.query;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.gistlabs.mechanize.json.query.NodeHelper;
 
 import se.fishtank.css.selectors.NodeSelectorException;
 import se.fishtank.css.selectors.dom.DOMHelper;

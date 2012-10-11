@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json.query.matchers;
+package com.gistlabs.mechanize.json.query;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -6,7 +6,6 @@ import java.util.LinkedHashSet;
 import se.fishtank.css.selectors.specifier.AttributeSpecifier;
 import se.fishtank.css.util.Assert;
 
-import com.gistlabs.mechanize.json.query.NodeHelper;
 
 public class AttributeSpecifierMatcher<Node> extends AbstractMatcher<Node> {
 
