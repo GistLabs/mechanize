@@ -15,10 +15,6 @@ import com.gistlabs.mechanize.json.exceptions.JsonException;
 public abstract class AbstractNode implements Node {
 	protected final String name;
 	protected final Node parent;
-
-	public AbstractNode(String name) {
-		this(null, name);
-	}
 		
 	public AbstractNode(Node parent, String name) {
 		this.parent = parent;

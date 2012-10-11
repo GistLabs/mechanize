@@ -118,8 +118,12 @@ public class ObjectNodeImpl extends AbstractNode {
 
 	@Override
 	public List<Node> getChildren(String key) {
-		if (!children.containsKey(key))
-			children.put(key, factory(key));
+		if (!children.containsKey(key)) {
+			if ("*".equalsIgnoreCase(key))
+				children.put(key, getChildren());
+			else
+				children.put(key, factory(key));
+		}
 		
 		return children.get(key);
 	}

@@ -56,5 +56,13 @@ public class ArrayElementsTest extends TestElementBaseClass {
 		
 		element.getChild("results");
 	}
+	
+	@Test
+	public void testGetChildrenStar() {
+		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : [2,3], \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 },  ] }"));
+		
+		assertEquals(2, element.getChildren("results").size());
+		assertEquals(4, element.getChildren("*").size());
+	}
 
 }
