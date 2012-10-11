@@ -1,6 +1,6 @@
 package com.gistlabs.mechanize.json.query.matchers;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Collection;
 
 import se.fishtank.css.selectors.specifier.AttributeSpecifier;
@@ -24,12 +24,13 @@ public abstract class AbstractAttributeSpecifierMatcher<Node> implements Matcher
 	@Override
 	public Collection<Node> match(Collection<Node> nodes) {
 	    Assert.notNull(nodes, "nodes is null!");
-	    Collection<Node> result = new ArrayList<Node>();
+	    Collection<Node> result = new LinkedHashSet<Node>();
 	    for (Node node : nodes) {
 	    	// It just have to be present.
 	        String name = specifier.getName();
-			if (specifier.getValue() == null && hasAttribute(node, name)) {
-	            result.add(node);
+			if (specifier.getValue() == null) {
+				if (hasAttribute(node, name))
+					result.add(node);
 	            continue;
 	        }
 	        

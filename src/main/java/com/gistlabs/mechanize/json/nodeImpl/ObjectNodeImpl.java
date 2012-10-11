@@ -13,7 +13,7 @@ import com.gistlabs.mechanize.json.exceptions.JsonException;
 public class ObjectNodeImpl extends AbstractNode {
 
 	private final JSONObject obj;
-	private Map<String,Node> children = new HashMap<String, Node>();
+	private Map<String,List<Node>> children = new HashMap<String, List<Node>>();
 
 	public ObjectNodeImpl(JSONObject obj) {
 		this("root", obj);
@@ -80,28 +80,23 @@ public class ObjectNodeImpl extends AbstractNode {
 
 	@Override
 	public void setContent(final String value) {
-		throw new JsonException("JSON Objects can't directly have cpntent");
+		throw new JsonException("JSON Objects can't directly have coSntent");
 	}
 
 	@Override
 	public Node getChild(final String key) {
-		if (!children.containsKey(key))
-			children.put(key, getElementByType(key));
+		List<Node> result = getChildren(key);
 		
-		return children.get(key);
+		if (result.size()>=2)
+			throw new JsonException("More than one result");
+		else if (result.isEmpty())
+			return null;
+		else
+			return result.get(0);
 	}
 	
 	protected boolean isPrimitive(Object jsonObject) {
 		return !(jsonObject instanceof JSONObject || jsonObject instanceof JSONArray);
-	}
-	
-	protected Node getElementByType(String key) {
-		try {
-			Object obj = this.obj.get(key);
-			return factory(key, obj);
-		} catch (JSONException e) {
-			throw new JsonException(e);
-		}
 	}
 
 	@Override
@@ -123,10 +118,23 @@ public class ObjectNodeImpl extends AbstractNode {
 
 	@Override
 	public List<Node> getChildren(String key) {
+		if (!children.containsKey(key)) {
+			if ("*".equalsIgnoreCase(key))
+				children.put(key, getChildren());
+			else
+				children.put(key, factory(key));
+		}
+		
+		return children.get(key);
+	}
+
+	protected List<Node> factory(String key) {
 		try {
 			ArrayList<Node> result = new ArrayList<Node>();
 			try {
-				result.add(getChild(key));
+				Node n = factory(this.obj, key);
+				if (n!=null)
+					result.add(n);
 			} catch(JsonArrayException e) {
 				if (e.getArray()==null)
 					throw e;

@@ -1,21 +1,23 @@
 package com.gistlabs.mechanize.json.query;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 import se.fishtank.css.selectors.NodeSelectorException;
 import se.fishtank.css.selectors.Selector;
 import se.fishtank.css.selectors.Specifier;
-import se.fishtank.css.selectors.dom.internal.*;
 import se.fishtank.css.selectors.scanner.Scanner;
 import se.fishtank.css.selectors.scanner.ScannerException;
 import se.fishtank.css.selectors.specifier.AttributeSpecifier;
 import se.fishtank.css.selectors.specifier.NegationSpecifier;
 import se.fishtank.css.selectors.specifier.PseudoClassSpecifier;
-import se.fishtank.css.selectors.specifier.PseudoNthSpecifier;
 import se.fishtank.css.util.Assert;
 
 import com.gistlabs.mechanize.json.Node;
 import com.gistlabs.mechanize.json.query.matchers.AttributeSpecifierMatcher;
+import com.gistlabs.mechanize.json.query.matchers.PseudoClassSpecifierMatcher;
 import com.gistlabs.mechanize.json.query.matchers.TagMatcher;
 
 public class NodeSelector {
@@ -37,7 +39,7 @@ public class NodeSelector {
             throw new RuntimeException(e);
         }
 
-        List<Node> results = new ArrayList<Node>();
+        Collection<Node> results = new LinkedHashSet<Node>();
         for (Collection<Selector> parts : groups) {
             Collection<Node> result;
 			try {
@@ -50,7 +52,7 @@ public class NodeSelector {
             }
         }
 
-        return results;
+        return new ArrayList<Node>(results);
 	}
 
     
@@ -62,47 +64,47 @@ public class NodeSelector {
      * @throws NodeSelectorException In case of an error.
      */
     private Collection<Node> check(Collection<Selector> parts) throws NodeSelectorException {
-        Collection<Node> result = new ArrayList<Node>();
+        Collection<Node> result = new LinkedHashSet<Node>();
         result.add(root);
         
         for (Selector selector : parts) {
             Matcher<Node> checker = new TagMatcher(selector);
             result = checker.match(result);
-//            if (selector.hasSpecifiers()) {
-//                for (Specifier specifier : selector.getSpecifiers()) {
-//                    switch (specifier.getType()) {
-//                    case ATTRIBUTE:
-//                        checker = new AttributeSpecifierMatcher((AttributeSpecifier) specifier);
-//                        break;
-//                    case PSEUDO:
-//                        if (specifier instanceof PseudoClassSpecifier) {
-//                            checker = new PseudoClassSpecifierChecker((PseudoClassSpecifier) specifier);
+            if (selector.hasSpecifiers()) {
+                for (Specifier specifier : selector.getSpecifiers()) {
+                    switch (specifier.getType()) {
+                    case ATTRIBUTE:
+                        checker = new AttributeSpecifierMatcher((AttributeSpecifier) specifier);
+                        break;
+                    case PSEUDO:
+                        if (specifier instanceof PseudoClassSpecifier) {
+                            checker = new PseudoClassSpecifierMatcher((PseudoClassSpecifier) specifier);
 //                        } else if (specifier instanceof PseudoNthSpecifier) {
 //                            checker = new PseudoNthSpecifierChecker((PseudoNthSpecifier) specifier);
-//                        }
-//                        
-//                        break;
-//                    case NEGATION:
-//                        final Set<Node> negationNodes = checkNegationSpecifier((NegationSpecifier) specifier);
-//                        checker = new NodeTraversalChecker() {
-//                            @Override
-//                            public Set<Node> check(Set<Node> nodes, Node root) throws NodeSelectorException {
-//                                Set<Node> set = new LinkedHashSet<Node>(nodes);
-//                                set.removeAll(negationNodes);
-//                                return set;
-//                            }
-//                        };
-//                        
-//                        break;
-//                    }
-//                    
-//                    result = checker.check(result, root);
-//                    if (result.isEmpty()) {
-//                        // Bail out early.
-//                        return result;
-//                    }
-//                }
-//            }
+                        }
+                        
+                        break;
+                        
+                    case NEGATION:
+                        final Collection<Node> negationNodes = checkNegationSpecifier((NegationSpecifier) specifier);
+                        checker = new Matcher<Node>() {
+                            @Override
+                            public List<Node> match(Collection<Node> nodes) {
+                                Collection<Node> set = new LinkedHashSet<Node>(nodes);
+                                set.removeAll(negationNodes);
+                                return new ArrayList<Node>(set);
+                            }
+                        };
+                        break;
+                    }
+                    
+                    result = checker.match(result);
+                    if (result.isEmpty()) {
+                        // Bail out early.
+                        return result;
+                    }
+                }
+            }
         }
         
         return result;
@@ -119,7 +121,7 @@ public class NodeSelector {
      * @throws NodeSelectorException In case of an error.
      */
     private Collection<Node> checkNegationSpecifier(NegationSpecifier specifier) throws NodeSelectorException {
-        List<Selector> parts = new ArrayList<Selector>(1);
+        Collection<Selector> parts = new LinkedHashSet<Selector>(1);
         parts.add(specifier.getSelector());
         return check(parts);
     }
