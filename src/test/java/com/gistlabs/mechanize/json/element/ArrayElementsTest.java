@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.json.Node;
-import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
+import com.gistlabs.mechanize.json.exceptions.JsonException;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 
 public class ArrayElementsTest extends TestElementBaseClass {
@@ -50,7 +50,7 @@ public class ArrayElementsTest extends TestElementBaseClass {
 		
 	}
 	
-	@Test(expected=JsonArrayException.class)
+	@Test(expected=JsonException.class)
 	public void testChildFails() {
 		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
 		

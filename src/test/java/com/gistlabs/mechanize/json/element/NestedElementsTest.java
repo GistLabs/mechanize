@@ -20,5 +20,12 @@ public class NestedElementsTest extends TestElementBaseClass {
 		assertEquals(element, nested.getParent());
 		assertEquals("x", nested.getAttribute("a"));
 	}
+	
+	@Test
+	public void testNullChild() {
+		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"b\" : { \"a\" : \"x\", \"c\" : 4 } }"));
+		
+		assertNull(element.getChild("c"));
+	}
 
 }
