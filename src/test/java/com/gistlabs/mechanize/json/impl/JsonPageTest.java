@@ -32,6 +32,6 @@ public class JsonPageTest extends MechanizeTestCase {
 	public void testParseJson() {
 		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());		
 		JsonPage page = (JsonPage) agent.get("http://test.com");
-		assertNotNull(page.json());
+		assertNotNull(page.getJsonNode());
 	}
 }

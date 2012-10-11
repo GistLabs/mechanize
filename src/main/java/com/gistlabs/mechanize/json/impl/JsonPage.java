@@ -43,7 +43,7 @@ public class JsonPage extends Page {
 		}	
 	}
 	
-	public Node json() {
+	public Node getJsonNode() {
 		return this.json;
 	}
 }
