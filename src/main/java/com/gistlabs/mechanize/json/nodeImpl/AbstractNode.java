@@ -1,5 +1,7 @@
 package com.gistlabs.mechanize.json.nodeImpl;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -22,7 +24,25 @@ public abstract class AbstractNode implements Node {
 		this.parent = parent;
 		this.name = name;
 	}
-		
+	
+	@Override
+	public String toString() {
+		return String.format("%s(%s)", getName(), join(getAttributes(),","));
+	}
+	
+	static String join(Collection<?> s, String delimiter) {
+	     StringBuilder builder = new StringBuilder();
+	     Iterator<?> iter = s.iterator();
+	     while (iter.hasNext()) {
+	         builder.append(iter.next());
+	         if (!iter.hasNext()) {
+	           break;                  
+	         }
+	         builder.append(delimiter);
+	     }
+	     return builder.toString();
+	 }
+	
 	@Override
 	public String getName() {
 		return this.name;

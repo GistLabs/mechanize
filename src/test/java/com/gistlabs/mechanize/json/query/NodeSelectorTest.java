@@ -79,16 +79,17 @@ public class NodeSelectorTest {
 	}
 	@Test
 	public void testNot() throws Exception {
-		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
+		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"a\" : 2 } ] }"));
 		NodeSelector selector = new NodeSelector(node);
 		
 		List<Node> result = selector.findAll("*:not([x])");
-		assertEquals(2, result.size());
-		assertEquals("1", result.get(0).getAttribute("a"));
+		assertEquals(3, result.size());
+		assertEquals("root", result.get(0).getName());
+		assertEquals("2", result.get(0).getAttribute("a"));
 		
-		List<Node> result2 = selector.findAll("*:not([x])");
-		assertEquals(2, result2.size());
-		assertEquals("1", result2.get(0).getAttribute("a"));
+		List<Node> result2 = selector.findAll("*:not([a])");
+		assertEquals(1, result2.size());
+		assertEquals("b", result2.get(0).getName());
 	}	
 }
 

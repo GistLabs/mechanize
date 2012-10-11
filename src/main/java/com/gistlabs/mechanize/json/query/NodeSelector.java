@@ -82,18 +82,18 @@ public class NodeSelector {
 //                        }
 //                        
 //                        break;
-//                    case NEGATION:
-//                        final Set<Node> negationNodes = checkNegationSpecifier((NegationSpecifier) specifier);
-//                        checker = new NodeTraversalChecker() {
-//                            @Override
-//                            public Set<Node> check(Set<Node> nodes, Node root) throws NodeSelectorException {
-//                                Set<Node> set = new LinkedHashSet<Node>(nodes);
-//                                set.removeAll(negationNodes);
-//                                return set;
-//                            }
-//                        };
-//                        
-//                        break;
+                        
+                    case NEGATION:
+                        final Collection<Node> negationNodes = checkNegationSpecifier((NegationSpecifier) specifier);
+                        checker = new Matcher<Node>() {
+                            @Override
+                            public List<Node> match(Collection<Node> nodes) {
+                                Collection<Node> set = new LinkedHashSet<Node>(nodes);
+                                set.removeAll(negationNodes);
+                                return new ArrayList<Node>(set);
+                            }
+                        };
+                        break;
                     }
                     
                     result = checker.match(result);
