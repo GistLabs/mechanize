@@ -1,8 +1,7 @@
 package com.gistlabs.mechanize.json.query.matchers;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 import se.fishtank.css.selectors.NodeSelectorException;
 import se.fishtank.css.selectors.Selector;
@@ -42,7 +41,7 @@ public abstract class AbstractTagMatcher<Node> implements Matcher<Node> {
         Assert.notNull(nodes, "nodes is null!");
         this.nodes = nodes;
 
-        result = new ArrayList<Node>();
+        result = new LinkedHashSet<Node>();
         switch (selector.getCombinator()) {
         case DESCENDANT:
             addDescendantElements();
@@ -70,7 +69,7 @@ public abstract class AbstractTagMatcher<Node> implements Matcher<Node> {
      */
     private void addDescendantElements() {
         for (Node node : nodes) {
-        	List<Node> nodes = new ArrayList<Node>();
+        	Collection<Node> nodes = new LinkedHashSet<Node>();
         	nodes.add(node);
         	nodes.addAll(getDescendentNodes(node));
         	

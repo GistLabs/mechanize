@@ -1,8 +1,7 @@
 package com.gistlabs.mechanize.json.query.matchers;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 import se.fishtank.css.selectors.specifier.AttributeSpecifier;
 
@@ -29,7 +28,7 @@ public class AttributeSpecifierMatcher extends AbstractAttributeSpecifierMatcher
 	}
 
 	protected Collection<Node> getAttributes(Node element) {
-		List<Node> result = new ArrayList<Node>();
+		Collection<Node> result = new LinkedHashSet<Node>();
 		for(String key : element.getAttributes()) {
 			result.add(element.getChild(key));
 		}

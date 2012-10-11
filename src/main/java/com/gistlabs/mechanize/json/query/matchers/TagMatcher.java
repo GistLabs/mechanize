@@ -1,9 +1,6 @@
 package com.gistlabs.mechanize.json.query.matchers;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import se.fishtank.css.selectors.Selector;
 
@@ -17,7 +14,7 @@ public class TagMatcher extends AbstractTagMatcher<Node> implements Matcher<Node
     }
      
     protected Collection<? extends Node> getDescendentNodes(Node node) {
-    	List<Node> result = new ArrayList<Node>();
+    	Collection<Node> result = new LinkedHashSet<Node>();
     	
     	LinkedList<Node> toProcess = new LinkedList<Node>();
     	toProcess.add(node);
