@@ -30,7 +30,7 @@ public class HtmlNode implements Node {
 		this.node = node;
 	}
 	
-	public org.jsoup.nodes.Node getNode() {
+	public org.jsoup.nodes.Node getJsoupNode() {
 		return node;
 	}
 	

@@ -21,12 +21,12 @@ import com.gistlabs.mechanize.util.Util;
  */
 public class HtmlElement extends HtmlNode implements Node {
 	
-	public HtmlElement(HtmlPage page, Element element) {
-		super(page, element);
+	public HtmlElement(HtmlPage page, Element jsoupElement) {
+		super(page, jsoupElement);
 	}
 	
-	public Element getElement() {
-		return (Element)getNode();
+	public Element getJsoupElement() {
+		return (Element)getJsoupNode();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -37,7 +37,7 @@ public class HtmlElement extends HtmlNode implements Node {
 	
 	@Override
 	public boolean hasAttribute(String attributeKey) {
-		return !isSupportedSpecialAttribute(attributeKey) ? getElement().hasAttr(attributeKey) : true;
+		return !isSupportedSpecialAttribute(attributeKey) ? getJsoupElement().hasAttr(attributeKey) : true;
 	}
 
 	private boolean isSupportedSpecialAttribute(String attributeKey) {
@@ -50,7 +50,7 @@ public class HtmlElement extends HtmlNode implements Node {
 
 	@Override
 	public String getAttribute(String attributeKey) {
-		Element element = getElement();
+		Element element = getJsoupElement();
 		return getAttributeValueOfJSoupElement(element, attributeKey);
 	}
 
@@ -82,7 +82,7 @@ public class HtmlElement extends HtmlNode implements Node {
 	
 	@Override
 	public String getAbsoluteAttribute(String attributeKey) {
-		return getElement().absUrl(attributeKey);
+		return getJsoupElement().absUrl(attributeKey);
 	}
 	
 	/** Returns the class names of the this element as a comma separated list without trailing white-spaces. */
@@ -113,7 +113,7 @@ public class HtmlElement extends HtmlNode implements Node {
 	
 	@Override
 	public List<String> getAttributeNames() {
-		return getAttributeNamesForJSoupElement(getElement());
+		return getAttributeNamesForJSoupElement(getJsoupElement());
 	}
 	
 	public static List<String> getAttributeNamesForJSoupElement(Element element) {
