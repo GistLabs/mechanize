@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -12,10 +13,15 @@ import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 
 public class PseudoNodeSelectorTest {
 
+	protected NodeSelector<Node> build(String json) throws JSONException {
+		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject(json));
+		NodeSelector<Node> selector = new NodeSelector<Node>(new JsonNodeHelper(), node);
+		return selector;
+	}
+
 	@Test
 	public void testPseudoFirstOfType() throws Exception {
-		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"a\" : 2 } ] }"));
-		NodeSelector selector = new NodeSelector(node);
+		NodeSelector<Node> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"a\" : 2 } ] }");
 		
 		List<Node> result = selector.findAll("results:first-of-type");
 		assertEquals(1, result.size());
@@ -25,8 +31,7 @@ public class PseudoNodeSelectorTest {
 
 	@Test
 	public void testPseudoLastOfType() throws Exception {
-		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"a\" : 2 } ] }"));
-		NodeSelector selector = new NodeSelector(node);
+		NodeSelector<Node> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"a\" : 2 } ] }");
 		
 		List<Node> result = selector.findAll("results:last-of-type");
 		assertEquals(1, result.size());

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -11,11 +12,16 @@ import com.gistlabs.mechanize.json.Node;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 
 public class NodeSelectorTest {
+
+	protected NodeSelector<Node> build(String json) throws JSONException {
+		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject(json));
+		NodeSelector<Node> selector = new NodeSelector<Node>(new JsonNodeHelper(), node);
+		return selector;
+	}
 	
 	@Test
 	public void testStar() throws Exception {
-		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
-		NodeSelector selector = new NodeSelector(node);
+		NodeSelector<Node> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
 		
 		List<Node> result = selector.findAll("*");
 		assertEquals(4, result.size());
@@ -23,8 +29,7 @@ public class NodeSelectorTest {
 	
 	@Test
 	public void testName() throws Exception {
-		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
-		NodeSelector selector = new NodeSelector(node);
+		NodeSelector<Node> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
 		
 		List<Node> result = selector.findAll("b");
 		assertEquals(1, result.size());
@@ -32,8 +37,7 @@ public class NodeSelectorTest {
 
 	@Test
 	public void testAttributePresent() throws Exception {
-		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
-		NodeSelector selector = new NodeSelector(node);
+		NodeSelector<Node> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
 		
 		List<Node> result = selector.findAll("b[x]");
 		assertEquals(1, result.size());
@@ -44,8 +48,7 @@ public class NodeSelectorTest {
 
 	@Test
 	public void testAttributeEquals() throws Exception {
-		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
-		NodeSelector selector = new NodeSelector(node);
+		NodeSelector<Node> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
 		
 		List<Node> result = selector.findAll("b[x=\"y\"]");
 		assertEquals(1, result.size());
@@ -56,8 +59,7 @@ public class NodeSelectorTest {
 
 	@Test
 	public void testAttributeTilda() throws Exception {
-		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y foo bar\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
-		NodeSelector selector = new NodeSelector(node);
+		NodeSelector<Node> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y foo bar\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
 		
 		assertEquals(1, selector.findAll("b[x~=\"y\"]").size());
 		assertEquals(1, selector.findAll("b[x~=\"foo\"]").size());
@@ -68,8 +70,7 @@ public class NodeSelectorTest {
 
 	@Test
 	public void testWildcardWithAttribute() throws Exception {
-		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
-		NodeSelector selector = new NodeSelector(node);
+		NodeSelector<Node> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
 		
 		List<Node> result = selector.findAll("*[x]");
 		assertEquals(1, result.size());
@@ -79,8 +80,7 @@ public class NodeSelectorTest {
 	}
 	@Test
 	public void testNot() throws Exception {
-		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"a\" : 2 } ] }"));
-		NodeSelector selector = new NodeSelector(node);
+		NodeSelector<Node> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"a\" : 2 } ] }");
 		
 		List<Node> result = selector.findAll("*:not([x])");
 		assertEquals(3, result.size());
