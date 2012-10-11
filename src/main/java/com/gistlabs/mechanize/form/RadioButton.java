@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.Node;
 
 /** Represents an input element of type 'radio'.  
  * 
@@ -17,8 +17,8 @@ import com.gistlabs.mechanize.html.HtmlElement;
  */
 public class RadioButton extends Checkable {
 
-	public RadioButton(Form form, HtmlElement element) {
-		super(form, element);
+	public RadioButton(Form form, Node node) {
+		super(form, node);
 	}
 	
 	@Override

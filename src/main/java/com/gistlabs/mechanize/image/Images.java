@@ -8,13 +8,13 @@
 package com.gistlabs.mechanize.image;
 
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
-import com.gistlabs.mechanize.html.HtmlElement;
 import com.gistlabs.mechanize.util.NullOutputStream;
+import com.gistlabs.mechanize.util.Util;
 
 /** 
  * A collection of Image objects.  
@@ -26,16 +26,20 @@ import com.gistlabs.mechanize.util.NullOutputStream;
 public class Images extends PageElements<Image> {
 	
 	public Images(Page page) {
-		this(page, new ArrayList<HtmlElement>());
+		this(page, newEmptyList());
+	}
+
+	private static List<? extends Node>newEmptyList() {
+		return Util.newEmptyList();
 	}
 	
-	public Images (Page page, List<HtmlElement> forms) {
+	public Images (Page page, List<? extends Node> forms) {
 		super(page, forms);
 	}
 
 	@Override
-	protected Image newRepresentation(HtmlElement element) {
-		return new Image(page, element);
+	protected Image newRepresentation(Node node) {
+		return new Image(page, node);
 	}
 	
 	public ImageCollection loadAll() {

@@ -9,10 +9,10 @@ import java.util.List;
 public interface QueryStrategy {
 	/** A comma separated list of class names without white spaces (no trim needed). */
 	String SPECIAL_ATTRIBUTE_CLASS_NAMES = "${classNames}";
-	String SPECIAL_ATTRIBUTE_TAG_NAME = "${tagName}";
+	String SPECIAL_ATTRIBUTE_TAG_NAME = "${nodeName}";
 	String SPECIAL_ATTRIBUTE_INNER_HTML = "${innerHtml}";
 	String SPECIAL_ATTRIBUTE_HTML = "${html}";
-	String SPECIAL_ATTRIBUTE_TEXT = "${text}";
+	String SPECIAL_ATTRIBUTE_TEXT = "${value}";
 	
 	/** Returns the value of the object or null while attribute can also refer to special attributes. */
 	String getAttributeValue(Object object, String attribute);

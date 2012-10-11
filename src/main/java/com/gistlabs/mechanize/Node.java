@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.html;
+package com.gistlabs.mechanize;
 
 import java.util.List;
 
@@ -14,6 +14,12 @@ import com.gistlabs.mechanize.query.Query;
  */
 public interface Node {
 
+	/** Returns the name of the node or null if none (similar to getAttribute(SpecialAttribute.SPECIAL_ATTRIBUTE_NAME)). */
+	String getName();
+	
+	/** Returns the name of the node or null if none (similar to getAttribute(SpecialAttribute.SPECIAL_ATTRIBUTE_VALUE)). */
+	String getValue();
+	
 	/** Returns the first child element matching the query by performing a deep first left right search. */
 	<T extends Node> T get(Query query);
 

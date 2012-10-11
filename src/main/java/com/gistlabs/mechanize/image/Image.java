@@ -7,9 +7,9 @@
  */
 package com.gistlabs.mechanize.image;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
-import com.gistlabs.mechanize.html.HtmlElement;
 
 /** 
  * Represents an image within a page.  
@@ -20,20 +20,20 @@ import com.gistlabs.mechanize.html.HtmlElement;
  */
 public class Image extends PageElement {
 	
-	public Image(Page page, HtmlElement image) {
-		super(page, image);
+	public Image(Page page, Node node) {
+		super(page, node);
 	}
 
 	/**
 	 * Get the image, can then saveTo()
 	 */
 	public Page get() {
-		return element.hasAttribute("src") ? doRequest(getAbsoluteSrc()).get() : null;
+		return node.hasAttribute("src") ? doRequest(getAbsoluteSrc()).get() : null;
 	}
 
 	
 	/** Returns the absolute url for the given image or null if no src-attribute is provided. */
 	public String getAbsoluteSrc() {
-		return getElement().hasAttribute("src") ? getElement().getAbsoluteAttribute("src") : null;
+		return getNode().hasAttribute("src") ? getNode().getAbsoluteAttribute("src") : null;
 	}
 }

@@ -16,6 +16,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Util;
@@ -87,7 +88,7 @@ public class HtmlElements {
 	public static HtmlElement getFormHtmlNodes(HtmlPage page, Query query, List<? extends HtmlNode> nodes) {
 		List<org.jsoup.nodes.Node> jsoupNodes = new ArrayList<org.jsoup.nodes.Node>();
 		for(HtmlNode node : nodes)
-			jsoupNodes.add(node.getNode());
+			jsoupNodes.add(node.getJsoupNode());
 		return get(page, query, jsoupNodes);
 	}
 	

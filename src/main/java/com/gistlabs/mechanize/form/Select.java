@@ -10,8 +10,9 @@ package com.gistlabs.mechanize.form;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.html.HtmlElements.HtmlQueryStrategy;
+import com.gistlabs.mechanize.html.HtmlSpecialAttributes;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryBuilder;
 
@@ -25,13 +26,13 @@ public class Select extends FormElement {
 	private final boolean isMultiple;
 	private final List<Option> options;
 	
-	public Select(Form form, HtmlElement element) {
-		super(form, element);
-		isMultiple = element.hasAttribute("multiple");
+	public Select(Form form, Node node) {
+		super(form, node);
+		isMultiple = node.hasAttribute("multiple");
 		options = new ArrayList<Option>();
 		
-		for(HtmlElement optionElement : element.getAll(QueryBuilder.byTag("option")))
-			options.add(new Option(optionElement));
+		for(Node optionNode : node.getAll(QueryBuilder.byTag("option")))
+			options.add(new Option(optionNode));
 	}
 	
 	public boolean isMultiple() {
@@ -47,7 +48,7 @@ public class Select extends FormElement {
 	public Option getOption(Query query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(Option option : options)
-			if(query.matches(queryStrategy, option.getElement()))
+			if(query.matches(queryStrategy, option.getNode()))
 				return option;
 		return null;
 	}
@@ -63,7 +64,7 @@ public class Select extends FormElement {
 		
 		List<Option> result = new ArrayList<Option>();
 		for(Option option : options)
-			if(query.matches(queryStrategy, option.getElement()))
+			if(query.matches(queryStrategy, option.getNode()))
 				result.add(option);
 		return result;
 	}
@@ -75,21 +76,21 @@ public class Select extends FormElement {
 	
 	public class Option {
 
-		private final HtmlElement element;
+		private final Node node;
 		private final String text;
 		private final String value;
 		
 		private boolean isSelected;
 		
-		public Option(HtmlElement element) {
-			this.element = element;
-			text = element.getInnerHtml();
-			value = element.hasAttribute("value") ? element.getAttribute("value") : text;
-			isSelected = element.hasAttribute("selected");
+		public Option(Node node) {
+			this.node = node;
+			text = node.getValue();
+			value = node.hasAttribute("value") ? node.getAttribute("value") : text;
+			isSelected = node.hasAttribute("selected");
 		}
 
-		public HtmlElement getElement() {
-			return element;
+		public Node getNode() {
+			return node;
 		}
 		
 		public boolean isSelected() {

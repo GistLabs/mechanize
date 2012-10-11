@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.Node;
 
 /** 
  * Represents an input element of type 'email'.  
@@ -16,7 +16,7 @@ import com.gistlabs.mechanize.html.HtmlElement;
  */
 public class Email extends FormElement {
 
-	public Email(Form form, HtmlElement element) {
-		super(form, element);
+	public Email(Form form, Node node) {
+		super(form, node);
 	}
 }

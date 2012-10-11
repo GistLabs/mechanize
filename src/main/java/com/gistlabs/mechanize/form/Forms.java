@@ -9,9 +9,9 @@ package com.gistlabs.mechanize.form;
 
 import java.util.List;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
-import com.gistlabs.mechanize.html.HtmlElement;
 
 /** 
  * A collection of Form objects. 
@@ -24,12 +24,12 @@ public class Forms extends PageElements<Form> {
 	public Forms(Page page) {
 		this(page, null);
 	}
-	public Forms(Page page, List<HtmlElement> forms) {
+	public Forms(Page page, List<? extends Node> forms) {
 		super(page, forms);
 	}
 	
 	@Override
-	protected Form newRepresentation(HtmlElement element) {
-		return new Form(getPage(), element);
+	protected Form newRepresentation(Node node) {
+		return new Form(getPage(), node);
 	}
 }

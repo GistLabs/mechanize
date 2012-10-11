@@ -24,21 +24,26 @@ public class HtmlTextNode extends HtmlNode {
 		super(page, node);
 	}
 	
-	public TextNode getTextNode() {
-		return (TextNode)getNode();
+	public TextNode getJsoupTextNode() {
+		return (TextNode)getJsoupNode();
+	}
+	
+	@Override
+	public String getValue() {
+		return getAttribute(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_TEXT);
 	}
 	
 	@Override
 	public String getAttribute(String attributeKey) {
 		if(attributeKey.equals(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_TEXT))
-			return getTextNode().text();
+			return getJsoupTextNode().text();
 		else
 			return super.getAttribute(attributeKey);
 	}
 	
 	@Override
 	public List<String> getAttributeNames() {
-		return getAttributeNamesOfJSoupTextNode(getTextNode());
+		return getAttributeNamesOfJSoupTextNode(getJsoupTextNode());
 	}
 
 	public static String getAttributeValueOfJSoupTextNode(TextNode textNode,

@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.Node;
 
 /**
  * Represents an input element of type 'text' or input without a type. 
@@ -18,15 +18,15 @@ import com.gistlabs.mechanize.html.HtmlElement;
  */
 public class Text extends FormElement {
 
-	public Text(Form form, HtmlElement element) {
-		super(form, element);
+	public Text(Form form, Node node) {
+		super(form, node);
 	}
 	
 	/** Returns the max length attribute as integer or -1 if its not present or not parseable. */
 	public int getMaxLength() {
-		if(getElement().hasAttribute("maxlength")) {
+		if(getNode().hasAttribute("maxlength")) {
 			try {
-				return Integer.parseInt(getElement().getAttribute("maxlength"));
+				return Integer.parseInt(getNode().getAttribute("maxlength"));
 			}
 			catch(NumberFormatException e) {
 				return -1;

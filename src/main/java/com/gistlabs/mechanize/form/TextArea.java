@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.Node;
 
 /** Represents an text area element.
  * 
@@ -17,12 +17,12 @@ import com.gistlabs.mechanize.html.HtmlElement;
  */
 public class TextArea extends FormElement {
 
-	public TextArea(Form form, HtmlElement element) {
-		super(form, element);
+	public TextArea(Form form, Node node) {
+		super(form, node);
 	}
 	
 	@Override
 	protected String getDefaultValue() {
-		return element.getInnerHtml();
+		return node.getValue();
 	}
 }
