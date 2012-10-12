@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.link;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
