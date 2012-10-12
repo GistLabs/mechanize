@@ -31,10 +31,30 @@ public class HtmlQueryBuilder {
 		return new HtmlQuery().not(query);
 	}
 
+	public static HtmlQuery by(String attribute, String value) {
+		return new HtmlQuery().by(attribute, value);
+	}
+	
+	public static HtmlQuery by(String attribute, Pattern pattern) {
+		return new HtmlQuery().by(attribute, pattern);
+	}
+
+	public static HtmlQuery by(String [] attributeNames, String value) {
+		return new HtmlQuery().by(attributeNames, value);
+	}
+
+	public static HtmlQuery by(String [] attributeNames, Pattern pattern) {
+		return new HtmlQuery().by(attributeNames, pattern);
+	}
+
+	public static String [] attributes(String ... attributeNames) {
+		return attributeNames;
+	}
+	
 	public static HtmlQuery byAny(String string) {
 		return new HtmlQuery().byAny(string);
 	}
-
+	
 	public static HtmlQuery byName(String string) {
 		return new HtmlQuery().byName(string);
 	}

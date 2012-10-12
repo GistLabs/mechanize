@@ -3,7 +3,7 @@ package com.gistlabs.mechanize.query;
 /** Query part to match every element. */
 class EverythingQueryPart extends QueryPart {
 	public EverythingQueryPart(boolean isAnd) {
-		super(isAnd, null, null);
+		super(isAnd, (String [])null, null);
 	}
 	
 	@Override

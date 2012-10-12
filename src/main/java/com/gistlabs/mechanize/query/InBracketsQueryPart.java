@@ -5,7 +5,7 @@ class InBracketsQueryPart extends QueryPart {
 	private final HtmlQuery query;
 	
 	public InBracketsQueryPart(boolean isAnd, HtmlQuery query) {
-		super(isAnd, null, null);
+		super(isAnd, (String [])null, null);
 		this.query = query;
 	}
 	

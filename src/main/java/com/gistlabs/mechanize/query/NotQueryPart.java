@@ -5,7 +5,7 @@ class NotQueryPart extends QueryPart {
 	private final HtmlQuery query;
 	
 	public NotQueryPart(boolean isAnd, HtmlQuery query) {
-		super(isAnd, null, null);
+		super(isAnd, (String [])null, null);
 		this.query = query;
 	}
 	

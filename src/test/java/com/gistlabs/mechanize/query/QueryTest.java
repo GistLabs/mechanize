@@ -7,13 +7,7 @@
  */
 package com.gistlabs.mechanize.query;
 
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.inBrackets;
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.not;
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.byId;
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.byName;
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.caseInsensitive;
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.everything;
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.regEx;
+import static com.gistlabs.mechanize.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -38,14 +32,16 @@ public class QueryTest {
 	
 	@Test
 	public void testSinglePartQueryWithString() {
-		assertEquals("(<value,[any]>)", HtmlQueryBuilder.inBrackets(HtmlQueryBuilder.byAny("value")).toString());
-		assertEquals("<not<value,[any]>>", HtmlQueryBuilder.not(HtmlQueryBuilder.byAny("value")).toString());
-		assertEquals("<value,[any]>", HtmlQueryBuilder.byAny("value").toString());
+		assertEquals("(<value,[*]>)", HtmlQueryBuilder.inBrackets(HtmlQueryBuilder.byAny("value")).toString());
+		assertEquals("<not<value,[*]>>", HtmlQueryBuilder.not(HtmlQueryBuilder.byAny("value")).toString());
+		assertEquals("<value,[test]>", HtmlQueryBuilder.by("test", "value").toString());
+		assertEquals("<value,[test, test2]>", HtmlQueryBuilder.by(attributes("test", "test2"), "value").toString());
+		assertEquals("<value,[*]>", HtmlQueryBuilder.byAny("value").toString());
 		assertEquals("<value,[name]>", HtmlQueryBuilder.byName("value").toString());
 		assertEquals("<value,[id]>", HtmlQueryBuilder.byId("value").toString());
-		assertEquals("<value,[name,id]>", HtmlQueryBuilder.byNameOrId("value").toString());
-		assertEquals("<value,[tag]>", HtmlQueryBuilder.byTag("value").toString());
-		assertEquals("<value,[class]>", HtmlQueryBuilder.byClass("value").toString());
+		assertEquals("<value,[name, id]>", HtmlQueryBuilder.byNameOrId("value").toString());
+		assertEquals("<value,[${nodeName}]>", HtmlQueryBuilder.byTag("value").toString());
+		assertEquals("<value,[${classNames}]>", HtmlQueryBuilder.byClass("value").toString());
 		assertEquals("<value,[href]>", HtmlQueryBuilder.byHRef("value").toString());
 		assertEquals("<value,[src]>", HtmlQueryBuilder.bySrc("value").toString());
 		assertEquals("<value,[title]>", HtmlQueryBuilder.byTitle("value").toString());
@@ -53,19 +49,21 @@ public class QueryTest {
 		assertEquals("<value,[height]>", HtmlQueryBuilder.byHeight("value").toString());
 		assertEquals("<value,[value]>", HtmlQueryBuilder.byValue("value").toString()); 
 		assertEquals("<value,[type]>", HtmlQueryBuilder.byType("value").toString());
-		assertEquals("<value,[text]>", HtmlQueryBuilder.byText("value").toString());
-		assertEquals("<value,[innerHtml]>", HtmlQueryBuilder.byInnerHtml("value").toString());
-		assertEquals("<value,[html]>", HtmlQueryBuilder.byHtml("value").toString());
+		assertEquals("<value,[${value}]>", HtmlQueryBuilder.byText("value").toString());
+		assertEquals("<value,[${innerHtml}]>", HtmlQueryBuilder.byInnerHtml("value").toString());
+		assertEquals("<value,[${html}]>", HtmlQueryBuilder.byHtml("value").toString());
 	}
 	
 	@Test
 	public void testSinglePartQueryWithPattern() {
-		assertEquals("<regEx(pattern),[any]>", HtmlQueryBuilder.byAny(regEx("pattern")).toString());
+		assertEquals("<regEx(pattern),[test]>", HtmlQueryBuilder.by("test", regEx("pattern")).toString());
+		assertEquals("<regEx(pattern),[test, test2]>", HtmlQueryBuilder.by(attributes("test", "test2"), regEx("pattern")).toString());
+		assertEquals("<regEx(pattern),[*]>", HtmlQueryBuilder.byAny(regEx("pattern")).toString());
 		assertEquals("<regEx(pattern),[name]>", HtmlQueryBuilder.byName(regEx("pattern")).toString());
 		assertEquals("<regEx(pattern),[id]>", HtmlQueryBuilder.byId(regEx("pattern")).toString());
-		assertEquals("<regEx(pattern),[name,id]>", HtmlQueryBuilder.byNameOrId(regEx("pattern")).toString());
-		assertEquals("<regEx(pattern),[tag]>", HtmlQueryBuilder.byTag(regEx("pattern")).toString());
-		assertEquals("<regEx(pattern),[class]>", HtmlQueryBuilder.byClass(regEx("pattern")).toString());
+		assertEquals("<regEx(pattern),[name, id]>", HtmlQueryBuilder.byNameOrId(regEx("pattern")).toString());
+		assertEquals("<regEx(pattern),[${nodeName}]>", HtmlQueryBuilder.byTag(regEx("pattern")).toString());
+		assertEquals("<regEx(pattern),[${classNames}]>", HtmlQueryBuilder.byClass(regEx("pattern")).toString());
 		assertEquals("<regEx(pattern),[href]>", HtmlQueryBuilder.byHRef(regEx("pattern")).toString());
 		assertEquals("<regEx(pattern),[src]>", HtmlQueryBuilder.bySrc(regEx("pattern")).toString());
 		assertEquals("<regEx(pattern),[title]>", HtmlQueryBuilder.byTitle(regEx("pattern")).toString());
@@ -73,32 +71,40 @@ public class QueryTest {
 		assertEquals("<regEx(pattern),[height]>", HtmlQueryBuilder.byHeight(regEx("pattern")).toString());
 		assertEquals("<regEx(pattern),[value]>", HtmlQueryBuilder.byValue(regEx("pattern")).toString());
 		assertEquals("<regEx(pattern),[type]>", HtmlQueryBuilder.byType(regEx("pattern")).toString());
-		assertEquals("<regEx(pattern),[text]>", HtmlQueryBuilder.byText(regEx("pattern")).toString());
-		assertEquals("<regEx(pattern),[html]>", HtmlQueryBuilder.byHtml(regEx("pattern")).toString());
+		assertEquals("<regEx(pattern),[${value}]>", HtmlQueryBuilder.byText(regEx("pattern")).toString());
+		assertEquals("<regEx(pattern),[${innerHtml}]>", HtmlQueryBuilder.byInnerHtml(regEx("pattern")).toString());
+		assertEquals("<regEx(pattern),[${html}]>", HtmlQueryBuilder.byHtml(regEx("pattern")).toString());
 	}
 	
 	@Test
 	public void testComposition() {
-		assertEquals("<name,[name]>or<regEx(id),[id]>or<text,[text]>", byName("name").or.byId(regEx("id")).or.byText("text").toString());
+		assertEquals("<name,[name]>or<regEx(id),[id]>or<text,[${value}]>", byName("name").or.byId(regEx("id")).or.byText("text").toString());
 	}
 
 	@Test
 	public void testAndComposition() {
-		assertEquals("<name,[name]>and<regEx(id),[id]>and<text,[text]>", byName("name").and.byId(regEx("id")).and.byText("text").toString());
+		assertEquals("<name,[name]>and<regEx(id),[id]>and<text,[${value}]>", byName("name").and.byId(regEx("id")).and.byText("text").toString());
 	}
 	
 	@Test
 	public void testOrIsDefaultComposition() {
-		assertEquals("<name,[name]>or<regEx(id),[id]>or<text,[text]>", byName("name").byId(regEx("id")).byText("text").toString());
+		assertEquals("<name,[name]>or<regEx(id),[id]>or<text,[${value}]>", byName("name").byId(regEx("id")).byText("text").toString());
 	}
 	
 	@Test
 	public void testOrIsStillStandardCompositionAfterAnd() {
-		assertEquals("<name,[name]>and<regEx(id),[id]>or<text,[text]>", byName("name").and.byId(regEx("id")).byText("text").toString());
+		assertEquals("<name,[name]>and<regEx(id),[id]>or<text,[${value}]>", byName("name").and.byId(regEx("id")).byText("text").toString());
 	}
 	
 	@Test
 	public void testSimpleQueryMatchingTrue() {
+		assertEquals("<value,[test]>", HtmlQueryBuilder.by("test", "value").toString());
+		assertEquals("<value,[test, test2]>", HtmlQueryBuilder.by(attributes("test", "test2"), "value").toString());
+		
+		assertTrue(HtmlQueryBuilder.by("test", "value").matches(strategy, newElement("<a test='value'/>")));
+		assertTrue(HtmlQueryBuilder.by(attributes("test", "test2"), "value").matches(strategy, newElement("<a test='value'/>")));
+		assertTrue(HtmlQueryBuilder.by(attributes("test", "test2"), "value").matches(strategy, newElement("<a test2='value'/>")));
+
 		assertTrue(HtmlQueryBuilder.byAny("value").matches(strategy, newElement("<a href='value'/>")));
 		assertTrue(HtmlQueryBuilder.byName("value").matches(strategy, newElement("<a name='value'/>")));
 		assertTrue(HtmlQueryBuilder.byId("value").matches(strategy, newElement("<a id='value'/>")));
