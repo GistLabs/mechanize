@@ -12,7 +12,6 @@ import java.util.List;
 
 import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.html.HtmlElements.HtmlQueryStrategy;
-import com.gistlabs.mechanize.html.HtmlSpecialAttributes;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryBuilder;
 

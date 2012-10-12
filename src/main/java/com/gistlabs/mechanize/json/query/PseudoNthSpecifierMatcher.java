@@ -2,11 +2,8 @@ package com.gistlabs.mechanize.json.query;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.Set;
 
-
-import se.fishtank.css.selectors.NodeSelectorException;
-import se.fishtank.css.selectors.dom.DOMHelper;
+import se.fishtank.css.selectors.dom.internal.NodeTraversalChecker;
 import se.fishtank.css.selectors.specifier.PseudoNthSpecifier;
 import se.fishtank.css.util.Assert;
 
@@ -40,7 +37,7 @@ public class PseudoNthSpecifierMatcher<Node> extends AbstractMatcher<Node> {
         Assert.notNull(nodes, "nodes is null!");
         this.nodes = nodes;
         result = new LinkedHashSet<Node>();
-        String value = specifier.getValue();
+//        String value = specifier.getValue();
         
 //        if ("nth-child".equals(value)) {
 //            addNthChild();

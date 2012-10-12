@@ -53,11 +53,6 @@ public class HtmlNode implements Node {
 	public boolean hasAttribute(String attributeKey) {
 		return false;
 	}
-	
-	@Override
-	public String getAbsoluteAttribute(String attributeKey) {
-		return null;
-	}
 
 	@Override
 	public String getAttribute(String attributeKey) {

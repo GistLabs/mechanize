@@ -47,7 +47,6 @@ public abstract class PageElement implements RequestBuilderFactory<Page> {
 
 	@Override
 	public String absoluteUrl(String uri) {
-		// TODO Auto-generated method stub
-		return null;
+		return getPage().absoluteUrl(uri);
 	}
 }

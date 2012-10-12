@@ -16,6 +16,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Node;
@@ -35,6 +36,8 @@ public class HtmlPage extends Page {
 				ContentType.APPLICATION_XML.getMimeType());
 
 	private HtmlElements htmlElements;
+	
+	private String baseUri;
 
 	public HtmlPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
 		super(agent, request, response);
@@ -46,9 +49,21 @@ public class HtmlPage extends Page {
 	
 	@Override
 	protected void loadPage() throws Exception {
-		htmlElements = new HtmlElements(this, Jsoup.parse(getInputStream(), getContentEncoding(response), this.uri));
+		Document jsoup = Jsoup.parse(getInputStream(), getContentEncoding(response), getUri());
+		setBaseUri(jsoup.head().baseUri());
+		this.htmlElements = new HtmlElements(this, jsoup);
 	}
 	
+	private void setBaseUri(String baseUri) {
+		if (! this.getUri().equals(baseUri))
+			this.baseUri = baseUri;
+	}
+	
+	@Override
+	public String getUri() {
+		return this.baseUri==null ? super.getUri() : this.baseUri;
+	}
+
 	@Override
 	protected Links loadLinks() {
 		List<? extends Node> links = htmlElements().getAll(byTag("a"));

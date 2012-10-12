@@ -34,9 +34,6 @@ public interface Node {
 
 	/** Returns the value of the attribute. */ 
 	String getAttribute(String attributeKey);
-
-	/** Returns the value of the attribute in the absolute form (image.getAttribute("src") vs. image.getAbsoluteAttribute("href")). */ 
-	String getAbsoluteAttribute(String attributeKey);
 	
 	/** Returns all attribute names being present including any supported special attribute. */
 	List<String> getAttributeNames();

@@ -91,11 +91,6 @@ public class HtmlElement extends HtmlNode implements Node {
 			return element.attr(attributeKey);
 	}
 	
-	@Override
-	public String getAbsoluteAttribute(String attributeKey) {
-		return getJsoupElement().absUrl(attributeKey);
-	}
-	
 	/** Returns the class names of the this element as a comma separated list without trailing white-spaces. */
 	public String getClassNames() {
 		return getAttribute(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_CLASS_NAMES);

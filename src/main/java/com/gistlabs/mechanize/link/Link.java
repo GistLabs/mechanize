@@ -31,6 +31,6 @@ public class Link extends PageElement {
 	}
 	
 	public String href() {
-		return hasAttribute("href") ? node.getAbsoluteAttribute("href") : null;
+		return hasAttribute("href") ? absoluteUrl(node.getAttribute("href")) : null;
 	}
 }
