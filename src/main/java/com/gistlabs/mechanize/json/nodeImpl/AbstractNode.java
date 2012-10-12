@@ -45,11 +45,13 @@ public abstract class AbstractNode implements Node {
 		return this.name;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Node getParent() {
 		return this.parent;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Node find(String query) {
 		return new NodeSelector<Node>(new JsonNodeHelper(), this).find(query);

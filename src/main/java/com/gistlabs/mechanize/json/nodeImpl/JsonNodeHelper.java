@@ -9,7 +9,7 @@ import com.gistlabs.mechanize.json.query.NodeHelper;
 public class JsonNodeHelper implements NodeHelper<Node> {
 
     public String getValue(Node element) {
-		return element.getContent();
+		return element.getValue();
 	}
 	
     public boolean hasAttribute(Node element, String name) {
@@ -31,7 +31,7 @@ public class JsonNodeHelper implements NodeHelper<Node> {
     	toProcess.add(node);
     	while(!toProcess.isEmpty()) {
     		Node first = toProcess.removeFirst();
-    		List<Node> children = first.getChildren();
+    		List<? extends Node> children = first.getChildren();
     		result.addAll(children);
     		toProcess.addAll(children);
     	}
@@ -57,7 +57,7 @@ public class JsonNodeHelper implements NodeHelper<Node> {
 	public Index getIndexInParent(Node node, boolean byType) {
 		String type = byType ? node.getName() : "*";
 		
-		List<Node> children;
+		List<? extends Node> children;
 		Node parent = node.getParent();
 		if (parent==null)
 			children = Collections.EMPTY_LIST;

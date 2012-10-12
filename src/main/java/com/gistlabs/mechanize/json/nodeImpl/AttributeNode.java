@@ -32,17 +32,17 @@ public class AttributeNode extends AbstractNode {
 	}
 
 	@Override
-	public String getContent() {
+	public String getValue() {
 		return this.parent.getAttribute(getName());
 	}
 
 	@Override
-	public void setContent(String value) {
+	public void setValue(String value) {
 		this.parent.setAttribute(getName(), value);
 	}
 
 	@Override
-	public Node getChild(String key) {
+	public <T extends Node> T getChild(String key) {
 		return null;
 	}
 
