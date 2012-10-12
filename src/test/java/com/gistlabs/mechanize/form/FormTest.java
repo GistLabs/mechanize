@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import static com.gistlabs.mechanize.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import java.io.File;

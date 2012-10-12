@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.gistlabs.mechanize.html.HtmlElements;
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.query.HtmlQuery;
 import com.gistlabs.mechanize.util.Assert;
 
 /**
@@ -52,7 +52,7 @@ public abstract class PageElements<T> implements Iterable<T> {
 
 	protected abstract T newRepresentation(Node element);
 	
-	public T get(Query query) {
+	public T get(HtmlQuery query) {
 		HtmlElements.HtmlQueryStrategy queryStrategy = new HtmlElements.HtmlQueryStrategy();
 		
 		for(Node node : nodes) 
@@ -62,7 +62,7 @@ public abstract class PageElements<T> implements Iterable<T> {
 		return null;
 	}
 	
-	public List<T> getAll(Query query) {
+	public List<T> getAll(HtmlQuery query) {
 		HtmlElements.HtmlQueryStrategy queryStrategy = new HtmlElements.HtmlQueryStrategy();
 
 		List<T> result = new ArrayList<T>();

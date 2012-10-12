@@ -13,7 +13,7 @@ import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Element;
 
 import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.query.HtmlQuery;
 import com.gistlabs.mechanize.util.Util;
 
 /**
@@ -42,7 +42,7 @@ public class HtmlElement extends HtmlNode implements Node {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public HtmlElement get(Query query) {
+	public HtmlElement get(HtmlQuery query) {
 		return super.get(query);
 	}
 	

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.query.HtmlQuery;
 import com.gistlabs.mechanize.util.Util;
 
 /**
@@ -75,12 +75,12 @@ public class HtmlNode implements Node {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public HtmlElement get(Query query) {
+	public HtmlElement get(HtmlQuery query) {
 		return HtmlElements.get(getPage(), query, node.childNodes());
 	}
 
 	@Override
-	public List<HtmlElement> getAll(Query query) {
+	public List<HtmlElement> getAll(HtmlQuery query) {
 		List<HtmlElement> result = new ArrayList<HtmlElement>();
 		HtmlElements.getAll(getPage(), result, query, node.childNodes());
 		return result;

@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import static com.gistlabs.mechanize.query.HtmlQueryBuilder.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,8 +19,8 @@ import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
 import com.gistlabs.mechanize.html.HtmlElements.HtmlQueryStrategy;
 import com.gistlabs.mechanize.parameters.Parameters;
-import com.gistlabs.mechanize.query.Query;
-import com.gistlabs.mechanize.query.QueryBuilder;
+import com.gistlabs.mechanize.query.HtmlQuery;
+import com.gistlabs.mechanize.query.HtmlQueryBuilder;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 
 /** 
@@ -103,10 +103,10 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	
 	/** Returns the element with the given name (case sensitive) or null. */
 	public FormElement get(String nameOrId) {
-		return get(QueryBuilder.byNameOrId(nameOrId));
+		return get(HtmlQueryBuilder.byNameOrId(nameOrId));
 	}
 	
-	public FormElement get(Query query) {
+	public FormElement get(HtmlQuery query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(FormElement element : elements)
 			if(element.matches(queryStrategy, query))
@@ -115,7 +115,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T get(Query query, Class<T> clazz) {
+	public <T> T get(HtmlQuery query, Class<T> clazz) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(FormElement element : elements) {
 			if(clazz == null || clazz.isInstance(element) && element.matches(queryStrategy, query))
@@ -125,7 +125,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> getAll(Query query, Class<T> clazz) {
+	public <T> List<T> getAll(HtmlQuery query, Class<T> clazz) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		List<T> result = new ArrayList<T>();
 		for(FormElement element : elements)
@@ -134,7 +134,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return result;
 	}
 	
-	public List<FormElement> getAll(Query query) {
+	public List<FormElement> getAll(HtmlQuery query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		
 		List<FormElement> result = new ArrayList<FormElement>();
@@ -144,79 +144,79 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return result;
 	}
 
-	public Text getText(Query query) {
+	public Text getText(HtmlQuery query) {
 		return get(query, Text.class);
 	}
 	
-	public List<Text> getTextFields(Query query) {
+	public List<Text> getTextFields(HtmlQuery query) {
 		return getAll(query, Text.class);
 	}
 
-	public Search getSearch(Query query) {
+	public Search getSearch(HtmlQuery query) {
 		return get(query, Search.class);
 	}
 
-	public List<Search> getSearchFields(Query query) {
+	public List<Search> getSearchFields(HtmlQuery query) {
 		return getAll(query, Search.class);
 	}
 
-	public Email getEmail(Query query) {
+	public Email getEmail(HtmlQuery query) {
 		return get(query, Email.class);
 	}
 	
-	public List<Email> getEmailFields(Query query) {
+	public List<Email> getEmailFields(HtmlQuery query) {
 		return getAll(query, Email.class);
 	}
 
-	public TextArea getTextArea(Query query) {
+	public TextArea getTextArea(HtmlQuery query) {
 		return get(query, TextArea.class);
 	}
 
-	public List<TextArea> getTextAreas(Query query) {
+	public List<TextArea> getTextAreas(HtmlQuery query) {
 		return getAll(query, TextArea.class);
 	}
 	
-	public Password getPassword(Query query) {
+	public Password getPassword(HtmlQuery query) {
 		return get(query, Password.class);
 	}
 	
-	public List<Search> getPasswords(Query query) {
+	public List<Search> getPasswords(HtmlQuery query) {
 		return getAll(query, Search.class);
 	}
 	
-	public Upload getUpload(Query query) {
+	public Upload getUpload(HtmlQuery query) {
 		return get(query, Upload.class);
 	}
 
-	public List<Search> getUploads(Query query) {
+	public List<Search> getUploads(HtmlQuery query) {
 		return getAll(query, Search.class);
 	}
 	
-	public Hidden getHidden(Query query) {
+	public Hidden getHidden(HtmlQuery query) {
 		return get(query, Hidden.class);
 	}
 
-	public List<Search> getHiddenFields(Query query) {
+	public List<Search> getHiddenFields(HtmlQuery query) {
 		return getAll(query, Search.class);
 	}
 	
-	public SubmitButton getSubmitButton(Query query) {
+	public SubmitButton getSubmitButton(HtmlQuery query) {
 		return get(query, SubmitButton.class);
 	}
 
-	public List<SubmitButton> getSubmitButtons(Query query) {
+	public List<SubmitButton> getSubmitButtons(HtmlQuery query) {
 		return getAll(query, SubmitButton.class);
 	}
 	
-	public SubmitImage getSubmitImage(Query query) {
+	public SubmitImage getSubmitImage(HtmlQuery query) {
 		return get(query, SubmitImage.class);
 	}
 
-	public List<SubmitImage> getSubmitImages(Query query) {
+	public List<SubmitImage> getSubmitImages(HtmlQuery query) {
 		return getAll(query, SubmitImage.class);
 	}
 	
-	public Checkbox getCheckbox(Query query) {
+	public Checkbox getCheckbox(HtmlQuery query) {
 		return get(query, Checkbox.class);
 	}
 
@@ -224,7 +224,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return get(nameOrId, value, Checkbox.class);
 	}
 
-	public List<Checkbox> getCheckboxes(Query query) {
+	public List<Checkbox> getCheckboxes(HtmlQuery query) {
 		return getAll(query, Checkbox.class);
 	}
 
@@ -232,7 +232,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return get(nameOrId, RadioButton.class);
 	}
 	
-	public List<RadioButton> getRadioButtons(Query query) {
+	public List<RadioButton> getRadioButtons(HtmlQuery query) {
 		return getAll(query, RadioButton.class);
 	}
 	
@@ -244,11 +244,11 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return getAll(nameOrId, RadioButton.class);
 	}
 	
-	public Select getSelect(Query query) {
+	public Select getSelect(HtmlQuery query) {
 		return get(query, Select.class);
 	}
 
-	public List<Select> getSelects(Query query) {
+	public List<Select> getSelects(HtmlQuery query) {
 		return getAll(query, Select.class);
 	}
 	

@@ -12,8 +12,8 @@ import java.util.List;
 
 import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.html.HtmlElements.HtmlQueryStrategy;
-import com.gistlabs.mechanize.query.Query;
-import com.gistlabs.mechanize.query.QueryBuilder;
+import com.gistlabs.mechanize.query.HtmlQuery;
+import com.gistlabs.mechanize.query.HtmlQueryBuilder;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -30,7 +30,7 @@ public class Select extends FormElement {
 		isMultiple = node.hasAttribute("multiple");
 		options = new ArrayList<Option>();
 		
-		for(Node optionNode : node.getAll(QueryBuilder.byTag("option")))
+		for(Node optionNode : node.getAll(HtmlQueryBuilder.byTag("option")))
 			options.add(new Option(optionNode));
 	}
 	
@@ -40,11 +40,11 @@ public class Select extends FormElement {
 	
 	/** Returns the option representing the given value or inner-HTML text. */
 	public Option getOption(String valueOrText) {
-		return getOption(QueryBuilder.byValue(valueOrText).or.byInnerHtml(valueOrText));
+		return getOption(HtmlQueryBuilder.byValue(valueOrText).or.byInnerHtml(valueOrText));
 	}
 	
 	/** Returns the first option matching the given query or null. */
-	public Option getOption(Query query) {
+	public Option getOption(HtmlQuery query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(Option option : options)
 			if(query.matches(queryStrategy, option.getNode()))
@@ -58,7 +58,7 @@ public class Select extends FormElement {
 	}
 	
 	/** Returns a new list containing all options matching the given query. */
-	public List<Option> getOptions(Query query) {
+	public List<Option> getOptions(HtmlQuery query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		
 		List<Option> result = new ArrayList<Option>();

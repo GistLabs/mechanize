@@ -2,7 +2,7 @@ package com.gistlabs.mechanize;
 
 import java.util.List;
 
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.query.HtmlQuery;
 
 /**
  * Describes a node of a document having attributes and child nodes.
@@ -21,10 +21,10 @@ public interface Node {
 	String getValue();
 	
 	/** Returns the first child element matching the query by performing a deep first left right search. */
-	<T extends Node> T get(Query query);
+	<T extends Node> T get(HtmlQuery query);
 
 	/** Returns all child elements matching the query by performing a deep first left right search. */
-	List<? extends Node> getAll(Query query);
+	List<? extends Node> getAll(HtmlQuery query);
 
 	/** Returns the child elements. */
 	List<? extends Node> getChildren();

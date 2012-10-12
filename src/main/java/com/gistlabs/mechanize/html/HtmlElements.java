@@ -17,7 +17,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 
 import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.query.HtmlQuery;
 import com.gistlabs.mechanize.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Util;
 
@@ -46,12 +46,12 @@ public class HtmlElements {
 	}
 	
 	/** Returns the first element matching the query in a deep first left right search. */ 
-	public HtmlElement get(Query query) {
+	public HtmlElement get(HtmlQuery query) {
 		return root.get(query);
 	}
 	
 	/** Returns the elements matching the query in a deep first left right search. */ 
-	public List<HtmlElement> getAll(Query query) {
+	public List<HtmlElement> getAll(HtmlQuery query) {
 		return root.getAll(query);
 	}
 	
@@ -85,18 +85,18 @@ public class HtmlElements {
 		return root.toString();
 	}
 
-	public static HtmlElement getFormHtmlNodes(HtmlPage page, Query query, List<? extends HtmlNode> nodes) {
+	public static HtmlElement getFormHtmlNodes(HtmlPage page, HtmlQuery query, List<? extends HtmlNode> nodes) {
 		List<org.jsoup.nodes.Node> jsoupNodes = new ArrayList<org.jsoup.nodes.Node>();
 		for(HtmlNode node : nodes)
 			jsoupNodes.add(node.getJsoupNode());
 		return get(page, query, jsoupNodes);
 	}
 	
-	public static HtmlElement get(HtmlPage page, Query query, List<org.jsoup.nodes.Node> nodes) {
+	public static HtmlElement get(HtmlPage page, HtmlQuery query, List<org.jsoup.nodes.Node> nodes) {
 		return get(page, query, new HtmlQueryStrategy(), nodes);
 	}
 	
-	public static HtmlElement get(HtmlPage page, Query query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
+	public static HtmlElement get(HtmlPage page, HtmlQuery query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
 		for(org.jsoup.nodes.Node node : nodes) {
 			if(node instanceof Element) {
 				if(query.matches(queryStrategy, (Element)node))
@@ -109,11 +109,11 @@ public class HtmlElements {
 		return null;
 	}
 
-	public static void getAll(HtmlPage page, List<HtmlElement> result, Query query, List<org.jsoup.nodes.Node> nodes) {
+	public static void getAll(HtmlPage page, List<HtmlElement> result, HtmlQuery query, List<org.jsoup.nodes.Node> nodes) {
 		getAll(page, result, query, new HtmlQueryStrategy(), nodes);
 	}
 	
-	public static void getAll(HtmlPage page, List<HtmlElement> result, Query query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
+	public static void getAll(HtmlPage page, List<HtmlElement> result, HtmlQuery query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
 		for(org.jsoup.nodes.Node node : nodes) {
 			if(node instanceof Element) {
 				if(query.matches(queryStrategy, (Element)node))
