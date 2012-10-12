@@ -12,6 +12,7 @@ import java.util.List;
 import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElements;
+import com.gistlabs.mechanize.util.Util;
 
 /** 
  * A collection of Form objects. 
@@ -22,8 +23,15 @@ import com.gistlabs.mechanize.PageElements;
  */
 public class Forms extends PageElements<Form> {
 	public Forms(Page page) {
-		this(page, null);
+		this(page, createList());
 	}
+
+	private static List<? extends Node> createList() {
+		return Util.newEmptyList();
+	}
+
+
+
 	public Forms(Page page, List<? extends Node> forms) {
 		super(page, forms);
 	}
