@@ -2,7 +2,6 @@ package com.gistlabs.mechanize.query;
 
 import java.util.Arrays;
 
-import com.gistlabs.mechanize.html.HtmlSpecialAttributes;
 import com.gistlabs.mechanize.query.HtmlQuery.Pattern;
 
 class QueryPart {
@@ -44,9 +43,9 @@ class QueryPart {
 
 	private boolean doesMatch(QueryStrategy queryStrategy, Object object, String attributeName) {
 		String value = queryStrategy.getAttributeValue(object, attributeName);
-		if(attributeName.equals(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_CLASS_NAMES)) {
-			for(String className : value.split("\\,"))
-				if(pattern.doesMatch(className))
+		if(queryStrategy.isMultipleValueAttribute(object, attributeName)) {
+			for(String valueItem : value.split("\\,"))
+				if(pattern.doesMatch(valueItem))
 					return true;
 			return false;
 		}

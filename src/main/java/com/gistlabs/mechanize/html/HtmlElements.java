@@ -153,5 +153,13 @@ public class HtmlElements {
 			else
 				return Util.newEmptyList();
 		}
+		
+		@Override
+		public boolean isMultipleValueAttribute(Object object, String attributeKey) {
+			if(object instanceof Node)
+				return ((Node)object).isMultipleValueAttribute(attributeKey);
+			else
+				return false;
+		}
 	}
 }

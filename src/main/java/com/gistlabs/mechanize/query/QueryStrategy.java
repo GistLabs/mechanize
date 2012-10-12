@@ -15,8 +15,11 @@ public interface QueryStrategy {
 	String SPECIAL_ATTRIBUTE_TEXT = "${value}";
 	
 	/** Returns the value of the object or null while attribute can also refer to special attributes. */
-	String getAttributeValue(Object object, String attribute);
+	String getAttributeValue(Object object, String attributeKey);
 	
+	/** Returns true if the given attribute is a multiple value attribute listing values by comma separated list. */
+	boolean isMultipleValueAttribute(Object object, String attributeKey);
+
 	/** Returns all attribute names of the object. This includes also supported attributes. */
 	List<String> getAttributeNames(Object object);
 }

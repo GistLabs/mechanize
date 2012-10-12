@@ -39,6 +39,11 @@ public class HtmlElement extends HtmlNode implements Node {
 	public String getValue() {
 		return getAttribute(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_VALUE);
 	}
+	
+	@Override
+	public boolean isMultipleValueAttribute(String attributeKey) {
+		return attributeKey.equals(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_CLASS_NAMES);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

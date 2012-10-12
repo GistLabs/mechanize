@@ -65,6 +65,11 @@ public class HtmlNode implements Node {
 	}
 	
 	@Override
+	public boolean isMultipleValueAttribute(String attributeKey) {
+		return false;
+	}
+	
+	@Override
 	public List<HtmlNode> getChildren() {
 		List<HtmlNode> result = new ArrayList<HtmlNode>();
 		for(org.jsoup.nodes.Node child : node.childNodes()) 
