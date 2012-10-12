@@ -2,9 +2,9 @@ package com.gistlabs.mechanize.query;
 
 /** Query part in brackets. */
 class InBracketsQueryPart extends QueryPart {
-	private final HtmlQuery query;
+	private final AbstractQuery<?> query;
 	
-	public InBracketsQueryPart(boolean isAnd, HtmlQuery query) {
+	public InBracketsQueryPart(boolean isAnd, AbstractQuery<?> query) {
 		super(isAnd, (String [])null, null);
 		this.query = query;
 	}

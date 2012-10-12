@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.html.HtmlElements.HtmlQueryStrategy;
-import com.gistlabs.mechanize.query.HtmlQuery;
-import com.gistlabs.mechanize.query.HtmlQueryBuilder;
+import com.gistlabs.mechanize.html.query.HtmlQueryBuilder;
+import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
+import com.gistlabs.mechanize.query.AbstractQuery;
+import com.gistlabs.mechanize.query.Query;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -44,7 +45,7 @@ public class Select extends FormElement {
 	}
 	
 	/** Returns the first option matching the given query or null. */
-	public Option getOption(HtmlQuery query) {
+	public Option getOption(AbstractQuery<?> query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(Option option : options)
 			if(query.matches(queryStrategy, option.getNode()))
@@ -58,7 +59,7 @@ public class Select extends FormElement {
 	}
 	
 	/** Returns a new list containing all options matching the given query. */
-	public List<Option> getOptions(HtmlQuery query) {
+	public List<Option> getOptions(Query query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		
 		List<Option> result = new ArrayList<Option>();

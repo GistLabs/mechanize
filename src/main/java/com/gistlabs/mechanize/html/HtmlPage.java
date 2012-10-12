@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.html;
 
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
 
 import java.util.Collection;
 import java.util.List;

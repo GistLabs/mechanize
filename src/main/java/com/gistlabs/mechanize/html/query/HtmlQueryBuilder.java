@@ -5,9 +5,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.query;
+package com.gistlabs.mechanize.html.query;
 
-import com.gistlabs.mechanize.query.HtmlQuery.Pattern;
+import com.gistlabs.mechanize.query.AbstractQueryBuilder;
+import com.gistlabs.mechanize.query.Pattern;
+
 
 /** 
  * Contains all the static methods to start and extend a query.
@@ -17,12 +19,12 @@ import com.gistlabs.mechanize.query.HtmlQuery.Pattern;
  * @version 1.0
  * @since 2012-09-12
  */
-public class HtmlQueryBuilder {
+public class HtmlQueryBuilder extends AbstractQueryBuilder {
 	
 	public static HtmlQuery everything() {
 		return new HtmlQuery().everything();
 	}
-	
+
 	public static HtmlQuery inBrackets(HtmlQuery query) {
 		return new HtmlQuery().inBrackets(query);
 	}
@@ -34,7 +36,7 @@ public class HtmlQueryBuilder {
 	public static HtmlQuery by(String attribute, String value) {
 		return new HtmlQuery().by(attribute, value);
 	}
-	
+
 	public static HtmlQuery by(String attribute, Pattern pattern) {
 		return new HtmlQuery().by(attribute, pattern);
 	}
@@ -47,10 +49,6 @@ public class HtmlQueryBuilder {
 		return new HtmlQuery().by(attributeNames, pattern);
 	}
 
-	public static String [] attributes(String ... attributeNames) {
-		return attributeNames;
-	}
-	
 	public static HtmlQuery byAny(String string) {
 		return new HtmlQuery().byAny(string);
 	}
@@ -185,21 +183,5 @@ public class HtmlQueryBuilder {
 	
 	public static HtmlQuery byHtml(Pattern pattern) {
 		return new HtmlQuery().byHtml(pattern);
-	}
-	
-	public static Pattern string(String string) {
-		return new Pattern(string, false);
-	}
-	
-	public static Pattern regEx(String pattern) {
-		return new Pattern(pattern, true);
-	}
-
-	public static Pattern caseInsensitive(String string) {
-		return new Pattern(string, false).setCompareLowerCase(true);
-	}
-
-	public static Pattern caseInsensitive(Pattern pattern) {
-		return new Pattern(pattern.getValue(), pattern.isRegularExpression()).setCompareLowerCase(true);
 	}
 }

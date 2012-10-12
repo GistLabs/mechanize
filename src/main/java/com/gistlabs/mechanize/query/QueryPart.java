@@ -2,7 +2,7 @@ package com.gistlabs.mechanize.query;
 
 import java.util.Arrays;
 
-import com.gistlabs.mechanize.query.HtmlQuery.Pattern;
+import com.gistlabs.mechanize.html.query.HtmlQueryBuilder;
 
 class QueryPart {
 	private final boolean isAnd;

@@ -7,10 +7,7 @@
  */
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.byClass;
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.byId;
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.byIdOrClass;
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.byName;
+import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

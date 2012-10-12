@@ -2,9 +2,9 @@ package com.gistlabs.mechanize.query;
 
 /** Query part being a negation. */
 class NotQueryPart extends QueryPart {
-	private final HtmlQuery query;
+	private final AbstractQuery<?> query;
 	
-	public NotQueryPart(boolean isAnd, HtmlQuery query) {
+	public NotQueryPart(boolean isAnd, AbstractQuery<?> query) {
 		super(isAnd, (String [])null, null);
 		this.query = query;
 	}

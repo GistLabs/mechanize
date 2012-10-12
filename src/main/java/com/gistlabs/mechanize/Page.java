@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
 
 import java.io.*;
 import java.net.MalformedURLException;

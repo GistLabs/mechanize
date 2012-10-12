@@ -13,5 +13,5 @@ public interface SpecialAttributes {
 	String SPECIAL_ATTRIBUTE_NODE_NAME = "${nodeName}"; 
 
 	/** The value of the node. In HTML / XML the value of a node is the text representation of the node without tag information. */
-	String SPECIAL_ATTRIBUTE_VALUE = "${value}"; //TODO check for a chance to find a better name to differenciate between name (tag) and name attribute
+	String SPECIAL_ATTRIBUTE_NODE_VALUE = "${nodeValue}"; //TODO check for a chance to find a better name to differenciate between name (tag) and name attribute
 }
