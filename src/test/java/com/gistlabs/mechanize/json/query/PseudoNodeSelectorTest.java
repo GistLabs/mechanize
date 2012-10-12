@@ -41,6 +41,18 @@ public class PseudoNodeSelectorTest {
 		assertEquals("results", result.get(0).getName());
 		assertEquals("2", result.get(0).getAttribute("a"));
 	}	
+
+	@Test
+	public void testPseudoNth() throws Exception {
+		NodeSelector<Node> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
+		
+		List<Node> result = selector.findAll("results:nth-child(1)");
+		assertEquals(1, result.size());
+		assertEquals("results", result.get(0).getName());
+		assertEquals("1", result.get(0).getAttribute("a"));
+		
+		assertEquals("2", selector.find("results:nth-child(2)").getAttribute("b"));
+	}	
 }
 
 

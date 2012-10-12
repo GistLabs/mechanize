@@ -3,6 +3,8 @@ package com.gistlabs.mechanize.json.query;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
+import com.gistlabs.mechanize.json.query.NodeHelper.Index;
+
 import se.fishtank.css.selectors.dom.internal.NodeTraversalChecker;
 import se.fishtank.css.selectors.specifier.PseudoNthSpecifier;
 import se.fishtank.css.util.Assert;
@@ -37,107 +39,50 @@ public class PseudoNthSpecifierMatcher<Node> extends AbstractMatcher<Node> {
         Assert.notNull(nodes, "nodes is null!");
         this.nodes = nodes;
         result = new LinkedHashSet<Node>();
-//        String value = specifier.getValue();
+        String value = specifier.getValue();
         
-//        if ("nth-child".equals(value)) {
-//            addNthChild();
-//        } else if ("nth-last-child".equals(value)) {
-//            addNthLastChild();
-//        } else if ("nth-of-type".equals(value)) {
-//            addNthOfType();
-//        } else if ("nth-last-of-type".equals(value)) {
-//            addNthLastOfType();
-//        } else {
-//            throw new RuntimeException("Unknown pseudo nth class: " + value);
-//        }
+        if ("nth-child".equals(value)) {
+            addNthChild(false);
+        } else if ("nth-last-child".equals(value)) {
+            addNthLastChild(false);
+        } else if ("nth-of-type".equals(value)) {
+            addNthChild(true);
+        } else if ("nth-last-of-type".equals(value)) {
+            addNthLastChild(false);
+        } else {
+            throw new RuntimeException("Unknown pseudo nth class: " + value);
+        }
         
         return result;
     }
-//    
-//    /**
-//     * Add the {@code :nth-child} elements.
-//     * 
-//     * @see <a href="http://www.w3.org/TR/css3-selectors/#nth-child-pseudo"><code>:nth-child</code> pseudo-class</a>
-//     */
-//    private void addNthChild() {
-//        for (Node node : nodes) {
-//            int count = 1;
-//            Node n = DOMHelper.getPreviousSiblingElement(node);
-//            while (n != null) {
-//                count++;
-//                n = DOMHelper.getPreviousSiblingElement(n);
-//            }
-//            
-//            if (specifier.isMatch(count)) {
-//                result.add(node);
-//            }
-//        }
-//    }
-//    
-//    /**
-//     * Add {@code :nth-last-child} elements.
-//     * 
-//     * @see <a href="http://www.w3.org/TR/css3-selectors/#nth-last-child-pseudo"><code>:nth-last-child</code> pseudo-class</a>
-//     */
-//    private void addNthLastChild() {
-//        for (Node node : nodes) {
-//            int count = 1;
-//            Node n = DOMHelper.getNextSiblingElement(node);
-//            while (n != null) {
-//                count++;
-//                n = DOMHelper.getNextSiblingElement(n);
-//            }
-//            
-//            if (specifier.isMatch(count)) {
-//                result.add(node);
-//            }
-//        }
-//    }
-//    
-//    /**
-//     * Add {@code :nth-of-type} elements.
-//     * 
-//     * @see <a href="http://www.w3.org/TR/css3-selectors/#nth-of-type-pseudo"><code>:nth-of-type</code> pseudo-class</a>
-//     */
-//    private void addNthOfType() {
-//        for (Node node : nodes) {
-//            int count = 1;
-//            Node n = DOMHelper.getPreviousSiblingElement(node);
-//            while (n != null) {
-//                if (n.getNodeName().equals(node.getNodeName())) {
-//                    count++;
-//                }
-//                
-//                n = DOMHelper.getPreviousSiblingElement(n);
-//            }
-//            
-//            if (specifier.isMatch(count)) {
-//                result.add(node);
-//            }
-//        }
-//    }
-//    
-//    /**
-//     * Add {@code nth-last-of-type} elements.
-//     * 
-//     * @see <a href="http://www.w3.org/TR/css3-selectors/#nth-last-of-type-pseudo"><code>:nth-last-of-type</code> pseudo-class</a>
-//     */
-//    private void addNthLastOfType() {
-//        for (Node node : nodes) {
-//            int count = 1;
-//            Node n = DOMHelper.getNextSiblingElement(node);
-//            while (n != null) {
-//                if (n.getNodeName().equals(node.getNodeName())) {
-//                    count++;
-//                }
-//                
-//                n = DOMHelper.getNextSiblingElement(n);
-//            }
-//            
-//            if (specifier.isMatch(count)) {
-//                result.add(node);
-//            }
-//        }
-//    }
-//    
+    
+    /**
+     * Add the {@code :nth-child} elements.
+     * 
+     * @see <a href="http://www.w3.org/TR/css3-selectors/#nth-child-pseudo"><code>:nth-child</code> pseudo-class</a>
+     */
+    private void addNthChild(boolean byType) {
+        for (Node node : nodes) {
+        	Index index = helper.getIndexInParent(node, byType);
+            
+            if (specifier.isMatch(index.index+1)) {
+                result.add(node);
+            }
+        }
+    }
+    
+    /**
+     * Add {@code :nth-last-child} elements.
+     * 
+     * @see <a href="http://www.w3.org/TR/css3-selectors/#nth-last-child-pseudo"><code>:nth-last-child</code> pseudo-class</a>
+     */
+    private void addNthLastChild(boolean byType) {
+        for (Node node : nodes) {
+        	Index index = helper.getIndexInParent(node, byType);
+            
+            if (specifier.isMatch(index.size - index.index+1)) {
+                result.add(node);
+            }
+        }
+    }
 }

@@ -16,12 +16,11 @@ public class ElementQueryTest {
 		return new ObjectNodeImpl(new JSONObject(json));
 	}
 	
-
 	@Test
 	public void testAttributeTilda() throws Exception {
 		Node node = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y foo bar\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
 		
-		assertEquals(1, node.findAll("b[x~=\"y\"]").size());
+		assertNotNull(node.find("b[x~=\"y\"]"));
 		assertEquals(1, node.findAll("b[x~=\"foo\"]").size());
 		assertEquals(1, node.findAll("b[x~=\"bar\"]").size());
 

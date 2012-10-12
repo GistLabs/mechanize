@@ -52,8 +52,7 @@ public abstract class AbstractNode implements Node {
 
 	@Override
 	public Node find(String query) {
-		// TODO Auto-generated method stub
-		return null;
+		return new NodeSelector<Node>(new JsonNodeHelper(), this).find(query);
 	}
 
 	@Override

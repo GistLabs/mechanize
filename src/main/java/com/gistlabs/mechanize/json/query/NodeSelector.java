@@ -28,11 +28,22 @@ public class NodeSelector<Node> {
 		this.helper = helper;
 	}
 
-	public List<Node> findAll(String selectors) {
-        Assert.notNull(selectors, "selectors is null!");
+	public Node find(String selector) {
+		List<Node> findAll = findAll(selector);
+		
+		if (findAll.size()>2) // too many results
+			throw new RuntimeException(String.format("Too many resusts (%s) for selector: %s", findAll.size(), selector));
+		else if (findAll.isEmpty())
+			return null;
+		else
+			return findAll.iterator().next();
+	}
+	
+	public List<Node> findAll(String selector) {
+        Assert.notNull(selector, "selectors is null!");
         List<List<Selector>> groups;
         try {
-            Scanner scanner = new Scanner(selectors);
+            Scanner scanner = new Scanner(selector);
             groups = scanner.scan();
         } catch (ScannerException e) {
             throw new RuntimeException(e);
