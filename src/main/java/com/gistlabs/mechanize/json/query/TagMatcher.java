@@ -8,7 +8,7 @@ import se.fishtank.css.selectors.Selector;
 import se.fishtank.css.util.Assert;
 
 
-public class TagMatcher<JsonNode> extends AbstractMatcher<JsonNode> {
+public class TagMatcher<JsonNode> extends AbstractChecker<JsonNode> {
    
     /** The selector to check against. */
     protected final Selector selector;
@@ -37,7 +37,7 @@ public class TagMatcher<JsonNode> extends AbstractMatcher<JsonNode> {
      * {@inheritDoc}
      */
     @Override
-    public Collection<JsonNode> match(Collection<JsonNode> nodes) {
+    public Collection<JsonNode> check(Collection<JsonNode> nodes) {
         Assert.notNull(nodes, "nodes is null!");
         this.nodes = nodes;
 

@@ -5,17 +5,17 @@ import java.util.Collection;
 import se.fishtank.css.util.Assert;
 
 
-public abstract class AbstractMatcher<JsonNode> implements Matcher<JsonNode> {
+public abstract class AbstractChecker<Node> implements Checker<Node> {
 
-	protected final NodeHelper<JsonNode> helper;
+	protected final NodeHelper<Node> helper;
 
     /** The set of nodes to check. */
-    protected Collection<JsonNode> nodes;
+    protected Collection<Node> nodes;
     
     /** The result of the checks. */
-    protected Collection<JsonNode> result;
+    protected Collection<Node> result;
     
-	public AbstractMatcher(NodeHelper<JsonNode> helper) {
+	public AbstractChecker(NodeHelper<Node> helper) {
         Assert.notNull(helper, "helper is null!");
 		this.helper = helper;
 	}

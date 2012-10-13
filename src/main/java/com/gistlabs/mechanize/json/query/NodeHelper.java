@@ -2,7 +2,7 @@ package com.gistlabs.mechanize.json.query;
 
 import java.util.Collection;
 
-public interface NodeHelper<JsonNode> {
+public interface NodeHelper<Node> {
     
     public class Index {
     	public final int index;
@@ -13,23 +13,23 @@ public interface NodeHelper<JsonNode> {
     	}
 	}
 
-    public String getValue(JsonNode element);
+    public String getValue(Node element);
 	
-	public boolean hasAttribute(JsonNode element, String name);
+	public boolean hasAttribute(Node element, String name);
 
-	public Collection<JsonNode> getAttributes(JsonNode element);
+	public Collection<Node> getAttributes(Node element);
 
-	public Index getIndexInParent(JsonNode node, boolean byType);
+	public Index getIndexInParent(Node node, boolean byType);
 
-	public JsonNode getRoot(JsonNode node);
+	public Node getRoot(Node node);
 
 
-    public Collection<? extends JsonNode> getDescendentNodes(JsonNode node);
+    public Collection<? extends Node> getDescendentNodes(Node node);
     
-    public Collection<? extends JsonNode> getChildNodes(JsonNode node);
+    public Collection<? extends Node> getChildNodes(Node node);
 
-	public String getName(JsonNode n);
+	public String getName(Node n);
     
-    public JsonNode getNextSibling(JsonNode node);
+    public Node getNextSibling(Node node);
     
 }
