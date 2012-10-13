@@ -18,9 +18,6 @@ public class TagMatcher<JsonNode> extends AbstractChecker<JsonNode> {
     
     /** The result of the checks. */
     protected Collection<JsonNode> result;
-
-    /** Whether the underlying DOM is case sensitive. */
-    protected boolean caseSensitive = false;
     
     /**
      * Create a new instance.
@@ -142,11 +139,7 @@ public class TagMatcher<JsonNode> extends AbstractChecker<JsonNode> {
      * @return <code>true</code> if the tag names are equal, <code>false</code> otherwise.
      */
     private boolean tagEquals(String tag1, String tag2) {
-        if (caseSensitive) {
-            return tag1.equals(tag2);
-        }
-
-        return tag1.equalsIgnoreCase(tag2);
+    	return helper.namesEqual(tag1, tag2);
     }
 
 }

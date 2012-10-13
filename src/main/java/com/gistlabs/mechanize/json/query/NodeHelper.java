@@ -31,5 +31,13 @@ public interface NodeHelper<Node> {
 	public String getName(Node n);
     
     public Node getNextSibling(Node node);
-    
+
+    /**
+     * This can be a case-sensitive or insensitive match.
+     * 
+     * @param tag1
+     * @param tag2
+     * @return
+     */
+	public boolean namesEqual(String tag1, String tag2);    
 }

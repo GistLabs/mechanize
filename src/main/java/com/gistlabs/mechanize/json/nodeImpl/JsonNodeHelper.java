@@ -74,4 +74,8 @@ public class JsonNodeHelper implements NodeHelper<JsonNode> {
 		return root;
 	}
 
+	@Override
+	public boolean namesEqual(String tag1, String tag2) {
+		return tag1.equalsIgnoreCase(tag2);
+	}
 }
