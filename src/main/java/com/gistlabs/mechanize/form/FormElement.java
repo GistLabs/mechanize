@@ -7,9 +7,9 @@
  */
 package com.gistlabs.mechanize.form;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.PageElement;
-import com.gistlabs.mechanize.html.HtmlElement;
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.query.AbstractQuery;
 import com.gistlabs.mechanize.query.QueryStrategy;
 
 /**
@@ -23,8 +23,8 @@ public class FormElement extends PageElement {
 	private final Form form;
 	private String value = null;
 	
-	public FormElement(Form form, HtmlElement element) {
-		super(form.getPage(), element);
+	public FormElement(Form form, Node node) {
+		super(form.getPage(), node);
 		this.form = form;
 	}
 	
@@ -33,16 +33,16 @@ public class FormElement extends PageElement {
 	}
 	
 	public String getType() {
-		return element.getAttribute("type");
+		return node.getAttribute("type");
 	}
 	
 	public String getName() {
-		return element.hasAttribute("name") ? element.getAttribute("name") : null;
+		return node.hasAttribute("name") ? node.getAttribute("name") : null;
 	}
 
 	/** Returns the id of the element or null. */
 	public String getId() {
-		return getElement().hasAttribute("id") ? getElement().getAttribute("id") : null;
+		return getNode().hasAttribute("id") ? getNode().getAttribute("id") : null;
 	}
 
 	public void set(String value) {
@@ -66,10 +66,10 @@ public class FormElement extends PageElement {
 	}
 
 	protected String getDefaultValue() {
-		return element.hasAttribute("value") ? element.getAttribute("value") : null;
+		return node.hasAttribute("value") ? node.getAttribute("value") : null;
 	}
 
-	public boolean matches(QueryStrategy queryStrategy, Query query) {
-		return query.matches(queryStrategy, getElement());
+	public boolean matches(QueryStrategy queryStrategy, AbstractQuery<?> query) {
+		return query.matches(queryStrategy, getNode());
 	}
 }

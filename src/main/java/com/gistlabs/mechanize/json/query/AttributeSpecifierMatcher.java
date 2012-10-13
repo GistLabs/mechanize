@@ -1,19 +1,19 @@
-package com.gistlabs.mechanize.json.query.matchers;
+package com.gistlabs.mechanize.json.query;
 
-import java.util.LinkedHashSet;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 
 import se.fishtank.css.selectors.specifier.AttributeSpecifier;
 import se.fishtank.css.util.Assert;
 
-import com.gistlabs.mechanize.json.query.Matcher;
 
-public abstract class AbstractAttributeSpecifierMatcher<Node> implements Matcher<Node> {
+public class AttributeSpecifierMatcher<Node> extends AbstractMatcher<Node> {
 
 	/** The attribute specifier to check against. */
 	protected final AttributeSpecifier specifier;
 
-	public AbstractAttributeSpecifierMatcher(AttributeSpecifier specifier) {
+	public AttributeSpecifierMatcher(NodeHelper<Node> helper, AttributeSpecifier specifier) {
+		super(helper);
         Assert.notNull(specifier, "specifier is null!");
         this.specifier = specifier;
 	}
@@ -29,14 +29,14 @@ public abstract class AbstractAttributeSpecifierMatcher<Node> implements Matcher
 	    	// It just have to be present.
 	        String name = specifier.getName();
 			if (specifier.getValue() == null) {
-				if (hasAttribute(node, name))
+				if (helper.hasAttribute(node, name))
 					result.add(node);
 	            continue;
 	        }
 	        
-	        Collection<Node> attributes = getAttributes(node);
+	        Collection<Node> attributes = helper.getAttributes(node);
 	        for (Node element : attributes) {
-	        	String value = getValue(element);
+	        	String value = helper.getValue(element);
 	            String spec = specifier.getValue();
 	            switch (specifier.getMatch()) {
 	            case EXACT:
@@ -83,11 +83,5 @@ public abstract class AbstractAttributeSpecifierMatcher<Node> implements Matcher
 	    
 	    return result;
 	}
-    
-    protected abstract String getValue(Node element);
-	
-	protected abstract boolean hasAttribute(Node element, String name);
-
-	protected abstract Collection<Node> getAttributes(Node element);
 
 }

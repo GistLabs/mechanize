@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.Node;
 
 /** 
  * Represents an input element of type 'checkbox'. 
@@ -18,7 +18,7 @@ import com.gistlabs.mechanize.html.HtmlElement;
  */
 public class Checkbox extends Checkable {
 
-	public Checkbox(Form form, HtmlElement element) {
-		super(form, element);
+	public Checkbox(Form form, Node node) {
+		super(form, node);
 	}
 }

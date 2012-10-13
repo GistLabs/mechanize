@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -45,7 +45,7 @@ public abstract class Page implements RequestBuilderFactory<Page> {
 	public static Collection<String> CONTENT_MATCHERS = Collections.EMPTY_LIST;
 
 	private final MechanizeAgent agent;
-	protected final String uri;
+	private final String uri;
 	private final HttpRequestBase request;
 	protected final HttpResponse response;
 
@@ -257,7 +257,7 @@ public abstract class Page implements RequestBuilderFactory<Page> {
 	@Override
 	public String absoluteUrl(String uri) {
 		try {
-			URL baseUrl = new URL(this.uri);
+			URL baseUrl = new URL(getUri());
 			return new URL(baseUrl, uri).toExternalForm();
 		} catch (MalformedURLException e) {
 			throw MechanizeExceptionFactory.newException(e);

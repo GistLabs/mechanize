@@ -7,20 +7,20 @@
  */
 package com.gistlabs.mechanize.form;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
-import com.gistlabs.mechanize.html.HtmlElement;
-import com.gistlabs.mechanize.html.HtmlElements.HtmlQueryStrategy;
+import com.gistlabs.mechanize.html.query.HtmlQueryBuilder;
+import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.parameters.Parameters;
-import com.gistlabs.mechanize.query.Query;
-import com.gistlabs.mechanize.query.QueryBuilder;
+import com.gistlabs.mechanize.query.AbstractQuery;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 
 /** 
@@ -32,70 +32,70 @@ import com.gistlabs.mechanize.requestor.RequestBuilder;
 public class Form extends PageElement implements Iterable<FormElement> {
 	private List<FormElement> elements = new ArrayList<FormElement>();
 	
-	public Form(Page page, HtmlElement formElement) {
-		super(page, formElement);
+	public Form(Page page, Node formNode) {
+		super(page, formNode);
 		analyse();
 	}
 
 	private void analyse() {
-		List<HtmlElement> elements = getElement().getAll(byTag("input").or.byTag("textarea").or.byTag("select"));
-		for(HtmlElement element : elements) {
-			FormElement formElement = newFormElement(element);
+		List<? extends Node> nodes = getNode().getAll(byTag("input").or.byTag("textarea").or.byTag("select"));
+		for(Node node : nodes) {
+			FormElement formElement = newFormElement(node);
 			if(formElement != null)
 				this.elements.add(formElement);
 		}
 	}
 	
-	private FormElement newFormElement(HtmlElement element) {
-		if(element.getTagName().equalsIgnoreCase("input") && element.hasAttribute("type")) {
-			String type = element.getAttribute("type");
+	private FormElement newFormElement(Node node) {
+		if(node.getName().equalsIgnoreCase("input") && node.hasAttribute("type")) {
+			String type = node.getAttribute("type");
 			if(type.equalsIgnoreCase("text"))
-				return new Text(this, element);
+				return new Text(this, node);
 			else if(type.equalsIgnoreCase("search"))
-				return new Search(this, element);
+				return new Search(this, node);
 			else if(type.equalsIgnoreCase("email"))
-				return new Email(this, element);
+				return new Email(this, node);
 			else if(type.equalsIgnoreCase("password"))
-				return new Password(this, element);
+				return new Password(this, node);
 			else if(type.equalsIgnoreCase("file"))
-				return new Upload(this, element);
+				return new Upload(this, node);
 			else if(type.equalsIgnoreCase("hidden"))
-				return new Hidden(this, element);
+				return new Hidden(this, node);
 			else if(type.equalsIgnoreCase("submit"))
-				return new SubmitButton(this, element);
+				return new SubmitButton(this, node);
 			else if(type.equalsIgnoreCase("image"))
-				return new SubmitImage(this, element);
+				return new SubmitImage(this, node);
 			else if(type.equalsIgnoreCase("checkbox"))
-				return new Checkbox(this, element);
+				return new Checkbox(this, node);
 			else if(type.equalsIgnoreCase("radio"))
-				return new RadioButton(this, element);
+				return new RadioButton(this, node);
 			else
-				return new FormElement(this, element);
+				return new FormElement(this, node);
 		}
-		else if(element.getTagName().equalsIgnoreCase("input") && !element.hasAttribute("type")) {
+		else if(node.getName().equalsIgnoreCase("input") && !node.hasAttribute("type")) {
 			//Used to map input without type to text field (as required by google.com search form)
-			return new Text(this, element);
+			return new Text(this, node);
 		}
-		else if(element.getTagName().equalsIgnoreCase("textarea"))
-			return new TextArea(this, element);
-		else if(element.getTagName().equalsIgnoreCase("select"))
-			return new Select(this, element);
+		else if(node.getName().equalsIgnoreCase("textarea"))
+			return new TextArea(this, node);
+		else if(node.getName().equalsIgnoreCase("select"))
+			return new Select(this, node);
 		else
 			return null;
 	}
 	
 	public boolean isDoPost() {
-		return getElement().hasAttribute("method") && getElement().getAttribute("method").equalsIgnoreCase("post");
+		return getNode().hasAttribute("method") && getNode().getAttribute("method").equalsIgnoreCase("post");
 	}
 	
 	public boolean isMultiPart() {
-		return getElement().hasAttribute("enctype") && getElement().getAttribute("enctype").equalsIgnoreCase("multipart/form-data");
+		return getNode().hasAttribute("enctype") && getNode().getAttribute("enctype").equalsIgnoreCase("multipart/form-data");
 	}
 	
 	public String getUri() {
 		String uri = null;
-		if(getElement().hasAttribute("action"))
-			uri = getElement().getAbsoluteAttribute("action");
+		if(getNode().hasAttribute("action"))
+			uri = absoluteUrl(getNode().getAttribute("action"));
 		else 
 			uri = getPage().getUri().toString();
 		return uri;
@@ -103,10 +103,10 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	
 	/** Returns the element with the given name (case sensitive) or null. */
 	public FormElement get(String nameOrId) {
-		return get(QueryBuilder.byNameOrId(nameOrId));
+		return get(HtmlQueryBuilder.byNameOrId(nameOrId));
 	}
 	
-	public FormElement get(Query query) {
+	public FormElement get(AbstractQuery<?> query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(FormElement element : elements)
 			if(element.matches(queryStrategy, query))
@@ -115,7 +115,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T get(Query query, Class<T> clazz) {
+	public <T> T get(AbstractQuery<?> query, Class<T> clazz) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(FormElement element : elements) {
 			if(clazz == null || clazz.isInstance(element) && element.matches(queryStrategy, query))
@@ -125,7 +125,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> getAll(Query query, Class<T> clazz) {
+	public <T> List<T> getAll(AbstractQuery<?> query, Class<T> clazz) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		List<T> result = new ArrayList<T>();
 		for(FormElement element : elements)
@@ -134,7 +134,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return result;
 	}
 	
-	public List<FormElement> getAll(Query query) {
+	public List<FormElement> getAll(AbstractQuery<?> query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		
 		List<FormElement> result = new ArrayList<FormElement>();
@@ -144,79 +144,79 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return result;
 	}
 
-	public Text getText(Query query) {
+	public Text getText(AbstractQuery<?> query) {
 		return get(query, Text.class);
 	}
 	
-	public List<Text> getTextFields(Query query) {
+	public List<Text> getTextFields(AbstractQuery<?> query) {
 		return getAll(query, Text.class);
 	}
 
-	public Search getSearch(Query query) {
+	public Search getSearch(AbstractQuery<?> query) {
 		return get(query, Search.class);
 	}
 
-	public List<Search> getSearchFields(Query query) {
+	public List<Search> getSearchFields(AbstractQuery<?> query) {
 		return getAll(query, Search.class);
 	}
 
-	public Email getEmail(Query query) {
+	public Email getEmail(AbstractQuery<?> query) {
 		return get(query, Email.class);
 	}
 	
-	public List<Email> getEmailFields(Query query) {
+	public List<Email> getEmailFields(AbstractQuery<?> query) {
 		return getAll(query, Email.class);
 	}
 
-	public TextArea getTextArea(Query query) {
+	public TextArea getTextArea(AbstractQuery<?> query) {
 		return get(query, TextArea.class);
 	}
 
-	public List<TextArea> getTextAreas(Query query) {
+	public List<TextArea> getTextAreas(AbstractQuery<?> query) {
 		return getAll(query, TextArea.class);
 	}
 	
-	public Password getPassword(Query query) {
+	public Password getPassword(AbstractQuery<?> query) {
 		return get(query, Password.class);
 	}
 	
-	public List<Search> getPasswords(Query query) {
+	public List<Search> getPasswords(AbstractQuery<?> query) {
 		return getAll(query, Search.class);
 	}
 	
-	public Upload getUpload(Query query) {
+	public Upload getUpload(AbstractQuery<?> query) {
 		return get(query, Upload.class);
 	}
 
-	public List<Search> getUploads(Query query) {
+	public List<Search> getUploads(AbstractQuery<?> query) {
 		return getAll(query, Search.class);
 	}
 	
-	public Hidden getHidden(Query query) {
+	public Hidden getHidden(AbstractQuery<?> query) {
 		return get(query, Hidden.class);
 	}
 
-	public List<Search> getHiddenFields(Query query) {
+	public List<Search> getHiddenFields(AbstractQuery<?> query) {
 		return getAll(query, Search.class);
 	}
 	
-	public SubmitButton getSubmitButton(Query query) {
+	public SubmitButton getSubmitButton(AbstractQuery<?> query) {
 		return get(query, SubmitButton.class);
 	}
 
-	public List<SubmitButton> getSubmitButtons(Query query) {
+	public List<SubmitButton> getSubmitButtons(AbstractQuery<?> query) {
 		return getAll(query, SubmitButton.class);
 	}
 	
-	public SubmitImage getSubmitImage(Query query) {
+	public SubmitImage getSubmitImage(AbstractQuery<?> query) {
 		return get(query, SubmitImage.class);
 	}
 
-	public List<SubmitImage> getSubmitImages(Query query) {
+	public List<SubmitImage> getSubmitImages(AbstractQuery<?> query) {
 		return getAll(query, SubmitImage.class);
 	}
 	
-	public Checkbox getCheckbox(Query query) {
+	public Checkbox getCheckbox(AbstractQuery<?> query) {
 		return get(query, Checkbox.class);
 	}
 
@@ -224,7 +224,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return get(nameOrId, value, Checkbox.class);
 	}
 
-	public List<Checkbox> getCheckboxes(Query query) {
+	public List<Checkbox> getCheckboxes(AbstractQuery<?> query) {
 		return getAll(query, Checkbox.class);
 	}
 
@@ -232,7 +232,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return get(nameOrId, RadioButton.class);
 	}
 	
-	public List<RadioButton> getRadioButtons(Query query) {
+	public List<RadioButton> getRadioButtons(AbstractQuery<?> query) {
 		return getAll(query, RadioButton.class);
 	}
 	
@@ -244,11 +244,11 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return getAll(nameOrId, RadioButton.class);
 	}
 	
-	public Select getSelect(Query query) {
+	public Select getSelect(AbstractQuery<?> query) {
 		return get(query, Select.class);
 	}
 
-	public List<Select> getSelects(Query query) {
+	public List<Select> getSelects(AbstractQuery<?> query) {
 		return getAll(query, Select.class);
 	}
 	

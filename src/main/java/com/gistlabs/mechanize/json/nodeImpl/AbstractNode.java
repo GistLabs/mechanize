@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import com.gistlabs.mechanize.json.Node;
 import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
+import com.gistlabs.mechanize.json.query.NodeSelector;
 
 public abstract class AbstractNode implements Node {
 	protected final String name;
@@ -44,21 +45,21 @@ public abstract class AbstractNode implements Node {
 		return this.name;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Node getParent() {
 		return this.parent;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Node find(String query) {
-		// TODO Auto-generated method stub
-		return null;
+		return new NodeSelector<Node>(new JsonNodeHelper(), this).find(query);
 	}
 
 	@Override
 	public List<Node> findAll(String query) {
-		// TODO Auto-generated method stub
-		return null;
+		return new NodeSelector<Node>(new JsonNodeHelper(), this).findAll(query);
 	}
 
 	protected Node factory(JSONObject node, String key) {		

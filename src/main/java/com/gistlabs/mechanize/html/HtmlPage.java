@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.html;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -15,8 +15,10 @@ import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.form.Forms;
@@ -34,6 +36,8 @@ public class HtmlPage extends Page {
 				ContentType.APPLICATION_XML.getMimeType());
 
 	private HtmlElements htmlElements;
+	
+	private String baseUri;
 
 	public HtmlPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
 		super(agent, request, response);
@@ -45,19 +49,31 @@ public class HtmlPage extends Page {
 	
 	@Override
 	protected void loadPage() throws Exception {
-		htmlElements = new HtmlElements(this, Jsoup.parse(getInputStream(), getContentEncoding(response), this.uri));
+		Document jsoup = Jsoup.parse(getInputStream(), getContentEncoding(response), getUri());
+		setBaseUri(jsoup.head().baseUri());
+		this.htmlElements = new HtmlElements(this, jsoup);
+	}
+	
+	private void setBaseUri(String baseUri) {
+		if (! this.getUri().equals(baseUri))
+			this.baseUri = baseUri;
 	}
 	
 	@Override
+	public String getUri() {
+		return this.baseUri==null ? super.getUri() : this.baseUri;
+	}
+
+	@Override
 	protected Links loadLinks() {
-		List<HtmlElement> links = htmlElements().getAll(byTag("a"));
+		List<? extends Node> links = htmlElements().getAll(byTag("a"));
 		return new Links(this, links);
 	}
 	
-	@Override
+	@Override 
 	protected Forms loadForms() {
-		List<HtmlElement> forms = htmlElements().getAll(byTag("form"));
-		return new Forms(this, forms);
+		List<? extends Node> forms = htmlElements().getAll(byTag("form"));
+		return new Forms((Page)this, forms);
 	}
 	
 	@Override

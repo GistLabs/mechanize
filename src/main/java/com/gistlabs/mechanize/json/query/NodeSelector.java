@@ -13,27 +13,37 @@ import se.fishtank.css.selectors.scanner.ScannerException;
 import se.fishtank.css.selectors.specifier.AttributeSpecifier;
 import se.fishtank.css.selectors.specifier.NegationSpecifier;
 import se.fishtank.css.selectors.specifier.PseudoClassSpecifier;
+import se.fishtank.css.selectors.specifier.PseudoNthSpecifier;
 import se.fishtank.css.util.Assert;
 
-import com.gistlabs.mechanize.json.Node;
-import com.gistlabs.mechanize.json.query.matchers.AttributeSpecifierMatcher;
-import com.gistlabs.mechanize.json.query.matchers.PseudoClassSpecifierMatcher;
-import com.gistlabs.mechanize.json.query.matchers.TagMatcher;
 
-public class NodeSelector {
+public class NodeSelector<Node> {
 	
 
 	private final Node root;
+	private final NodeHelper<Node> helper;
 
-	public NodeSelector(Node node) {
+	public NodeSelector(NodeHelper<Node> helper, Node node) {
 		this.root = node;
+		this.helper = helper;
 	}
 
-	public List<Node> findAll(String selectors) {
-        Assert.notNull(selectors, "selectors is null!");
+	public Node find(String selector) {
+		List<Node> findAll = findAll(selector);
+		
+		if (findAll.size()>2) // too many results
+			throw new RuntimeException(String.format("Too many resusts (%s) for selector: %s", findAll.size(), selector));
+		else if (findAll.isEmpty())
+			return null;
+		else
+			return findAll.iterator().next();
+	}
+	
+	public List<Node> findAll(String selector) {
+        Assert.notNull(selector, "selectors is null!");
         List<List<Selector>> groups;
         try {
-            Scanner scanner = new Scanner(selectors);
+            Scanner scanner = new Scanner(selector);
             groups = scanner.scan();
         } catch (ScannerException e) {
             throw new RuntimeException(e);
@@ -68,19 +78,19 @@ public class NodeSelector {
         result.add(root);
         
         for (Selector selector : parts) {
-            Matcher<Node> checker = new TagMatcher(selector);
+            Matcher<Node> checker = new TagMatcher<Node>(helper, selector);
             result = checker.match(result);
             if (selector.hasSpecifiers()) {
                 for (Specifier specifier : selector.getSpecifiers()) {
                     switch (specifier.getType()) {
                     case ATTRIBUTE:
-                        checker = new AttributeSpecifierMatcher((AttributeSpecifier) specifier);
+                        checker = new AttributeSpecifierMatcher<Node>(helper, (AttributeSpecifier) specifier);
                         break;
                     case PSEUDO:
                         if (specifier instanceof PseudoClassSpecifier) {
-                            checker = new PseudoClassSpecifierMatcher((PseudoClassSpecifier) specifier);
-//                        } else if (specifier instanceof PseudoNthSpecifier) {
-//                            checker = new PseudoNthSpecifierChecker((PseudoNthSpecifier) specifier);
+                            checker = new PseudoClassSpecifierMatcher<Node>(helper, (PseudoClassSpecifier) specifier);
+                        } else if (specifier instanceof PseudoNthSpecifier) {
+                            checker = new PseudoNthSpecifierMatcher<Node>(helper, (PseudoNthSpecifier) specifier);
                         }
                         
                         break;

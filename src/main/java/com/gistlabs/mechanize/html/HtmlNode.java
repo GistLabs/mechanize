@@ -10,7 +10,8 @@ package com.gistlabs.mechanize.html;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.Node;
+import com.gistlabs.mechanize.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Util;
 
 /**
@@ -30,7 +31,7 @@ public class HtmlNode implements Node {
 		this.node = node;
 	}
 	
-	public org.jsoup.nodes.Node getNode() {
+	public org.jsoup.nodes.Node getJsoupNode() {
 		return node;
 	}
 	
@@ -39,13 +40,18 @@ public class HtmlNode implements Node {
 	}
 	
 	@Override
-	public boolean hasAttribute(String attributeKey) {
-		return false;
+	public String getName() {
+		return null;
 	}
 	
 	@Override
-	public String getAbsoluteAttribute(String attributeKey) {
+	public String getValue() {
 		return null;
+	}
+	
+	@Override
+	public boolean hasAttribute(String attributeKey) {
+		return false;
 	}
 
 	@Override
@@ -59,6 +65,11 @@ public class HtmlNode implements Node {
 	}
 	
 	@Override
+	public boolean isMultipleValueAttribute(String attributeKey) {
+		return false;
+	}
+	
+	@Override
 	public List<HtmlNode> getChildren() {
 		List<HtmlNode> result = new ArrayList<HtmlNode>();
 		for(org.jsoup.nodes.Node child : node.childNodes()) 
@@ -67,14 +78,13 @@ public class HtmlNode implements Node {
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public HtmlElement get(Query query) {
+	public HtmlElement get(AbstractQuery<?> query) {
 		return HtmlElements.get(getPage(), query, node.childNodes());
 	}
 
 	@Override
-	public List<HtmlElement> getAll(Query query) {
+	public List<HtmlElement> getAll(AbstractQuery<?> query) {
 		List<HtmlElement> result = new ArrayList<HtmlElement>();
 		HtmlElements.getAll(getPage(), result, query, node.childNodes());
 		return result;

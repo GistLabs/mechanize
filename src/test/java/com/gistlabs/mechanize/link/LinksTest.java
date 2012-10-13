@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.link;
 
-import static com.gistlabs.mechanize.query.QueryBuilder.*;
+import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -55,7 +55,7 @@ public class LinksTest extends MechanizeTestCase {
 		agent.addPageRequest("http://www1.test.com/myPage.html", newHtml("My Page", ""));
 		
 		Page page = agent.get("http://test.com");
-		Link link = page.links().get(byInnerHtml("myPage"));
+		Link link = page.links().get(0);
 		assertNotNull(link);
 		Page myPage = link.click();
 		assertEquals("My Page", myPage.getTitle());

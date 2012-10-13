@@ -12,7 +12,8 @@ import java.util.List;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Element;
 
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.Node;
+import com.gistlabs.mechanize.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Util;
 
 /**
@@ -21,23 +22,42 @@ import com.gistlabs.mechanize.util.Util;
  */
 public class HtmlElement extends HtmlNode implements Node {
 	
-	public HtmlElement(HtmlPage page, Element element) {
-		super(page, element);
+	public HtmlElement(HtmlPage page, Element jsoupElement) {
+		super(page, jsoupElement);
 	}
 	
-	public Element getElement() {
-		return (Element)getNode();
+	public Element getJsoupElement() {
+		return (Element)getJsoupNode();
+	}
+	
+	@Override
+	public String getName() {
+		return getAttribute(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_NODE_NAME);
+	}
+	
+	@Override
+	public String getValue() {
+		return getAttribute(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_NODE_VALUE);
+	}
+	
+	@Override
+	public boolean isMultipleValueAttribute(String attributeKey) {
+		return attributeKey.equals(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_CLASS_NAMES);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public HtmlElement get(Query query) {
+	public HtmlElement get(AbstractQuery<?> query) {
 		return super.get(query);
 	}
 	
 	@Override
+	public List<HtmlElement> getAll(AbstractQuery<?> query) {
+		return super.getAll(query);
+	}
+	
+	@Override
 	public boolean hasAttribute(String attributeKey) {
-		return !isSupportedSpecialAttribute(attributeKey) ? getElement().hasAttr(attributeKey) : true;
+		return !isSupportedSpecialAttribute(attributeKey) ? getJsoupElement().hasAttr(attributeKey) : true;
 	}
 
 	private boolean isSupportedSpecialAttribute(String attributeKey) {
@@ -50,7 +70,7 @@ public class HtmlElement extends HtmlNode implements Node {
 
 	@Override
 	public String getAttribute(String attributeKey) {
-		Element element = getElement();
+		Element element = getJsoupElement();
 		return getAttributeValueOfJSoupElement(element, attributeKey);
 	}
 
@@ -78,11 +98,6 @@ public class HtmlElement extends HtmlNode implements Node {
 		}
 		else
 			return element.attr(attributeKey);
-	}
-	
-	@Override
-	public String getAbsoluteAttribute(String attributeKey) {
-		return getElement().absUrl(attributeKey);
 	}
 	
 	/** Returns the class names of the this element as a comma separated list without trailing white-spaces. */
@@ -113,7 +128,7 @@ public class HtmlElement extends HtmlNode implements Node {
 	
 	@Override
 	public List<String> getAttributeNames() {
-		return getAttributeNamesForJSoupElement(getElement());
+		return getAttributeNamesForJSoupElement(getJsoupElement());
 	}
 	
 	public static List<String> getAttributeNamesForJSoupElement(Element element) {

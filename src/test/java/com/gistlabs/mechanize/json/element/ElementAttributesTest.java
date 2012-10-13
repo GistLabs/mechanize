@@ -24,8 +24,8 @@ public class ElementAttributesTest extends TestElementBaseClass {
 		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : \"two\", \"\" : \"four\", \"a:b\" : \"http://example.com\" }"));
 		
 		assertEquals("four", element.getAttribute(""));
-		assertEquals("two", element.getChild("one").getContent());
-		assertEquals("four", element.getChild("").getContent());
+		assertEquals("two", element.getChild("one").getValue());
+		assertEquals("four", element.getChild("").getValue());
 	}
 
 	@Test
@@ -33,7 +33,7 @@ public class ElementAttributesTest extends TestElementBaseClass {
 		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"b\" : 2.2 }"));
 		
 		assertEquals("2", element.getAttribute("one"));
-		assertEquals("2.2", element.getChild("b").getContent());
+		assertEquals("2.2", element.getChild("b").getValue());
 	}
 	
 	@Test
@@ -52,9 +52,9 @@ public class ElementAttributesTest extends TestElementBaseClass {
 		element.setAttribute("one", "new");
 		assertEquals("new", element.getAttribute("one"));
 		
-		assertEquals("2.2", element.getChild("b").getContent());
-		element.getChild("b").setContent("maybe");
-		assertEquals("maybe", element.getChild("b").getContent());
+		assertEquals("2.2", element.getChild("b").getValue());
+		element.getChild("b").setValue("maybe");
+		assertEquals("maybe", element.getChild("b").getValue());
 	}
 	
 	@Test

@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json.query.matchers;
+package com.gistlabs.mechanize.json.query;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -7,9 +7,8 @@ import se.fishtank.css.selectors.NodeSelectorException;
 import se.fishtank.css.selectors.Selector;
 import se.fishtank.css.util.Assert;
 
-import com.gistlabs.mechanize.json.query.Matcher;
 
-public abstract class AbstractTagMatcher<Node> implements Matcher<Node> {
+public class TagMatcher<Node> extends AbstractMatcher<Node> {
    
     /** The selector to check against. */
     protected final Selector selector;
@@ -28,7 +27,8 @@ public abstract class AbstractTagMatcher<Node> implements Matcher<Node> {
      * 
      * @param selector The selector to check against.
      */
-    public AbstractTagMatcher(Selector selector) {
+    public TagMatcher(NodeHelper<Node> helper, Selector selector) {
+    	super(helper);
         Assert.notNull(selector, "selector is null!");
         this.selector = selector;
     }
@@ -71,7 +71,7 @@ public abstract class AbstractTagMatcher<Node> implements Matcher<Node> {
         for (Node node : nodes) {
         	Collection<Node> nodes = new LinkedHashSet<Node>();
         	nodes.add(node);
-        	nodes.addAll(getDescendentNodes(node));
+        	nodes.addAll(helper.getDescendentNodes(node));
         	
         	for(Node n : nodes) {
         		if (matchTag(n))
@@ -87,7 +87,7 @@ public abstract class AbstractTagMatcher<Node> implements Matcher<Node> {
      */
     private void addChildElements() {
         for (Node node : nodes) {
-        	Collection<? extends Node> childNodes = getChildNodes(node);
+        	Collection<? extends Node> childNodes = helper.getChildNodes(node);
         	for (Node child : childNodes) {
                 if (matchTag(child))
                 	result.add(child);	
@@ -97,7 +97,7 @@ public abstract class AbstractTagMatcher<Node> implements Matcher<Node> {
 
 	private boolean matchTag(Node child) {
 		String tag = selector.getTagName();
-		return tagEquals(tag, getName(child)) || tag.equals(Selector.UNIVERSAL_TAG);
+		return tagEquals(tag, helper.getName(child)) || tag.equals(Selector.UNIVERSAL_TAG);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public abstract class AbstractTagMatcher<Node> implements Matcher<Node> {
      */
     private void addAdjacentSiblingElements() {
         for (Node node : nodes) {
-            Node n = getNextSibling(node);
+            Node n = helper.getNextSibling(node);
             if (n != null) {
                 if (matchTag(n))
                 	result.add(n);	
@@ -115,14 +115,6 @@ public abstract class AbstractTagMatcher<Node> implements Matcher<Node> {
         }
     }
     
-    protected abstract Collection<? extends Node> getDescendentNodes(Node node);
-    
-    protected abstract Collection<? extends Node> getChildNodes(Node node);
-
-	protected abstract String getName(Node n);
-    
-    protected abstract Node getNextSibling(Node node);
-
 	/**
      * Add general sibling elements.
      * 
@@ -130,14 +122,14 @@ public abstract class AbstractTagMatcher<Node> implements Matcher<Node> {
      */
     private void addGeneralSiblingElements() {
         for (Node node : nodes) {
-            Node n = getNextSibling(node);
+            Node n = helper.getNextSibling(node);
             while (n != null) {
                 String tag = selector.getTagName();
-                if (tagEquals(tag, getName(n)) || tag.equals(Selector.UNIVERSAL_TAG)) {
+                if (tagEquals(tag, helper.getName(n)) || tag.equals(Selector.UNIVERSAL_TAG)) {
                     result.add(n);
                 }
                 
-                n = getNextSibling(n);
+                n = helper.getNextSibling(n);
             }
         }
     }

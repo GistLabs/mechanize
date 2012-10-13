@@ -13,64 +13,61 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.gistlabs.mechanize.html.HtmlElement;
-import com.gistlabs.mechanize.html.HtmlElements;
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
+import com.gistlabs.mechanize.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Assert;
 
 /**
  * Abstract implementation stub for page elements implementing dynamic caching of representations of DOM elements. 
  *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public abstract class PageElements<T> implements Iterable<T> {
 	protected final Page page;
-	protected final List<HtmlElement> elements;
+	protected final List<? extends Node> nodes;
 	
-	private final Map<HtmlElement, T> representations = new HashMap<HtmlElement, T>();
+	private final Map<Node, T> representations = new HashMap<Node, T>();
 	
-	public PageElements(Page page, List<HtmlElement> elements) {
-		Assert.notNull(elements, "Elements may not be null");
+	public PageElements(Page page, List<? extends Node> nodes) {
+		Assert.notNull(nodes, "Nodes may not be null");
 		
 		this.page = page;
-		this.elements = elements;
+		this.nodes = nodes;
 	}
 	
 	public Page getPage() {
 		return page;
 	}
 	
-	protected T getCachedOrNewRepresentation(HtmlElement element) {
-		if(element != null) {
-			if(!representations.containsKey(element))
-				representations.put(element, newRepresentation(element));
+	protected T getCachedOrNewRepresentation(Node node) {
+		if(node != null) {
+			if(!representations.containsKey(node))
+				representations.put(node, newRepresentation(node));
 			
-			return representations.get(element);
+			return representations.get(node);
 		}
 		else
 			return null;
 	}
 
-	protected abstract T newRepresentation(HtmlElement element);
+	protected abstract T newRepresentation(Node element);
 	
-	public T get(Query query) {
-		HtmlElements.HtmlQueryStrategy queryStrategy = new HtmlElements.HtmlQueryStrategy();
+	public T get(AbstractQuery<?> query) {
+		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		
-		for(HtmlElement element : elements) 
-			if(query.matches(queryStrategy, element))
-				return getCachedOrNewRepresentation(element);
+		for(Node node : nodes) 
+			if(query.matches(queryStrategy, node))
+				return getCachedOrNewRepresentation(node);
 
 		return null;
 	}
 	
-	public List<T> getAll(Query query) {
-		HtmlElements.HtmlQueryStrategy queryStrategy = new HtmlElements.HtmlQueryStrategy();
+	public List<T> getAll(AbstractQuery<?> query) {
+		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 
 		List<T> result = new ArrayList<T>();
-		if (elements != null)
-			for(HtmlElement element : elements)
+		if (nodes != null)
+			for(Node element : nodes)
 				if(query.matches(queryStrategy, element))
 					result.add(getCachedOrNewRepresentation(element));
 		return result;
@@ -79,18 +76,18 @@ public abstract class PageElements<T> implements Iterable<T> {
 	/** Returns a list with all representations of all elements. */
 	public List<T> getAll() {
 		List<T> result = new ArrayList<T>();
-		if (elements != null)
-			for(HtmlElement element : elements) 
+		if (nodes != null)
+			for(Node element : nodes) 
 				result.add(getCachedOrNewRepresentation(element));
 		return result;
 	}
 	
 	public int size() {
-		return elements.size();
+		return nodes.size();
 	}
 	
 	public T get(int index) {
-		return getCachedOrNewRepresentation(elements.get(index));
+		return getCachedOrNewRepresentation(nodes.get(index));
 	}
 		
 	public Iterator<T> iterator() {

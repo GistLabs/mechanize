@@ -7,8 +7,8 @@
  */
 package com.gistlabs.mechanize.form;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
-import com.gistlabs.mechanize.html.HtmlElement;
 
 /** Represents an input element of type 'submit'.
  * 
@@ -18,8 +18,8 @@ import com.gistlabs.mechanize.html.HtmlElement;
  */
 public class SubmitButton extends FormElement {
 
-	public SubmitButton(Form form, HtmlElement element) {
-		super(form, element);
+	public SubmitButton(Form form, Node node) {
+		super(form, node);
 	}
 	
 	@Override

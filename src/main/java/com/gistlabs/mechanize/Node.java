@@ -1,8 +1,8 @@
-package com.gistlabs.mechanize.html;
+package com.gistlabs.mechanize;
 
 import java.util.List;
 
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.query.AbstractQuery;
 
 /**
  * Describes a node of a document having attributes and child nodes.
@@ -14,11 +14,17 @@ import com.gistlabs.mechanize.query.Query;
  */
 public interface Node {
 
+	/** Returns the name of the node or null if none (similar to getAttribute(SpecialAttribute.SPECIAL_ATTRIBUTE_NAME)). */
+	String getName();
+	
+	/** Returns the name of the node or null if none (similar to getAttribute(SpecialAttribute.SPECIAL_ATTRIBUTE_VALUE)). */
+	String getValue();
+	
 	/** Returns the first child element matching the query by performing a deep first left right search. */
-	<T extends Node> T get(Query query);
+	Node get(AbstractQuery<?> query);
 
 	/** Returns all child elements matching the query by performing a deep first left right search. */
-	List<? extends Node> getAll(Query query);
+	List<? extends Node> getAll(AbstractQuery<?> query);
 
 	/** Returns the child elements. */
 	List<? extends Node> getChildren();
@@ -28,9 +34,9 @@ public interface Node {
 
 	/** Returns the value of the attribute. */ 
 	String getAttribute(String attributeKey);
-
-	/** Returns the value of the attribute in the absolute form (image.getAttribute("src") vs. image.getAbsoluteAttribute("href")). */ 
-	String getAbsoluteAttribute(String attributeKey);
+	
+	/** Returns true if the given attribute name is a multiple value attribute being a comma separated list without whitespace. */
+	boolean isMultipleValueAttribute(String attributeKey);
 	
 	/** Returns all attribute names being present including any supported special attribute. */
 	List<String> getAttributeNames();

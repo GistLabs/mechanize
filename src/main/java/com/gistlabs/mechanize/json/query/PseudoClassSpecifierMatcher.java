@@ -1,39 +1,26 @@
-package com.gistlabs.mechanize.json.query.matchers;
+package com.gistlabs.mechanize.json.query;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
+import com.gistlabs.mechanize.json.query.NodeHelper.Index;
+
 import se.fishtank.css.selectors.specifier.PseudoClassSpecifier;
 import se.fishtank.css.util.Assert;
 
-import com.gistlabs.mechanize.json.query.Matcher;
 
-public abstract class AbstractPseudoClassSpecifierMatcher<Node> implements Matcher<Node> {
-    
-    public class Index {
-    	final int index;
-    	final int size;
-    	public Index(int index, int size) {
-    		this.index = index;
-    		this.size = size;
-    	}
-	}
+public class PseudoClassSpecifierMatcher<Node> extends AbstractMatcher<Node> {
 
 	/** The pseudo-class specifier to check against. */
     protected final PseudoClassSpecifier specifier;
-    
-    /** The set of nodes to check. */
-    protected Collection<Node> nodes;
-
-    /** The result of the checks. */
-    protected Collection<Node> result;
     
     /**
      * Create a new instance.
      * 
      * @param specifier The pseudo-class specifier to check against.
      */
-    public AbstractPseudoClassSpecifierMatcher(PseudoClassSpecifier specifier) {
+    public PseudoClassSpecifierMatcher(NodeHelper<Node> helper, PseudoClassSpecifier specifier) {
+    	super(helper);
         Assert.notNull(specifier, "specifier is null!");
         this.specifier = specifier;
     }
@@ -46,7 +33,7 @@ public abstract class AbstractPseudoClassSpecifierMatcher<Node> implements Match
         Assert.notNull(nodes, "nodes is null!");
         this.nodes = nodes;
 
-        result = new LinkedHashSet<Node>();
+        this.result = new LinkedHashSet<Node>();
 
         String value = specifier.getValue();
         if ("empty".equals(value)) {
@@ -79,7 +66,7 @@ public abstract class AbstractPseudoClassSpecifierMatcher<Node> implements Match
      */
     private void addEmptyElements() {
         for (Node node : nodes) {
-        	if (getChildNodes(node).isEmpty())
+        	if (helper.getChildNodes(node).isEmpty())
         		result.add(node);
         }
     }
@@ -91,7 +78,7 @@ public abstract class AbstractPseudoClassSpecifierMatcher<Node> implements Match
      */
     private void addFirstChildElements() {
         for (Node node : nodes) {
-        	Index index = getIndexInParent(node, false);
+        	Index index = helper.getIndexInParent(node, false);
         	if (index.index == 0)
                 result.add(node);
         }
@@ -104,7 +91,7 @@ public abstract class AbstractPseudoClassSpecifierMatcher<Node> implements Match
      */
     private void addFirstOfType() {
         for (Node node : nodes) {
-        	Index index = getIndexInParent(node, true);
+        	Index index = helper.getIndexInParent(node, true);
         	if (index.index == 0)
                 result.add(node);
         }
@@ -117,7 +104,7 @@ public abstract class AbstractPseudoClassSpecifierMatcher<Node> implements Match
      */
     private void addLastChildElements() {
         for (Node node : nodes) {
-        	Index index = getIndexInParent(node, false);
+        	Index index = helper.getIndexInParent(node, false);
         	if (index.index == (index.size-1))
                 result.add(node);
         }
@@ -130,7 +117,7 @@ public abstract class AbstractPseudoClassSpecifierMatcher<Node> implements Match
      */
     private void addLastOfType() {
         for (Node node : nodes) {
-        	Index index = getIndexInParent(node, true);
+        	Index index = helper.getIndexInParent(node, true);
         	if (index.index == (index.size-1))
                 result.add(node);
         }
@@ -143,7 +130,7 @@ public abstract class AbstractPseudoClassSpecifierMatcher<Node> implements Match
      */
     private void addOnlyChildElements() {
         for (Node node : nodes) {
-        	Index index = getIndexInParent(node, false);
+        	Index index = helper.getIndexInParent(node, false);
         	if (index.size==1)
                 result.add(node);
         }
@@ -156,7 +143,7 @@ public abstract class AbstractPseudoClassSpecifierMatcher<Node> implements Match
      */
     private void addOnlyOfTypeElements() {
         for (Node node : nodes) {
-        	Index index = getIndexInParent(node, true);
+        	Index index = helper.getIndexInParent(node, true);
         	if (index.size==1)
                 result.add(node);
         }
@@ -169,15 +156,10 @@ public abstract class AbstractPseudoClassSpecifierMatcher<Node> implements Match
      */
     private void addRootElement() {
         for (Node node : nodes) {
-        	Node root = getRoot(node);
+        	Node root = helper.getRoot(node);
         	
         	if (root != null)
         		result.add(root);
         }
     }
-    protected abstract Collection<? extends Node> getChildNodes(Node node);
-
-	protected abstract Index getIndexInParent(Node node, boolean byType);
-
-	protected abstract Node getRoot(Node node);
 }

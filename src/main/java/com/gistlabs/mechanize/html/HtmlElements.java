@@ -16,9 +16,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 
+import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
+import com.gistlabs.mechanize.query.AbstractQuery;
 import com.gistlabs.mechanize.query.Query;
 import com.gistlabs.mechanize.query.QueryStrategy;
-import com.gistlabs.mechanize.util.Util;
 
 /**
  * Collection of all HTML elements of a HtmlPage object and the underlying Jsoup DOM-Document. 
@@ -45,12 +46,12 @@ public class HtmlElements {
 	}
 	
 	/** Returns the first element matching the query in a deep first left right search. */ 
-	public HtmlElement get(Query query) {
+	public HtmlElement get(AbstractQuery<?> query) {
 		return root.get(query);
 	}
 	
 	/** Returns the elements matching the query in a deep first left right search. */ 
-	public List<HtmlElement> getAll(Query query) {
+	public List<HtmlElement> getAll(AbstractQuery<?> query) {
 		return root.getAll(query);
 	}
 	
@@ -87,15 +88,15 @@ public class HtmlElements {
 	public static HtmlElement getFormHtmlNodes(HtmlPage page, Query query, List<? extends HtmlNode> nodes) {
 		List<org.jsoup.nodes.Node> jsoupNodes = new ArrayList<org.jsoup.nodes.Node>();
 		for(HtmlNode node : nodes)
-			jsoupNodes.add(node.getNode());
+			jsoupNodes.add(node.getJsoupNode());
 		return get(page, query, jsoupNodes);
 	}
 	
-	public static HtmlElement get(HtmlPage page, Query query, List<org.jsoup.nodes.Node> nodes) {
+	public static HtmlElement get(HtmlPage page, AbstractQuery<?> query, List<org.jsoup.nodes.Node> nodes) {
 		return get(page, query, new HtmlQueryStrategy(), nodes);
 	}
 	
-	public static HtmlElement get(HtmlPage page, Query query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
+	public static HtmlElement get(HtmlPage page, AbstractQuery<?> query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
 		for(org.jsoup.nodes.Node node : nodes) {
 			if(node instanceof Element) {
 				if(query.matches(queryStrategy, (Element)node))
@@ -108,49 +109,17 @@ public class HtmlElements {
 		return null;
 	}
 
-	public static void getAll(HtmlPage page, List<HtmlElement> result, Query query, List<org.jsoup.nodes.Node> nodes) {
+	public static void getAll(HtmlPage page, List<HtmlElement> result, AbstractQuery<?> query, List<org.jsoup.nodes.Node> nodes) {
 		getAll(page, result, query, new HtmlQueryStrategy(), nodes);
 	}
 	
-	public static void getAll(HtmlPage page, List<HtmlElement> result, Query query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
+	public static void getAll(HtmlPage page, List<HtmlElement> result, AbstractQuery<?> query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
 		for(org.jsoup.nodes.Node node : nodes) {
 			if(node instanceof Element) {
 				if(query.matches(queryStrategy, (Element)node))
 					result.add(page.htmlElements().getHtmlElement((Element)node));
 				getAll(page, result, query, queryStrategy, node.childNodes());
 			}
-		}
-	}
-	
-	public static class HtmlQueryStrategy implements QueryStrategy {
-
-		@Override
-		public String getAttributeValue(Object object, String attribute) {
-			if(object instanceof Node)
-				return ((Node)object).getAttribute(attribute);
-			else if(object instanceof Element) {
-				return HtmlElement.getAttributeValueOfJSoupElement((Element)object, attribute);
-			}
-			else if(object instanceof TextNode) {
-				return HtmlTextNode.getAttributeValueOfJSoupTextNode((TextNode)object, attribute);
-			}
-			else
-				return null;
-		}
-
-		@Override
-		public List<String> getAttributeNames(Object object) {
-			if(object instanceof Node) {
-				return ((Node)object).getAttributeNames();
-			}
-			else if(object instanceof Element) {
-				return HtmlElement.getAttributeNamesForJSoupElement((Element)object);
-			}
-			else if(object instanceof TextNode) {
-				return HtmlTextNode.getAttributeNamesOfJSoupTextNode((TextNode)object);
-			}
-			else
-				return Util.newEmptyList();
 		}
 	}
 }

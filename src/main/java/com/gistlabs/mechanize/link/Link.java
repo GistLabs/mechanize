@@ -7,9 +7,9 @@
  */
 package com.gistlabs.mechanize.link;
 
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.PageElement;
-import com.gistlabs.mechanize.html.HtmlElement;
 
 /** 
  * Represents a link within a page.  
@@ -19,7 +19,7 @@ import com.gistlabs.mechanize.html.HtmlElement;
  * @since 2012-09-12
  */
 public class Link extends PageElement {
-	public Link(Page page, HtmlElement link) {
+	public Link(Page page, Node link) {
 		super(page, link);
 	}
 
@@ -31,6 +31,6 @@ public class Link extends PageElement {
 	}
 	
 	public String href() {
-		return hasAttribute("href") ? element.getAbsoluteAttribute("href") : null;
+		return hasAttribute("href") ? absoluteUrl(node.getAttribute("href")) : null;
 	}
 }
