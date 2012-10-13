@@ -7,12 +7,12 @@ import se.fishtank.css.selectors.specifier.AttributeSpecifier;
 import se.fishtank.css.util.Assert;
 
 
-public class AttributeSpecifierMatcher<Node> extends AbstractMatcher<Node> {
+public class AttributeSpecifierMatcher<JsonNode> extends AbstractMatcher<JsonNode> {
 
 	/** The attribute specifier to check against. */
 	protected final AttributeSpecifier specifier;
 
-	public AttributeSpecifierMatcher(NodeHelper<Node> helper, AttributeSpecifier specifier) {
+	public AttributeSpecifierMatcher(NodeHelper<JsonNode> helper, AttributeSpecifier specifier) {
 		super(helper);
         Assert.notNull(specifier, "specifier is null!");
         this.specifier = specifier;
@@ -22,10 +22,10 @@ public class AttributeSpecifierMatcher<Node> extends AbstractMatcher<Node> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<Node> match(Collection<Node> nodes) {
+	public Collection<JsonNode> match(Collection<JsonNode> nodes) {
 	    Assert.notNull(nodes, "nodes is null!");
-	    Collection<Node> result = new LinkedHashSet<Node>();
-	    for (Node node : nodes) {
+	    Collection<JsonNode> result = new LinkedHashSet<JsonNode>();
+	    for (JsonNode node : nodes) {
 	    	// It just have to be present.
 	        String name = specifier.getName();
 			if (specifier.getValue() == null) {
@@ -34,8 +34,8 @@ public class AttributeSpecifierMatcher<Node> extends AbstractMatcher<Node> {
 	            continue;
 	        }
 	        
-	        Collection<Node> attributes = helper.getAttributes(node);
-	        for (Node element : attributes) {
+	        Collection<JsonNode> attributes = helper.getAttributes(node);
+	        for (JsonNode element : attributes) {
 	        	String value = helper.getValue(element);
 	            String spec = specifier.getValue();
 	            switch (specifier.getMatch()) {

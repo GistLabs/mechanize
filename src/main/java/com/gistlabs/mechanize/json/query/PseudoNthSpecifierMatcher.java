@@ -15,7 +15,7 @@ import se.fishtank.css.util.Assert;
  * 
  * @author Christer Sandberg
  */
-public class PseudoNthSpecifierMatcher<Node> extends AbstractMatcher<Node> {
+public class PseudoNthSpecifierMatcher<JsonNode> extends AbstractMatcher<JsonNode> {
     
     /** The {@code nth-*} pseudo-class specifier to check against. */
     private final PseudoNthSpecifier specifier;
@@ -25,7 +25,7 @@ public class PseudoNthSpecifierMatcher<Node> extends AbstractMatcher<Node> {
      * 
      * @param specifier The {@code nth-*} pseudo-class specifier to check against.
      */
-    public PseudoNthSpecifierMatcher(NodeHelper<Node> helper, PseudoNthSpecifier specifier) {
+    public PseudoNthSpecifierMatcher(NodeHelper<JsonNode> helper, PseudoNthSpecifier specifier) {
     	super(helper);
         Assert.notNull(specifier, "specifier is null!");
         this.specifier = specifier;
@@ -35,10 +35,10 @@ public class PseudoNthSpecifierMatcher<Node> extends AbstractMatcher<Node> {
      * {@inheritDoc}
      */
     @Override
-    public Collection<Node> match(Collection<Node> nodes)  {
+    public Collection<JsonNode> match(Collection<JsonNode> nodes)  {
         Assert.notNull(nodes, "nodes is null!");
         this.nodes = nodes;
-        result = new LinkedHashSet<Node>();
+        result = new LinkedHashSet<JsonNode>();
         String value = specifier.getValue();
         
         if ("nth-child".equals(value)) {
@@ -62,7 +62,7 @@ public class PseudoNthSpecifierMatcher<Node> extends AbstractMatcher<Node> {
      * @see <a href="http://www.w3.org/TR/css3-selectors/#nth-child-pseudo"><code>:nth-child</code> pseudo-class</a>
      */
     private void addNthChild(boolean byType) {
-        for (Node node : nodes) {
+        for (JsonNode node : nodes) {
         	Index index = helper.getIndexInParent(node, byType);
             
             if (specifier.isMatch(index.index+1)) {
@@ -77,7 +77,7 @@ public class PseudoNthSpecifierMatcher<Node> extends AbstractMatcher<Node> {
      * @see <a href="http://www.w3.org/TR/css3-selectors/#nth-last-child-pseudo"><code>:nth-last-child</code> pseudo-class</a>
      */
     private void addNthLastChild(boolean byType) {
-        for (Node node : nodes) {
+        for (JsonNode node : nodes) {
         	Index index = helper.getIndexInParent(node, byType);
             
             if (specifier.isMatch(index.size - index.index+1)) {

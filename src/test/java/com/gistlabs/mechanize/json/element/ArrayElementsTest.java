@@ -32,11 +32,11 @@ public class ArrayElementsTest extends TestElementBaseClass {
 		assertNotNull(array);
 		assertEquals(2, array.size());
 		assertEquals("results", array.get(0).getName());
-		assertEquals("1", array.get(0).getContent());
+		assertEquals("1", array.get(0).getValue());
 		
-		array.get(0).setContent("4");
+		array.get(0).setValue("4");
 		assertEquals("results", array.get(0).getName());
-		assertEquals("4", array.get(0).getContent());
+		assertEquals("4", array.get(0).getValue());
 	}
 	
 	@Test

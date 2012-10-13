@@ -44,16 +44,16 @@ public class ArrayNodeImpl extends AbstractNode {
 	}
 
 	@Override
-	public String getContent() {
+	public String getValue() {
 		return null;
 	}
 
 	@Override
-	public void setContent(final String value) {
+	public void setValue(final String value) {
 	}
 
 	@Override
-	public JsonNode getChild(final String key) {
+	public <T extends JsonNode> T getChild(final String key) {
 		return null;
 	}
 

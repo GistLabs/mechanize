@@ -74,15 +74,16 @@ public class ObjectNodeImpl extends AbstractNode {
 	}
 
 	@Override
-	public String getContent() {
+	public String getValue() {
 		return null;
 	}
 
 	@Override
-	public void setContent(final String value) {
+	public void setValue(final String value) {
 		throw new JsonException("JSON Objects can't directly have coSntent");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public JsonNode getChild(final String key) {
 		List<JsonNode> result = getChildren(key);

@@ -17,19 +17,19 @@ import se.fishtank.css.selectors.specifier.PseudoNthSpecifier;
 import se.fishtank.css.util.Assert;
 
 
-public class NodeSelector<Node> {
+public class NodeSelector<JsonNode> {
 	
 
-	private final Node root;
-	private final NodeHelper<Node> helper;
+	private final JsonNode root;
+	private final NodeHelper<JsonNode> helper;
 
-	public NodeSelector(NodeHelper<Node> helper, Node node) {
+	public NodeSelector(NodeHelper<JsonNode> helper, JsonNode node) {
 		this.root = node;
 		this.helper = helper;
 	}
 
-	public Node find(String selector) {
-		List<Node> findAll = findAll(selector);
+	public JsonNode find(String selector) {
+		List<JsonNode> findAll = findAll(selector);
 		
 		if (findAll.size()>2) // too many results
 			throw new RuntimeException(String.format("Too many resusts (%s) for selector: %s", findAll.size(), selector));
@@ -39,7 +39,7 @@ public class NodeSelector<Node> {
 			return findAll.iterator().next();
 	}
 	
-	public List<Node> findAll(String selector) {
+	public List<JsonNode> findAll(String selector) {
         Assert.notNull(selector, "selectors is null!");
         List<List<Selector>> groups;
         try {
@@ -49,9 +49,9 @@ public class NodeSelector<Node> {
             throw new RuntimeException(e);
         }
 
-        Collection<Node> results = new LinkedHashSet<Node>();
+        Collection<JsonNode> results = new LinkedHashSet<JsonNode>();
         for (Collection<Selector> parts : groups) {
-            Collection<Node> result;
+            Collection<JsonNode> result;
 			try {
 				result = check(parts);
 			} catch (NodeSelectorException e) {
@@ -62,7 +62,7 @@ public class NodeSelector<Node> {
             }
         }
 
-        return new ArrayList<Node>(results);
+        return new ArrayList<JsonNode>(results);
 	}
 
     
@@ -73,36 +73,36 @@ public class NodeSelector<Node> {
      * @return A set of nodes.
      * @throws NodeSelectorException In case of an error.
      */
-    private Collection<Node> check(Collection<Selector> parts) throws NodeSelectorException {
-        Collection<Node> result = new LinkedHashSet<Node>();
+    private Collection<JsonNode> check(Collection<Selector> parts) throws NodeSelectorException {
+        Collection<JsonNode> result = new LinkedHashSet<JsonNode>();
         result.add(root);
         
         for (Selector selector : parts) {
-            Matcher<Node> checker = new TagMatcher<Node>(helper, selector);
+            Matcher<JsonNode> checker = new TagMatcher<JsonNode>(helper, selector);
             result = checker.match(result);
             if (selector.hasSpecifiers()) {
                 for (Specifier specifier : selector.getSpecifiers()) {
                     switch (specifier.getType()) {
                     case ATTRIBUTE:
-                        checker = new AttributeSpecifierMatcher<Node>(helper, (AttributeSpecifier) specifier);
+                        checker = new AttributeSpecifierMatcher<JsonNode>(helper, (AttributeSpecifier) specifier);
                         break;
                     case PSEUDO:
                         if (specifier instanceof PseudoClassSpecifier) {
-                            checker = new PseudoClassSpecifierMatcher<Node>(helper, (PseudoClassSpecifier) specifier);
+                            checker = new PseudoClassSpecifierMatcher<JsonNode>(helper, (PseudoClassSpecifier) specifier);
                         } else if (specifier instanceof PseudoNthSpecifier) {
-                            checker = new PseudoNthSpecifierMatcher<Node>(helper, (PseudoNthSpecifier) specifier);
+                            checker = new PseudoNthSpecifierMatcher<JsonNode>(helper, (PseudoNthSpecifier) specifier);
                         }
                         
                         break;
                         
                     case NEGATION:
-                        final Collection<Node> negationNodes = checkNegationSpecifier((NegationSpecifier) specifier);
-                        checker = new Matcher<Node>() {
+                        final Collection<JsonNode> negationNodes = checkNegationSpecifier((NegationSpecifier) specifier);
+                        checker = new Matcher<JsonNode>() {
                             @Override
-                            public List<Node> match(Collection<Node> nodes) {
-                                Collection<Node> set = new LinkedHashSet<Node>(nodes);
+                            public List<JsonNode> match(Collection<JsonNode> nodes) {
+                                Collection<JsonNode> set = new LinkedHashSet<JsonNode>(nodes);
                                 set.removeAll(negationNodes);
-                                return new ArrayList<Node>(set);
+                                return new ArrayList<JsonNode>(set);
                             }
                         };
                         break;
@@ -130,7 +130,7 @@ public class NodeSelector<Node> {
      * @return A set of nodes after invoking {@link #check(List)}.
      * @throws NodeSelectorException In case of an error.
      */
-    private Collection<Node> checkNegationSpecifier(NegationSpecifier specifier) throws NodeSelectorException {
+    private Collection<JsonNode> checkNegationSpecifier(NegationSpecifier specifier) throws NodeSelectorException {
         Collection<Selector> parts = new LinkedHashSet<Selector>(1);
         parts.add(specifier.getSelector());
         return check(parts);

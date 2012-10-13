@@ -18,7 +18,7 @@ public class IndexedAttributeNode extends AttributeNode {
 	}
 
 	@Override
-	public String getContent() {
+	public String getValue() {
 		try {
 			return this.array.getString(this.index);
 		} catch (JSONException e) {
@@ -27,7 +27,7 @@ public class IndexedAttributeNode extends AttributeNode {
 	}
 
 	@Override
-	public void setContent(String value) {
+	public void setValue(String value) {
 		try {
 			this.array.put(this.index, value);
 		} catch (JSONException e) {

@@ -8,16 +8,16 @@ import se.fishtank.css.selectors.Selector;
 import se.fishtank.css.util.Assert;
 
 
-public class TagMatcher<Node> extends AbstractMatcher<Node> {
+public class TagMatcher<JsonNode> extends AbstractMatcher<JsonNode> {
    
     /** The selector to check against. */
     protected final Selector selector;
     
     /** The set of nodes to check. */
-    protected Collection<Node> nodes;
+    protected Collection<JsonNode> nodes;
     
     /** The result of the checks. */
-    protected Collection<Node> result;
+    protected Collection<JsonNode> result;
 
     /** Whether the underlying DOM is case sensitive. */
     protected boolean caseSensitive = false;
@@ -27,7 +27,7 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
      * 
      * @param selector The selector to check against.
      */
-    public TagMatcher(NodeHelper<Node> helper, Selector selector) {
+    public TagMatcher(NodeHelper<JsonNode> helper, Selector selector) {
     	super(helper);
         Assert.notNull(selector, "selector is null!");
         this.selector = selector;
@@ -37,11 +37,11 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
      * {@inheritDoc}
      */
     @Override
-    public Collection<Node> match(Collection<Node> nodes) {
+    public Collection<JsonNode> match(Collection<JsonNode> nodes) {
         Assert.notNull(nodes, "nodes is null!");
         this.nodes = nodes;
 
-        result = new LinkedHashSet<Node>();
+        result = new LinkedHashSet<JsonNode>();
         switch (selector.getCombinator()) {
         case DESCENDANT:
             addDescendantElements();
@@ -68,12 +68,12 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
      * @throws NodeSelectorException If one of the nodes have an illegal type.
      */
     private void addDescendantElements() {
-        for (Node node : nodes) {
-        	Collection<Node> nodes = new LinkedHashSet<Node>();
+        for (JsonNode node : nodes) {
+        	Collection<JsonNode> nodes = new LinkedHashSet<JsonNode>();
         	nodes.add(node);
         	nodes.addAll(helper.getDescendentNodes(node));
         	
-        	for(Node n : nodes) {
+        	for(JsonNode n : nodes) {
         		if (matchTag(n))
         			result.add(n);
         	}
@@ -86,16 +86,16 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
      * @see <a href="http://www.w3.org/TR/css3-selectors/#child-combinators">Child combinators</a>
      */
     private void addChildElements() {
-        for (Node node : nodes) {
-        	Collection<? extends Node> childNodes = helper.getChildNodes(node);
-        	for (Node child : childNodes) {
+        for (JsonNode node : nodes) {
+        	Collection<? extends JsonNode> childNodes = helper.getChildNodes(node);
+        	for (JsonNode child : childNodes) {
                 if (matchTag(child))
                 	result.add(child);	
 			}
         }
     }
 
-	private boolean matchTag(Node child) {
+	private boolean matchTag(JsonNode child) {
 		String tag = selector.getTagName();
 		return tagEquals(tag, helper.getName(child)) || tag.equals(Selector.UNIVERSAL_TAG);
 	}
@@ -106,8 +106,8 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
      * @see <a href="http://www.w3.org/TR/css3-selectors/#adjacent-sibling-combinators">Adjacent sibling combinator</a>
      */
     private void addAdjacentSiblingElements() {
-        for (Node node : nodes) {
-            Node n = helper.getNextSibling(node);
+        for (JsonNode node : nodes) {
+            JsonNode n = helper.getNextSibling(node);
             if (n != null) {
                 if (matchTag(n))
                 	result.add(n);	
@@ -121,8 +121,8 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
      * @see <a href="http://www.w3.org/TR/css3-selectors/#general-sibling-combinators">General sibling combinator</a>
      */
     private void addGeneralSiblingElements() {
-        for (Node node : nodes) {
-            Node n = helper.getNextSibling(node);
+        for (JsonNode node : nodes) {
+            JsonNode n = helper.getNextSibling(node);
             while (n != null) {
                 String tag = selector.getTagName();
                 if (tagEquals(tag, helper.getName(n)) || tag.equals(Selector.UNIVERSAL_TAG)) {
