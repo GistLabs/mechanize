@@ -10,7 +10,7 @@ package com.gistlabs.mechanize.form;
 import java.util.List;
 
 import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.PageElements;
 import com.gistlabs.mechanize.util.Util;
 
@@ -22,7 +22,7 @@ import com.gistlabs.mechanize.util.Util;
  * @since 2012-09-12
  */
 public class Forms extends PageElements<Form> {
-	public Forms(Page page) {
+	public Forms(Resource page) {
 		this(page, createList());
 	}
 
@@ -32,7 +32,7 @@ public class Forms extends PageElements<Form> {
 
 
 
-	public Forms(Page page, List<? extends Node> forms) {
+	public Forms(Resource page, List<? extends Node> forms) {
 		super(page, forms);
 	}
 	

@@ -10,7 +10,7 @@ package com.gistlabs.mechanize.link;
 import java.util.List;
 
 import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.PageElements;
 
 /** 
@@ -21,11 +21,11 @@ import com.gistlabs.mechanize.PageElements;
  * @since 2012-09-12
  */
 public class Links extends PageElements<Link> {
-	public Links(Page page) {
+	public Links(Resource page) {
 		this(page, null);
 	}
 	
-	public Links(Page page, List<? extends Node> links) {
+	public Links(Resource page, List<? extends Node> links) {
 		super(page, links);
 	}
 	

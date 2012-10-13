@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 
 public class NestedElementsTest extends TestElementBaseClass {
@@ -13,7 +13,7 @@ public class NestedElementsTest extends TestElementBaseClass {
 	public void testNestedElement() {
 		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"b\" : { \"a\" : \"x\", \"c\" : 4 } }"));
 		
-		Node nested = element.getChild("b");
+		JsonNode nested = element.getChild("b");
 		assertNotNull(nested);
 		assertTrue(nested instanceof ObjectNodeImpl);
 		assertEquals("b", nested.getName());

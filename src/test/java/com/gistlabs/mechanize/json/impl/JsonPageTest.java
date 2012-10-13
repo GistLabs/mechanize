@@ -13,7 +13,7 @@ import org.apache.http.entity.ContentType;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.json.impl.JsonPage;
 
 /**
@@ -23,7 +23,7 @@ public class JsonPageTest extends MechanizeTestCase {
 	@Test
 	public void testLoadJson() {
 		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());		
-		Page page = agent.get("http://test.com");
+		Resource page = agent.get("http://test.com");
 		assertNotNull(page);
 		assertEquals(JsonPage.class, page.getClass());
 	}

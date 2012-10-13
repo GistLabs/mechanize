@@ -12,7 +12,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -28,6 +32,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.parameters.Parameter;
 import com.gistlabs.mechanize.parameters.Parameters;
@@ -106,13 +111,13 @@ public class RequestBuilder<Page> {
 		return parameters;
 	}
 	
-	public Page get() {
+	public <T extends Resource> T get() {
 		if(hasFiles())
 			throw new UnsupportedOperationException("Files can not be send using a get request");
 		return requestor.request(composeGetRequest(uri, parameters));
 	}
 	
-	public Page post() {
+	public <T extends Resource> T post() {
 		HttpPost request = (!hasFiles()) || isMultiPart ? composePostRequest(getBaseUri(), parameters) : 
 			composeMultiPartFormRequest(getBaseUri(), parameters, files);
 		return requestor.request(request);

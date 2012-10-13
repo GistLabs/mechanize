@@ -11,7 +11,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -41,7 +45,7 @@ import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
  * @version 1.0
  * @since 2012-09-12
  */
-public class MechanizeAgent implements PageRequestor<Page>, RequestBuilderFactory<Page> {
+public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFactory<Resource> {
 	static String VERSION;
 	
 	static final Map<String,PageFactory> PAGE_FACTORIES = new HashMap<String, PageFactory>();
@@ -111,17 +115,23 @@ public class MechanizeAgent implements PageRequestor<Page>, RequestBuilderFactor
 	}
 
 	@Override
-	public RequestBuilder<Page> doRequest(String uri) {
-		return new RequestBuilder<Page>(this, uri);
+	public RequestBuilder<Resource> doRequest(String uri) {
+		return new RequestBuilder<Resource>(this, uri);
 	}
 
+	/** 
+	 * Returns the resource received uppon the request. The resource can be casted to any expected subclass of resource
+	 * but will fail with ClassCastException if the expected type of resource is not the actual returned resource. 
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Page request(HttpRequestBase request) {
+	public <T extends Resource> T request(HttpRequestBase request) {
 		try {
 			HttpResponse response = execute(client, request);
-			Page page = toPage(request, response);
-			history.add(page);
-			return page;
+			Resource resource = toPage(request, response);
+			if(resource instanceof Document)
+				history.add((Document)resource);
+			return (T)resource;
 		} catch (ClientProtocolException e) {
 			throw MechanizeExceptionFactory.newException(e);
 		} catch (IOException e) {
@@ -129,11 +139,11 @@ public class MechanizeAgent implements PageRequestor<Page>, RequestBuilderFactor
 		}
 	}
 	
-	public Page get(String uri) {
+	public <T extends Resource> T get(String uri) {
 		return doRequest(uri).get();
 	}
 	
-	public Page post(String uri, Map<String, String> params) throws UnsupportedEncodingException {
+	public <T extends Resource> T post(String uri, Map<String, String> params) throws UnsupportedEncodingException {
 		return post(uri, new Parameters(unsafeCast(params)));
 	}
 
@@ -148,7 +158,7 @@ public class MechanizeAgent implements PageRequestor<Page>, RequestBuilderFactor
 	 * @param params
 	 * @return
 	 */
-	public Page post(String uri, Parameters params) {
+	public <T extends Resource> T post(String uri, Parameters params) {
 		return doRequest(uri).set(params).post();
 	}
 	
@@ -169,7 +179,7 @@ public class MechanizeAgent implements PageRequestor<Page>, RequestBuilderFactor
 		return cookies;
 	}	
 	
-	protected Page toPage(HttpRequestBase request, HttpResponse response)
+	protected Resource toPage(HttpRequestBase request, HttpResponse response)
 			throws IOException, UnsupportedEncodingException {
 		ContentType contentType = getContentType(response);
 		
@@ -213,6 +223,7 @@ public class MechanizeAgent implements PageRequestor<Page>, RequestBuilderFactor
 				result.add(clazz.cast(interceptor));
 		return result;
 	}
+	
 	@Override
 	public String absoluteUrl(String uri) {
 		try {

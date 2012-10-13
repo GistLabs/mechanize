@@ -15,7 +15,7 @@ import org.apache.http.entity.ContentType;
 
 import com.gistlabs.mechanize.util.*;
 
-public class ContentPage extends Page {
+public class ContentPage extends Resource {
 	public static Collection<String> CONTENT_MATCHERS = 
 		Collections.collection(
 				ContentType.WILDCARD.getMimeType(), 

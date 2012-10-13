@@ -6,19 +6,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 
 
 public class ElementQueryTest {
 
-	protected Node build(String json) throws JSONException {
+	protected JsonNode build(String json) throws JSONException {
 		return new ObjectNodeImpl(new JSONObject(json));
 	}
 	
 	@Test
 	public void testAttributeTilda() throws Exception {
-		Node node = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y foo bar\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
+		JsonNode node = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y foo bar\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
 		
 		assertNotNull(node.find("b[x~=\"y\"]"));
 		assertEquals(1, node.findAll("b[x~=\"foo\"]").size());

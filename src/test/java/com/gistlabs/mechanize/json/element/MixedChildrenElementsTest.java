@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 
 public class MixedChildrenElementsTest extends TestElementBaseClass {
@@ -16,7 +16,7 @@ public class MixedChildrenElementsTest extends TestElementBaseClass {
 	
 	@Test
 	public void testPrimitiveChild() {		
-		Node nested = element.getChild("a");
+		JsonNode nested = element.getChild("a");
 		assertNotNull(nested);
 		
 		Collection<String> attributes = element.getAttributes();
@@ -26,7 +26,7 @@ public class MixedChildrenElementsTest extends TestElementBaseClass {
 	
 	@Test
 	public void testElementChild() {
-		Node nested = element.getChild("b");
+		JsonNode nested = element.getChild("b");
 		assertNotNull(nested);
 		assertTrue(nested instanceof ObjectNodeImpl);
 		assertEquals("b", nested.getName());
@@ -36,7 +36,7 @@ public class MixedChildrenElementsTest extends TestElementBaseClass {
 	
 	@Test
 	public void testChildren() {
-		List<Node> children = element.getChildren();
+		List<JsonNode> children = element.getChildren();
 		assertEquals(3, children.size());
 		
 		Collection<String> names = new ArrayList<String>();

@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.form.Form;
 
 /**
@@ -25,10 +25,10 @@ public class GoogleSearchForMechanizeJavaIT {
 	@Test
 	public void testGooglePageSearchForm() {
 		MechanizeAgent agent = new MechanizeAgent();
-		Page page = agent.get("http://www.google.com");
+		Resource page = agent.get("http://www.google.com");
 		Form form = page.form("f");
 		form.get("q").set("mechanize java");
-		Page response = form.submit();
+		Resource response = form.submit();
 		assertTrue(response.getTitle().startsWith("mechanize java"));
 	}
 }

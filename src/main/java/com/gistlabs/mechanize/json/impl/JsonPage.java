@@ -17,9 +17,10 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 import com.gistlabs.mechanize.util.Collections;
 
@@ -28,7 +29,7 @@ public class JsonPage extends Page {
 		Collections.collection(
 				ContentType.APPLICATION_JSON.getMimeType());
 	
-	private Node json;
+	private JsonNode json;
 	
 	public JsonPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
 		super(agent, request, response);
@@ -43,7 +44,11 @@ public class JsonPage extends Page {
 		}	
 	}
 	
-	public Node getJsonNode() {
+	public JsonNode getJsonNode() {
 		return this.json;
+	}
+
+	public Node getRoot() {
+		throw new UnsupportedOperationException("Not supported right now. Use getJsonNode()");
 	}
 }

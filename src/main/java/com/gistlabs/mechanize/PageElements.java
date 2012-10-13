@@ -23,19 +23,19 @@ import com.gistlabs.mechanize.util.Assert;
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public abstract class PageElements<T> implements Iterable<T> {
-	protected final Page page;
+	protected final Resource page;
 	protected final List<? extends Node> nodes;
 	
 	private final Map<Node, T> representations = new HashMap<Node, T>();
 	
-	public PageElements(Page page, List<? extends Node> nodes) {
+	public PageElements(Resource page, List<? extends Node> nodes) {
 		Assert.notNull(nodes, "Nodes may not be null");
 		
 		this.page = page;
 		this.nodes = nodes;
 	}
 	
-	public Page getPage() {
+	public Resource getPage() {
 		return page;
 	}
 	

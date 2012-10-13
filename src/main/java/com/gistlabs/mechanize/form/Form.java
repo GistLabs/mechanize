@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.PageElement;
 import com.gistlabs.mechanize.html.query.HtmlQueryBuilder;
 import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
@@ -32,7 +32,7 @@ import com.gistlabs.mechanize.requestor.RequestBuilder;
 public class Form extends PageElement implements Iterable<FormElement> {
 	private List<FormElement> elements = new ArrayList<FormElement>();
 	
-	public Form(Page page, Node formNode) {
+	public Form(Resource page, Node formNode) {
 		super(page, formNode);
 		analyse();
 	}
@@ -278,21 +278,21 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return result;
 	}
 	
-	public Page submit() {
+	public Resource submit() {
 		return submit(this, composeParameters(null, null, 0, 0));
 	}
 
-	public Page submit(SubmitButton button) {
+	public Resource submit(SubmitButton button) {
 		return submit(this, composeParameters(button, null, 0, 0));
 	}
 
-	public Page submit(SubmitImage image, int x, int y) {
+	public Resource submit(SubmitImage image, int x, int y) {
 		return submit(this, composeParameters(null, image, x, y));
 	} 
 
 	/** Returns the page object received as response to the form submit action. */
-	private Page submit(Form form, Parameters parameters) {
-		RequestBuilder<Page> request = doRequest(form.getUri()).set(parameters);
+	private Resource submit(Form form, Parameters parameters) {
+		RequestBuilder<Resource> request = doRequest(form.getUri()).set(parameters);
 		boolean doPost = form.isDoPost();
 		boolean multiPart = form.isMultiPart();
 		if(doPost && multiPart) {
@@ -302,7 +302,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return doPost ? request.post() : request.get(); 
 	}
 
-	private void addFiles(RequestBuilder<Page> request, Form form) {
+	private void addFiles(RequestBuilder<Resource> request, Form form) {
 		for(FormElement formElement : form) {
 			if(formElement instanceof Upload) {
 				Upload upload = (Upload)formElement;

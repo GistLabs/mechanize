@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
 
@@ -16,7 +16,7 @@ public class ArrayElementsTest extends TestElementBaseClass {
 	public void testArrayObjects() {
 		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"one\" : 2, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
 		
-		List<Node> array = element.getChildren("results");
+		List<JsonNode> array = element.getChildren("results");
 		assertNotNull(array);
 		assertEquals("results", array.get(0).getName());
 		assertEquals(element, array.get(0).getParent());
@@ -28,7 +28,7 @@ public class ArrayElementsTest extends TestElementBaseClass {
 	public void testArrayPrimitives() {
 		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"results\" : [ 1,2] }"));
 		
-		List<Node> array = element.getChildren("results");
+		List<JsonNode> array = element.getChildren("results");
 		assertNotNull(array);
 		assertEquals(2, array.size());
 		assertEquals("results", array.get(0).getName());
@@ -43,7 +43,7 @@ public class ArrayElementsTest extends TestElementBaseClass {
 	public void testNestedArrays() {
 		ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"results\" : [ [1,2], [3,4] ] }"));
 		
-		List<Node> array = element.getChildren("results");
+		List<JsonNode> array = element.getChildren("results");
 		assertNotNull(array);
 		assertEquals(2, array.size());
 		assertEquals("results", array.get(0).getName());
