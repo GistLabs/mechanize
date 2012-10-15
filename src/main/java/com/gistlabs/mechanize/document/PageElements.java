@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
+//import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
+import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.query.AbstractQuery;
+import com.gistlabs.mechanize.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Assert;
 
 /**
@@ -26,14 +28,16 @@ import com.gistlabs.mechanize.util.Assert;
 public abstract class PageElements<T> implements Iterable<T> {
 	protected final Resource page;
 	protected final List<? extends Node> nodes;
+	protected final QueryStrategy queryStrategy;
 	
 	private final Map<Node, T> representations = new HashMap<Node, T>();
 	
-	public PageElements(Resource page, List<? extends Node> nodes) {
+	public PageElements(Resource page, List<? extends Node> nodes, QueryStrategy queryStrategy) {
 		Assert.notNull(nodes, "Nodes may not be null");
 		
 		this.page = page;
 		this.nodes = nodes;
+		this.queryStrategy = queryStrategy;
 	}
 	
 	public Resource getPage() {
@@ -54,7 +58,8 @@ public abstract class PageElements<T> implements Iterable<T> {
 	protected abstract T newRepresentation(Node element);
 	
 	public T get(AbstractQuery<?> query) {
-		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
+		if (this.queryStrategy==null)
+			throw new MechanizeException("No Query implementation set!!");
 		
 		for(Node node : nodes) 
 			if(query.matches(queryStrategy, node))
@@ -64,8 +69,9 @@ public abstract class PageElements<T> implements Iterable<T> {
 	}
 	
 	public List<T> getAll(AbstractQuery<?> query) {
-		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
-
+		if (this.queryStrategy==null)
+			throw new MechanizeException("No Query implementation set!!");
+		
 		List<T> result = new ArrayList<T>();
 		if (nodes != null)
 			for(Node element : nodes)

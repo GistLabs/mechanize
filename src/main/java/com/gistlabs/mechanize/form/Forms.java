@@ -12,6 +12,7 @@ import java.util.List;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.document.PageElements;
+import com.gistlabs.mechanize.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Util;
 
 /** 
@@ -22,8 +23,8 @@ import com.gistlabs.mechanize.util.Util;
  * @since 2012-09-12
  */
 public class Forms extends PageElements<Form> {
-	public Forms(Resource page) {
-		this(page, createList());
+	public Forms(Resource page, QueryStrategy queryStrategy) {
+		this(page, createList(), queryStrategy);
 	}
 
 	private static List<? extends Node> createList() {
@@ -32,8 +33,8 @@ public class Forms extends PageElements<Form> {
 
 
 
-	public Forms(Resource page, List<? extends Node> forms) {
-		super(page, forms);
+	public Forms(Resource page, List<? extends Node> forms, QueryStrategy queryStrategy) {
+		super(page, forms, queryStrategy);
 	}
 	
 	@Override

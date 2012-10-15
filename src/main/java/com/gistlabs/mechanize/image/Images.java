@@ -13,6 +13,7 @@ import java.util.List;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.document.PageElements;
+import com.gistlabs.mechanize.query.QueryStrategy;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
 
@@ -25,16 +26,16 @@ import com.gistlabs.mechanize.util.Util;
  */
 public class Images extends PageElements<Image> {
 	
-	public Images(Resource page) {
-		this(page, newEmptyList());
+	public Images(Resource page, QueryStrategy queryStrategy) {
+		this(page, newEmptyList(), queryStrategy);
 	}
 
 	private static List<? extends Node>newEmptyList() {
 		return Util.newEmptyList();
 	}
 	
-	public Images (Resource page, List<? extends Node> forms) {
-		super(page, forms);
+	public Images (Resource page, List<? extends Node> forms, QueryStrategy queryStrategy) {
+		super(page, forms, queryStrategy);
 	}
 
 	@Override

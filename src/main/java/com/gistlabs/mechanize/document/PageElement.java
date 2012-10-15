@@ -29,13 +29,14 @@ public abstract class PageElement implements RequestBuilderFactory<Resource> {
 		return node;
 	}
 	
-	public Resource getPage() {
-		return page;
+	@SuppressWarnings("unchecked")
+	public <T extends Resource> T getResource() {
+		return (T) page;
 	}
 	
 	@Override
 	public RequestBuilder<Resource> doRequest(String uri) {
-		return getPage().doRequest(uri);
+		return getResource().doRequest(uri);
 	}
 	
 	public boolean hasAttribute(String key) {
@@ -48,6 +49,6 @@ public abstract class PageElement implements RequestBuilderFactory<Resource> {
 
 	@Override
 	public String absoluteUrl(String uri) {
-		return getPage().absoluteUrl(uri);
+		return getResource().absoluteUrl(uri);
 	}
 }

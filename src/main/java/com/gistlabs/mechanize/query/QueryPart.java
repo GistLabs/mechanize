@@ -2,8 +2,6 @@ package com.gistlabs.mechanize.query;
 
 import java.util.Arrays;
 
-import com.gistlabs.mechanize.html.query.HtmlQueryBuilder;
-
 class QueryPart {
 	private final boolean isAnd;
 	private final String [] attributeNames;
@@ -16,7 +14,7 @@ class QueryPart {
 	}
 	
 	public QueryPart(boolean isAnd, String attributeName, Pattern pattern) {
-		this(isAnd, HtmlQueryBuilder.attributes(attributeName), pattern);
+		this(isAnd, AbstractQueryBuilder.attributes(attributeName), pattern);
 	}
 	
 	@Override

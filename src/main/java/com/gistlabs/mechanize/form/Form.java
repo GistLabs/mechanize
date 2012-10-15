@@ -97,7 +97,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		if(getNode().hasAttribute("action"))
 			uri = absoluteUrl(getNode().getAttribute("action"));
 		else 
-			uri = getPage().getUri().toString();
+			uri = getResource().getUri().toString();
 		return uri;
 	}
 	

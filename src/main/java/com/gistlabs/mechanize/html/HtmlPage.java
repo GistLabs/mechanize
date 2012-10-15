@@ -24,6 +24,7 @@ import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.document.Page;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.form.Forms;
+import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Links;
 import com.gistlabs.mechanize.util.Collections;
@@ -68,19 +69,19 @@ public class HtmlPage extends Page {
 	@Override
 	protected Links loadLinks() {
 		List<? extends Node> links = htmlElements().getAll(byTag("a"));
-		return new Links(this, links);
+		return new Links(this, links, new HtmlQueryStrategy());
 	}
 	
 	@Override 
 	protected Forms loadForms() {
 		List<? extends Node> forms = htmlElements().getAll(byTag("form"));
-		return new Forms((Resource)this, forms);
+		return new Forms((Resource)this, forms, new HtmlQueryStrategy());
 	}
 	
 	@Override
 	protected Images loadImages() {
 		List<HtmlElement> images = htmlElements().getAll(byTag("img"));
-		return new Images(this, images);
+		return new Images(this, images, new HtmlQueryStrategy());
 	}
 	
 	

@@ -24,7 +24,7 @@ public class FormElement extends PageElement {
 	private String value = null;
 	
 	public FormElement(Form form, Node node) {
-		super(form.getPage(), node);
+		super(form.getResource(), node);
 		this.form = form;
 	}
 	

@@ -50,7 +50,7 @@ public abstract class Document extends Resource {
 	}
 
 	protected Links loadLinks() {
-		return new Links(this);
+		return new Links(this, null);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public abstract class Document extends Resource {
 	}
 
 	protected Forms loadForms() {
-		return new Forms(this);
+		return new Forms(this, null);
 	}
 
 	public Images images() {
@@ -82,7 +82,7 @@ public abstract class Document extends Resource {
 	}
 
 	protected Images loadImages() {
-		return new Images(this);
+		return new Images(this, null);
 	}
 
 }
