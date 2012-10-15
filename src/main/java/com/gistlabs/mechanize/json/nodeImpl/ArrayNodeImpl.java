@@ -57,8 +57,14 @@ public class ArrayNodeImpl extends AbstractNode {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<JsonNode> getChildren() {
+	public List<JsonNode> getChildren(String... names) {
+		if (names.length>2)
+			return Collections.EMPTY_LIST;
+		if (names.length==1 && !"*".equalsIgnoreCase(names[0]))
+			return Collections.EMPTY_LIST;
+		
 		try {
 			if (children==null) {
 				children = new ArrayList<JsonNode>();
@@ -72,11 +78,4 @@ public class ArrayNodeImpl extends AbstractNode {
 			throw new JsonException(e);
 		}
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<JsonNode> getChildren(String key) {
-		return Collections.EMPTY_LIST;
-	}
-
 }

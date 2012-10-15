@@ -19,10 +19,24 @@ public interface JsonNode {
 	public String getValue();
 	public void setValue(String value);
 	
-	public <T extends JsonNode> T getChild(String key);
-	public List<? extends JsonNode> getChildren();
-	public List<? extends JsonNode> getChildren(String key);
-
+	/**
+	 * Find exactly one child with name, otherwise throw exception
+	 * 
+	 * @param name
+	 * @return Either null, the one child node with name, or exception because of multiple
+	 */
+	public <T extends JsonNode> T getChild(String name);
+	
+	/**
+	 * Get children of this node. The names argument allow to filter the list of returned children 
+	 * to only those that match getName() in names.
+	 * 
+	 * The special name, '*', is the equivalent of matching all child names.
+	 * 
+	 * @param names
+	 * @return
+	 */
+	public List<? extends JsonNode> getChildren(String... names);
 	
 	public <T extends JsonNode> T find(String query);
 	public List<? extends JsonNode> findAll(String query);

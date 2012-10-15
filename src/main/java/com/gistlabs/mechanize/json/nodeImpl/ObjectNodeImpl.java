@@ -100,8 +100,7 @@ public class ObjectNodeImpl extends AbstractNode {
 		return !(jsonObject instanceof JSONObject || jsonObject instanceof JSONArray);
 	}
 
-	@Override
-	public List<JsonNode> getChildren() {
+	protected List<JsonNode> getChildren() {
 		try {
 			List<JsonNode> result = new ArrayList<JsonNode>();
 			@SuppressWarnings("unchecked")
@@ -118,7 +117,27 @@ public class ObjectNodeImpl extends AbstractNode {
 	}
 
 	@Override
-	public List<JsonNode> getChildren(String key) {
+	public List<JsonNode> getChildren(String... names) {
+		int length = names.length;
+		if (length==0)
+			return getChildren();
+		
+		if (length==1) {
+			if ("*".equalsIgnoreCase(names[0]))
+				return getChildren();
+			return lookupChildren(names[0]);
+		}
+		
+		List<String> namesColl = Arrays.asList(names);
+		List<JsonNode> result = new ArrayList<JsonNode>();
+		for(JsonNode node : getChildren()) {
+			if (namesColl.contains(node.getName()))
+				result.add(node);
+		}
+		return result;
+	}
+	
+	protected List<JsonNode> lookupChildren(String key) {
 		if (!children.containsKey(key)) {
 			if ("*".equalsIgnoreCase(key))
 				children.put(key, getChildren());

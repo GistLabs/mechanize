@@ -48,12 +48,7 @@ public class AttributeNode extends AbstractNode {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<JsonNode> getChildren() {
+	public List<JsonNode> getChildren(String... names) {
 		return Collections.EMPTY_LIST;
-	}
-
-	@Override
-	public List<JsonNode> getChildren(String key) {
-		return getChildren();
 	}
 }
