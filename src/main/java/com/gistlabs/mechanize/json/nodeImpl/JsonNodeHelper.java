@@ -3,7 +3,7 @@ package com.gistlabs.mechanize.json.nodeImpl;
 import java.util.*;
 
 import com.gistlabs.mechanize.json.JsonNode;
-import com.gistlabs.mechanize.json.query.NodeHelper;
+import com.gistlabs.mechanize.util.css_query.NodeHelper;
 
 
 public class JsonNodeHelper implements NodeHelper<JsonNode> {

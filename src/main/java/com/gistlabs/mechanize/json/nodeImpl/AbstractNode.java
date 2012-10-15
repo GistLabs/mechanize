@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
-import com.gistlabs.mechanize.json.query.NodeSelector;
+import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
 public abstract class AbstractNode implements JsonNode {
 	protected final String name;

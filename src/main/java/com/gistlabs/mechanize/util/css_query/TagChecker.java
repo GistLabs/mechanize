@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json.query;
+package com.gistlabs.mechanize.util.css_query;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;

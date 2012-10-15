@@ -11,6 +11,7 @@ import org.junit.Test;
 import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.nodeImpl.JsonNodeHelper;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
+import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
 
 public class NodeSelectorTest {
