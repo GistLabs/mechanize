@@ -17,7 +17,7 @@ public class NodeSelectorTest {
 
 	protected NodeSelector<JsonNode> build(String json) throws JSONException {
 		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject(json));
-		NodeSelector<JsonNode> selector = new NodeSelector<JsonNode>(new JsonNodeHelper(), node);
+		NodeSelector<JsonNode> selector = new NodeSelector<JsonNode>(new JsonNodeHelper(node), node);
 		return selector;
 	}
 	

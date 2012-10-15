@@ -5,7 +5,6 @@ import java.util.LinkedHashSet;
 
 import com.gistlabs.mechanize.json.query.NodeHelper.Index;
 
-import se.fishtank.css.selectors.dom.internal.NodeTraversalChecker;
 import se.fishtank.css.selectors.specifier.PseudoNthSpecifier;
 import se.fishtank.css.util.Assert;
 

@@ -54,12 +54,12 @@ public abstract class AbstractNode implements JsonNode {
 	@SuppressWarnings("unchecked")
 	@Override
 	public JsonNode find(String query) {
-		return new NodeSelector<JsonNode>(new JsonNodeHelper(), this).find(query);
+		return new NodeSelector<JsonNode>(new JsonNodeHelper(this), this).find(query);
 	}
 
 	@Override
 	public List<JsonNode> findAll(String query) {
-		return new NodeSelector<JsonNode>(new JsonNodeHelper(), this).findAll(query);
+		return new NodeSelector<JsonNode>(new JsonNodeHelper(this), this).findAll(query);
 	}
 
 	protected JsonNode factory(JSONObject node, String key) {		

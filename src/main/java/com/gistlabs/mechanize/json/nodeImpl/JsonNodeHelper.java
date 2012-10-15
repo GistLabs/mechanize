@@ -7,6 +7,12 @@ import com.gistlabs.mechanize.json.query.NodeHelper;
 
 
 public class JsonNodeHelper implements NodeHelper<JsonNode> {
+	
+	private JsonNode root;
+
+	public JsonNodeHelper(JsonNode root) {
+		this.root = root;
+	}
 
     public String getValue(JsonNode element) {
 		return element.getValue();
@@ -43,7 +49,7 @@ public class JsonNodeHelper implements NodeHelper<JsonNode> {
     	return result;
 	}
     
-    public Collection<? extends JsonNode> getChildNodes(JsonNode node) {
+    public List<? extends JsonNode> getChildNodes(JsonNode node) {
 		return node.getChildren();
 	}
     
@@ -76,15 +82,12 @@ public class JsonNodeHelper implements NodeHelper<JsonNode> {
 		return new Index(children.indexOf(node), children.size());
 	}
 
-	public JsonNode getRoot(JsonNode node) {
-		JsonNode root = node;
-		while (root.getParent()!=null)
-			root = root.getParent();
-		return root;
+	public JsonNode getRoot() {
+		return this.root;
 	}
-
+	
 	@Override
-	public boolean namesEqual(String tag1, String tag2) {
-		return tag1.equalsIgnoreCase(tag2);
-	}
+	public boolean nameMatches(JsonNode n, String name) {
+		return "*".equals(name) || n.getName().equalsIgnoreCase(name);
+	}	
 }
