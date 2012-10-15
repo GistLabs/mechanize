@@ -9,6 +9,7 @@ import org.apache.http.impl.conn.ProxySelectorRoutePlanner;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.cookie.Cookie;
+import com.gistlabs.mechanize.document.Page;
 import com.gistlabs.mechanize.form.Checkable;
 import com.gistlabs.mechanize.form.Form;
 
@@ -39,7 +40,7 @@ public class Issue36Test {
 	    };
 
 	    String manageKindleUrl = "http://www.amazon.com/gp/digital/fiona/manage/ref=gno_yam_myk";
-	    Resource signinPage = agent.get(manageKindleUrl);
+	    Page signinPage = agent.get(manageKindleUrl);
 
 	    debug(signinPage);
 

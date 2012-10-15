@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.Node;
+import com.gistlabs.mechanize.document.Node;
 
 /** 
  * Represents an input element of type 'text'.  

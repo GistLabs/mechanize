@@ -19,9 +19,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.document.Node;
+import com.gistlabs.mechanize.document.Page;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.form.Forms;
 import com.gistlabs.mechanize.image.Images;

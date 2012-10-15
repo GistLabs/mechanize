@@ -9,9 +9,9 @@ package com.gistlabs.mechanize.form;
 
 import java.util.List;
 
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.PageElements;
+import com.gistlabs.mechanize.document.Node;
+import com.gistlabs.mechanize.document.PageElements;
 import com.gistlabs.mechanize.util.Util;
 
 /** 

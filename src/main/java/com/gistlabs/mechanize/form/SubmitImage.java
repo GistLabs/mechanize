@@ -7,8 +7,8 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.Node;
 
 /** 
  * Represents an input element of type 'submit'.  
@@ -28,7 +28,7 @@ public class SubmitImage extends FormElement {
 		throw new UnsupportedOperationException("Value of a submit button may not be changed / set");
 	}
 
-	public Resource submit(int x, int y) {
+	public <T extends Resource> T submit(int x, int y) {
 		return getForm().submit(this, x, y);
 	}
 }

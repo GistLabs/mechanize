@@ -7,8 +7,6 @@
  */
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
-
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,15 +16,10 @@ import java.util.Collections;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.ContentType;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
-import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.form.Forms;
-import com.gistlabs.mechanize.html.JsoupDataUtil;
-import com.gistlabs.mechanize.image.Images;
-import com.gistlabs.mechanize.link.Link;
-import com.gistlabs.mechanize.link.Links;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 import com.gistlabs.mechanize.util.CopyInputStream;
@@ -49,9 +42,6 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	protected final HttpResponse response;
 
 	private ByteArrayOutputStream originalContent;
-	private Links links;
-	private Forms forms;
-	private Images images;
 	
 	public Resource(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
 		this.agent = agent;
@@ -77,7 +67,13 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	}
 
 	protected String getContentEncoding(HttpResponse response) {
-		return JsoupDataUtil.getCharsetFromContentType(response.getEntity().getContentType());
+		try {
+			ContentType contentType = ContentType.get(response.getEntity());
+			return contentType.getCharset().displayName();			
+		} catch (NullPointerException np) {
+			// TODO why don't test cases set this?
+			return null;
+		}
 	}
 
 	/**
@@ -140,59 +136,6 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	 */
 	public String getTitle() {
 		return "";
-	}
-
-	/**
-	 *  Query for a matching link, find first match by either id or by class attributes.
-	 * 
-	 * @param query wrapped with byIdOrClass()
-	 * @return first Link found
-	 */
-	public Link link(String query) {
-		return links().get(byIdOrClass(query));
-	}
-	
-	public Links links() {
-		if(this.links == null) {
-			this.links = loadLinks();
-		}
-		return this.links;
-	}
-
-	protected Links loadLinks() {
-		return new Links(this);
-	}
-
-	/**
-	 *  Query for a matching form, find first match by either id or by class attributes.
-	 * 
-	 * @param query wrapped with byIdOrClass()
-	 * @return first Form found
-	 */
-	public Form form(String query) {
-		return forms().get(byIdOrClassOrName(query));
-	}
-
-	public Forms forms() {
-		if(this.forms == null) {
-			this.forms = loadForms();
-		}
-		return this.forms;
-	}
-
-	protected Forms loadForms() {
-		return new Forms(this);
-	}
-
-	public Images images() {
-		if(this.images == null) {
-			this.images = loadImages();
-		}
-		return this.images;
-	}
-
-	protected Images loadImages() {
-		return new Images(this);
 	}
 
 	public String getUri() {

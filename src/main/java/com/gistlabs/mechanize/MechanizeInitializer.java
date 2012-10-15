@@ -59,8 +59,8 @@ public class MechanizeInitializer {
 		for (String factoryClassName : factoryClassNames) {
 			try {
 				@SuppressWarnings("unchecked")
-				Class<PageFactory> pageFactoryClass = (Class<PageFactory>) Class.forName(factoryClassName);
-				PageFactory pageFactory = pageFactoryClass.newInstance();
+				Class<ResourceFactory> pageFactoryClass = (Class<ResourceFactory>) Class.forName(factoryClassName);
+				ResourceFactory pageFactory = pageFactoryClass.newInstance();
 				MechanizeAgent.registerFactory(pageFactory);
 			} catch (Exception e) {
 				// TODO add logging...

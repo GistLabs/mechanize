@@ -9,7 +9,7 @@ package com.gistlabs.mechanize.form;
 
 import java.io.File;
 
-import com.gistlabs.mechanize.Node;
+import com.gistlabs.mechanize.document.Node;
 
 /** Represents an input element of type 'file' used for uploading data. 
  * 

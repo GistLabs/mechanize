@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.PageElement;
+import com.gistlabs.mechanize.document.Node;
+import com.gistlabs.mechanize.document.PageElement;
 import com.gistlabs.mechanize.html.query.HtmlQueryBuilder;
 import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.parameters.Parameters;
@@ -278,20 +278,21 @@ public class Form extends PageElement implements Iterable<FormElement> {
 		return result;
 	}
 	
-	public Resource submit() {
+	public <T extends Resource> T submit() {
 		return submit(this, composeParameters(null, null, 0, 0));
 	}
 
-	public Resource submit(SubmitButton button) {
+	public <T extends Resource> T submit(SubmitButton button) {
 		return submit(this, composeParameters(button, null, 0, 0));
 	}
 
-	public Resource submit(SubmitImage image, int x, int y) {
+	public <T extends Resource> T submit(SubmitImage image, int x, int y) {
 		return submit(this, composeParameters(null, image, x, y));
 	} 
 
 	/** Returns the page object received as response to the form submit action. */
-	private Resource submit(Form form, Parameters parameters) {
+	@SuppressWarnings("unchecked")
+	private <T extends Resource> T submit(Form form, Parameters parameters) {
 		RequestBuilder<Resource> request = doRequest(form.getUri()).set(parameters);
 		boolean doPost = form.isDoPost();
 		boolean multiPart = form.isMultiPart();
@@ -299,7 +300,7 @@ public class Form extends PageElement implements Iterable<FormElement> {
 			request.multiPart();
 			addFiles(request, form);
 		}
-		return doPost ? request.post() : request.get(); 
+		return (T) (doPost ? request.post() : request.get()); 
 	}
 
 	private void addFiles(RequestBuilder<Resource> request, Form form) {

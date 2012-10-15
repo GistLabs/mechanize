@@ -10,7 +10,7 @@ package com.gistlabs.mechanize.html;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gistlabs.mechanize.Node;
+import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Util;
 

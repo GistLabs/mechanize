@@ -8,14 +8,12 @@
 package com.gistlabs.mechanize.image;
 
 import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
-import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.Page;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -28,7 +26,7 @@ public class ImagesTest extends MechanizeTestCase {
 		agent.addPageRequest("http://www.test.com", 
 				newHtml("Test Page", "<img src=\"test.png\"/>"));
 		
-		Resource page = agent.get("http://www.test.com");
+		Page page = agent.get("http://www.test.com");
 		Image image = page.images().get(bySrc("test.png")); 
 		assertEquals("http://www.test.com/test.png", image.getAbsoluteSrc());
 	}
@@ -40,7 +38,7 @@ public class ImagesTest extends MechanizeTestCase {
 		agent.addPageRequest("http://www.test.com/test.png", "ImageContent");
 		agent.addPageRequest("http://www.test.com/test2.png", "ImageContent");
 		
-		Resource page = agent.get("http://www.test.com");
+		Page page = agent.get("http://www.test.com");
 		ImageCollection imageCollection = page.images().loadAll();
 		assertEquals(2, imageCollection.size());
 		assertTrue(imageCollection.hasLoaded(page.images().get(0)));
@@ -59,7 +57,7 @@ public class ImagesTest extends MechanizeTestCase {
 
 		agent.addPageRequest("http://www.test.com/test2.png", "ImageContent");
 		
-		Resource page = agent.get("http://www.test.com");
+		Page page = agent.get("http://www.test.com");
 		ImageCollection imageCollection = new ImageCollection();
 		page.images().loadAllMissing(imageCollection);
 		assertEquals(1, imageCollection.size());

@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.Node;
+import com.gistlabs.mechanize.document.Node;
 
 /**
  * Base class for Checkbox and RadioButton.

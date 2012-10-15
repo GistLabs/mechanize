@@ -19,7 +19,7 @@ import org.apache.http.client.methods.HttpRequestBase;
  * @author jheintz
  *
  */
-public interface PageFactory {
+public interface ResourceFactory {
 	Collection<String> getContentMatches();
 	Resource buildPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response);
 }

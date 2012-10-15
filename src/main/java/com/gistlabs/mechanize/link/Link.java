@@ -7,9 +7,9 @@
  */
 package com.gistlabs.mechanize.link;
 
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.PageElement;
+import com.gistlabs.mechanize.document.Node;
+import com.gistlabs.mechanize.document.PageElement;
 
 /** 
  * Represents a link within a page.  
@@ -26,8 +26,9 @@ public class Link extends PageElement {
 	/**
 	 * Follows the link by using the original agent.
 	 */
-	public Resource click() {
-		return hasAttribute("href") ? doRequest(href()).get() : null;
+	@SuppressWarnings("unchecked")
+	public <T extends Resource> T click() {
+		return (T) (hasAttribute("href") ? doRequest(href()).get() : null);
 	}
 	
 	public String href() {

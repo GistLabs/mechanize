@@ -1,7 +1,9 @@
-package com.gistlabs.mechanize;
+package com.gistlabs.mechanize.document;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
+
+import com.gistlabs.mechanize.MechanizeAgent;
 
 /**
  * Implements a single page document.

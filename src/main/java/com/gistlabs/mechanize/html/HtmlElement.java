@@ -12,7 +12,7 @@ import java.util.List;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Element;
 
-import com.gistlabs.mechanize.Node;
+import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Util;
 
