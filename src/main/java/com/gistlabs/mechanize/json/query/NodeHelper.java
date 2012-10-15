@@ -15,7 +15,7 @@ public interface NodeHelper<Node> {
 
     public String getValue(Node element);
 	
-	public boolean hasAttribute(Node element, String name);
+	public Node getAttribute(Node element, String name);
 
 	public Collection<Node> getAttributes(Node element);
 
@@ -27,6 +27,8 @@ public interface NodeHelper<Node> {
     public Collection<? extends Node> getDescendentNodes(Node node);
     
     public Collection<? extends Node> getChildNodes(Node node);
+    
+	public boolean isEmpty(Node node);
 
 	public String getName(Node n);
     

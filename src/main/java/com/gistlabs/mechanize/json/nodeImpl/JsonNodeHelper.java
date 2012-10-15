@@ -12,8 +12,11 @@ public class JsonNodeHelper implements NodeHelper<JsonNode> {
 		return element.getValue();
 	}
 	
-    public boolean hasAttribute(JsonNode element, String name) {
-		return element.hasAttribute(name);
+	public JsonNode getAttribute(JsonNode element, String name) {
+		if (element.hasAttribute(name))
+			return element.getChild(name);
+		else 
+			return null;
 	}
 
     public Collection<JsonNode> getAttributes(JsonNode element) {
@@ -26,6 +29,7 @@ public class JsonNodeHelper implements NodeHelper<JsonNode> {
     
     public Collection<? extends JsonNode> getDescendentNodes(JsonNode node) {
     	Collection<JsonNode> result = new LinkedHashSet<JsonNode>();
+    	result.add(node);
     	
     	LinkedList<JsonNode> toProcess = new LinkedList<JsonNode>();
     	toProcess.add(node);
@@ -42,6 +46,11 @@ public class JsonNodeHelper implements NodeHelper<JsonNode> {
     public Collection<? extends JsonNode> getChildNodes(JsonNode node) {
 		return node.getChildren();
 	}
+    
+    @Override
+    public boolean isEmpty(JsonNode node) {
+    	return getChildNodes(node).isEmpty();
+    }
 
     public String getName(JsonNode n) {
 		return n.getName();

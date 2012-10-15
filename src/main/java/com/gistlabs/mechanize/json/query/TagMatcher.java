@@ -67,7 +67,6 @@ public class TagMatcher<JsonNode> extends AbstractChecker<JsonNode> {
     private void addDescendantElements() {
         for (JsonNode node : nodes) {
         	Collection<JsonNode> nodes = new LinkedHashSet<JsonNode>();
-        	nodes.add(node);
         	nodes.addAll(helper.getDescendentNodes(node));
         	
         	for(JsonNode n : nodes) {

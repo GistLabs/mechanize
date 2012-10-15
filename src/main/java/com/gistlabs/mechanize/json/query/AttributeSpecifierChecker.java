@@ -29,7 +29,7 @@ public class AttributeSpecifierChecker<Node> extends AbstractChecker<Node> {
 	    	// It just have to be present.
 	        String name = specifier.getName();
 			if (specifier.getValue() == null) {
-				if (helper.hasAttribute(node, name))
+				if (helper.getAttribute(node, name)!=null)
 					result.add(node);
 	            continue;
 	        }
