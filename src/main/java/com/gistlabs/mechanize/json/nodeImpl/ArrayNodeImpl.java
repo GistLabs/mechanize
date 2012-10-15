@@ -8,7 +8,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
 
 /**
@@ -16,10 +16,10 @@ import com.gistlabs.mechanize.json.exceptions.JsonException;
  */
 public class ArrayNodeImpl extends AbstractNode {
 	private final JSONArray array;
-	private List<Node> children;
+	private List<JsonNode> children;
 
 
-	public ArrayNodeImpl(Node parent, String key, JSONArray array) {
+	public ArrayNodeImpl(JsonNode parent, String key, JSONArray array) {
 		super(parent, key);
 		this.array = array;
 	}
@@ -53,15 +53,15 @@ public class ArrayNodeImpl extends AbstractNode {
 	}
 
 	@Override
-	public <T extends Node> T getChild(final String key) {
+	public <T extends JsonNode> T getChild(final String key) {
 		return null;
 	}
 
 	@Override
-	public List<Node> getChildren() {
+	public List<JsonNode> getChildren() {
 		try {
 			if (children==null) {
-				children = new ArrayList<Node>();
+				children = new ArrayList<JsonNode>();
 				for(int i=0;i < array.length();i++){
 					Object obj = array.get(i);
 					children.add(factory("array", obj, array, i));
@@ -75,7 +75,7 @@ public class ArrayNodeImpl extends AbstractNode {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Node> getChildren(String key) {
+	public List<JsonNode> getChildren(String key) {
 		return Collections.EMPTY_LIST;
 	}
 

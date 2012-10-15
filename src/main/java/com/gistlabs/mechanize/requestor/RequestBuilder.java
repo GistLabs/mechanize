@@ -12,7 +12,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -32,18 +36,18 @@ import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.parameters.Parameter;
 import com.gistlabs.mechanize.parameters.Parameters;
 
-public class RequestBuilder<Page> {
-	private final PageRequestor<Page> requestor;
+public class RequestBuilder<Resource> {
+	private final PageRequestor<Resource> requestor;
 	private String uri;
 	private final Parameters parameters = new Parameters();
 	private final Map<String, ContentBody> files = new HashMap<String, ContentBody>();
 	private boolean isMultiPart = false;
 
-	public RequestBuilder(PageRequestor<Page> requestor) {
+	public RequestBuilder(PageRequestor<Resource> requestor) {
 		this.requestor = requestor;
 	}
 	
-	public RequestBuilder(PageRequestor<Page> requestor, String uri) {
+	public RequestBuilder(PageRequestor<Resource> requestor, String uri) {
 		this(requestor);
 		setUri(uri);
 	}
@@ -56,29 +60,29 @@ public class RequestBuilder<Page> {
 				parameters.add(param.getName(), param.getValue());
 	}
 	
-	public RequestBuilder<Page> multiPart() {
+	public RequestBuilder<Resource> multiPart() {
 		this.isMultiPart = true;
 		return this;
 	}
 	
-	public RequestBuilder<Page> add(String name, String ... values) {
+	public RequestBuilder<Resource> add(String name, String ... values) {
 		parameters.add(name, values);
 		return this;
 	}
 	
-	public RequestBuilder<Page> set(String name, String ... values) {
+	public RequestBuilder<Resource> set(String name, String ... values) {
 		parameters.set(name, values);
 		return this;
 	}
 	
-	public RequestBuilder<Page> set(Parameters parameters) {
+	public RequestBuilder<Resource> set(Parameters parameters) {
 		for(String name : parameters.getNames()) 
 			set(name, parameters.get(name));
 		
 		return this;
 	}
 
-	public RequestBuilder<Page> add(Parameters parameters) {
+	public RequestBuilder<Resource> add(Parameters parameters) {
 		for(String name :parameters.getNames()) 
 			add(name, parameters.get(name));
 		
@@ -87,12 +91,12 @@ public class RequestBuilder<Page> {
 	
 	/** Adds a file to the request also making the request to become a multi-part post request or removes any file registered
 	 *  under the given name if the file value is null. */
-	public RequestBuilder<Page> set(String name, File file) {
+	public RequestBuilder<Resource> set(String name, File file) {
 		return set(name, file != null ? new FileBody(file) : null);
 	}
 	
 	/** Adds an ContentBody object. */
-	public RequestBuilder<Page> set(String name, ContentBody contentBody) {
+	public RequestBuilder<Resource> set(String name, ContentBody contentBody) {
 		if(contentBody != null)
 			files.put(name, contentBody);
 		else
@@ -106,13 +110,13 @@ public class RequestBuilder<Page> {
 		return parameters;
 	}
 	
-	public Page get() {
+	public <T extends Resource> T get() {
 		if(hasFiles())
 			throw new UnsupportedOperationException("Files can not be send using a get request");
 		return requestor.request(composeGetRequest(uri, parameters));
 	}
 	
-	public Page post() {
+	public <T extends Resource> T post() {
 		HttpPost request = (!hasFiles()) || isMultiPart ? composePostRequest(getBaseUri(), parameters) : 
 			composeMultiPartFormRequest(getBaseUri(), parameters, files);
 		return requestor.request(request);

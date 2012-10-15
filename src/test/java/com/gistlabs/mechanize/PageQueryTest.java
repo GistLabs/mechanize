@@ -23,7 +23,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" href=\"foo.html\">foo</a>"));
 		
-		Page page = agent.get("http://test.com");
+		Resource page = agent.get("http://test.com");
 		Link link = page.links().get(byId("foo"));
 		assertNotNull(link);
 		assertEquals("http://test.com/foo.html", link.href());
@@ -34,7 +34,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" class=\"bar baz\" href=\"foo.html\">foo</a>"));
 		
-		Page page = agent.get("http://test.com");
+		Resource page = agent.get("http://test.com");
 		
 		assertNull(page.links().get(byClass("foo"))); // foo class
 		
@@ -52,7 +52,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" href=\"foo.html\">foo</a>"));
 		
-		Page page = agent.get("http://test.com");
+		Resource page = agent.get("http://test.com");
 		Link link = page.links().get(byName("foo"));
 		assertNull(link);
 	}
@@ -62,7 +62,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" class=\"bar baz\" href=\"foo.html\">foo</a>"));
 		
-		Page page = agent.get("http://test.com");
+		Resource page = agent.get("http://test.com");
 		
 		assertNotNull(page.links().get(byIdOrClass("foo")));
 		assertNotNull(page.links().get(byIdOrClass("bar")));
@@ -76,7 +76,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" class=\"bar baz\" href=\"foo.html\">foo</a>"));
 		
-		Page page = agent.get("http://test.com");
+		Resource page = agent.get("http://test.com");
 		
 		assertNotNull(page.link("foo"));
 		assertNotNull(page.link("bar"));
@@ -91,7 +91,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", newForm("form").id("form")));
 		
-		Page page = agent.get("http://test.com");
+		Resource page = agent.get("http://test.com");
 		
 		assertNull(page.form("foo"));
 		assertNotNull(page.form("form"));

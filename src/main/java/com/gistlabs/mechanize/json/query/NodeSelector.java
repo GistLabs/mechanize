@@ -24,6 +24,8 @@ public class NodeSelector<Node> {
 	private final NodeHelper<Node> helper;
 
 	public NodeSelector(NodeHelper<Node> helper, Node node) {
+        Assert.notNull(node, "root is null!");
+        Assert.notNull(helper, "helper is null!");
 		this.root = node;
 		this.helper = helper;
 	}
@@ -78,28 +80,28 @@ public class NodeSelector<Node> {
         result.add(root);
         
         for (Selector selector : parts) {
-            Matcher<Node> checker = new TagMatcher<Node>(helper, selector);
-            result = checker.match(result);
+            Checker<Node> checker = new TagChecker<Node>(helper, selector);
+            result = checker.check(result);
             if (selector.hasSpecifiers()) {
                 for (Specifier specifier : selector.getSpecifiers()) {
                     switch (specifier.getType()) {
                     case ATTRIBUTE:
-                        checker = new AttributeSpecifierMatcher<Node>(helper, (AttributeSpecifier) specifier);
+                        checker = new AttributeSpecifierChecker<Node>(helper, (AttributeSpecifier) specifier);
                         break;
                     case PSEUDO:
                         if (specifier instanceof PseudoClassSpecifier) {
-                            checker = new PseudoClassSpecifierMatcher<Node>(helper, (PseudoClassSpecifier) specifier);
+                            checker = new PseudoClassSpecifierChecker<Node>(helper, (PseudoClassSpecifier) specifier);
                         } else if (specifier instanceof PseudoNthSpecifier) {
-                            checker = new PseudoNthSpecifierMatcher<Node>(helper, (PseudoNthSpecifier) specifier);
+                            checker = new PseudoNthSpecifierChecker<Node>(helper, (PseudoNthSpecifier) specifier);
                         }
                         
                         break;
                         
                     case NEGATION:
                         final Collection<Node> negationNodes = checkNegationSpecifier((NegationSpecifier) specifier);
-                        checker = new Matcher<Node>() {
+                        checker = new Checker<Node>() {
                             @Override
-                            public List<Node> match(Collection<Node> nodes) {
+                            public List<Node> check(Collection<Node> nodes) {
                                 Collection<Node> set = new LinkedHashSet<Node>(nodes);
                                 set.removeAll(negationNodes);
                                 return new ArrayList<Node>(set);
@@ -108,7 +110,7 @@ public class NodeSelector<Node> {
                         break;
                     }
                     
-                    result = checker.match(result);
+                    result = checker.check(result);
                     if (result.isEmpty()) {
                         // Bail out early.
                         return result;

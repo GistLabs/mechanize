@@ -21,5 +21,5 @@ import org.apache.http.client.methods.HttpRequestBase;
  */
 public interface PageFactory {
 	Collection<String> getContentMatches();
-	Page buildPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response);
+	Resource buildPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response);
 }

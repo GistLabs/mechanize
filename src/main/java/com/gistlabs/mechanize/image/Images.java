@@ -11,7 +11,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.PageElements;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
@@ -25,7 +25,7 @@ import com.gistlabs.mechanize.util.Util;
  */
 public class Images extends PageElements<Image> {
 	
-	public Images(Page page) {
+	public Images(Resource page) {
 		this(page, newEmptyList());
 	}
 
@@ -33,7 +33,7 @@ public class Images extends PageElements<Image> {
 		return Util.newEmptyList();
 	}
 	
-	public Images (Page page, List<? extends Node> forms) {
+	public Images (Resource page, List<? extends Node> forms) {
 		super(page, forms);
 	}
 

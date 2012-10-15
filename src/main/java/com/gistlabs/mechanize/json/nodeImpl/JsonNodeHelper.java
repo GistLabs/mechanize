@@ -2,36 +2,46 @@ package com.gistlabs.mechanize.json.nodeImpl;
 
 import java.util.*;
 
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.query.NodeHelper;
 
 
-public class JsonNodeHelper implements NodeHelper<Node> {
+public class JsonNodeHelper implements NodeHelper<JsonNode> {
+	
+	private JsonNode root;
 
-    public String getValue(Node element) {
+	public JsonNodeHelper(JsonNode root) {
+		this.root = root;
+	}
+
+    public String getValue(JsonNode element) {
 		return element.getValue();
 	}
 	
-    public boolean hasAttribute(Node element, String name) {
-		return element.hasAttribute(name);
+	public JsonNode getAttribute(JsonNode element, String name) {
+		if (element.hasAttribute(name))
+			return element.getChild(name);
+		else 
+			return null;
 	}
 
-    public Collection<Node> getAttributes(Node element) {
-		Collection<Node> result = new LinkedHashSet<Node>();
+    public Collection<JsonNode> getAttributes(JsonNode element) {
+		Collection<JsonNode> result = new LinkedHashSet<JsonNode>();
 		for(String key : element.getAttributes()) {
 			result.add(element.getChild(key));
 		}
 		return result;
 	}
     
-    public Collection<? extends Node> getDescendentNodes(Node node) {
-    	Collection<Node> result = new LinkedHashSet<Node>();
+    public Collection<? extends JsonNode> getDescendentNodes(JsonNode node) {
+    	Collection<JsonNode> result = new LinkedHashSet<JsonNode>();
+    	result.add(node);
     	
-    	LinkedList<Node> toProcess = new LinkedList<Node>();
+    	LinkedList<JsonNode> toProcess = new LinkedList<JsonNode>();
     	toProcess.add(node);
     	while(!toProcess.isEmpty()) {
-    		Node first = toProcess.removeFirst();
-    		List<? extends Node> children = first.getChildren();
+    		JsonNode first = toProcess.removeFirst();
+    		List<? extends JsonNode> children = first.getChildren();
     		result.addAll(children);
     		toProcess.addAll(children);
     	}
@@ -39,26 +49,31 @@ public class JsonNodeHelper implements NodeHelper<Node> {
     	return result;
 	}
     
-    public Collection<? extends Node> getChildNodes(Node node) {
+    public List<? extends JsonNode> getChildNodes(JsonNode node) {
 		return node.getChildren();
 	}
+    
+    @Override
+    public boolean isEmpty(JsonNode node) {
+    	return getChildNodes(node).isEmpty();
+    }
 
-    public String getName(Node n) {
+    public String getName(JsonNode n) {
 		return n.getName();
 	}
     
-    public Node getNextSibling(Node node) {
+    public JsonNode getNextSibling(JsonNode node) {
     	throw new UnsupportedOperationException("Haven't implemented this yet");
     	//DOMHelper.getNextSiblingElement(node);
 		// TODO Auto-generated method stub
 	}
 
     @SuppressWarnings("unchecked")
-	public Index getIndexInParent(Node node, boolean byType) {
+	public Index getIndexInParent(JsonNode node, boolean byType) {
 		String type = byType ? node.getName() : "*";
 		
-		List<? extends Node> children;
-		Node parent = node.getParent();
+		List<? extends JsonNode> children;
+		JsonNode parent = node.getParent();
 		if (parent==null)
 			children = Collections.EMPTY_LIST;
 		else
@@ -67,11 +82,12 @@ public class JsonNodeHelper implements NodeHelper<Node> {
 		return new Index(children.indexOf(node), children.size());
 	}
 
-	public Node getRoot(Node node) {
-		Node root = node;
-		while (root.getParent()!=null)
-			root = root.getParent();
-		return root;
+	public JsonNode getRoot() {
+		return this.root;
 	}
-
+	
+	@Override
+	public boolean nameMatches(JsonNode n, String name) {
+		return "*".equals(name) || n.getName().equalsIgnoreCase(name);
+	}	
 }

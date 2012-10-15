@@ -21,7 +21,7 @@ public class History {
 	
 	private final MechanizeAgent agent;
 	private int maximumSize = DEFAULT_MAXIMUM_SIZE;
-	private Stack<Page> history = new Stack<Page>();
+	private Stack<Document> history = new Stack<Document>();
 	
 	public History(MechanizeAgent agent) {
 		this.agent = agent;
@@ -37,17 +37,17 @@ public class History {
 		this.maximumSize = maximumSize;
 	}
 	
-	public Page get(int index) {
+	public Document get(int index) {
 		return history.get(index);
 	}
 	
-	/** Returns the current page or null if none. */
-	public Page getCurrent() {
+	/** Returns the current document or null if none. */
+	public Document getCurrent() {
 		return !isEmpty() ? history.peek() : null;
 	}
 	
-	/** Returns the removed current page from history stack or null if history is empty. */
-	public Page pop() {
+	/** Returns the removed current document from history stack or null if history is empty. */
+	public Document pop() {
 		return !isEmpty() ? history.pop() : null;
 	}
 	
@@ -55,18 +55,18 @@ public class History {
 		return history.isEmpty();
 	}
 	
-	/** Returns the new Page version from reloading the current page or null if history is empty. */
-	public Page reload() {
+	/** Returns the new Document version from reloading the current document or null if history is empty. */
+	public Document reload() {
 		if(!isEmpty()) {
-			Page pageToReload = pop();
-			return agent.request(pageToReload.getRequest());
+			Document toReload = pop();
+			return agent.request(toReload.getRequest());
 		}
 		else
 			return null;
 	}
 	
-	public boolean contains(Page page) {
-		return history.contains(page);
+	public boolean contains(Document document) {
+		return history.contains(document);
 	}
 	
 	public int size() {
@@ -74,9 +74,9 @@ public class History {
 	}
 
 	/** Pushes the given page to the history making it current. */ 
-	public void add(Page page) {
+	public void add(Document document) {
 		if(history.size() == maximumSize)
 			history.remove(0);
-		history.push(page);
+		history.push(document);
 	}
 }

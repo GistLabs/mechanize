@@ -21,7 +21,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.RequestInterceptor;
 import com.gistlabs.mechanize.ResponseInterceptor;
 import com.gistlabs.mechanize.parameters.Parameters;
@@ -41,7 +41,7 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 	@Test
 	public void testReceivingAPage() {
 		agent.addPageRequest("http://test.com", newHtml("Test Page", ""));
-		Page page = agent.get("http://test.com");
+		Resource page = agent.get("http://test.com");
 		assertEquals("Test Page", page.getTitle());
 	}
 	
@@ -50,7 +50,7 @@ public class MechanizeAgentTest extends MechanizeTestCase {
         agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
         disableAfterTest();
         
-        Page result = agent.get("http://test.com/form");
+        Resource result = agent.get("http://test.com/form");
         assertEquals("OK", result.getTitle());
     }   
     
@@ -64,14 +64,14 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 	@Test
 	public void testDoRequestGet() {
 		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", ""));
-		Page page = agent.doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").get();
+		Resource page = agent.doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").get();
 		assertEquals("Test Page", page.getTitle());
 	}
 
 	@Test
 	public void testDoRequestGetWithExistingQueryParameters() {
 		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=2", newHtml("Test Page", ""));
-		Page page = agent.doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").get();
+		Resource page = agent.doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").get();
 		assertEquals("Test Page", page.getTitle());
 	}
 
@@ -79,7 +79,7 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 	public void testDoRequestPostWithExistingQueryParameters() {
 		Parameters expectedParameters = new Parameters().add("query","ab cd").add("page", "2");
 		agent.addPageRequest("Post", "http://test.com/index.html", expectedParameters, newHtml("Test Page", ""));
-		Page page = agent.doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").post();
+		Resource page = agent.doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").post();
 		assertEquals("Test Page", page.getTitle());
 	}
     
@@ -87,7 +87,7 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 	public void testPostMethod() {
 		MechanizeAgent agent = agent();
 		Parameters parameters = new Parameters().add("param1", "value").add("param2", "value2");
-		Page page = agent.post("http://posttestserver.com/post.php", parameters);
+		Resource page = agent.post("http://posttestserver.com/post.php", parameters);
 		String pageString = page.asString();
 		assertTrue(pageString.contains(" Successfully dumped 2 post variables"));
 	}
@@ -119,7 +119,7 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		File file = File.createTempFile("mechanize", ".png");
 		file.delete();
 
-		Page page = agent().get(wikipediaLogoUri);
+		Resource page = agent().get(wikipediaLogoUri);
 		
 		assertTrue(page instanceof ContentPage);
 		

@@ -8,7 +8,7 @@
 package com.gistlabs.mechanize.image;
 
 import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.PageElement;
 
 /** 
@@ -20,14 +20,14 @@ import com.gistlabs.mechanize.PageElement;
  */
 public class Image extends PageElement {
 	
-	public Image(Page page, Node node) {
+	public Image(Resource page, Node node) {
 		super(page, node);
 	}
 
 	/**
 	 * Get the image, can then saveTo()
 	 */
-	public Page get() {
+	public Resource get() {
 		return node.hasAttribute("src") ? doRequest(getAbsoluteSrc()).get() : null;
 	}
 

@@ -8,7 +8,7 @@
 package com.gistlabs.mechanize.link;
 
 import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.PageElement;
 
 /** 
@@ -19,14 +19,14 @@ import com.gistlabs.mechanize.PageElement;
  * @since 2012-09-12
  */
 public class Link extends PageElement {
-	public Link(Page page, Node link) {
+	public Link(Resource page, Node link) {
 		super(page, link);
 	}
 
 	/**
 	 * Follows the link by using the original agent.
 	 */
-	public Page click() {
+	public Resource click() {
 		return hasAttribute("href") ? doRequest(href()).get() : null;
 	}
 	

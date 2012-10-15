@@ -5,7 +5,7 @@ import java.util.Collection;
 import se.fishtank.css.util.Assert;
 
 
-public abstract class AbstractMatcher<Node> implements Matcher<Node> {
+public abstract class AbstractChecker<Node> implements Checker<Node> {
 
 	protected final NodeHelper<Node> helper;
 
@@ -15,7 +15,7 @@ public abstract class AbstractMatcher<Node> implements Matcher<Node> {
     /** The result of the checks. */
     protected Collection<Node> result;
     
-	public AbstractMatcher(NodeHelper<Node> helper) {
+	public AbstractChecker(NodeHelper<Node> helper) {
         Assert.notNull(helper, "helper is null!");
 		this.helper = helper;
 	}

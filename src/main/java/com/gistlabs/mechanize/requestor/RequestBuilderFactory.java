@@ -10,7 +10,7 @@ package com.gistlabs.mechanize.requestor;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 
 
-public interface RequestBuilderFactory<Page> {
+public interface RequestBuilderFactory<Resource> {
 	public String absoluteUrl(String uri);
-	public RequestBuilder<Page> doRequest(String uri);
+	public RequestBuilder<Resource> doRequest(String uri);
 }

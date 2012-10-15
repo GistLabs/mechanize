@@ -4,17 +4,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 
 public class AttributeNode extends AbstractNode {
 	
-	public AttributeNode(Node parent, String name) {
+	public AttributeNode(JsonNode parent, String name) {
 		super(parent, name);
 	}
 
 	@Override
 	public String getAttribute(String key) {
-		return null;
+		return null; 
 	}
 
 	@Override
@@ -42,18 +42,18 @@ public class AttributeNode extends AbstractNode {
 	}
 
 	@Override
-	public <T extends Node> T getChild(String key) {
+	public <T extends JsonNode> T getChild(String key) {
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Node> getChildren() {
+	public List<JsonNode> getChildren() {
 		return Collections.EMPTY_LIST;
 	}
 
 	@Override
-	public List<Node> getChildren(String key) {
+	public List<JsonNode> getChildren(String key) {
 		return getChildren();
 	}
 }

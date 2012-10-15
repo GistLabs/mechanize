@@ -9,6 +9,9 @@ package com.gistlabs.mechanize.requestor;
 
 import org.apache.http.client.methods.HttpRequestBase;
 
-public interface PageRequestor<Page> {
-	public Page request(HttpRequestBase request);
+/**
+ * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
+ */
+public interface PageRequestor<Resource> {
+	public <T extends Resource> T request(HttpRequestBase request);
 }

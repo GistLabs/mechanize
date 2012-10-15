@@ -9,9 +9,6 @@ package com.gistlabs.mechanize;
 
 import static org.junit.Assert.*;
 
-import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Page;
-
 import org.junit.Test;
 
 /** 
@@ -27,10 +24,10 @@ public class HistoryTest {
 		agent.history().setMaximumSize(3);
 		assertEquals(3, agent.history().getMaximumSize());
 		
-		Page page1 = agent.get("http://www.wikipedia.org");
-		Page page2 = agent.get("http://www.google.com");
-		Page page3 = agent.get("http://www.amazon.com");
-		Page page4 = agent.get("http://www.twitter.com");
+		Document page1 = agent.get("http://www.wikipedia.org");
+		Document page2 = agent.get("http://www.google.com");
+		Document page3 = agent.get("http://www.amazon.com");
+		Document page4 = agent.get("http://www.twitter.com");
 		
 		assertEquals(3, agent.history().size());
 		assertFalse(agent.history().contains(page1));
@@ -50,8 +47,8 @@ public class HistoryTest {
 	public void testReload() {
 		MechanizeAgent agent = new MechanizeAgent();
 		assertNull("Reloading empty history results in null", agent.history().reload());
-		Page page1 = agent.get("http://www.wikipedia.org");
-		Page page2 = agent.history().reload();
+		Document page1 = agent.get("http://www.wikipedia.org");
+		Document page2 = agent.history().reload();
 		assertEquals(1, agent.history().size());
 		assertFalse(agent.history().contains(page1));
 		assertSame(page2, agent.history().get(0));

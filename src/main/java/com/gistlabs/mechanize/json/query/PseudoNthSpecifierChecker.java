@@ -5,7 +5,6 @@ import java.util.LinkedHashSet;
 
 import com.gistlabs.mechanize.json.query.NodeHelper.Index;
 
-import se.fishtank.css.selectors.dom.internal.NodeTraversalChecker;
 import se.fishtank.css.selectors.specifier.PseudoNthSpecifier;
 import se.fishtank.css.util.Assert;
 
@@ -15,7 +14,7 @@ import se.fishtank.css.util.Assert;
  * 
  * @author Christer Sandberg
  */
-public class PseudoNthSpecifierMatcher<Node> extends AbstractMatcher<Node> {
+public class PseudoNthSpecifierChecker<Node> extends AbstractChecker<Node> {
     
     /** The {@code nth-*} pseudo-class specifier to check against. */
     private final PseudoNthSpecifier specifier;
@@ -25,7 +24,7 @@ public class PseudoNthSpecifierMatcher<Node> extends AbstractMatcher<Node> {
      * 
      * @param specifier The {@code nth-*} pseudo-class specifier to check against.
      */
-    public PseudoNthSpecifierMatcher(NodeHelper<Node> helper, PseudoNthSpecifier specifier) {
+    public PseudoNthSpecifierChecker(NodeHelper<Node> helper, PseudoNthSpecifier specifier) {
     	super(helper);
         Assert.notNull(specifier, "specifier is null!");
         this.specifier = specifier;
@@ -35,7 +34,7 @@ public class PseudoNthSpecifierMatcher<Node> extends AbstractMatcher<Node> {
      * {@inheritDoc}
      */
     @Override
-    public Collection<Node> match(Collection<Node> nodes)  {
+    public Collection<Node> check(Collection<Node> nodes)  {
         Assert.notNull(nodes, "nodes is null!");
         this.nodes = nodes;
         result = new LinkedHashSet<Node>();

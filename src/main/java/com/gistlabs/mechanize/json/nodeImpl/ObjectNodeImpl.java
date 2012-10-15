@@ -6,14 +6,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
 
 public class ObjectNodeImpl extends AbstractNode {
 
 	private final JSONObject obj;
-	private Map<String,List<Node>> children = new HashMap<String, List<Node>>();
+	private Map<String,List<JsonNode>> children = new HashMap<String, List<JsonNode>>();
 
 	public ObjectNodeImpl(JSONObject obj) {
 		this("root", obj);
@@ -24,7 +24,7 @@ public class ObjectNodeImpl extends AbstractNode {
 		this(null, name, obj);
 	}
 
-	public ObjectNodeImpl(Node parent, String name, JSONObject obj) {
+	public ObjectNodeImpl(JsonNode parent, String name, JSONObject obj) {
 		super(parent, name);
 		this.obj = obj;
 	}
@@ -85,8 +85,8 @@ public class ObjectNodeImpl extends AbstractNode {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Node getChild(final String key) {
-		List<Node> result = getChildren(key);
+	public JsonNode getChild(final String key) {
+		List<JsonNode> result = getChildren(key);
 		
 		if (result.size()>=2)
 			throw new JsonException("More than one result");
@@ -101,9 +101,9 @@ public class ObjectNodeImpl extends AbstractNode {
 	}
 
 	@Override
-	public List<Node> getChildren() {
+	public List<JsonNode> getChildren() {
 		try {
-			List<Node> result = new ArrayList<Node>();
+			List<JsonNode> result = new ArrayList<JsonNode>();
 			@SuppressWarnings("unchecked")
 			Iterator<String> keys = this.obj.keys();
 			while(keys.hasNext()) {
@@ -118,7 +118,7 @@ public class ObjectNodeImpl extends AbstractNode {
 	}
 
 	@Override
-	public List<Node> getChildren(String key) {
+	public List<JsonNode> getChildren(String key) {
 		if (!children.containsKey(key)) {
 			if ("*".equalsIgnoreCase(key))
 				children.put(key, getChildren());
@@ -129,11 +129,11 @@ public class ObjectNodeImpl extends AbstractNode {
 		return children.get(key);
 	}
 
-	protected List<Node> factory(String key) {
+	protected List<JsonNode> factory(String key) {
 		try {
-			ArrayList<Node> result = new ArrayList<Node>();
+			ArrayList<JsonNode> result = new ArrayList<JsonNode>();
 			try {
-				Node n = factory(this.obj, key);
+				JsonNode n = factory(this.obj, key);
 				if (n!=null)
 					result.add(n);
 			} catch(JsonArrayException e) {

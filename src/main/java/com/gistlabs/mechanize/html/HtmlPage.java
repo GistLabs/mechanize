@@ -19,6 +19,7 @@ import org.jsoup.nodes.Document;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Node;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.Page;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.form.Forms;
@@ -73,7 +74,7 @@ public class HtmlPage extends Page {
 	@Override 
 	protected Forms loadForms() {
 		List<? extends Node> forms = htmlElements().getAll(byTag("form"));
-		return new Forms((Page)this, forms);
+		return new Forms((Resource)this, forms);
 	}
 	
 	@Override

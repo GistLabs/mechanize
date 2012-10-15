@@ -15,11 +15,11 @@ import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
  * @version 1.0
  * @since 2012-09-12
  */
-public abstract class PageElement implements RequestBuilderFactory<Page> {
-	protected final Page page;
+public abstract class PageElement implements RequestBuilderFactory<Resource> {
+	protected final Resource page;
 	protected final Node node;
 	
-	public PageElement(Page page, Node node) {
+	public PageElement(Resource page, Node node) {
 		this.page = page;
 		this.node = node;
 	}
@@ -28,12 +28,12 @@ public abstract class PageElement implements RequestBuilderFactory<Page> {
 		return node;
 	}
 	
-	public Page getPage() {
+	public Resource getPage() {
 		return page;
 	}
 	
 	@Override
-	public RequestBuilder<Page> doRequest(String uri) {
+	public RequestBuilder<Resource> doRequest(String uri) {
 		return getPage().doRequest(uri);
 	}
 	

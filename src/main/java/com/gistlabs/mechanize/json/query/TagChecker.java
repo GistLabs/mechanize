@@ -8,7 +8,7 @@ import se.fishtank.css.selectors.Selector;
 import se.fishtank.css.util.Assert;
 
 
-public class TagMatcher<Node> extends AbstractMatcher<Node> {
+public class TagChecker<Node> extends AbstractChecker<Node> {
    
     /** The selector to check against. */
     protected final Selector selector;
@@ -18,16 +18,13 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
     
     /** The result of the checks. */
     protected Collection<Node> result;
-
-    /** Whether the underlying DOM is case sensitive. */
-    protected boolean caseSensitive = false;
     
     /**
      * Create a new instance.
      * 
      * @param selector The selector to check against.
      */
-    public TagMatcher(NodeHelper<Node> helper, Selector selector) {
+    public TagChecker(NodeHelper<Node> helper, Selector selector) {
     	super(helper);
         Assert.notNull(selector, "selector is null!");
         this.selector = selector;
@@ -37,7 +34,7 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
      * {@inheritDoc}
      */
     @Override
-    public Collection<Node> match(Collection<Node> nodes) {
+    public Collection<Node> check(Collection<Node> nodes) {
         Assert.notNull(nodes, "nodes is null!");
         this.nodes = nodes;
 
@@ -70,7 +67,7 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
     private void addDescendantElements() {
         for (Node node : nodes) {
         	Collection<Node> nodes = new LinkedHashSet<Node>();
-        	nodes.add(node);
+
         	nodes.addAll(helper.getDescendentNodes(node));
         	
         	for(Node n : nodes) {
@@ -97,7 +94,7 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
 
 	private boolean matchTag(Node child) {
 		String tag = selector.getTagName();
-		return tagEquals(tag, helper.getName(child)) || tag.equals(Selector.UNIVERSAL_TAG);
+		return helper.nameMatches(child, tag);
 	}
 
 	/**
@@ -125,7 +122,7 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
             Node n = helper.getNextSibling(node);
             while (n != null) {
                 String tag = selector.getTagName();
-                if (tagEquals(tag, helper.getName(n)) || tag.equals(Selector.UNIVERSAL_TAG)) {
+                if (helper.nameMatches(n, tag)) {
                     result.add(n);
                 }
                 
@@ -133,20 +130,4 @@ public class TagMatcher<Node> extends AbstractMatcher<Node> {
             }
         }
     }
-
-    /**
-     * Determine if the two specified tag names are equal.
-     *
-     * @param tag1 A tag name.
-     * @param tag2 A tag name.
-     * @return <code>true</code> if the tag names are equal, <code>false</code> otherwise.
-     */
-    private boolean tagEquals(String tag1, String tag2) {
-        if (caseSensitive) {
-            return tag1.equals(tag2);
-        }
-
-        return tag1.equalsIgnoreCase(tag2);
-    }
-
 }

@@ -3,7 +3,7 @@ package com.gistlabs.mechanize.json.nodeImpl;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
 
 public class IndexedAttributeNode extends AttributeNode {
@@ -11,7 +11,7 @@ public class IndexedAttributeNode extends AttributeNode {
 	private final int index;
 	private JSONArray array;
 
-	public IndexedAttributeNode(Node parent, String name, JSONArray array, int index) {
+	public IndexedAttributeNode(JsonNode parent, String name, JSONArray array, int index) {
 		super(parent, name);
 		this.array = array;
 		this.index = index;

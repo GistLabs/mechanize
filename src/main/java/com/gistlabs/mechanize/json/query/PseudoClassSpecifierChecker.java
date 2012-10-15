@@ -9,7 +9,7 @@ import se.fishtank.css.selectors.specifier.PseudoClassSpecifier;
 import se.fishtank.css.util.Assert;
 
 
-public class PseudoClassSpecifierMatcher<Node> extends AbstractMatcher<Node> {
+public class PseudoClassSpecifierChecker<Node> extends AbstractChecker<Node> {
 
 	/** The pseudo-class specifier to check against. */
     protected final PseudoClassSpecifier specifier;
@@ -19,7 +19,7 @@ public class PseudoClassSpecifierMatcher<Node> extends AbstractMatcher<Node> {
      * 
      * @param specifier The pseudo-class specifier to check against.
      */
-    public PseudoClassSpecifierMatcher(NodeHelper<Node> helper, PseudoClassSpecifier specifier) {
+    public PseudoClassSpecifierChecker(NodeHelper<Node> helper, PseudoClassSpecifier specifier) {
     	super(helper);
         Assert.notNull(specifier, "specifier is null!");
         this.specifier = specifier;
@@ -29,7 +29,7 @@ public class PseudoClassSpecifierMatcher<Node> extends AbstractMatcher<Node> {
      * {@inheritDoc}
      */
     @Override
-    public Collection<Node> match(Collection<Node> nodes) {
+    public Collection<Node> check(Collection<Node> nodes) {
         Assert.notNull(nodes, "nodes is null!");
         this.nodes = nodes;
 
@@ -66,7 +66,7 @@ public class PseudoClassSpecifierMatcher<Node> extends AbstractMatcher<Node> {
      */
     private void addEmptyElements() {
         for (Node node : nodes) {
-        	if (helper.getChildNodes(node).isEmpty())
+        	if (helper.isEmpty(node))
         		result.add(node);
         }
     }
@@ -155,11 +155,8 @@ public class PseudoClassSpecifierMatcher<Node> extends AbstractMatcher<Node> {
      * @see <a href="http://www.w3.org/TR/css3-selectors/#root-pseudo"><code>:root</code> pseudo-class</a>
      */
     private void addRootElement() {
-        for (Node node : nodes) {
-        	Node root = helper.getRoot(node);
-        	
-        	if (root != null)
-        		result.add(root);
-        }
+    	Node root = helper.getRoot();
+    	if (root != null)
+    		result.add(root);
     }
 }

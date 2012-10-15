@@ -7,7 +7,7 @@ import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.conn.ProxySelectorRoutePlanner;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Page;
+import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.cookie.Cookie;
 import com.gistlabs.mechanize.form.Checkable;
 import com.gistlabs.mechanize.form.Form;
@@ -39,7 +39,7 @@ public class Issue36Test {
 	    };
 
 	    String manageKindleUrl = "http://www.amazon.com/gp/digital/fiona/manage/ref=gno_yam_myk";
-	    Page signinPage = agent.get(manageKindleUrl);
+	    Resource signinPage = agent.get(manageKindleUrl);
 
 	    debug(signinPage);
 
@@ -47,13 +47,13 @@ public class Issue36Test {
 	    form.get("email").setValue(username);
 	    ((Checkable) form.get("ap_signin_existing_radio")).setChecked(true);
 	    form.get("password").setValue(password);
-	    Page managePage = form.submit();
+	    Resource managePage = form.submit();
 
 	    debug(managePage);
 
 	}
 
-	private void debug(Page page) {
+	private void debug(Resource page) {
 	    System.out.println("\n\n\n");
 	    System.out.println("**** Page Headers ****");
 	    System.out.println(page.getResponse().toString());

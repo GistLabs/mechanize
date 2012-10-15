@@ -8,16 +8,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.gistlabs.mechanize.json.Node;
+import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
 import com.gistlabs.mechanize.json.query.NodeSelector;
 
-public abstract class AbstractNode implements Node {
+public abstract class AbstractNode implements JsonNode {
 	protected final String name;
-	protected final Node parent;
+	protected final JsonNode parent;
 		
-	public AbstractNode(Node parent, String name) {
+	public AbstractNode(JsonNode parent, String name) {
 		this.parent = parent;
 		this.name = name;
 	}
@@ -47,22 +47,22 @@ public abstract class AbstractNode implements Node {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Node getParent() {
+	public JsonNode getParent() {
 		return this.parent;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Node find(String query) {
-		return new NodeSelector<Node>(new JsonNodeHelper(), this).find(query);
+	public JsonNode find(String query) {
+		return new NodeSelector<JsonNode>(new JsonNodeHelper(this), this).find(query);
 	}
 
 	@Override
-	public List<Node> findAll(String query) {
-		return new NodeSelector<Node>(new JsonNodeHelper(), this).findAll(query);
+	public List<JsonNode> findAll(String query) {
+		return new NodeSelector<JsonNode>(new JsonNodeHelper(this), this).findAll(query);
 	}
 
-	protected Node factory(JSONObject node, String key) {		
+	protected JsonNode factory(JSONObject node, String key) {		
 		try {
 			if (!node.has(key))
 				return null;
@@ -80,7 +80,7 @@ public abstract class AbstractNode implements Node {
 		}
 	}
 
-	protected Node factory(String key, Object obj, JSONArray array, int index) {
+	protected JsonNode factory(String key, Object obj, JSONArray array, int index) {
 		if (obj instanceof JSONObject)
 			return new ObjectNodeImpl(this, key, (JSONObject)obj);
 		else if (obj instanceof JSONArray)
