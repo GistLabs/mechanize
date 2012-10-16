@@ -31,6 +31,9 @@ public interface Node {
 
 	/** Returns the child elements. */
 	List<? extends Node> getChildren(String... names);
+	
+	/** Returns the parent node or null in case of a root node. */
+	Node getParent();
 
 	/** Returns true if the attribute is set and has a value of if a special attribute (${name}) is supported. */
 	boolean hasAttribute(String attributeKey);

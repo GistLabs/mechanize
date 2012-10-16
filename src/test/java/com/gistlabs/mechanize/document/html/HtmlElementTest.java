@@ -49,4 +49,16 @@ public class HtmlElementTest extends MechanizeTestCase {
 		assertEquals("link1", elements.get(0).getAttribute("href"));
 		assertEquals("link2", elements.get(1).getAttribute("href"));
 	}
+	
+	@Test
+	public void testGettingTheParent() {
+		agent.addPageRequest("http://test.com", 
+				newHtml("Test Page", "<a href=\"link\">link</a>"));
+		
+		HtmlPage page = agent.get("http://test.com");
+		HtmlElement element = page.getRoot().get(byHRef(regEx("link")));
+		assertEquals("body", element.getParent().getName());
+		assertEquals("html", element.getParent().getParent().getName());
+		assertNull(element.getParent().getParent().getParent().getParent());
+	}
 }

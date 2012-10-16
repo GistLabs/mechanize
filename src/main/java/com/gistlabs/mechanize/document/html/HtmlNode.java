@@ -94,6 +94,12 @@ public class HtmlNode implements Node {
 		return result;
 	}
 	
+	@Override
+	public HtmlNode getParent() {
+		org.jsoup.nodes.Node parent = getJsoupNode().parent();
+		return parent != null ? getPage().htmlElements().getHtmlNode(parent) : null;
+	}
+	
 	protected String maybeElementTag(org.jsoup.nodes.Node node) {
 		if (node instanceof Element)
 			return ((Element)node).tagName();
