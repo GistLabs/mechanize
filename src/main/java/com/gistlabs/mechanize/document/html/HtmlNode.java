@@ -69,11 +69,23 @@ public class HtmlNode implements Node {
 	}
 		
 	@Override
+	public List<HtmlNode> getChildren() {
+		List<HtmlNode> result = new ArrayList<HtmlNode>();
+		
+		for(org.jsoup.nodes.Node child : node.childNodes()) {
+			result.add(getPage().htmlElements().getHtmlNode(child));
+		}
+		
+		return result;
+	}
+
+	@Override
 	public List<HtmlNode> getChildren(String... names) {
 		Collection<String> namesColl = Arrays.asList(names); 
 		boolean emptyOrStar = namesColl.isEmpty() || namesColl.contains("*");
 
 		List<HtmlNode> result = new ArrayList<HtmlNode>();
+		
 		for(org.jsoup.nodes.Node child : node.childNodes()) {
 			if (emptyOrStar || namesColl.contains(maybeElementTag(node)))
 				result.add(getPage().htmlElements().getHtmlNode(child));
