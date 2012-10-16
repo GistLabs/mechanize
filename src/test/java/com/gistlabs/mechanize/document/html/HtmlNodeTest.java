@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.document.Node;
+import com.gistlabs.mechanize.document.NodeUtil;
 import com.gistlabs.mechanize.document.NodeVisitor;
 
 /**
@@ -32,7 +33,7 @@ public class HtmlNodeTest extends MechanizeTestCase {
 		
 		HtmlPage page = agent.get("http://test.com");
 		MyNodeVisitor visitor = new MyNodeVisitor();
-		page.getRoot().visit(visitor);
+		NodeUtil.visit(page.getRoot(), visitor);
 		assertEquals("<#root<html<head<title<null>>><body<a>>>>", visitor.result.toString());
 	}
 	

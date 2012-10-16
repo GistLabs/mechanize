@@ -43,6 +43,4 @@ public interface Node {
 	
 	/** Returns all attribute names being present including any supported special attribute. */
 	List<String> getAttributeNames();
-	
-	void visit(NodeVisitor visitor);
 }
