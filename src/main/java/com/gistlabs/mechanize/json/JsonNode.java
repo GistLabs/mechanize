@@ -1,6 +1,5 @@
 package com.gistlabs.mechanize.json;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ public interface JsonNode {
 	public String getAttribute(String key);
 	public void setAttribute(String key, String value);
 	public boolean hasAttribute(String key);
-	public Collection<String> getAttributes();
+	public List<String> getAttributes();
 	 
 	public String getValue();
 	public void setValue(String value);

@@ -1,7 +1,6 @@
 package com.gistlabs.mechanize.json.nodeImpl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class ArrayNodeImpl extends AbstractNode {
 	}
 
 	@Override
-	public Collection<String> getAttributes() {
+	public List<String> getAttributes() {
 		return null;
 	}
 
