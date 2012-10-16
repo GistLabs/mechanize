@@ -71,7 +71,9 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 		Page page = agent.get("http://www.wikipedia.org");
 		List<Image> images = page.images().getAll(byHtml(regEx(".*Wikipedia.*")));
 		assertEquals(2, images.size());
-		assertEquals(2479, images.get(0).get().getLength());
-		assertEquals(45283, images.get(1).get().getLength());
+		
+		// these are fragile... changed today
+//		assertEquals(2479, images.get(0).get().getLength());
+//		assertEquals(45283, images.get(1).get().getLength());
 	}
 }
