@@ -16,13 +16,9 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.html.HtmlElement;
-import com.gistlabs.mechanize.document.html.HtmlPage;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class HtmlElementTest extends MechanizeTestCase {
 	
@@ -48,17 +44,5 @@ public class HtmlElementTest extends MechanizeTestCase {
 		assertEquals(2, elements.size());
 		assertEquals("link1", elements.get(0).getAttribute("href"));
 		assertEquals("link2", elements.get(1).getAttribute("href"));
-	}
-	
-	@Test
-	public void testGettingTheParent() {
-		agent.addPageRequest("http://test.com", 
-				newHtml("Test Page", "<a href=\"link\">link</a>"));
-		
-		HtmlPage page = agent.get("http://test.com");
-		HtmlElement element = page.getRoot().get(byHRef(regEx("link")));
-		assertEquals("body", element.getParent().getName());
-		assertEquals("html", element.getParent().getParent().getName());
-		assertNull(element.getParent().getParent().getParent().getParent());
 	}
 }

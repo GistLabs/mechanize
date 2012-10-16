@@ -15,6 +15,7 @@ import java.util.List;
 import org.jsoup.nodes.Element;
 
 import com.gistlabs.mechanize.document.Node;
+import com.gistlabs.mechanize.document.NodeVisitor;
 import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Util;
 
@@ -119,6 +120,14 @@ public class HtmlNode implements Node {
 		return result;
 	}
 	
+	@Override
+	public void visit(NodeVisitor visitor) {
+		if(visitor.beginNode(this)) {
+			for(Node child : getChildren())
+				child.visit(visitor);
+		}
+		visitor.endNode(this);
+	}
 	
 	@Override
 	public String toString() {
