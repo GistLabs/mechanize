@@ -9,14 +9,11 @@ package com.gistlabs.mechanize.form;
 
 import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.document.PageElement;
-import com.gistlabs.mechanize.query.AbstractQuery;
-import com.gistlabs.mechanize.query.QueryStrategy;
+import com.gistlabs.mechanize.document.query.AbstractQuery;
+import com.gistlabs.mechanize.document.query.QueryStrategy;
 
 /**
- *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class FormElement extends PageElement {
 

@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -20,8 +20,6 @@ import com.gistlabs.mechanize.document.Page;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class FormTest extends MechanizeTestCase {
 	

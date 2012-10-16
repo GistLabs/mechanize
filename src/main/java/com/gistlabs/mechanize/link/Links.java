@@ -12,14 +12,12 @@ import java.util.List;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.document.PageElements;
-import com.gistlabs.mechanize.query.QueryStrategy;
+import com.gistlabs.mechanize.document.query.QueryStrategy;
 
 /** 
  * A collection of Link objects. 
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class Links extends PageElements<Link> {
 	public Links(Resource page, QueryStrategy queryStrategy) {

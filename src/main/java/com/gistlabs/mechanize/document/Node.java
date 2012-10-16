@@ -2,7 +2,7 @@ package com.gistlabs.mechanize.document;
 
 import java.util.List;
 
-import com.gistlabs.mechanize.query.AbstractQuery;
+import com.gistlabs.mechanize.document.query.AbstractQuery;
 
 /**
  * Describes a node of a document having attributes and child nodes.
@@ -27,7 +27,13 @@ public interface Node {
 	List<? extends Node> getAll(AbstractQuery<?> query);
 
 	/** Returns the child elements. */
+	List<? extends Node> getChildren();
+
+	/** Returns the child elements. */
 	List<? extends Node> getChildren(String... names);
+	
+	/** Returns the parent node or null in case of a root node. */
+	Node getParent();
 
 	/** Returns true if the attribute is set and has a value of if a special attribute (${name}) is supported. */
 	boolean hasAttribute(String attributeKey);
@@ -37,4 +43,6 @@ public interface Node {
 	
 	/** Returns all attribute names being present including any supported special attribute. */
 	List<String> getAttributeNames();
+	
+	void visit(NodeVisitor visitor);
 }

@@ -13,7 +13,7 @@ import java.util.List;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.document.PageElements;
-import com.gistlabs.mechanize.query.QueryStrategy;
+import com.gistlabs.mechanize.document.query.QueryStrategy;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
 
@@ -21,8 +21,6 @@ import com.gistlabs.mechanize.util.Util;
  * A collection of Image objects.  
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class Images extends PageElements<Image> {
 	

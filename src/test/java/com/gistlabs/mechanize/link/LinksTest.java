@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.link;
 
-import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -19,8 +19,6 @@ import com.gistlabs.mechanize.document.Page;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class LinksTest extends MechanizeTestCase {
 	@Test

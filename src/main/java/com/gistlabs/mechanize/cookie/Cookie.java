@@ -16,8 +16,6 @@ import org.apache.http.impl.cookie.BasicClientCookie2;
  * Representation of a cookie 
  *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class Cookie implements Serializable {
 
