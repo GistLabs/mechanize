@@ -18,19 +18,15 @@ public class JsonNodeHelper implements NodeHelper<JsonNode> {
 		return element.getValue();
 	}
 	
-	public JsonNode getAttribute(JsonNode element, String name) {
+	public boolean hasAttribute(JsonNode element, String name) {
+		return element.hasAttribute(name);
+	}
+	
+	public String getAttribute(JsonNode element, String name) {
 		if (element.hasAttribute(name))
-			return element.getChild(name);
+			return element.getChild(name).getValue();
 		else 
 			return null;
-	}
-
-    public Collection<JsonNode> getAttributes(JsonNode element) {
-		Collection<JsonNode> result = new LinkedHashSet<JsonNode>();
-		for(String key : element.getAttributes()) {
-			result.add(element.getChild(key));
-		}
-		return result;
 	}
     
     public Collection<? extends JsonNode> getDescendentNodes(JsonNode node) {

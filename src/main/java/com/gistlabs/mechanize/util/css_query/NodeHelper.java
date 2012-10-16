@@ -16,9 +16,9 @@ public interface NodeHelper<Node> {
 
     public String getValue(Node element);
 	
-	public Node getAttribute(Node element, String name);
-
-	public Collection<Node> getAttributes(Node element);
+	public boolean hasAttribute(Node element, String name);
+	
+	public String getAttribute(Node element, String name);
 
 	public Index getIndexInParent(Node node, boolean byType);
 
