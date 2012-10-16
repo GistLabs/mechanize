@@ -26,7 +26,7 @@ public class AttributeNode extends AbstractNode {
 	}
 
 	@Override
-	public List<String> getAttributes() {
+	public List<String> getAttributeNames() {
 		return null;
 	}
 

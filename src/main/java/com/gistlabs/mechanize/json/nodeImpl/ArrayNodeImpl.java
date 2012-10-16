@@ -38,7 +38,7 @@ public class ArrayNodeImpl extends AbstractNode {
 	}
 
 	@Override
-	public List<String> getAttributes() {
+	public List<String> getAttributeNames() {
 		return null;
 	}
 

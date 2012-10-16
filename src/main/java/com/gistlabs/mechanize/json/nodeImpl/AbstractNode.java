@@ -24,7 +24,7 @@ public abstract class AbstractNode implements JsonNode {
 	
 	@Override
 	public String toString() {
-		return String.format("%s(%s)", getName(), join(getAttributes(),","));
+		return String.format("%s(%s)", getName(), join(getAttributeNames(),","));
 	}
 	
 	static String join(Collection<?> s, String delimiter) {

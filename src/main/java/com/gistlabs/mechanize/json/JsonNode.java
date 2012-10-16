@@ -13,7 +13,7 @@ public interface JsonNode {
 	public String getAttribute(String key);
 	public void setAttribute(String key, String value);
 	public boolean hasAttribute(String key);
-	public List<String> getAttributes();
+	public List<String> getAttributeNames();
 	 
 	public String getValue();
 	public void setValue(String value);

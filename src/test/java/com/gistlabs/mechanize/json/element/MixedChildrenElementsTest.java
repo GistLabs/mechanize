@@ -19,7 +19,7 @@ public class MixedChildrenElementsTest extends TestElementBaseClass {
 		JsonNode nested = element.getChild("a");
 		assertNotNull(nested);
 		
-		Collection<String> attributes = element.getAttributes();
+		Collection<String> attributes = element.getAttributeNames();
 		assertEquals(1, attributes.size());
 		assertTrue(attributes.contains("a"));
 	}

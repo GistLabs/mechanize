@@ -57,7 +57,7 @@ public class ObjectNodeImpl extends AbstractNode {
 	}
 
 	@Override
-	public List<String> getAttributes() {
+	public List<String> getAttributeNames() {
 		try {
 			List<String> result = new ArrayList<String>();
 			@SuppressWarnings("unchecked")
