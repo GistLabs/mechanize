@@ -8,7 +8,11 @@
 package com.gistlabs.mechanize.html;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+
+import org.jsoup.nodes.Element;
 
 import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.query.AbstractQuery;
@@ -65,12 +69,24 @@ public class HtmlNode implements Node {
 	}
 		
 	@Override
-	public List<HtmlNode> getChildren() {
+	public List<HtmlNode> getChildren(String... names) {
+		Collection<String> namesColl = Arrays.asList(names); 
+		boolean emptyOrStar = namesColl.isEmpty() || namesColl.contains("*");
+
 		List<HtmlNode> result = new ArrayList<HtmlNode>();
-		for(org.jsoup.nodes.Node child : node.childNodes()) 
-			result.add(getPage().htmlElements().getHtmlNode(child));
+		for(org.jsoup.nodes.Node child : node.childNodes()) {
+			if (emptyOrStar || namesColl.contains(maybeElementTag(node)))
+				result.add(getPage().htmlElements().getHtmlNode(child));
+		}
 		
 		return result;
+	}
+	
+	protected String maybeElementTag(org.jsoup.nodes.Node node) {
+		if (node instanceof Element)
+			return ((Element)node).tagName();
+		else
+			return null;
 	}
 
 	@Override

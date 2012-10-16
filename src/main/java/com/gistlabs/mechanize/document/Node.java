@@ -27,7 +27,7 @@ public interface Node {
 	List<? extends Node> getAll(AbstractQuery<?> query);
 
 	/** Returns the child elements. */
-	List<? extends Node> getChildren();
+	List<? extends Node> getChildren(String... names);
 
 	/** Returns true if the attribute is set and has a value of if a special attribute (${name}) is supported. */
 	boolean hasAttribute(String attributeKey);
