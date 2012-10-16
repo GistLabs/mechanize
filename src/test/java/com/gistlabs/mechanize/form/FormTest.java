@@ -152,16 +152,6 @@ public class FormTest extends MechanizeTestCase {
 	}
 	
 	@Test(expected = UnsupportedOperationException.class)
-	public void testSettingValueOfHiddenInputFails() {
-		agent.addPageRequest("http://test.com", 
-				newHtml("Test Page", newForm("form").id("form").addHidden("hidden", "Text")));
-		
-		Page page = agent.get("http://test.com");
-		Form form = page.forms().get(byId("form"));
-		form.getHidden(byName("hidden")).setValue("shouldFail");
-	}
-	
-	@Test(expected = UnsupportedOperationException.class)
 	public void testSettingValueOfSubmitButtonFails() {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", newForm("form").id("form").addSubmitButton("button", "Text")));

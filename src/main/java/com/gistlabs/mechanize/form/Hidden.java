@@ -20,8 +20,4 @@ public class Hidden extends FormElement {
 		super(form, node);
 	}
 	
-	@Override
-	public void setValue(String value) {
-		throw new UnsupportedOperationException("Value of hidden field may not be changed / set");
-	}
 }
