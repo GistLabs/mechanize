@@ -35,9 +35,6 @@ public interface Node {
 	/** Returns the value of the attribute. */ 
 	String getAttribute(String attributeKey);
 	
-	/** Returns true if the given attribute name is a multiple value attribute being a comma separated list without whitespace. */
-	boolean isMultipleValueAttribute(String attributeKey);
-	
 	/** Returns all attribute names being present including any supported special attribute. */
 	List<String> getAttributeNames();
 }

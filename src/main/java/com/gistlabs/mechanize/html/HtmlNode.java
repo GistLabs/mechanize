@@ -63,12 +63,7 @@ public class HtmlNode implements Node {
 	public List<String> getAttributeNames() {
 		return Util.newEmptyList();
 	}
-	
-	@Override
-	public boolean isMultipleValueAttribute(String attributeKey) {
-		return false;
-	}
-	
+		
 	@Override
 	public List<HtmlNode> getChildren() {
 		List<HtmlNode> result = new ArrayList<HtmlNode>();

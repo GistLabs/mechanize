@@ -7,6 +7,7 @@ import org.jsoup.nodes.TextNode;
 
 import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.html.HtmlElement;
+import com.gistlabs.mechanize.html.HtmlSpecialAttributes;
 import com.gistlabs.mechanize.html.HtmlTextNode;
 import com.gistlabs.mechanize.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Util;
@@ -44,8 +45,8 @@ public class HtmlQueryStrategy implements QueryStrategy {
 	
 	@Override
 	public boolean isMultipleValueAttribute(Object object, String attributeKey) {
-		if(object instanceof Node)
-			return ((Node)object).isMultipleValueAttribute(attributeKey);
+		if(object instanceof Node && attributeKey.equals(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_CLASS_NAMES))
+			return true;
 		else
 			return false;
 	}
