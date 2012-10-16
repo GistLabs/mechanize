@@ -15,9 +15,9 @@ import java.util.Map;
 
 import com.gistlabs.mechanize.Resource;
 //import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
+import com.gistlabs.mechanize.document.query.AbstractQuery;
+import com.gistlabs.mechanize.document.query.QueryStrategy;
 import com.gistlabs.mechanize.exceptions.MechanizeException;
-import com.gistlabs.mechanize.query.AbstractQuery;
-import com.gistlabs.mechanize.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Assert;
 
 /**

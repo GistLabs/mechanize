@@ -2,7 +2,7 @@ package com.gistlabs.mechanize.document;
 
 import java.util.List;
 
-import com.gistlabs.mechanize.query.AbstractQuery;
+import com.gistlabs.mechanize.document.query.AbstractQuery;
 
 /**
  * Describes a node of a document having attributes and child nodes.

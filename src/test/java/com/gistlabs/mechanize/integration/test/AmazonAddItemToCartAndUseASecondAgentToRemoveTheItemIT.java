@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.integration.test;
 
-import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -15,8 +15,8 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.Page;
+import com.gistlabs.mechanize.document.html.HtmlPage;
 import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.html.HtmlPage;
 import com.gistlabs.mechanize.sequence.AbstractSequence;
 
 /**

@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.form;
 
-import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ import java.util.List;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.document.PageElement;
-import com.gistlabs.mechanize.html.query.HtmlQueryBuilder;
-import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
+import com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder;
+import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
+import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.parameters.Parameters;
-import com.gistlabs.mechanize.query.AbstractQuery;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 
 /** 

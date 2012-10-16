@@ -1,6 +1,6 @@
 package com.gistlabs.mechanize.document;
 
-import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;

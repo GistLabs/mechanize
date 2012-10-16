@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gistlabs.mechanize.document.Node;
-import com.gistlabs.mechanize.html.query.HtmlQueryBuilder;
-import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
-import com.gistlabs.mechanize.query.AbstractQuery;
-import com.gistlabs.mechanize.query.Query;
+import com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder;
+import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
+import com.gistlabs.mechanize.document.query.AbstractQuery;
+import com.gistlabs.mechanize.document.query.Query;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
