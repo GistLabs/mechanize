@@ -15,8 +15,6 @@ import org.apache.http.client.methods.HttpRequestBase;
  * HTTP protocol.
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public interface RequestInterceptor extends Interceptor {
 	void intercept(MechanizeAgent agent, HttpRequestBase request);

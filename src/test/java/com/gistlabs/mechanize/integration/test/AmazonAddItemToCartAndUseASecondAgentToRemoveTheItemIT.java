@@ -21,8 +21,6 @@ import com.gistlabs.mechanize.sequence.AbstractSequence;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends MozillaUserAgentTestClass {
 	static final String firefoxUserAgent = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.1) Gecko/20100122 firefox/3.6.1";

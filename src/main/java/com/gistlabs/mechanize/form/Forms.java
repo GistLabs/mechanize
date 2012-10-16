@@ -19,8 +19,6 @@ import com.gistlabs.mechanize.util.Util;
  * A collection of Form objects. 
  *
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class Forms extends PageElements<Form> {
 	public Forms(Resource page, QueryStrategy queryStrategy) {

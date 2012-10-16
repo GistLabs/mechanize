@@ -13,8 +13,6 @@ import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public abstract class PageElement implements RequestBuilderFactory<Resource> {
 	protected final Resource page;

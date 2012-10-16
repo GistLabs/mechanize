@@ -42,8 +42,6 @@ import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @author John Heintz <john@gistlabs.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFactory<Resource> {
 	static String VERSION;

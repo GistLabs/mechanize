@@ -29,6 +29,9 @@ import com.gistlabs.mechanize.image.Images;
 import com.gistlabs.mechanize.link.Links;
 import com.gistlabs.mechanize.util.Collections;
 
+/**
+ * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
+ */
 public class HtmlPage extends Page {
 	public static Collection<String> CONTENT_MATCHERS = 
 		Collections.collection(

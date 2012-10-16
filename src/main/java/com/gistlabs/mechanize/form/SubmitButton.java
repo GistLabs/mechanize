@@ -13,8 +13,6 @@ import com.gistlabs.mechanize.document.Node;
 /** Represents an input element of type 'submit'.
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class SubmitButton extends FormElement {
 

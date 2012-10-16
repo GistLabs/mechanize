@@ -10,8 +10,6 @@ package com.gistlabs.mechanize;
 /**
  * Describes an interceptor for the Mechanize agent.
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public interface Interceptor {
 
