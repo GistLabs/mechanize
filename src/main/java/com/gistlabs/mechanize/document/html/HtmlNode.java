@@ -14,8 +14,7 @@ import java.util.List;
 
 import org.jsoup.nodes.Element;
 
-import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.node.NodeVisitor;
+import com.gistlabs.mechanize.document.node.AbstractNode;
 import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Util;
 
@@ -26,7 +25,7 @@ import com.gistlabs.mechanize.util.Util;
  *    exactly same as org.jsoup.nodes.Node.toString().</p>
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
-public class HtmlNode implements Node {
+public class HtmlNode extends AbstractNode {
 	
 	private final HtmlPage page;
 	private final org.jsoup.nodes.Node node;
@@ -118,15 +117,6 @@ public class HtmlNode implements Node {
 		List<HtmlElement> result = new ArrayList<HtmlElement>();
 		HtmlElements.getAll(getPage(), result, query, node.childNodes());
 		return result;
-	}
-	
-	@Override
-	public void visit(NodeVisitor visitor) {
-		if(visitor.beginNode(this)) {
-			for(Node child : getChildren())
-				child.visit(visitor);
-		}
-		visitor.endNode(this);
 	}
 	
 	@Override

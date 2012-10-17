@@ -26,6 +26,12 @@ public interface Node {
 	/** Returns all child elements matching the query by performing a deep first left right search. */
 	List<? extends Node> getAll(AbstractQuery<?> query);
 
+	/** Returns the only child node matching the CSS Selector search query */
+	public <T extends Node> T find(String query);
+
+	/** Returns all descendant nodes matching the CSS Selector search query */
+	public List<? extends Node> findAll(String query);
+
 	/** Returns the child elements. */
 	List<? extends Node> getChildren();
 
