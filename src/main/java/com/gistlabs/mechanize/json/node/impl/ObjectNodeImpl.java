@@ -100,7 +100,7 @@ public class ObjectNodeImpl extends AbstractNode {
 		return !(jsonObject instanceof JSONObject || jsonObject instanceof JSONArray);
 	}
 
-	protected List<JsonNode> getChildren() {
+	public List<JsonNode> getChildren() {
 		try {
 			List<JsonNode> result = new ArrayList<JsonNode>();
 			@SuppressWarnings("unchecked")

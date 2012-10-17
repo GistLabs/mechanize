@@ -24,7 +24,7 @@ public class JsonNodeHelper implements NodeHelper<JsonNode> {
 	
 	public String getAttribute(JsonNode element, String name) {
 		if (element.hasAttribute(name))
-			return element.getChild(name).getValue();
+			return element.getAttribute(name);
 		else 
 			return null;
 	}

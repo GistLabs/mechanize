@@ -1,6 +1,7 @@
 package com.gistlabs.mechanize.json.node.impl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import com.gistlabs.mechanize.json.exceptions.JsonException;
 import com.gistlabs.mechanize.json.node.JsonNode;
 import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
-public abstract class AbstractNode implements JsonNode {
+public abstract class AbstractNode extends com.gistlabs.mechanize.document.node.AbstractNode implements JsonNode {
 	protected final String name;
 	protected final JsonNode parent;
 		
@@ -45,7 +46,6 @@ public abstract class AbstractNode implements JsonNode {
 		return this.name;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public JsonNode getParent() {
 		return this.parent;
@@ -62,6 +62,11 @@ public abstract class AbstractNode implements JsonNode {
 		return new NodeSelector<JsonNode>(new JsonNodeHelper(this), this).findAll(query);
 	}
 
+	@Override
+	public List<? extends JsonNode> getChildren() {
+		return Collections.emptyList();
+	}
+	
 	protected JsonNode factory(JSONObject node, String key) {		
 		try {
 			if (!node.has(key))

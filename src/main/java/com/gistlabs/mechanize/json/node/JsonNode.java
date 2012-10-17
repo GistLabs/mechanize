@@ -2,20 +2,15 @@ package com.gistlabs.mechanize.json.node;
 
 import java.util.List;
 
+import com.gistlabs.mechanize.document.node.Node;
+
 /**
  * JSON Element abstraction, like the DOM for XML
  * 
  */
-public interface JsonNode {
+public interface JsonNode extends Node {
 
-	public String getName();
-	
-	public String getAttribute(String key);
 	public void setAttribute(String key, String value);
-	public boolean hasAttribute(String key);
-	public List<String> getAttributeNames();
-	 
-	public String getValue();
 	public void setValue(String value);
 	
 	/**
@@ -26,19 +21,12 @@ public interface JsonNode {
 	 */
 	public <T extends JsonNode> T getChild(String name);
 	
-	/**
-	 * Get children of this node. The names argument allow to filter the list of returned children 
-	 * to only those that match getName() in names.
-	 * 
-	 * The special name, '*', is the equivalent of matching all child names.
-	 * 
-	 * @param names
-	 * @return
-	 */
-	public List<? extends JsonNode> getChildren(String... names);
+	@Override
+	public JsonNode getParent();
 	
-	public <T extends JsonNode> T find(String query);
-	public List<? extends JsonNode> findAll(String query);
-
-	public <T extends JsonNode> T getParent();
+	@Override
+	public List<? extends JsonNode> getChildren();
+	
+	@Override
+	public List<? extends JsonNode> getChildren(String... names);
 }
