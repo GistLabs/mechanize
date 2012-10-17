@@ -14,8 +14,8 @@ import java.util.List;
 
 import org.jsoup.nodes.Element;
 
-import com.gistlabs.mechanize.document.Node;
-import com.gistlabs.mechanize.document.NodeVisitor;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.node.NodeVisitor;
 import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Util;
 

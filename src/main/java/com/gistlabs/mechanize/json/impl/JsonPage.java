@@ -17,8 +17,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.document.Page;
+import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;

@@ -15,10 +15,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.Node;
-import com.gistlabs.mechanize.document.PageElement;
 import com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder;
 import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.pageElements.PageElement;
 import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.requestor.RequestBuilder;

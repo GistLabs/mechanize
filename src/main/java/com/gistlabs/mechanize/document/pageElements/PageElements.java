@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.document;
+package com.gistlabs.mechanize.document.pageElements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +15,7 @@ import java.util.Map;
 
 import com.gistlabs.mechanize.Resource;
 //import com.gistlabs.mechanize.html.query.HtmlQueryStrategy;
+import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.document.query.QueryStrategy;
 import com.gistlabs.mechanize.exceptions.MechanizeException;

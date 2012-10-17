@@ -8,8 +8,8 @@
 package com.gistlabs.mechanize.image;
 
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.Node;
-import com.gistlabs.mechanize.document.PageElement;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.pageElements.PageElement;
 
 /** 
  * Represents an image within a page.  

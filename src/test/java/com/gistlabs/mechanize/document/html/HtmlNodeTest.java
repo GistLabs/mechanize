@@ -6,8 +6,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
-import com.gistlabs.mechanize.document.Node;
-import com.gistlabs.mechanize.document.NodeVisitor;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.node.NodeVisitor;
 
 /**
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>

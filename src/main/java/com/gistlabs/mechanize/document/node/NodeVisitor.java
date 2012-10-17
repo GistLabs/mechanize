@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.document;
+package com.gistlabs.mechanize.document.node;
 
 /**
  * Describes a node visitor for visiting nodes following the Visitor pattern.

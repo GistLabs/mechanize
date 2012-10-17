@@ -5,10 +5,10 @@ import java.util.List;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 
-import com.gistlabs.mechanize.document.Node;
 import com.gistlabs.mechanize.document.html.HtmlElement;
 import com.gistlabs.mechanize.document.html.HtmlSpecialAttributes;
 import com.gistlabs.mechanize.document.html.HtmlTextNode;
+import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.document.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Util;
 

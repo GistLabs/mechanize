@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.document;
+package com.gistlabs.mechanize.document.node;
 
 import java.util.List;
 

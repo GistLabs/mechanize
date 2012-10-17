@@ -10,8 +10,8 @@ package com.gistlabs.mechanize.link;
 import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.Node;
-import com.gistlabs.mechanize.document.PageElements;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.pageElements.PageElements;
 import com.gistlabs.mechanize.document.query.QueryStrategy;
 
 /** 

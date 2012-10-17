@@ -7,6 +7,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.form.Form;
 import com.gistlabs.mechanize.form.Forms;
 import com.gistlabs.mechanize.image.Images;

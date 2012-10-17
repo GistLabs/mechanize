@@ -8,7 +8,7 @@
 package com.gistlabs.mechanize.form;
 
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.Node;
+import com.gistlabs.mechanize.document.node.Node;
 
 /** 
  * Represents an input element of type 'submit'.  
