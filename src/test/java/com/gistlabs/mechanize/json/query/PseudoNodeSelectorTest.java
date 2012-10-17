@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.json.node.JsonNode;
-import com.gistlabs.mechanize.json.node.impl.JsonNodeHelper;
 import com.gistlabs.mechanize.json.node.impl.ObjectNodeImpl;
 import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
@@ -18,8 +17,7 @@ public class PseudoNodeSelectorTest {
 
 	protected NodeSelector<JsonNode> build(String json) throws JSONException {
 		ObjectNodeImpl node = new ObjectNodeImpl(new JSONObject(json));
-		NodeSelector<JsonNode> selector = new NodeSelector<JsonNode>(new JsonNodeHelper(node), node);
-		return selector;
+		return node.buildNodeSelector();
 	}
 
 	@Test

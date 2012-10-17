@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.gistlabs.mechanize.document.query.AbstractQuery;
+import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
 public abstract class AbstractNode implements Node {
 
@@ -17,14 +18,19 @@ public abstract class AbstractNode implements Node {
 		return Collections.emptyList();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Node> T find(String query) {
-		return null;
+		return (T) buildNodeSelector().find(query);
 	}
 	
 	@Override
 	public List<? extends Node> findAll(String query) {
-		return Collections.emptyList();
+		return buildNodeSelector().findAll(query);
+	}
+
+	protected NodeSelector<? extends Node> buildNodeSelector() {
+		return new NodeSelector<Node>(new CssNodeHelper(this), this);
 	}
 	
 	@Override

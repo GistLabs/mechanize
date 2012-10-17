@@ -51,22 +51,16 @@ public abstract class AbstractNode extends com.gistlabs.mechanize.document.node.
 		return this.parent;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public JsonNode find(String query) {
-		return new NodeSelector<JsonNode>(new JsonNodeHelper(this), this).find(query);
-	}
-
-	@Override
-	public List<JsonNode> findAll(String query) {
-		return new NodeSelector<JsonNode>(new JsonNodeHelper(this), this).findAll(query);
-	}
-
 	@Override
 	public List<? extends JsonNode> getChildren() {
 		return Collections.emptyList();
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public NodeSelector<JsonNode> buildNodeSelector() {
+		return (NodeSelector<JsonNode>) super.buildNodeSelector();
+	}
 	protected JsonNode factory(JSONObject node, String key) {		
 		try {
 			if (!node.has(key))
