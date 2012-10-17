@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
+import com.gistlabs.mechanize.json.node.impl.ObjectNodeImpl;
 
 public class ElementAttributesTest extends TestElementBaseClass {
 

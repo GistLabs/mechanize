@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json.nodeImpl;
+package com.gistlabs.mechanize.json.node.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,8 +7,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
+import com.gistlabs.mechanize.json.node.JsonNode;
 
 /**
  * Support for nested arrays

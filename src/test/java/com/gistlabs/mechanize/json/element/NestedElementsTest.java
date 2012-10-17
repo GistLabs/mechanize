@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.JsonNode;
-import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
+import com.gistlabs.mechanize.json.node.JsonNode;
+import com.gistlabs.mechanize.json.node.impl.ObjectNodeImpl;
 
 public class NestedElementsTest extends TestElementBaseClass {
 	

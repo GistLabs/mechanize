@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.json.nodeImpl;
+package com.gistlabs.mechanize.json.node.impl;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -8,9 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.gistlabs.mechanize.json.JsonNode;
 import com.gistlabs.mechanize.json.exceptions.JsonArrayException;
 import com.gistlabs.mechanize.json.exceptions.JsonException;
+import com.gistlabs.mechanize.json.node.JsonNode;
 import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
 public abstract class AbstractNode implements JsonNode {

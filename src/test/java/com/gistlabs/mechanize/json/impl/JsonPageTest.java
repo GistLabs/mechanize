@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.json.impl.JsonPage;
+import com.gistlabs.mechanize.json.JsonPage;
 
 /**
  */

@@ -1,9 +1,9 @@
-package com.gistlabs.mechanize.json.nodeImpl;
+package com.gistlabs.mechanize.json.node.impl;
 
 import java.util.Collections;
 import java.util.List;
 
-import com.gistlabs.mechanize.json.JsonNode;
+import com.gistlabs.mechanize.json.node.JsonNode;
 
 public class AttributeNode extends AbstractNode {
 	

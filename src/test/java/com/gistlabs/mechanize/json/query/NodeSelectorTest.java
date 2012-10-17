@@ -8,9 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.JsonNode;
-import com.gistlabs.mechanize.json.nodeImpl.JsonNodeHelper;
-import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
+import com.gistlabs.mechanize.json.node.JsonNode;
+import com.gistlabs.mechanize.json.node.impl.JsonNodeHelper;
+import com.gistlabs.mechanize.json.node.impl.ObjectNodeImpl;
 import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
 
