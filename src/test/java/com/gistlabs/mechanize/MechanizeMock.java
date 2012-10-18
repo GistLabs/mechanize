@@ -24,7 +24,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
@@ -34,6 +33,7 @@ import org.junit.internal.ArrayComparisonFailure;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.util.apache.ContentType;
+import com.gistlabs.mechanize.util.apache.URLEncodedUtils;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
