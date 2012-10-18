@@ -19,19 +19,19 @@ import com.gistlabs.mechanize.json.JsonPage;
 /**
  */
 public class JsonPageTest extends MechanizeTestCase {
-	
+
 	@Test
 	public void testLoadJson() {
-		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());		
+		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
 		Resource page = agent.get("http://test.com");
 		assertNotNull(page);
 		assertEquals(JsonPage.class, page.getClass());
 	}
-	
+
 	@Test
 	public void testParseJson() {
-		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());		
+		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
 		JsonPage page = (JsonPage) agent.get("http://test.com");
-		assertNotNull(page.getJsonNode());
+		assertNotNull(page.getRoot());
 	}
 }

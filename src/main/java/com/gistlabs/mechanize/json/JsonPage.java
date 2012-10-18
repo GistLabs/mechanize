@@ -18,20 +18,19 @@ import org.json.JSONTokener;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.Page;
-import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.json.node.JsonNode;
 import com.gistlabs.mechanize.json.node.impl.ObjectNodeImpl;
 import com.gistlabs.mechanize.util.Collections;
 
 public class JsonPage extends Page {
-	public static Collection<String> CONTENT_MATCHERS = 
-		Collections.collection(
-				ContentType.APPLICATION_JSON.getMimeType());
-	
+	public static Collection<String> CONTENT_MATCHERS =
+			Collections.collection(
+					ContentType.APPLICATION_JSON.getMimeType());
+
 	private JsonNode json;
-	
-	public JsonPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
+
+	public JsonPage(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
 		super(agent, request, response);
 	}
 
@@ -41,14 +40,11 @@ public class JsonPage extends Page {
 			this.json = new ObjectNodeImpl(new JSONObject(new JSONTokener(new InputStreamReader(getInputStream()))));
 		} catch (Exception e) {
 			throw MechanizeExceptionFactory.newException(e);
-		}	
-	}
-	
-	public JsonNode getJsonNode() {
-		return this.json;
+		}
 	}
 
-	public Node getRoot() {
-		throw new UnsupportedOperationException("Not supported right now. Use getJsonNode()");
+	@Override
+	public JsonNode getRoot() {
+		return this.json;
 	}
 }
