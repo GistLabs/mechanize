@@ -35,7 +35,7 @@ public class MechanizeInitializer {
 
 	public static final String MECHANIZE_PAGE_FACTORIES = "mechanize.page.factories";
 	public static final String MECHANIZE_PAGE_FACTORIES_EXT = "mechanize.page.factories.ext";
-	public static final String DEFAULT_FACTORIES = "com.gistlabs.mechanize.html.HtmlPageFactory,com.gistlabs.mechanize.DefaultPageFactory,com.gistlabs.mechanize.json.impl.JsonPageFactory";
+	public static final String DEFAULT_FACTORIES = "com.gistlabs.mechanize.document.html.HtmlPageFactory,com.gistlabs.mechanize.DefaultPageFactory,com.gistlabs.mechanize.json.JsonPageFactory";
 	
 	
 	static void initialize() {
@@ -59,8 +59,8 @@ public class MechanizeInitializer {
 		for (String factoryClassName : factoryClassNames) {
 			try {
 				@SuppressWarnings("unchecked")
-				Class<PageFactory> pageFactoryClass = (Class<PageFactory>) Class.forName(factoryClassName);
-				PageFactory pageFactory = pageFactoryClass.newInstance();
+				Class<ResourceFactory> pageFactoryClass = (Class<ResourceFactory>) Class.forName(factoryClassName);
+				ResourceFactory pageFactory = pageFactoryClass.newInstance();
 				MechanizeAgent.registerFactory(pageFactory);
 			} catch (Exception e) {
 				// TODO add logging...

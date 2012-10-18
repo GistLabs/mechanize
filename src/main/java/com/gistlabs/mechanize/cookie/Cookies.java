@@ -20,8 +20,6 @@ import org.apache.http.impl.client.AbstractHttpClient;
  *  Collection of the current available cookies. 
  *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class Cookies implements Iterable<Cookie> {
 	private final AbstractHttpClient client;

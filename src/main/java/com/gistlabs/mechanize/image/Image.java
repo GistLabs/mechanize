@@ -7,16 +7,14 @@
  */
 package com.gistlabs.mechanize.image;
 
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.PageElement;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.pageElements.PageElement;
 
 /** 
  * Represents an image within a page.  
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class Image extends PageElement {
 	

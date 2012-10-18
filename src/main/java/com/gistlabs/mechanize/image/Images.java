@@ -10,9 +10,10 @@ package com.gistlabs.mechanize.image;
 import java.io.OutputStream;
 import java.util.List;
 
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.PageElements;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.pageElements.PageElements;
+import com.gistlabs.mechanize.document.query.QueryStrategy;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
 
@@ -20,21 +21,19 @@ import com.gistlabs.mechanize.util.Util;
  * A collection of Image objects.  
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class Images extends PageElements<Image> {
 	
-	public Images(Resource page) {
-		this(page, newEmptyList());
+	public Images(Resource page, QueryStrategy queryStrategy) {
+		this(page, newEmptyList(), queryStrategy);
 	}
 
 	private static List<? extends Node>newEmptyList() {
 		return Util.newEmptyList();
 	}
 	
-	public Images (Resource page, List<? extends Node> forms) {
-		super(page, forms);
+	public Images (Resource page, List<? extends Node> forms, QueryStrategy queryStrategy) {
+		super(page, forms, queryStrategy);
 	}
 
 	@Override

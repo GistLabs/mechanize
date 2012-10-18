@@ -9,24 +9,23 @@ package com.gistlabs.mechanize.link;
 
 import java.util.List;
 
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.PageElements;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.pageElements.PageElements;
+import com.gistlabs.mechanize.document.query.QueryStrategy;
 
 /** 
  * A collection of Link objects. 
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class Links extends PageElements<Link> {
-	public Links(Resource page) {
-		this(page, null);
+	public Links(Resource page, QueryStrategy queryStrategy) {
+		this(page, null, queryStrategy);
 	}
 	
-	public Links(Resource page, List<? extends Node> links) {
-		super(page, links);
+	public Links(Resource page, List<? extends Node> links, QueryStrategy queryStrategy) {
+		super(page, links, queryStrategy);
 	}
 	
 	@Override

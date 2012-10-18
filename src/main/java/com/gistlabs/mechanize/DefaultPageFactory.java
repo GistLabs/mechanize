@@ -14,9 +14,9 @@ import org.apache.http.client.methods.HttpRequestBase;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.PageFactory;
+import com.gistlabs.mechanize.ResourceFactory;
 
-public class DefaultPageFactory implements PageFactory {
+public class DefaultPageFactory implements ResourceFactory {
 
 	@Override
 	public Collection<String> getContentMatches() {

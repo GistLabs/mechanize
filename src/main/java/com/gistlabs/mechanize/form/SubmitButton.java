@@ -7,14 +7,12 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.node.Node;
 
 /** Represents an input element of type 'submit'.
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class SubmitButton extends FormElement {
 
@@ -27,7 +25,7 @@ public class SubmitButton extends FormElement {
 		throw new UnsupportedOperationException("Value of a submit button may not be changed / set");
 	}
 
-	public Resource submit() {
+	public <T extends Resource> T submit() {
 		return getForm().submit(this);
 	}
 }

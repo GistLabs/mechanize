@@ -42,17 +42,15 @@ import com.gistlabs.mechanize.util.apache.ContentType;
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @author John Heintz <john@gistlabs.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFactory<Resource> {
 	static String VERSION;
 	
-	static final Map<String,PageFactory> PAGE_FACTORIES = new HashMap<String, PageFactory>();
-	static PageFactory lookupFactory(String mimeType) {
+	static final Map<String,ResourceFactory> PAGE_FACTORIES = new HashMap<String, ResourceFactory>();
+	static ResourceFactory lookupFactory(String mimeType) {
 		return PAGE_FACTORIES.get(mimeType);
 	}
-	static void registerFactory(PageFactory factory) {
+	static void registerFactory(ResourceFactory factory) {
 		Collection<String> contentMatches = factory.getContentMatches();
 		for (String mimeType : contentMatches) {
 			PAGE_FACTORIES.put(mimeType, factory);
@@ -129,8 +127,7 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		try {
 			HttpResponse response = execute(client, request);
 			Resource resource = toPage(request, response);
-			if(resource instanceof Document)
-				history.add((Document)resource);
+			history.add(resource);
 			return (T)resource;
 		} catch (ClientProtocolException e) {
 			throw MechanizeExceptionFactory.newException(e);
@@ -183,7 +180,7 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 			throws IOException, UnsupportedEncodingException {
 		ContentType contentType = getContentType(response);
 		
-		PageFactory factory = lookupFactory(contentType.getMimeType());
+		ResourceFactory factory = lookupFactory(contentType.getMimeType());
 		if (factory == null)
 			factory = lookupFactory(ContentType.WILDCARD.getMimeType());
 		

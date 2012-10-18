@@ -12,8 +12,6 @@ import java.util.Stack;
 
 /** 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class History {
 	
@@ -21,7 +19,7 @@ public class History {
 	
 	private final MechanizeAgent agent;
 	private int maximumSize = DEFAULT_MAXIMUM_SIZE;
-	private Stack<Document> history = new Stack<Document>();
+	private Stack<Resource> history = new Stack<Resource>();
 	
 	public History(MechanizeAgent agent) {
 		this.agent = agent;
@@ -37,18 +35,21 @@ public class History {
 		this.maximumSize = maximumSize;
 	}
 	
-	public Document get(int index) {
-		return history.get(index);
+	@SuppressWarnings("unchecked")
+	public <T extends Resource> T get(int index) {
+		return (T) history.get(index);
 	}
 	
 	/** Returns the current document or null if none. */
-	public Document getCurrent() {
-		return !isEmpty() ? history.peek() : null;
+	@SuppressWarnings("unchecked")
+	public <T extends Resource> T getCurrent() {
+		return (T) (!isEmpty() ? history.peek() : null);
 	}
 	
 	/** Returns the removed current document from history stack or null if history is empty. */
-	public Document pop() {
-		return !isEmpty() ? history.pop() : null;
+	@SuppressWarnings("unchecked")
+	public <T extends Resource> T pop() {
+		return (T) (!isEmpty() ? history.pop() : null);
 	}
 	
 	public boolean isEmpty() {
@@ -56,16 +57,16 @@ public class History {
 	}
 	
 	/** Returns the new Document version from reloading the current document or null if history is empty. */
-	public Document reload() {
+	public <T extends Resource> T reload() {
 		if(!isEmpty()) {
-			Document toReload = pop();
+			T toReload = pop();
 			return agent.request(toReload.getRequest());
 		}
 		else
 			return null;
 	}
 	
-	public boolean contains(Document document) {
+	public boolean contains(Resource document) {
 		return history.contains(document);
 	}
 	
@@ -74,7 +75,7 @@ public class History {
 	}
 
 	/** Pushes the given page to the history making it current. */ 
-	public void add(Document document) {
+	public void add(Resource document) {
 		if(history.size() == maximumSize)
 			history.remove(0);
 		history.push(document);

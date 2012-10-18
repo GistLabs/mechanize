@@ -7,16 +7,14 @@
  */
 package com.gistlabs.mechanize.link;
 
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.PageElement;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.pageElements.PageElement;
 
 /** 
  * Represents a link within a page.  
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class Link extends PageElement {
 	public Link(Resource page, Node link) {
@@ -26,8 +24,9 @@ public class Link extends PageElement {
 	/**
 	 * Follows the link by using the original agent.
 	 */
-	public Resource click() {
-		return hasAttribute("href") ? doRequest(href()).get() : null;
+	@SuppressWarnings("unchecked")
+	public <T extends Resource> T click() {
+		return (T) (hasAttribute("href") ? doRequest(href()).get() : null);
 	}
 	
 	public String href() {

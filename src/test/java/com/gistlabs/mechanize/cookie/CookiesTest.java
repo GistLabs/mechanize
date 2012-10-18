@@ -21,8 +21,6 @@ import org.junit.Test;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class CookiesTest {
 	@Test

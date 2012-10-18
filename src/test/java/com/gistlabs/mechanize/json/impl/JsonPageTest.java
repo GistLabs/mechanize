@@ -14,24 +14,30 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.json.impl.JsonPage;
+import com.gistlabs.mechanize.json.JsonPage;
+import com.gistlabs.mechanize.json.node.JsonNode;
 
 /**
  */
 public class JsonPageTest extends MechanizeTestCase {
-	
+
 	@Test
 	public void testLoadJson() {
-		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());		
+		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
 		Resource page = agent.get("http://test.com");
 		assertNotNull(page);
 		assertEquals(JsonPage.class, page.getClass());
 	}
-	
+
 	@Test
 	public void testParseJson() {
-		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());		
+		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
 		JsonPage page = (JsonPage) agent.get("http://test.com");
-		assertNotNull(page.getJsonNode());
+		assertNotNull(page.getRoot());
+
+		assertEquals("US", page.getRoot().getAttribute("country"));
+
+		JsonNode node = page.getRoot().find("quota_info");
+		assertEquals("107374182400000", node.getAttribute("quota"));
 	}
 }

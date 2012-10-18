@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.link;
 
-import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -15,11 +15,10 @@ import org.junit.Test;
 import com.gistlabs.mechanize.MechanizeMock.PageRequest;
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.Page;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class LinksTest extends MechanizeTestCase {
 	@Test
@@ -28,7 +27,7 @@ public class LinksTest extends MechanizeTestCase {
 				newHtml("Test Page", "<a href=\"http://test.com/myPage.html\">myPage</a>"));
 		agent.addPageRequest("http://test.com/myPage.html", newHtml("My Page", ""));
 		
-		Resource page = agent.get("http://test.com");
+		Page page = agent.get("http://test.com");
 		Link link = page.links().get(byInnerHtml("myPage"));
 		assertNotNull(link);
 		Resource myPage = link.click();
@@ -41,7 +40,7 @@ public class LinksTest extends MechanizeTestCase {
 				newHtml("Test Page", "<a href=\"myPage.html\">myPage</a>"));
 		agent.addPageRequest("http://test.com/myPage.html", newHtml("My Page", ""));
 		
-		Resource page = agent.get("http://test.com");
+		Page page = agent.get("http://test.com");
 		Link link = page.links().get(byInnerHtml("myPage"));
 		assertNotNull(link);
 		Resource myPage = link.click();
@@ -54,7 +53,7 @@ public class LinksTest extends MechanizeTestCase {
 				"<html><head><base href=\"http://www1.test.com\"/></head><body><a href=\"myPage.html\">myPage</a></body></html>");
 		agent.addPageRequest("http://www1.test.com/myPage.html", newHtml("My Page", ""));
 		
-		Resource page = agent.get("http://test.com");
+		Page page = agent.get("http://test.com");
 		Link link = page.links().get(0);
 		assertNotNull(link);
 		Resource myPage = link.click();
@@ -68,7 +67,7 @@ public class LinksTest extends MechanizeTestCase {
 		pageRequest.setContentLocation("http://www1.test.com");
 		agent.addPageRequest("http://www1.test.com/myPage.html", newHtml("My Page", ""));
 		
-		Resource page = agent.get("http://test.com");
+		Page page = agent.get("http://test.com");
 		Link link = page.links().get(byInnerHtml("myPage"));
 		assertNotNull(link);
 		Resource myPage = link.click();

@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.json.JsonNode;
-import com.gistlabs.mechanize.json.nodeImpl.ObjectNodeImpl;
+import com.gistlabs.mechanize.json.node.JsonNode;
+import com.gistlabs.mechanize.json.node.impl.ObjectNodeImpl;
 
 public class MixedChildrenElementsTest extends TestElementBaseClass {
 	ObjectNodeImpl element = new ObjectNodeImpl(parseJson("{ \"a\" : 2, \"b\" : { \"a\" : \"x\", \"c\" : 4 }, \"c\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }"));
@@ -19,7 +19,7 @@ public class MixedChildrenElementsTest extends TestElementBaseClass {
 		JsonNode nested = element.getChild("a");
 		assertNotNull(nested);
 		
-		Collection<String> attributes = element.getAttributes();
+		Collection<String> attributes = element.getAttributeNames();
 		assertEquals(1, attributes.size());
 		assertTrue(attributes.contains("a"));
 	}

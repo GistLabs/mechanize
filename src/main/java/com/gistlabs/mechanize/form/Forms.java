@@ -9,21 +9,20 @@ package com.gistlabs.mechanize.form;
 
 import java.util.List;
 
-import com.gistlabs.mechanize.Node;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.PageElements;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.pageElements.PageElements;
+import com.gistlabs.mechanize.document.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Util;
 
 /** 
  * A collection of Form objects. 
  *
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class Forms extends PageElements<Form> {
-	public Forms(Resource page) {
-		this(page, createList());
+	public Forms(Resource page, QueryStrategy queryStrategy) {
+		this(page, createList(), queryStrategy);
 	}
 
 	private static List<? extends Node> createList() {
@@ -32,8 +31,8 @@ public class Forms extends PageElements<Form> {
 
 
 
-	public Forms(Resource page, List<? extends Node> forms) {
-		super(page, forms);
+	public Forms(Resource page, List<? extends Node> forms, QueryStrategy queryStrategy) {
+		super(page, forms, queryStrategy);
 	}
 	
 	@Override

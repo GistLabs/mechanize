@@ -7,16 +7,13 @@
  */
 package com.gistlabs.mechanize.form;
 
-import com.gistlabs.mechanize.Node;
-import com.gistlabs.mechanize.PageElement;
-import com.gistlabs.mechanize.query.AbstractQuery;
-import com.gistlabs.mechanize.query.QueryStrategy;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.pageElements.PageElement;
+import com.gistlabs.mechanize.document.query.AbstractQuery;
+import com.gistlabs.mechanize.document.query.QueryStrategy;
 
 /**
- *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class FormElement extends PageElement {
 
@@ -24,7 +21,7 @@ public class FormElement extends PageElement {
 	private String value = null;
 	
 	public FormElement(Form form, Node node) {
-		super(form.getPage(), node);
+		super(form.getResource(), node);
 		this.form = form;
 	}
 	

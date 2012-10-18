@@ -7,8 +7,6 @@
  */
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
-
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,15 +16,10 @@ import java.util.Collections;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.ContentType;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
-import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.form.Forms;
-import com.gistlabs.mechanize.html.JsoupDataUtil;
-import com.gistlabs.mechanize.image.Images;
-import com.gistlabs.mechanize.link.Link;
-import com.gistlabs.mechanize.link.Links;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 import com.gistlabs.mechanize.util.CopyInputStream;
@@ -39,7 +32,7 @@ import com.gistlabs.mechanize.util.Util;
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public abstract class Resource implements RequestBuilderFactory<Resource> {
-	
+
 	@SuppressWarnings("unchecked")
 	public static Collection<String> CONTENT_MATCHERS = Collections.EMPTY_LIST;
 
@@ -49,16 +42,13 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	protected final HttpResponse response;
 
 	private ByteArrayOutputStream originalContent;
-	private Links links;
-	private Forms forms;
-	private Images images;
-	
-	public Resource(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
+
+	public Resource(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
 		this.agent = agent;
 		this.request = request;
 		this.response = response;
 		this.uri = inspectUri(request, response);
-		
+
 		try {
 			loadPage();
 		} catch(RuntimeException e) {
@@ -76,8 +66,14 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 		Util.copy(getInputStream(), new NullOutputStream());
 	}
 
-	protected String getContentEncoding(HttpResponse response) {
-		return JsoupDataUtil.getCharsetFromContentType(response.getEntity().getContentType());
+	protected String getContentEncoding(final HttpResponse response) {
+		try {
+			ContentType contentType = ContentType.get(response.getEntity());
+			return contentType.getCharset().displayName();
+		} catch (NullPointerException np) {
+			// TODO why don't test cases set this?
+			return null;
+		}
 	}
 
 	/**
@@ -90,24 +86,23 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 		if (this.originalContent==null) {
 			this.originalContent = new ByteArrayOutputStream(getIntContentLength(this.response));
 			return new CopyInputStream(response.getEntity().getContent(), this.originalContent);
-		} else { // use cached data
+		} else
 			return new ByteArrayInputStream(this.originalContent.toByteArray());
-		}
 	}
 
 	/**
-     * (From HttpEntity) Tells the length of the content, if known.
-     *
-     * @return  the number of bytes of the content, or
-     *          a negative number if unknown. If the content length is known
-     *          but exceeds {@link java.lang.Long#MAX_VALUE Long.MAX_VALUE},
-     *          a negative number is returned.
-     */
+	 * (From HttpEntity) Tells the length of the content, if known.
+	 *
+	 * @return  the number of bytes of the content, or
+	 *          a negative number if unknown. If the content length is known
+	 *          but exceeds {@link java.lang.Long#MAX_VALUE Long.MAX_VALUE},
+	 *          a negative number is returned.
+	 */
 	public long getLength() {
 		return this.response.getEntity().getContentLength();
 	}
-	
-	protected int getIntContentLength(HttpResponse response) {
+
+	protected int getIntContentLength(final HttpResponse response) {
 		long longLength = response.getEntity().getContentLength();
 		if (longLength<0)
 			return 0;
@@ -117,7 +112,7 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 			return (int)longLength;
 	}
 
-	protected String inspectUri(HttpRequestBase request, HttpResponse response) {
+	protected String inspectUri(final HttpRequestBase request, final HttpResponse response) {
 		Header contentLocation = Util.findHeader(response, "content-location");
 		if(contentLocation != null && contentLocation.getValue() != null)
 			return contentLocation.getValue();
@@ -130,7 +125,7 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	}
 
 	@Override
-	public RequestBuilder<Resource> doRequest(String uri) {
+	public RequestBuilder<Resource> doRequest(final String uri) {
 		return getAgent().doRequest(uri);
 	}
 
@@ -142,71 +137,18 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 		return "";
 	}
 
-	/**
-	 *  Query for a matching link, find first match by either id or by class attributes.
-	 * 
-	 * @param query wrapped with byIdOrClass()
-	 * @return first Link found
-	 */
-	public Link link(String query) {
-		return links().get(byIdOrClass(query));
-	}
-	
-	public Links links() {
-		if(this.links == null) {
-			this.links = loadLinks();
-		}
-		return this.links;
-	}
-
-	protected Links loadLinks() {
-		return new Links(this);
-	}
-
-	/**
-	 *  Query for a matching form, find first match by either id or by class attributes.
-	 * 
-	 * @param query wrapped with byIdOrClass()
-	 * @return first Form found
-	 */
-	public Form form(String query) {
-		return forms().get(byIdOrClassOrName(query));
-	}
-
-	public Forms forms() {
-		if(this.forms == null) {
-			this.forms = loadForms();
-		}
-		return this.forms;
-	}
-
-	protected Forms loadForms() {
-		return new Forms(this);
-	}
-
-	public Images images() {
-		if(this.images == null) {
-			this.images = loadImages();
-		}
-		return this.images;
-	}
-
-	protected Images loadImages() {
-		return new Images(this);
-	}
-
 	public String getUri() {
 		return uri;
 	}
-	
+
 	public int size() {
 		return originalContent.size();
 	}
-	
+
 	public HttpRequestBase getRequest() {
 		return request;
 	}
-	
+
 	public HttpResponse getResponse() {
 		return response;
 	}
@@ -214,7 +156,7 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	public MechanizeAgent getAgent() {
 		return agent;
 	}
-	
+
 	/**
 	 * Serialize the contents of this page into a string
 	 * 
@@ -226,14 +168,14 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 		return result.toString();
 	}
 
-	/** Writes the page document content to file. 
-	 * @throws IOException 
+	/** Writes the page document content to file.
+	 * @throws IOException
 	 * @throws IllegalArgumentException If file already exists
 	 */
-	public void saveTo(File file) {
+	public void saveTo(final File file) {
 		if(file.exists())
 			throw new IllegalArgumentException("File '" + file.toString() + "' already exists.");
-		
+
 		try {
 			saveTo(new FileOutputStream(file));
 		} catch (FileNotFoundException e) {
@@ -241,11 +183,11 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 		}
 	}
 
-	/** Writes the page document content to file. 
-	 * @throws IOException 
+	/** Writes the page document content to file.
+	 * @throws IOException
 	 * @throws IllegalArgumentException If file already exists
 	 */
-	public void saveTo(OutputStream out) {		
+	public void saveTo(final OutputStream out) {
 		try {
 			Util.copy(getInputStream(), out);
 		} catch (IOException e) {
@@ -253,8 +195,17 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 		}
 	}
 
+	/**
+	 * Useful for diagnostics
+	 * 
+	 * @return
+	 */
+	public String saveToString() {
+		return new String(this.originalContent.toByteArray());
+	}
+
 	@Override
-	public String absoluteUrl(String uri) {
+	public String absoluteUrl(final String uri) {
 		try {
 			URL baseUrl = new URL(getUri());
 			return new URL(baseUrl, uri).toExternalForm();

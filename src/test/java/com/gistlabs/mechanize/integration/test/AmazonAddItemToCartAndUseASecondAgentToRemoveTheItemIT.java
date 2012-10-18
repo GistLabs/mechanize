@@ -7,22 +7,20 @@
  */
 package com.gistlabs.mechanize.integration.test;
 
-import static com.gistlabs.mechanize.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.Page;
+import com.gistlabs.mechanize.document.html.HtmlPage;
 import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.html.HtmlPage;
 import com.gistlabs.mechanize.sequence.AbstractSequence;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
- * @version 1.0
- * @since 2012-09-12
  */
 public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends MozillaUserAgentTestClass {
 	static final String firefoxUserAgent = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.1) Gecko/20100122 firefox/3.6.1";
@@ -70,7 +68,7 @@ public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends Mozi
 			agent.get("http://www.amazon.com");
 			agent.idle(200);
 			
-			Resource amdProcessorPage = agent.get("http://www.amazon.com/gp/product/" + productCode + "/");
+			Page amdProcessorPage = agent.get("http://www.amazon.com/gp/product/" + productCode + "/");
 			agent.idle(250);
 			Form form = amdProcessorPage.forms().get(byName("handleBuy"));
 			agent.idle(200);
@@ -85,9 +83,9 @@ public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends Mozi
 		
 		@Override
 		protected void run() {
-			Resource page = agent.get("http://www.amazon.com");
+			Page page = agent.get("http://www.amazon.com");
 			agent.idle(200);
-			Resource cart = page.links().get(byId("nav-cart")).click();
+			Page cart = page.links().get(byId("nav-cart")).click();
 			Form cartForm = cart.forms().get(byName("cartViewForm"));
 			cartForm.get("quantity.C35RMYTCMZTEKE").setValue("0");
 			agent.idle(200);
