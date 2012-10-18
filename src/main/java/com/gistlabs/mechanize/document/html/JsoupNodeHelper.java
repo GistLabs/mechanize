@@ -1,24 +1,33 @@
 package com.gistlabs.mechanize.document.html;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
-import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 
-import se.fishtank.css.selectors.NodeSelectorException;
 import se.fishtank.css.selectors.Selector;
 import se.fishtank.css.util.Assert;
 
 import com.gistlabs.mechanize.util.css_query.NodeHelper;
+import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
 public class JsoupNodeHelper implements NodeHelper<Node> {
+
+	public static Node find(final Node node, final String selector) {
+		return new NodeSelector<Node>(new JsoupNodeHelper(node), node).find(selector);
+	}
+
+	public static List<Node> findAll(final Node node, final String selector) {
+		return new NodeSelector<Node>(new JsoupNodeHelper(node), node).findAll(selector);
+	}
 
 
 	/** The root node (document or element). */
 	private final Node root;
-
-	private final boolean caseSensitive;
 
 	/**
 	 * Create a new instance.
@@ -27,18 +36,16 @@ public class JsoupNodeHelper implements NodeHelper<Node> {
 	 */
 	public JsoupNodeHelper(final Node root) {
 		Assert.notNull(root, "root is null!");
-		short nodeType = root.getNodeType();
-		Assert.isTrue(nodeType == Node.DOCUMENT_NODE ||
-				nodeType == Node.ELEMENT_NODE, "root must be a document or element node!");
+		Assert.isTrue(root instanceof Document || root instanceof Element, "root must be a document or element node!");
 		this.root = root;
-
-		Document doc = (root instanceof Document) ? (Document) root : root.getOwnerDocument();
-		caseSensitive = !doc.createElement("a").isEqualNode(doc.createElement("A"));
 	}
 
 	@Override
 	public String getValue(final Node node) {
-		return node.//getNodeValue().trim();
+		if (node instanceof Element)
+			return ((Element)node).text();
+		else
+			return null;
 	}
 
 	@Override
@@ -67,15 +74,10 @@ public class JsoupNodeHelper implements NodeHelper<Node> {
 
 	@Override
 	public Collection<? extends Node> getDescendentNodes(final Node node) {
-		NodeList nodes;
-		if (node.getNodeType() == Node.DOCUMENT_NODE)
-			nodes = ((Document) node).getElementsByTagName(Selector.UNIVERSAL_TAG);
-		else if (node.getNodeType() == Node.ELEMENT_NODE)
-			nodes = ((Element) node).getElementsByTagName(Selector.UNIVERSAL_TAG);
+		if (node instanceof Document)
+			return ((Document)node).getAllElements();
 		else
-			throw new RuntimeException(new NodeSelectorException("Only document and element nodes allowed!"));
-
-		return convert(nodes);
+			return ((Element)node).getAllElements();
 	}
 
 	@Override
@@ -125,25 +127,22 @@ public class JsoupNodeHelper implements NodeHelper<Node> {
 		if (name.equals(Selector.UNIVERSAL_TAG))
 			return true;
 
-		if (caseSensitive)
-			return name.equals(getName(n));
-		else
-			return name.equalsIgnoreCase(getName(n));
+		return name.equalsIgnoreCase(getName(n));
 	}
 
 	@Override
 	public Node getRoot() {
-		if (root.getNodeType() == Node.DOCUMENT_NODE) {
+		if (root instanceof Document) {
 			// Get the single element child of the document node.
 			// There could be a doctype node and comment nodes that we must skip.
-			NodeList children = root.getChildNodes();
-			for (int i = 0; i < children.getLength(); i++)
-				if (children.item(i).getNodeType() == Node.ELEMENT_NODE)
-					return (Element) children.item(i);
+			List<Node> children = root.childNodes();
+			for(Node child : children)
+				if (child instanceof Element)
+					return child;
 			Assert.isTrue(false, "there should be a root element!");
 			return null;
 		} else {
-			Assert.isTrue(root.getNodeType() == Node.ELEMENT_NODE, "root must be a document or element node!");
+			Assert.isTrue(root instanceof Element, "root must be a document or element node!");
 			return root;
 		}
 	}

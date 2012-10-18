@@ -58,18 +58,17 @@ public class HtmlNode extends AbstractNode {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Node> T find(final String query) {
-		return (T) getPage().htmlElements().getHtmlNode((org.jsoup.nodes.Node) buildNodeSelector().find(query));
+		return (T) getPage().htmlElements().getHtmlNode(JsoupNodeHelper.find(node, query));
 	}
 
 	@Override
 	public List<? extends Node> findAll(final String query) {
-		// TODO Auto-generated method stub
-		return buildNodeSelector().findAll(query);
+		return convert(JsoupNodeHelper.findAll(node, query));
 	}
 
 	@Override
 	protected NodeSelector<? extends Node> buildNodeSelector() {
-		return new NodeSelector<Node>(new JsoupNodeHelper(getJsoupNode()), getJsoupNode());
+		throw new UnsupportedOperationException("must reimplment this");
 	}
 
 	@Override
@@ -89,9 +88,14 @@ public class HtmlNode extends AbstractNode {
 
 	@Override
 	public List<HtmlNode> getChildren() {
+		List<org.jsoup.nodes.Node> nodes = node.childNodes();
+		return convert(nodes);
+	}
+
+	protected List<HtmlNode> convert(final List<org.jsoup.nodes.Node> nodes) {
 		List<HtmlNode> result = new ArrayList<HtmlNode>();
 
-		for(org.jsoup.nodes.Node child : node.childNodes())
+		for(org.jsoup.nodes.Node child : nodes)
 			result.add(getPage().htmlElements().getHtmlNode(child));
 
 		return result;
