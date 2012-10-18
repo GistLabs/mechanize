@@ -16,7 +16,6 @@ import java.util.Collections;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.ContentType;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
@@ -25,6 +24,7 @@ import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 import com.gistlabs.mechanize.util.CopyInputStream;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
  * Represents a resource being reseived by a request.

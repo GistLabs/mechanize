@@ -26,7 +26,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.entity.ContentType;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
 import org.junit.Assert;
@@ -34,38 +33,39 @@ import org.junit.internal.ArrayComparisonFailure;
 
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.parameters.Parameters;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public class MechanizeMock extends MechanizeAgent {
-	
-	private List<PageRequest> requests = new ArrayList<PageRequest>();
-	
-	public PageRequest addPageRequest(String uri, String body) {
+
+	private final List<PageRequest> requests = new ArrayList<PageRequest>();
+
+	public PageRequest addPageRequest(final String uri, final String body) {
 		return addPageRequest("GET", uri, body);
 	}
 
-	public PageRequest addPageRequest(String method, String uri, String body) {
+	public PageRequest addPageRequest(final String method, final String uri, final String body) {
 		PageRequest request = new PageRequest(method, uri, body);
 		requests.add(request);
 		return request;
 	}
 
-	public PageRequest addPageRequest(String method, String uri, InputStream body) {
+	public PageRequest addPageRequest(final String method, final String uri, final InputStream body) {
 		PageRequest request = new PageRequest(method, uri, body);
 		requests.add(request);
 		return request;
 	}
 
-	public PageRequest addPageRequest(String method, String uri, Parameters parameters, String body) {
+	public PageRequest addPageRequest(final String method, final String uri, final Parameters parameters, final String body) {
 		PageRequest request = new PageRequest(method, uri, parameters, body);
 		requests.add(request);
 		return request;
 	}
-	
+
 	@Override
-	protected HttpResponse execute(HttpClient client, HttpRequestBase request) throws IOException, ClientProtocolException {
+	protected HttpResponse execute(final HttpClient client, final HttpRequestBase request) throws IOException, ClientProtocolException {
 		PageRequest pageRequest = nextUnexecutedPageRequest();
 		if(pageRequest != null)
 			return pageRequest.consume(client, request);
@@ -74,14 +74,14 @@ public class MechanizeMock extends MechanizeAgent {
 			return null;
 		}
 	}
-	
+
 	public PageRequest nextUnexecutedPageRequest() {
 		for(PageRequest pageRequest : requests)
 			if(!pageRequest.wasExecuted())
 				return pageRequest;
 		return null;
 	}
-	
+
 	public class PageRequest {
 		public final String httpMethod;
 		public final String uri;
@@ -93,24 +93,24 @@ public class MechanizeMock extends MechanizeAgent {
 		public String contentType = ContentType.TEXT_HTML.getMimeType();
 		public String charset = "utf-8";
 		private String contentLocation = null;
-		
-		public PageRequest(String uri, String body) {
+
+		public PageRequest(final String uri, final String body) {
 			this("GET", uri, body);
 		}
-		
-		public PageRequest(String method, String uri, String body) {
+
+		public PageRequest(final String method, final String uri, final String body) {
 			this(method, uri, new Parameters(), body);
 		}
-		
-		public PageRequest(String method, String uri, InputStream body) {
+
+		public PageRequest(final String method, final String uri, final InputStream body) {
 			this(method, uri, new Parameters(), body);
 		}
-		
-		public PageRequest(String method, String uri, Parameters parameters, String body) {
+
+		public PageRequest(final String method, final String uri, final Parameters parameters, final String body) {
 			this(method, uri, parameters, new ByteArrayInputStream(body.getBytes()));
 		}
-		
-		public PageRequest(String method, String uri, Parameters parameters, InputStream body) {
+
+		public PageRequest(final String method, final String uri, final Parameters parameters, final InputStream body) {
 			this.httpMethod = method;
 			this.uri = uri;
 			this.parameters = parameters;
@@ -120,24 +120,23 @@ public class MechanizeMock extends MechanizeAgent {
 		public boolean wasExecuted() {
 			return wasExecuted;
 		}
-		
-		public void setEncoding(String charset) {
+
+		public void setEncoding(final String charset) {
 			this.charset = charset;
 		}
-		
-		public void setContentLocation(String contentLocation) {
+
+		public void setContentLocation(final String contentLocation) {
 			this.contentLocation = contentLocation;
 		}
-		
-		public HttpResponse consume(HttpClient client, HttpRequestBase request) {
+
+		public HttpResponse consume(final HttpClient client, final HttpRequestBase request) {
 			if(!wasExecuted) {
 				this.client = client;
 				this.request = request;
-				
-				if(!request.getMethod().equalsIgnoreCase(httpMethod)) {
+
+				if(!request.getMethod().equalsIgnoreCase(httpMethod))
 					throw new IllegalArgumentException(String.format("Expected %s, but was %s", httpMethod, request.getMethod()));
-				}
-				
+
 				if(request.getURI().toString().equals(uri)) {
 					HttpResponse response = new BasicHttpResponse(new ProtocolVersion("HTTP", 1, 1), 200, "OK");
 					BasicHttpEntity entity = new BasicHttpEntity();
@@ -147,9 +146,9 @@ public class MechanizeMock extends MechanizeAgent {
 					entity.setContentEncoding(charset);
 					entity.setContentType(this.contentType);
 					entity.setContent(body);
-					
+
 					assertParameters(request);
-					
+
 					this.wasExecuted = true;
 					return response;
 				}
@@ -162,19 +161,19 @@ public class MechanizeMock extends MechanizeAgent {
 				throw new UnsupportedOperationException("Request already executed");
 		}
 
-		private void assertParameters(HttpRequestBase request) throws ArrayComparisonFailure {
+		private void assertParameters(final HttpRequestBase request) throws ArrayComparisonFailure {
 			if(request instanceof HttpPost) {
 				HttpPost post = (HttpPost)request;
 				UrlEncodedFormEntity entity = (UrlEncodedFormEntity)post.getEntity();
-				Parameters actualParameters = extractParameters(entity); 
-				
+				Parameters actualParameters = extractParameters(entity);
+
 				String [] expectedNames = parameters.getNames();
 				String [] actualNames = actualParameters.getNames();
 				Arrays.sort(expectedNames);
 				Arrays.sort(actualNames);
-				Assert.assertArrayEquals("Expected and actual parameters should equal by available parameter names", 
+				Assert.assertArrayEquals("Expected and actual parameters should equal by available parameter names",
 						expectedNames, actualNames);
-				
+
 				for(String name : expectedNames) {
 					String [] expectedValue = parameters.get(name);
 					String [] actualValue = actualParameters.get(name);
@@ -183,7 +182,7 @@ public class MechanizeMock extends MechanizeAgent {
 			}
 		}
 
-		private Parameters extractParameters(UrlEncodedFormEntity entity) {
+		private Parameters extractParameters(final UrlEncodedFormEntity entity) {
 			try {
 				InputStream stream = entity.getContent();
 				BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
@@ -191,14 +190,14 @@ public class MechanizeMock extends MechanizeAgent {
 				while(true) {
 					String line = reader.readLine();
 					if(line != null) {
-						if(content.length() > 0) 
+						if(content.length() > 0)
 							content.append("\n");
 						content.append(line);
 					}
-					else 
+					else
 						break;
 				}
-				
+
 				Parameters parameters = new Parameters();
 				for(NameValuePair param : URLEncodedUtils.parse(content.toString(), Charset.forName("UTF-8")))
 					parameters.add(param.getName(), param.getValue());
@@ -208,14 +207,14 @@ public class MechanizeMock extends MechanizeAgent {
 				throw MechanizeExceptionFactory.newException(e);
 			}
 		}
-		
+
 		@Override
 		public String toString() {
 			return "<" + httpMethod + ":" + uri + "{" + parameters + "}" + ">";
 		}
 
-		public void setContentType(String mimeType) {
-			this.contentType = mimeType;	
+		public void setContentType(final String mimeType) {
+			this.contentType = mimeType;
 		}
 	}
 }

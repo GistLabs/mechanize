@@ -9,13 +9,13 @@ package com.gistlabs.mechanize.json.impl;
 
 import static org.junit.Assert.*;
 
-import org.apache.http.entity.ContentType;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.json.JsonPage;
 import com.gistlabs.mechanize.json.node.JsonNode;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
  */
