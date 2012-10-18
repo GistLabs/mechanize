@@ -8,6 +8,7 @@ import java.util.List;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
+import org.jsoup.select.Elements;
 
 import se.fishtank.css.selectors.Selector;
 import se.fishtank.css.util.Assert;
@@ -74,10 +75,14 @@ public class JsoupNodeHelper implements NodeHelper<Node> {
 
 	@Override
 	public Collection<? extends Node> getDescendentNodes(final Node node) {
+		Elements descendents;
 		if (node instanceof Document)
-			return ((Document)node).getAllElements();
+			descendents = ((Document)node).getAllElements();
 		else
-			return ((Element)node).getAllElements();
+			descendents = ((Element)node).getAllElements();
+
+		descendents.remove(node); // Jsoup includes the target of getAllElements() in the result...
+		return descendents;
 	}
 
 	@Override
@@ -91,7 +96,7 @@ public class JsoupNodeHelper implements NodeHelper<Node> {
 			return Collections.EMPTY_LIST;
 
 		if (Selector.UNIVERSAL_TAG.equals(withName))
-			return node.childNodes();
+			return filter(node.childNodes());
 
 		ArrayList<Node> result = new ArrayList<Node>();
 
@@ -100,6 +105,14 @@ public class JsoupNodeHelper implements NodeHelper<Node> {
 			if (nameMatches(child, withName))
 				result.add(child);
 
+		return result;
+	}
+
+	private List<? extends Node> filter(final List<Node> nodes) {
+		ArrayList<Node> result = new ArrayList<Node>();
+		for(Node node : nodes)
+			if (node instanceof Element)
+				result.add(node);
 		return result;
 	}
 

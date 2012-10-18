@@ -36,7 +36,7 @@ public class JsoupNodeHelperTest {
 	@Test
 	public void test() {
 		NodeSelector<Node> selector = new NodeSelector<Node>(new JsoupNodeHelper(document), document);
-		assertEquals(count, selector.findAll(query).size());
+		assertEquals("["+query+"]", count, selector.findAll(query).size());
 	}
 
 	@Parameters
