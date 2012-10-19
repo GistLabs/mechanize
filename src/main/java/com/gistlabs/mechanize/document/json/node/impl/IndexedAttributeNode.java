@@ -9,6 +9,7 @@ package com.gistlabs.mechanize.document.json.node.impl;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.gistlabs.mechanize.document.json.exceptions.JsonException;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
@@ -22,6 +23,15 @@ public class IndexedAttributeNode extends AttributeNode {
 		super(parent, name);
 		this.array = array;
 		this.index = index;
+	}
+
+	@Override
+	public String toString() {
+		try {
+			return new JSONObject().put(name, getValue()).toString();
+		} catch (JSONException e) {
+			throw new JsonException(e);
+		}
 	}
 
 	@Override

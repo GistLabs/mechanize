@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.json.JsonPage;
+import com.gistlabs.mechanize.document.node.Node;
 
 /**
  * 
@@ -28,8 +29,10 @@ public class GoogleApiJsonIT {
 		MechanizeAgent agent = new MechanizeAgent();
 		JsonPage json = agent.doRequest(googleUrl)
 				.add("shortUrl", shortUrl)
+				.add("projection", "FULL")
 				.get();
 
-		assertEquals(longUrl, json.getRoot().find("longUrl").getValue());
+		Node node = json.getRoot().find("longUrl");
+		assertEquals(longUrl, node.getValue());
 	}
 }

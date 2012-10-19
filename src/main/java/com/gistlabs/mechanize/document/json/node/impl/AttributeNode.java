@@ -10,12 +10,25 @@ package com.gistlabs.mechanize.document.json.node.impl;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.gistlabs.mechanize.document.json.exceptions.JsonException;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
 
 public class AttributeNode extends AbstractNode {
 
 	public AttributeNode(final JsonNode parent, final String name) {
 		super(parent, name);
+	}
+
+	@Override
+	public String toString() {
+		try {
+			return new JSONObject().put(name, getValue()).toString();
+		} catch (JSONException e) {
+			throw new JsonException(e);
+		}
 	}
 
 	@Override

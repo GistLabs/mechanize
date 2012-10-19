@@ -33,7 +33,14 @@ public class ObjectNodeImpl extends AbstractNode {
 
 	public ObjectNodeImpl(final JsonNode parent, final String name, final JSONObject obj) {
 		super(parent, name);
+		if (obj==null)
+			throw new NullPointerException("JSONObject can't be null");
 		this.obj = obj;
+	}
+
+	@Override
+	public String toString() {
+		return obj.toString();
 	}
 
 	@Override

@@ -27,7 +27,14 @@ public class ArrayNodeImpl extends AbstractNode {
 
 	public ArrayNodeImpl(final JsonNode parent, final String key, final JSONArray array) {
 		super(parent, key);
+		if (array==null)
+			throw new NullPointerException("JSONArray can't be null");
 		this.array = array;
+	}
+
+	@Override
+	public String toString() {
+		return array.toString();
 	}
 
 	@Override
