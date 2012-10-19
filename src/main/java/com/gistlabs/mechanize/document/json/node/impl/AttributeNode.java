@@ -5,30 +5,30 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.json.node.impl;
+package com.gistlabs.mechanize.document.json.node.impl;
 
 import java.util.Collections;
 import java.util.List;
 
-import com.gistlabs.mechanize.json.node.JsonNode;
+import com.gistlabs.mechanize.document.json.node.JsonNode;
 
 public class AttributeNode extends AbstractNode {
-	
-	public AttributeNode(JsonNode parent, String name) {
+
+	public AttributeNode(final JsonNode parent, final String name) {
 		super(parent, name);
 	}
 
 	@Override
-	public String getAttribute(String key) {
-		return null; 
+	public String getAttribute(final String key) {
+		return null;
 	}
 
 	@Override
-	public void setAttribute(String key, String value) {
+	public void setAttribute(final String key, final String value) {
 	}
 
 	@Override
-	public boolean hasAttribute(String key) {
+	public boolean hasAttribute(final String key) {
 		return false;
 	}
 
@@ -43,18 +43,18 @@ public class AttributeNode extends AbstractNode {
 	}
 
 	@Override
-	public void setValue(String value) {
+	public void setValue(final String value) {
 		this.parent.setAttribute(getName(), value);
 	}
 
 	@Override
-	public <T extends JsonNode> T getChild(String key) {
+	public <T extends JsonNode> T getChild(final String key) {
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<JsonNode> getChildren(String... names) {
+	public List<JsonNode> getChildren(final String... names) {
 		return Collections.EMPTY_LIST;
 	}
 }

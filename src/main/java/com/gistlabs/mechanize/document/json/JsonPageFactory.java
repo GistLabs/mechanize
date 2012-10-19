@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.json;
+package com.gistlabs.mechanize.document.json;
 
 import java.util.Collection;
 
@@ -24,7 +24,7 @@ public class JsonPageFactory implements ResourceFactory {
 	}
 
 	@Override
-	public Resource buildPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
+	public Resource buildPage(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
 		return new JsonPage(agent, request, response);
 	}
 

@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.json.node.impl;
+package com.gistlabs.mechanize.document.json.node.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,8 +14,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.gistlabs.mechanize.json.exceptions.JsonException;
-import com.gistlabs.mechanize.json.node.JsonNode;
+import com.gistlabs.mechanize.document.json.exceptions.JsonException;
+import com.gistlabs.mechanize.document.json.node.JsonNode;
 
 /**
  * Support for nested arrays
@@ -25,13 +25,13 @@ public class ArrayNodeImpl extends AbstractNode {
 	private List<JsonNode> children;
 
 
-	public ArrayNodeImpl(JsonNode parent, String key, JSONArray array) {
+	public ArrayNodeImpl(final JsonNode parent, final String key, final JSONArray array) {
 		super(parent, key);
 		this.array = array;
 	}
 
 	@Override
-	public String getAttribute(String key) {
+	public String getAttribute(final String key) {
 		return null;
 	}
 
@@ -40,7 +40,7 @@ public class ArrayNodeImpl extends AbstractNode {
 	}
 
 	@Override
-	public boolean hasAttribute(String key) {
+	public boolean hasAttribute(final String key) {
 		return false;
 	}
 
@@ -65,12 +65,12 @@ public class ArrayNodeImpl extends AbstractNode {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<JsonNode> getChildren(String... names) {
+	public List<JsonNode> getChildren(final String... names) {
 		if (names.length>2)
 			return Collections.EMPTY_LIST;
 		if (names.length==1 && !"*".equalsIgnoreCase(names[0]))
 			return Collections.EMPTY_LIST;
-		
+
 		try {
 			if (children==null) {
 				children = new ArrayList<JsonNode>();

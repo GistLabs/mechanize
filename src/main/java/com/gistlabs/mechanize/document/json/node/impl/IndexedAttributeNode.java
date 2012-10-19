@@ -5,20 +5,20 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.json.node.impl;
+package com.gistlabs.mechanize.document.json.node.impl;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import com.gistlabs.mechanize.json.exceptions.JsonException;
-import com.gistlabs.mechanize.json.node.JsonNode;
+import com.gistlabs.mechanize.document.json.exceptions.JsonException;
+import com.gistlabs.mechanize.document.json.node.JsonNode;
 
 public class IndexedAttributeNode extends AttributeNode {
-	
-	private final int index;
-	private JSONArray array;
 
-	public IndexedAttributeNode(JsonNode parent, String name, JSONArray array, int index) {
+	private final int index;
+	private final JSONArray array;
+
+	public IndexedAttributeNode(final JsonNode parent, final String name, final JSONArray array, final int index) {
 		super(parent, name);
 		this.array = array;
 		this.index = index;
@@ -34,7 +34,7 @@ public class IndexedAttributeNode extends AttributeNode {
 	}
 
 	@Override
-	public void setValue(String value) {
+	public void setValue(final String value) {
 		try {
 			this.array.put(this.index, value);
 		} catch (JSONException e) {

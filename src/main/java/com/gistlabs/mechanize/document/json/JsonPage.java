@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.json;
+package com.gistlabs.mechanize.document.json;
 
 import java.io.InputStreamReader;
 import java.util.Collection;
@@ -17,9 +17,9 @@ import org.json.JSONTokener;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.Page;
+import com.gistlabs.mechanize.document.json.node.JsonNode;
+import com.gistlabs.mechanize.document.json.node.impl.ObjectNodeImpl;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
-import com.gistlabs.mechanize.json.node.JsonNode;
-import com.gistlabs.mechanize.json.node.impl.ObjectNodeImpl;
 import com.gistlabs.mechanize.util.Collections;
 import com.gistlabs.mechanize.util.apache.ContentType;
 

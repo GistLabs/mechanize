@@ -15,8 +15,8 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.json.JsonPage;
-import com.gistlabs.mechanize.json.node.JsonNode;
+import com.gistlabs.mechanize.document.json.JsonPage;
+import com.gistlabs.mechanize.document.json.node.JsonNode;
 
 /**
  * 
