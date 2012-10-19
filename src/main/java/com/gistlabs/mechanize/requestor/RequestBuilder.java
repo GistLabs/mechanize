@@ -29,6 +29,7 @@ import org.apache.http.message.BasicNameValuePair;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.parameters.Parameter;
 import com.gistlabs.mechanize.parameters.Parameters;
+import com.gistlabs.mechanize.util.apache.URIBuilder;
 import com.gistlabs.mechanize.util.apache.URLEncodedUtils;
 
 public class RequestBuilder<Resource> {
