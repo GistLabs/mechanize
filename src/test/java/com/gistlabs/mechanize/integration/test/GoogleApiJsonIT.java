@@ -30,6 +30,6 @@ public class GoogleApiJsonIT {
 				.add("shortUrl", shortUrl)
 				.get();
 
-		assertEquals(longUrl, json.getRoot().getAttribute("longUrl"));
+		assertEquals(longUrl, json.getRoot().find("longUrl").getValue());
 	}
 }
