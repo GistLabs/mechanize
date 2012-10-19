@@ -44,7 +44,7 @@ public class MixedChildrenElementsTest extends TestElementBaseClass {
 	@Test
 	public void testChildren() {
 		List<JsonNode> children = element.getChildren();
-		assertEquals(3, children.size());
+		assertEquals(4, children.size());
 
 		Collection<String> names = new ArrayList<String>();
 		names.add("b");

@@ -115,11 +115,11 @@ public class ObjectNodeImpl extends AbstractNode {
 			Iterator<String> keys = this.obj.keys();
 			while(keys.hasNext()) {
 				String key = keys.next();
-				if (!isPrimitive(this.obj.get(key)))
-					result.addAll(getChildren(key));
+				//				if (!isPrimitive(this.obj.get(key)))
+				result.addAll(getChildren(key));
 			}
 			return result;
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			throw new JsonException(e);
 		}
 	}

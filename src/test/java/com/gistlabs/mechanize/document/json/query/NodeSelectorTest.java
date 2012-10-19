@@ -32,7 +32,7 @@ public class NodeSelectorTest {
 		NodeSelector<JsonNode> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
 
 		List<JsonNode> result = selector.findAll("*");
-		assertEquals(4, result.size());
+		assertEquals(8, result.size());
 	}
 
 	@Test
@@ -40,7 +40,15 @@ public class NodeSelectorTest {
 		NodeSelector<JsonNode> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
 
 		List<JsonNode> result = selector.findAll("b");
-		assertEquals(1, result.size());
+		assertEquals(2, result.size());
+	}
+
+	@Test
+	public void testNames() throws Exception {
+		NodeSelector<JsonNode> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"b\" : 2 } ] }");
+
+		List<JsonNode> result = selector.findAll("b, results");
+		assertEquals(4, result.size());
 	}
 
 	@Test
@@ -91,12 +99,12 @@ public class NodeSelectorTest {
 		NodeSelector<JsonNode> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"a\" : 1 }, { \"a\" : 2 } ] }");
 
 		List<JsonNode> result = selector.findAll("*:not([x])");
-		assertEquals(3, result.size());
+		assertEquals(7, result.size());
 		assertEquals("root", result.get(0).getName());
 		assertEquals("2", result.get(0).getAttribute("a"));
 
 		List<JsonNode> result2 = selector.findAll("*:not([a])");
-		assertEquals(1, result2.size());
+		assertEquals(5, result2.size());
 		assertEquals("b", result2.get(0).getName());
 	}
 }
