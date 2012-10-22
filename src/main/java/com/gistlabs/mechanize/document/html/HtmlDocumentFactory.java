@@ -16,16 +16,16 @@ import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.ResourceFactory;
 
-public class HtmlPageFactory implements ResourceFactory {
+public class HtmlDocumentFactory implements ResourceFactory {
 
 	@Override
 	public Collection<String> getContentMatches() {
-		return HtmlPage.CONTENT_MATCHERS;
+		return HtmlDocument.CONTENT_MATCHERS;
 	}
 
 	@Override
 	public Resource buildPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
-		return new HtmlPage(agent, request, response);
+		return new HtmlDocument(agent, request, response);
 	}
 
 }

@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.document.pageElements;
+package com.gistlabs.mechanize.document.documentElements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,14 +26,14 @@ import com.gistlabs.mechanize.util.Assert;
  *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public abstract class PageElements<T> implements Iterable<T> {
+public abstract class DocumentElements<T> implements Iterable<T> {
 	protected final Resource page;
 	protected final List<? extends Node> nodes;
 	protected final QueryStrategy queryStrategy;
 	
 	private final Map<Node, T> representations = new HashMap<Node, T>();
 	
-	public PageElements(Resource page, List<? extends Node> nodes, QueryStrategy queryStrategy) {
+	public DocumentElements(Resource page, List<? extends Node> nodes, QueryStrategy queryStrategy) {
 		Assert.notNull(nodes, "Nodes may not be null");
 		
 		this.page = page;

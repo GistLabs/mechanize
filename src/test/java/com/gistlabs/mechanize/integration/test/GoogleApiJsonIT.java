@@ -13,7 +13,7 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.document.json.JsonPage;
+import com.gistlabs.mechanize.document.json.JsonDocument;
 import com.gistlabs.mechanize.document.node.Node;
 
 /**
@@ -27,7 +27,7 @@ public class GoogleApiJsonIT {
 	@Test
 	public void testGoogleApi() throws JSONException {
 		MechanizeAgent agent = new MechanizeAgent();
-		JsonPage json = agent.doRequest(googleUrl)
+		JsonDocument json = agent.doRequest(googleUrl)
 				.add("shortUrl", shortUrl)
 				.add("projection", "FULL")
 				.get();

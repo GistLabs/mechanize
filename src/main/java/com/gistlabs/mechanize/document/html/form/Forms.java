@@ -10,8 +10,8 @@ package com.gistlabs.mechanize.document.html.form;
 import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.documentElements.DocumentElements;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.pageElements.PageElements;
 import com.gistlabs.mechanize.document.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Util;
 
@@ -20,7 +20,7 @@ import com.gistlabs.mechanize.util.Util;
  *
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public class Forms extends PageElements<Form> {
+public class Forms extends DocumentElements<Form> {
 	public Forms(Resource page, QueryStrategy queryStrategy) {
 		this(page, createList(), queryStrategy);
 	}

@@ -29,10 +29,10 @@ import com.gistlabs.mechanize.util.css_query.NodeSelector;
  */
 public class HtmlNode extends AbstractNode {
 
-	private final HtmlPage page;
+	private final HtmlDocument page;
 	private final org.jsoup.nodes.Node node;
 
-	public HtmlNode(final HtmlPage page, final org.jsoup.nodes.Node node) {
+	public HtmlNode(final HtmlDocument page, final org.jsoup.nodes.Node node) {
 		this.page = page;
 		this.node = node;
 	}
@@ -41,7 +41,7 @@ public class HtmlNode extends AbstractNode {
 		return node;
 	}
 
-	public HtmlPage getPage() {
+	public HtmlDocument getPage() {
 		return page;
 	}
 

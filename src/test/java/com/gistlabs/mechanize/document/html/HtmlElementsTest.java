@@ -17,7 +17,7 @@ import org.junit.Test;
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.html.HtmlElement;
-import com.gistlabs.mechanize.document.html.HtmlPage;
+import com.gistlabs.mechanize.document.html.HtmlDocument;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -30,7 +30,7 @@ public class HtmlElementsTest extends MechanizeTestCase {
 				newHtml("Test Page", "<a href=\"http://test.com/myPage.html\">myPage</a>"));
 		
 		Resource page = agent.get("http://test.com");
-		HtmlElement htmlElement = ((HtmlPage)page).htmlElements().get(byHRef(regEx(".*myPage.html")));
+		HtmlElement htmlElement = ((HtmlDocument)page).htmlElements().get(byHRef(regEx(".*myPage.html")));
 		assertNotNull(htmlElement);
 		assertEquals("http://test.com/myPage.html", htmlElement.getAttribute("href"));
 	}
@@ -41,7 +41,7 @@ public class HtmlElementsTest extends MechanizeTestCase {
 				newHtml("Test Page", "<a href=\"link1\">link1</a><a href=\"link2\">link2</a>"));
 		
 		Resource page = agent.get("http://test.com");
-		List<HtmlElement> elements = ((HtmlPage)page).htmlElements().getAll(byHRef(regEx("link[0-9]")));
+		List<HtmlElement> elements = ((HtmlDocument)page).htmlElements().getAll(byHRef(regEx("link[0-9]")));
 		assertNotNull(elements);
 		assertEquals(2, elements.size());
 		assertEquals("link1", elements.get(0).getAttribute("href"));

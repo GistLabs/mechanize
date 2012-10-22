@@ -11,8 +11,8 @@ import java.io.OutputStream;
 import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.documentElements.DocumentElements;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.pageElements.PageElements;
 import com.gistlabs.mechanize.document.query.QueryStrategy;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
@@ -22,7 +22,7 @@ import com.gistlabs.mechanize.util.Util;
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public class Images extends PageElements<Image> {
+public class Images extends DocumentElements<Image> {
 	
 	public Images(Resource page, QueryStrategy queryStrategy) {
 		this(page, newEmptyList(), queryStrategy);

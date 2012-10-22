@@ -20,7 +20,7 @@ import com.gistlabs.mechanize.util.Util;
  */
 public class HtmlTextNode extends HtmlNode {
 	
-	public HtmlTextNode(HtmlPage page, TextNode node) {
+	public HtmlTextNode(HtmlDocument page, TextNode node) {
 		super(page, node);
 	}
 	

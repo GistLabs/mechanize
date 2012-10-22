@@ -15,7 +15,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import com.gistlabs.mechanize.util.Collections;
 import com.gistlabs.mechanize.util.apache.ContentType;
 
-public class ContentPage extends Resource {
+public class DefaultResource extends Resource {
 	public static Collection<String> CONTENT_MATCHERS = 
 		Collections.collection(
 				ContentType.WILDCARD.getMimeType(), 
@@ -23,7 +23,7 @@ public class ContentPage extends Resource {
 				ContentType.DEFAULT_BINARY.getMimeType(), 
 				ContentType.DEFAULT_TEXT.getMimeType());
 	
-	public ContentPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
+	public DefaultResource(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
 		super(agent, request, response);
 	}
 }

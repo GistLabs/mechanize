@@ -16,16 +16,16 @@ import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.ResourceFactory;
 
-public class JsonPageFactory implements ResourceFactory {
+public class JsonDocumentFactory implements ResourceFactory {
 
 	@Override
 	public Collection<String> getContentMatches() {
-		return JsonPage.CONTENT_MATCHERS;
+		return JsonDocument.CONTENT_MATCHERS;
 	}
 
 	@Override
 	public Resource buildPage(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
-		return new JsonPage(agent, request, response);
+		return new JsonDocument(agent, request, response);
 	}
 
 }

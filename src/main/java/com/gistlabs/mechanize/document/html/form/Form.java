@@ -15,10 +15,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.documentElements.DocumentElement;
 import com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder;
 import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.pageElements.PageElement;
 import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
@@ -29,7 +29,7 @@ import com.gistlabs.mechanize.requestor.RequestBuilder;
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @since 2012-09-12
  */
-public class Form extends PageElement implements Iterable<FormElement> {
+public class Form extends DocumentElement implements Iterable<FormElement> {
 	private List<FormElement> elements = new ArrayList<FormElement>();
 	
 	public Form(Resource page, Node formNode) {

@@ -15,7 +15,7 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.document.json.JsonPage;
+import com.gistlabs.mechanize.document.json.JsonDocument;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
 
 /**
@@ -26,7 +26,7 @@ public class AndroidJsonApiIT {
 	@Test
 	public void testAndroidJsonApiDemo() throws JSONException {
 		MechanizeAgent agent = new MechanizeAgent();
-		JsonPage page = (JsonPage) agent.get("http://api.androidhive.info/contacts/");
+		JsonDocument page = (JsonDocument) agent.get("http://api.androidhive.info/contacts/");
 
 		List<? extends JsonNode> contacts = page.getRoot().getChildren("contacts");
 		assertNotNull(contacts);

@@ -7,15 +7,15 @@
  */
 package com.gistlabs.mechanize.document.html.form;
 
+import com.gistlabs.mechanize.document.documentElements.DocumentElement;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.pageElements.PageElement;
 import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.document.query.QueryStrategy;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public class FormElement extends PageElement {
+public class FormElement extends DocumentElement {
 
 	private final Form form;
 	private String value = null;

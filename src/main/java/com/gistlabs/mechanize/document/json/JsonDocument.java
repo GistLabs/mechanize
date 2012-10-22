@@ -23,14 +23,14 @@ import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.util.Collections;
 import com.gistlabs.mechanize.util.apache.ContentType;
 
-public class JsonPage extends Document {
+public class JsonDocument extends Document {
 	public static Collection<String> CONTENT_MATCHERS =
 			Collections.collection(
 					ContentType.APPLICATION_JSON.getMimeType());
 
 	private JsonNode json;
 
-	public JsonPage(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
+	public JsonDocument(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
 		super(agent, request, response);
 	}
 

@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.json.JsonPage;
+import com.gistlabs.mechanize.document.json.JsonDocument;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
 import com.gistlabs.mechanize.util.apache.ContentType;
 
@@ -26,13 +26,13 @@ public class JsonPageTest extends MechanizeTestCase {
 		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
 		Resource page = agent.get("http://test.com");
 		assertNotNull(page);
-		assertEquals(JsonPage.class, page.getClass());
+		assertEquals(JsonDocument.class, page.getClass());
 	}
 
 	@Test
 	public void testParseJson() {
 		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
-		JsonPage page = (JsonPage) agent.get("http://test.com");
+		JsonDocument page = (JsonDocument) agent.get("http://test.com");
 		assertNotNull(page.getRoot());
 
 		assertEquals("US", page.getRoot().getAttribute("country"));

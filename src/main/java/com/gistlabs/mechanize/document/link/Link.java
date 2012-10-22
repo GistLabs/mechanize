@@ -8,15 +8,15 @@
 package com.gistlabs.mechanize.document.link;
 
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.documentElements.DocumentElement;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.pageElements.PageElement;
 
 /** 
  * Represents a link within a page.  
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public class Link extends PageElement {
+public class Link extends DocumentElement {
 	public Link(Resource page, Node link) {
 		super(page, link);
 	}

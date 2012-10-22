@@ -30,7 +30,7 @@ import com.gistlabs.mechanize.util.apache.ContentType;
 /**
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
-public class HtmlPage extends com.gistlabs.mechanize.document.Document {
+public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
 	public static Collection<String> CONTENT_MATCHERS =
 			Collections.collection(
 					ContentType.TEXT_HTML.getMimeType(),
@@ -42,7 +42,7 @@ public class HtmlPage extends com.gistlabs.mechanize.document.Document {
 
 	private String baseUri;
 
-	public HtmlPage(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
+	public HtmlDocument(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
 		super(agent, request, response);
 	}
 

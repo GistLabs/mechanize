@@ -28,14 +28,14 @@ import com.gistlabs.mechanize.document.query.QueryStrategy;
 //TODO check for extension of PageElements
 public class HtmlElements {
 
-	private HtmlPage page; 
+	private HtmlDocument page; 
 	
 	private HtmlElement root;
 
 	//TODO May increase memory footprint when html code changes
 	private final Map<org.jsoup.nodes.Node, HtmlNode> elementCache = new HashMap<org.jsoup.nodes.Node, HtmlNode>();
 	
-	public HtmlElements(HtmlPage page, Document document) {
+	public HtmlElements(HtmlDocument page, Document document) {
 		this.page = page;
 		this.root = getHtmlElement(document);
 	}
@@ -85,18 +85,18 @@ public class HtmlElements {
 		return root.toString();
 	}
 
-	public static HtmlElement getFormHtmlNodes(HtmlPage page, Query query, List<? extends HtmlNode> nodes) {
+	public static HtmlElement getFormHtmlNodes(HtmlDocument page, Query query, List<? extends HtmlNode> nodes) {
 		List<org.jsoup.nodes.Node> jsoupNodes = new ArrayList<org.jsoup.nodes.Node>();
 		for(HtmlNode node : nodes)
 			jsoupNodes.add(node.getJsoupNode());
 		return get(page, query, jsoupNodes);
 	}
 	
-	public static HtmlElement get(HtmlPage page, AbstractQuery<?> query, List<org.jsoup.nodes.Node> nodes) {
+	public static HtmlElement get(HtmlDocument page, AbstractQuery<?> query, List<org.jsoup.nodes.Node> nodes) {
 		return get(page, query, new HtmlQueryStrategy(), nodes);
 	}
 	
-	public static HtmlElement get(HtmlPage page, AbstractQuery<?> query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
+	public static HtmlElement get(HtmlDocument page, AbstractQuery<?> query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
 		for(org.jsoup.nodes.Node node : nodes) {
 			if(node instanceof Element) {
 				if(query.matches(queryStrategy, (Element)node))
@@ -109,11 +109,11 @@ public class HtmlElements {
 		return null;
 	}
 
-	public static void getAll(HtmlPage page, List<HtmlElement> result, AbstractQuery<?> query, List<org.jsoup.nodes.Node> nodes) {
+	public static void getAll(HtmlDocument page, List<HtmlElement> result, AbstractQuery<?> query, List<org.jsoup.nodes.Node> nodes) {
 		getAll(page, result, query, new HtmlQueryStrategy(), nodes);
 	}
 	
-	public static void getAll(HtmlPage page, List<HtmlElement> result, AbstractQuery<?> query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
+	public static void getAll(HtmlDocument page, List<HtmlElement> result, AbstractQuery<?> query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
 		for(org.jsoup.nodes.Node node : nodes) {
 			if(node instanceof Element) {
 				if(query.matches(queryStrategy, (Element)node))

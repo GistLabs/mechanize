@@ -22,7 +22,7 @@ import com.gistlabs.mechanize.util.Util;
  */
 public class HtmlElement extends HtmlNode implements Node {
 	
-	public HtmlElement(HtmlPage page, Element jsoupElement) {
+	public HtmlElement(HtmlDocument page, Element jsoupElement) {
 		super(page, jsoupElement);
 	}
 	

@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.Document;
-import com.gistlabs.mechanize.document.html.HtmlPage;
+import com.gistlabs.mechanize.document.html.HtmlDocument;
 import com.gistlabs.mechanize.document.html.form.Form;
 import com.gistlabs.mechanize.sequence.AbstractSequence;
 
@@ -89,7 +89,7 @@ public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends Mozi
 			Form cartForm = cart.forms().get(byName("cartViewForm"));
 			cartForm.get("quantity.C35RMYTCMZTEKE").setValue("0");
 			agent.idle(200);
-			HtmlPage response = (HtmlPage)cartForm.submit();
+			HtmlDocument response = (HtmlDocument)cartForm.submit();
 			wasShoppingCartEmpty = response.htmlElements().getRoot().getHtml().contains("Your Shopping Cart is empty.");
 		}
 		

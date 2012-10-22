@@ -25,7 +25,7 @@ public class HtmlNodeTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"link\">link</a>"));
 		
-		HtmlPage page = agent.get("http://test.com");
+		HtmlDocument page = agent.get("http://test.com");
 		HtmlElement element = page.getRoot().get(byHRef(regEx("link")));
 		assertEquals("body", element.getParent().getName());
 		assertEquals("html", element.getParent().getParent().getName());
@@ -37,7 +37,7 @@ public class HtmlNodeTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"link\">link</a>"));
 		
-		HtmlPage page = agent.get("http://test.com");
+		HtmlDocument page = agent.get("http://test.com");
 		MyNodeVisitor visitor = new MyNodeVisitor();
 		page.getRoot().visit(visitor);
 		assertEquals("<#root<html<head<title<null>>><body<a>>>>", visitor.result.toString());

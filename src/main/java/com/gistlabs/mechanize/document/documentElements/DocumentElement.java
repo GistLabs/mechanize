@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.document.pageElements;
+package com.gistlabs.mechanize.document.documentElements;
 
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.node.Node;
@@ -15,11 +15,11 @@ import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public abstract class PageElement implements RequestBuilderFactory<Resource> {
+public abstract class DocumentElement implements RequestBuilderFactory<Resource> {
 	protected final Resource page;
 	protected final Node node;
 	
-	public PageElement(Resource page, Node node) {
+	public DocumentElement(Resource page, Node node) {
 		this.page = page;
 		this.node = node;
 	}

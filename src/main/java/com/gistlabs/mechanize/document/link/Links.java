@@ -10,8 +10,8 @@ package com.gistlabs.mechanize.document.link;
 import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.document.documentElements.DocumentElements;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.pageElements.PageElements;
 import com.gistlabs.mechanize.document.query.QueryStrategy;
 
 /** 
@@ -19,7 +19,7 @@ import com.gistlabs.mechanize.document.query.QueryStrategy;
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public class Links extends PageElements<Link> {
+public class Links extends DocumentElements<Link> {
 	public Links(Resource page, QueryStrategy queryStrategy) {
 		this(page, null, queryStrategy);
 	}
