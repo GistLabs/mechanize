@@ -16,14 +16,14 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.document.Page;
+import com.gistlabs.mechanize.document.Document;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
 import com.gistlabs.mechanize.document.json.node.impl.ObjectNodeImpl;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.util.Collections;
 import com.gistlabs.mechanize.util.apache.ContentType;
 
-public class JsonPage extends Page {
+public class JsonPage extends Document {
 	public static Collection<String> CONTENT_MATCHERS =
 			Collections.collection(
 					ContentType.APPLICATION_JSON.getMimeType());

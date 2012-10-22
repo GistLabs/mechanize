@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.Page;
+import com.gistlabs.mechanize.document.Document;
 import com.gistlabs.mechanize.document.html.form.Form;
 import com.gistlabs.mechanize.document.html.image.Image;
 import com.gistlabs.mechanize.document.link.Link;
@@ -30,7 +30,7 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 	@Test
 	public void testLoadWikipediaIndexPage() {
 		MechanizeAgent agent = new MechanizeAgent();
-		Page page = agent.get("http://www.wikipedia.org");
+		Document page = agent.get("http://www.wikipedia.org");
 		assertNotNull(page);
 		assertTrue(page.size() > 10000);
 		Links links = page.links();
@@ -41,7 +41,7 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 	@Test
 	public void testClickingEnglishWikipediaVersionLink() {
 		MechanizeAgent agent = new MechanizeAgent();
-		Page page = agent.get("http://www.wikipedia.org");
+		Document page = agent.get("http://www.wikipedia.org");
 		assertNotNull(page);
 		assertTrue(page.size() > 10000);
 		Links links = page.links();
@@ -55,7 +55,7 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 	@Test
 	public void testSearchingWikipediaForAngelaMerkelInGermanLanguageUtilizingSelectAndTextInput() {
 		MechanizeAgent agent = new MechanizeAgent();
-		Page page = agent.get("http://www.wikipedia.org");
+		Document page = agent.get("http://www.wikipedia.org");
 		Form form = page.forms().get(byClass("search-form"));
 		form.getSelect(byName("language")).getOption("de").select();
 		form.getSearch(byName("search")).set("Angela Merkel");
@@ -66,7 +66,7 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 	@Test
 	public void testDownloadWikipediaLogoImagesToBuffer() {
 		MechanizeAgent agent = new MechanizeAgent();
-		Page page = agent.get("http://www.wikipedia.org");
+		Document page = agent.get("http://www.wikipedia.org");
 		List<Image> images = page.images().getAll(byHtml(regEx(".*Wikipedia.*")));
 		assertEquals(2, images.size());
 

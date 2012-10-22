@@ -18,8 +18,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.Page;
 import com.gistlabs.mechanize.document.html.form.Forms;
 import com.gistlabs.mechanize.document.html.image.Images;
 import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
@@ -32,38 +30,39 @@ import com.gistlabs.mechanize.util.apache.ContentType;
 /**
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
-public class HtmlPage extends Page {
-	public static Collection<String> CONTENT_MATCHERS = 
-		Collections.collection(
-				ContentType.TEXT_HTML.getMimeType(), 
-				ContentType.APPLICATION_ATOM_XML.getMimeType(), 
-				ContentType.APPLICATION_XHTML_XML.getMimeType(), 
-				ContentType.APPLICATION_XML.getMimeType());
+public class HtmlPage extends com.gistlabs.mechanize.document.Document {
+	public static Collection<String> CONTENT_MATCHERS =
+			Collections.collection(
+					ContentType.TEXT_HTML.getMimeType(),
+					ContentType.APPLICATION_ATOM_XML.getMimeType(),
+					ContentType.APPLICATION_XHTML_XML.getMimeType(),
+					ContentType.APPLICATION_XML.getMimeType());
 
 	private HtmlElements htmlElements;
-	
+
 	private String baseUri;
 
-	public HtmlPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
+	public HtmlPage(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
 		super(agent, request, response);
 	}
 
+	@Override
 	public HtmlElement getRoot() {
 		return htmlElements().getRoot();
 	}
-	
+
 	@Override
 	protected void loadPage() throws Exception {
 		Document jsoup = Jsoup.parse(getInputStream(), getContentEncoding(response), getUri());
 		setBaseUri(jsoup.head().baseUri());
 		this.htmlElements = new HtmlElements(this, jsoup);
 	}
-	
-	private void setBaseUri(String baseUri) {
+
+	private void setBaseUri(final String baseUri) {
 		if (! this.getUri().equals(baseUri))
 			this.baseUri = baseUri;
 	}
-	
+
 	@Override
 	public String getUri() {
 		return this.baseUri==null ? super.getUri() : this.baseUri;
@@ -74,20 +73,20 @@ public class HtmlPage extends Page {
 		List<? extends Node> links = htmlElements().getAll(byTag("a"));
 		return new Links(this, links, new HtmlQueryStrategy());
 	}
-	
-	@Override 
+
+	@Override
 	protected Forms loadForms() {
 		List<? extends Node> forms = htmlElements().getAll(byTag("form"));
-		return new Forms((Resource)this, forms, new HtmlQueryStrategy());
+		return new Forms(this, forms, new HtmlQueryStrategy());
 	}
-	
+
 	@Override
 	protected Images loadImages() {
 		List<HtmlElement> images = htmlElements().getAll(byTag("img"));
 		return new Images(this, images, new HtmlQueryStrategy());
 	}
-	
-	
+
+
 	public HtmlElements htmlElements() {
 		if(htmlElements == null)
 			try {
@@ -101,16 +100,18 @@ public class HtmlPage extends Page {
 	/**
 	 * Returns the title of the page or null.
 	 */
+	@Override
 	public String getTitle() {
 		HtmlElement title = htmlElements().get(byTag("title"));
-		return title != null ? title.getText() : null; 
+		return title != null ? title.getText() : null;
 	}
-	
+
 	/**
 	 * Serialize the contents of this page into a string
 	 * 
 	 * @return
 	 */
+	@Override
 	public String asString() {
 		return htmlElements.toString();
 	}
