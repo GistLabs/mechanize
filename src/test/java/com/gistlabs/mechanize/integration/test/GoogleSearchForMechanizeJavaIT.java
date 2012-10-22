@@ -14,7 +14,7 @@ import org.junit.Test;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Page;
-import com.gistlabs.mechanize.form.Form;
+import com.gistlabs.mechanize.document.html.form.Form;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>

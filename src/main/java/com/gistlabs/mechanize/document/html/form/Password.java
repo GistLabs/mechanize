@@ -5,18 +5,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.form;
+package com.gistlabs.mechanize.document.html.form;
 
 import com.gistlabs.mechanize.document.node.Node;
 
 /** 
- * Represents an input element of type 'checkbox'. 
- *  
+ * Represents an input element of type 'password'. 
+ * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public class Checkbox extends Checkable {
+public class Password extends FormElement {
 
-	public Checkbox(Form form, Node node) {
+	public Password(Form form, Node node) {
 		super(form, node);
 	}
 }

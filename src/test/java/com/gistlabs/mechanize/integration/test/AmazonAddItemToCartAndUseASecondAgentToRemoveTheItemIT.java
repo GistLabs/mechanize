@@ -16,7 +16,7 @@ import org.junit.Test;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.Page;
 import com.gistlabs.mechanize.document.html.HtmlPage;
-import com.gistlabs.mechanize.form.Form;
+import com.gistlabs.mechanize.document.html.form.Form;
 import com.gistlabs.mechanize.sequence.AbstractSequence;
 
 /**

@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.image;
+package com.gistlabs.mechanize.document.html.image;
 
 import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
@@ -14,6 +14,8 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.document.Page;
+import com.gistlabs.mechanize.document.html.image.Image;
+import com.gistlabs.mechanize.document.html.image.ImageCollection;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>

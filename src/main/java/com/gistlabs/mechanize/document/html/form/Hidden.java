@@ -5,18 +5,19 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.form;
+package com.gistlabs.mechanize.document.html.form;
 
 import com.gistlabs.mechanize.document.node.Node;
 
 /** 
- * Represents an input element of type 'password'. 
- * 
+ * Represents an input element of type 'hidden'. 
+ *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public class Password extends FormElement {
+public class Hidden extends FormElement {
 
-	public Password(Form form, Node node) {
+	public Hidden(Form form, Node node) {
 		super(form, node);
 	}
+	
 }

@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.document.Page;
-import com.gistlabs.mechanize.link.Link;
+import com.gistlabs.mechanize.document.link.Link;
 
 public class PageQueryTest extends MechanizeTestCase {
 

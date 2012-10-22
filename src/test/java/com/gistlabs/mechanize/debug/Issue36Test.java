@@ -17,8 +17,8 @@ import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.cookie.Cookie;
 import com.gistlabs.mechanize.document.Page;
-import com.gistlabs.mechanize.form.Checkable;
-import com.gistlabs.mechanize.form.Form;
+import com.gistlabs.mechanize.document.html.form.Checkable;
+import com.gistlabs.mechanize.document.html.form.Form;
 
 public class Issue36Test {
 

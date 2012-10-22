@@ -17,10 +17,10 @@ import org.junit.Test;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Page;
-import com.gistlabs.mechanize.form.Form;
-import com.gistlabs.mechanize.image.Image;
-import com.gistlabs.mechanize.link.Link;
-import com.gistlabs.mechanize.link.Links;
+import com.gistlabs.mechanize.document.html.form.Form;
+import com.gistlabs.mechanize.document.html.image.Image;
+import com.gistlabs.mechanize.document.link.Link;
+import com.gistlabs.mechanize.document.link.Links;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
