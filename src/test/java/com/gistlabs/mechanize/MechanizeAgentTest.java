@@ -7,8 +7,7 @@
  */
 package com.gistlabs.mechanize;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -20,10 +19,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.Test;
 
-import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.RequestInterceptor;
-import com.gistlabs.mechanize.ResponseInterceptor;
 import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
@@ -42,23 +37,23 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		Resource page = agent.get("http://test.com");
 		assertEquals("Test Page", page.getTitle());
 	}
-	
-    @Test(expected=IllegalArgumentException.class)
-    public void testExpectPostButReceiveGetRequestFails() throws Exception {
-        agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
-        disableAfterTest();
-        
-        Resource result = agent.get("http://test.com/form");
-        assertEquals("OK", result.getTitle());
-    }   
-    
-    @Test
-    public void testRequestParametersExtractedFromUri() {
-    	Parameters parameters = agent.doRequest("http://www.test.com/index.html?query=ab+cd&page=1").parameters();
-    	assertEquals("ab cd", parameters.get("query")[0]);
-    	assertEquals("1", parameters.get("page")[0]);
-    }
-    
+
+	@Test(expected=IllegalArgumentException.class)
+	public void testExpectPostButReceiveGetRequestFails() throws Exception {
+		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
+		disableAfterTest();
+
+		Resource result = agent.get("http://test.com/form");
+		assertEquals("OK", result.getTitle());
+	}
+
+	@Test
+	public void testRequestParametersExtractedFromUri() {
+		Parameters parameters = agent.doRequest("http://www.test.com/index.html?query=ab+cd&page=1").parameters();
+		assertEquals("ab cd", parameters.get("query")[0]);
+		assertEquals("1", parameters.get("page")[0]);
+	}
+
 	@Test
 	public void testDoRequestGet() {
 		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", ""));
@@ -80,7 +75,28 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		Resource page = agent.doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").post();
 		assertEquals("Test Page", page.getTitle());
 	}
-    
+
+	@Test
+	public void testDoRequestWithSetHeader() {
+		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("foo", "bar");
+		Resource page = agent.doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").setHeader("foo", "x").setHeader("foo", "bar").get();
+		assertEquals("Test Page", page.getTitle());
+	}
+
+	@Test
+	public void testDoRequestWithAddHeaders() {
+		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("foo", "bar", "baz");
+		Resource page = agent.doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").addHeader("foo", "bar", "baz").get();
+		assertEquals("Test Page", page.getTitle());
+	}
+
+	@Test
+	public void testDoRequestWithAccept() {
+		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("Accept", "application/json");
+		Resource page = agent.doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").accept("application/json").get();
+		assertEquals("Test Page", page.getTitle());
+	}
+
 	@Test
 	public void testPostMethod() {
 		MechanizeAgent agent = agent();
@@ -89,12 +105,12 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		String pageString = page.asString();
 		assertTrue(pageString.contains(" Successfully dumped 2 post variables"));
 	}
-	
+
 	@Test
 	public void testDownloadToImage() throws IOException {
 		String wikipediaLogoUri = "http://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png";
 		BufferedImage image = ImageIO.read(agent().get(wikipediaLogoUri).getInputStream());
-				
+
 		assertEquals(200, image.getWidth());
 		assertEquals(200, image.getHeight());
 	}
@@ -109,8 +125,8 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		assertEquals(45283, file.length());
 		file.delete();
 	}
-	
-	
+
+
 	@Test
 	public void testDownloadPage() throws Exception {
 		String wikipediaLogoUri = "http://upload.wikimedia.org/wikipedia/commons/6/63/Wikipedia-logo.png";
@@ -118,21 +134,21 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		file.delete();
 
 		Resource page = agent().get(wikipediaLogoUri);
-		
+
 		assertTrue(page instanceof DefaultResource);
-		
+
 		assertEquals("image/png", page.getContentType());
 		page.saveTo(file);
 		assertEquals(45283, file.length());
 		file.delete();
-		
+
 		// in here my copied stream doesn't get the right bytes...
-		
+
 		page.saveTo(file);
 		assertEquals(45283, file.length());
 		file.delete();
 	}
-	
+
 	@Test
 	public void testPreAndPostRequestInterceptor() {
 		Interceptor interceptor = new Interceptor();
@@ -141,17 +157,19 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		agent.get("http://wikipedia.org");
 		assertEquals(2, interceptor.getCount());
 	}
-	
+
 	public static class Interceptor implements RequestInterceptor, ResponseInterceptor {
 		int count = 0;
-		public void intercept(MechanizeAgent agent, HttpRequestBase request) {
+		@Override
+		public void intercept(final MechanizeAgent agent, final HttpRequestBase request) {
 			count ++;
 		}
-		
-		public void intercept(MechanizeAgent agent, HttpResponse response, HttpRequestBase request) {
+
+		@Override
+		public void intercept(final MechanizeAgent agent, final HttpResponse response, final HttpRequestBase request) {
 			count ++;
 		}
-		
+
 		public int getCount() {
 			return count;
 		}

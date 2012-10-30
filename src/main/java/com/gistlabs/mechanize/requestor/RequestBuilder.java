@@ -12,7 +12,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -27,6 +31,8 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
+import com.gistlabs.mechanize.headers.Header;
+import com.gistlabs.mechanize.headers.Headers;
 import com.gistlabs.mechanize.parameters.Parameter;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.util.apache.URIBuilder;
@@ -36,6 +42,8 @@ public class RequestBuilder<Resource> {
 	private final PageRequestor<Resource> requestor;
 	private String uri;
 	private final Parameters parameters = new Parameters();
+	private final Headers setHeaders = new Headers();
+	private final Headers addHeaders = new Headers();
 	private final Map<String, ContentBody> files = new HashMap<String, ContentBody>();
 	private boolean isMultiPart = false;
 
@@ -79,15 +87,39 @@ public class RequestBuilder<Resource> {
 	}
 
 	public RequestBuilder<Resource> add(final Parameters parameters) {
-		for(String name :parameters.getNames())
+		for(String name : parameters.getNames())
 			add(name, parameters.get(name));
 
 		return this;
 	}
 
-	public RequestBuilder<Resource> accept(final String string) {
-		// TODO Auto-generated method stub
-		return null;
+	public RequestBuilder<Resource> addHeader(final String name, final String ... values) {
+		addHeaders.add(name, values);
+		return this;
+	}
+
+	public RequestBuilder<Resource> setHeader(final String name, final String ... values) {
+		setHeaders.set(name, values);
+		return this;
+	}
+
+	public RequestBuilder<Resource> setHeaders(final Headers headers) {
+		for(String name : headers.getNames())
+			setHeader(name, headers.get(name));
+
+		return this;
+	}
+
+	public RequestBuilder<Resource> addHeaders(final Headers headers) {
+		for(String name :headers.getNames())
+			addHeader(name, headers.get(name));
+
+		return this;
+	}
+
+	public RequestBuilder<Resource> accept(final String contentType) {
+		this.setHeader("Accept", contentType);
+		return this;
 	}
 
 	/** Adds a file to the request also making the request to become a multi-part post request or removes any file registered
@@ -105,8 +137,6 @@ public class RequestBuilder<Resource> {
 		return this;
 	}
 
-
-
 	public Parameters parameters() {
 		return parameters;
 	}
@@ -114,12 +144,15 @@ public class RequestBuilder<Resource> {
 	public <T extends Resource> T get() {
 		if(hasFiles())
 			throw new UnsupportedOperationException("Files can not be send using a get request");
-		return requestor.request(composeGetRequest(uri, parameters));
+		HttpRequestBase request = composeGetRequest(uri, parameters);
+		buildHeaders(request);
+		return requestor.request(request);
 	}
 
 	public <T extends Resource> T post() {
 		HttpPost request = (!hasFiles()) || isMultiPart ? composePostRequest(getBaseUri(), parameters) :
 			composeMultiPartFormRequest(getBaseUri(), parameters, files);
+		buildHeaders(request);
 		return requestor.request(request);
 	}
 
@@ -129,6 +162,15 @@ public class RequestBuilder<Resource> {
 
 	private String getBaseUri() {
 		return uri.contains("?") ? uri.substring(0, uri.indexOf('?')) : uri;
+	}
+
+	private void buildHeaders(final HttpRequestBase request) {
+		for(Header header : this.setHeaders)
+			for(String value : header)
+				request.setHeader(header.getName(), value);
+		for(Header header : this.addHeaders)
+			for(String value : header)
+				request.addHeader(header.getName(), value);
 	}
 
 	private HttpRequestBase composeGetRequest(String uri, final Parameters parameters) {

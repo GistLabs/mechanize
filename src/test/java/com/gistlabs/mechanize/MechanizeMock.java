@@ -9,7 +9,11 @@ package com.gistlabs.mechanize;
 
 import static junit.framework.Assert.*;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +35,8 @@ import org.junit.Assert;
 import org.junit.internal.ArrayComparisonFailure;
 
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
+import com.gistlabs.mechanize.headers.Header;
+import com.gistlabs.mechanize.headers.Headers;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.util.apache.ContentType;
 import com.gistlabs.mechanize.util.apache.URLEncodedUtils;
@@ -86,6 +92,7 @@ public class MechanizeMock extends MechanizeAgent {
 		public final String httpMethod;
 		public final String uri;
 		public final Parameters parameters;
+		public Headers headers = new Headers();
 		public final InputStream body;
 		public boolean wasExecuted = false;
 		public HttpClient client = null;
@@ -115,6 +122,12 @@ public class MechanizeMock extends MechanizeAgent {
 			this.uri = uri;
 			this.parameters = parameters;
 			this.body = body;
+		}
+
+		public PageRequest addHeader(final String header, final String... values) {
+			this.headers.add(header, values);
+
+			return this;
 		}
 
 		public boolean wasExecuted() {
@@ -148,6 +161,7 @@ public class MechanizeMock extends MechanizeAgent {
 					entity.setContent(body);
 
 					assertParameters(request);
+					assertHeaders(request);
 
 					this.wasExecuted = true;
 					return response;
@@ -159,6 +173,36 @@ public class MechanizeMock extends MechanizeAgent {
 			}
 			else
 				throw new UnsupportedOperationException("Request already executed");
+		}
+
+		private void assertHeaders(final HttpRequestBase request) throws ArrayComparisonFailure {
+			for(Header header: headers) {
+				org.apache.http.Header[] requestHeaders = request.getHeaders(header.getName());
+				boolean foundMatch = false;
+				for(org.apache.http.Header requestHeader : requestHeaders)
+					if (header.getValues().contains(requestHeader.getValue()))
+						foundMatch=true;
+				if (!foundMatch)
+					Assert.fail(String.format("Could not find request header matching: %s", header));
+			}
+			if(request instanceof HttpPost) {
+				HttpPost post = (HttpPost)request;
+				UrlEncodedFormEntity entity = (UrlEncodedFormEntity)post.getEntity();
+				Parameters actualParameters = extractParameters(entity);
+
+				String [] expectedNames = parameters.getNames();
+				String [] actualNames = actualParameters.getNames();
+				Arrays.sort(expectedNames);
+				Arrays.sort(actualNames);
+				Assert.assertArrayEquals("Expected and actual parameters should equal by available parameter names",
+						expectedNames, actualNames);
+
+				for(String name : expectedNames) {
+					String [] expectedValue = parameters.get(name);
+					String [] actualValue = actualParameters.get(name);
+					Assert.assertArrayEquals("Expected parameter of next PageRequest '" + uri + "' must match", expectedValue, actualValue);
+				}
+			}
 		}
 
 		private void assertParameters(final HttpRequestBase request) throws ArrayComparisonFailure {
