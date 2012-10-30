@@ -11,35 +11,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implements a multi-value parameter. 
+ * Implements a multi-value parameter.
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
 public class Parameter {
 	private final String name;
 	private final List<String> values = new ArrayList<String>();
-	
-	public Parameter(String name, String value) {
+
+	public Parameter(final String name, final String value) {
 		this.name = name;
 		this.values.add(value);
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public boolean isSingleValue() {
 		return values.size() == 1;
 	}
-	
-	public void addValue(String value) {
+
+	public void addValue(final String value) {
 		if(!values.contains(value))
 			values.add(value);
 	}
-	
+
 	public String getValue() {
 		return values.get(0);
 	}
-	
+
 	public List<String> getValues() {
 		return values;
 	}
