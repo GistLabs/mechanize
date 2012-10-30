@@ -24,52 +24,49 @@ public class Issue36Test {
 
 	//@org.junit.Test
 	public void testRedirect() throws IOException {
-	    String username = "";
-	    String password = "";
-	    MechanizeAgent agent = new MechanizeAgent() {
-	    	@Override
-	    	protected AbstractHttpClient buildDefaultHttpClient() {
-	    		AbstractHttpClient result = super.buildDefaultHttpClient();
-	    		
-	    		System.setProperty("http.proxyHost", "127.0.0.1");
-	    		System.setProperty("http.proxyPort", "8888");	    		
+		String username = "";
+		String password = "";
+		MechanizeAgent agent = new MechanizeAgent(buildClient());
 
-	    		//	    		HttpHost proxy = new HttpHost("localhost", 8080);
-	    		//	    		result.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
-	    		
-	    		ProxySelectorRoutePlanner routePlanner = new ProxySelectorRoutePlanner(
-	    		        result.getConnectionManager().getSchemeRegistry(),
-	    		        ProxySelector.getDefault());  
-	    		result.setRoutePlanner(routePlanner);
-	    		
-				return result;
-	    	}
-	    };
+		String manageKindleUrl = "http://www.amazon.com/gp/digital/fiona/manage/ref=gno_yam_myk";
+		Document signinPage = agent.get(manageKindleUrl);
 
-	    String manageKindleUrl = "http://www.amazon.com/gp/digital/fiona/manage/ref=gno_yam_myk";
-	    Document signinPage = agent.get(manageKindleUrl);
+		debug(signinPage);
 
-	    debug(signinPage);
+		Form form = signinPage.forms().get(0);
+		form.get("email").setValue(username);
+		((Checkable) form.get("ap_signin_existing_radio")).setChecked(true);
+		form.get("password").setValue(password);
+		Resource managePage = form.submit();
 
-	    Form form = signinPage.forms().get(0);
-	    form.get("email").setValue(username);
-	    ((Checkable) form.get("ap_signin_existing_radio")).setChecked(true);
-	    form.get("password").setValue(password);
-	    Resource managePage = form.submit();
-
-	    debug(managePage);
+		debug(managePage);
 
 	}
 
-	private void debug(Resource page) {
-	    System.out.println("\n\n\n");
-	    System.out.println("**** Page Headers ****");
-	    System.out.println(page.getResponse().toString());
-	    System.out.println("**** Page Cookies ****");
-	    for (Cookie cookie : page.getAgent().cookies()) {
-	        System.out.println(cookie.toString());
-	    }
-	    System.out.println("**** Page Body ****");
-	    System.out.println(page.asString());
+	private AbstractHttpClient buildClient() {
+		AbstractHttpClient result = MechanizeAgent.buildDefaultHttpClient();
+
+		System.setProperty("http.proxyHost", "127.0.0.1");
+		System.setProperty("http.proxyPort", "8888");
+
+		//	    		HttpHost proxy = new HttpHost("localhost", 8080);
+		//	    		result.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+
+		ProxySelectorRoutePlanner routePlanner = new ProxySelectorRoutePlanner(
+				result.getConnectionManager().getSchemeRegistry(),
+				ProxySelector.getDefault());
+		result.setRoutePlanner(routePlanner);
+
+		return result;
+	}
+	private void debug(final Resource page) {
+		System.out.println("\n\n\n");
+		System.out.println("**** Page Headers ****");
+		System.out.println(page.getResponse().toString());
+		System.out.println("**** Page Cookies ****");
+		for (Cookie cookie : page.getAgent().cookies())
+			System.out.println(cookie.toString());
+		System.out.println("**** Page Body ****");
+		System.out.println(page.asString());
 	}
 }

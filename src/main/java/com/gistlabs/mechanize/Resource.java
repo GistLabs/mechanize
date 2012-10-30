@@ -7,7 +7,14 @@
  */
 package com.gistlabs.mechanize;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
@@ -114,10 +121,14 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 
 	protected String inspectUri(final HttpRequestBase request, final HttpResponse response) {
 		Header contentLocation = Util.findHeader(response, "content-location");
-		if(contentLocation != null && contentLocation.getValue() != null)
+		if (contentLocation != null && contentLocation.getValue() != null)
 			return contentLocation.getValue();
-		else
-			return request.getURI().toString();
+
+		Header mechanizeLocation = Util.findHeader(response, MechanizeAgent.MECHANIZE_LOCATION);
+		if (mechanizeLocation!=null && mechanizeLocation.getValue()!=null)
+			return mechanizeLocation.getValue();
+
+		return request.getURI().toString();
 	}
 
 	public String getContentType() {

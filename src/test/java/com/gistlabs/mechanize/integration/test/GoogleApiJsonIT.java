@@ -13,7 +13,9 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.document.html.HtmlDocument;
 import com.gistlabs.mechanize.document.json.JsonDocument;
+import com.gistlabs.mechanize.document.json.node.JsonNode;
 import com.gistlabs.mechanize.document.node.Node;
 
 /**
@@ -25,6 +27,13 @@ public class GoogleApiJsonIT {
 	String longUrl = "http://gistlabs.com/software/mechanize-for-java/";
 
 	@Test
+	public void testShortUrl() throws JSONException {
+		MechanizeAgent agent = new MechanizeAgent();
+		HtmlDocument html = agent.get(shortUrl);
+		assertEquals(longUrl, html.getUri());
+	}
+
+	@Test
 	public void testGoogleApi() throws JSONException {
 		MechanizeAgent agent = new MechanizeAgent();
 		JsonDocument json = agent.doRequest(googleUrl)
@@ -32,7 +41,11 @@ public class GoogleApiJsonIT {
 				.add("projection", "FULL")
 				.get();
 
-		Node node = json.getRoot().find("longUrl");
+		JsonNode root = json.getRoot();
+		Node node = root.find("longUrl");
 		assertEquals(longUrl, node.getValue());
+
+		String value = root.find("analytics month countries#US count").getValue();
+		assertTrue(value, Integer.valueOf(value)>=1);
 	}
 }
