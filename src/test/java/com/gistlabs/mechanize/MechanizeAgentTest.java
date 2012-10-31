@@ -19,6 +19,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.Test;
 
+import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
@@ -38,7 +39,7 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		assertEquals("Test Page", page.getTitle());
 	}
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=MechanizeException.class)
 	public void testExpectPostButReceiveGetRequestFails() throws Exception {
 		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
 		disableAfterTest();

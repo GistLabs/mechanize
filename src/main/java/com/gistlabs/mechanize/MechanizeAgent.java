@@ -21,9 +21,9 @@ import org.apache.http.Header;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpResponseInterceptor;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpProtocolParams;
@@ -150,9 +150,7 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 			Resource resource = toPage(request, response);
 			history.add(resource);
 			return (T)resource;
-		} catch (ClientProtocolException e) {
-			throw MechanizeExceptionFactory.newException(e);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw MechanizeExceptionFactory.newException(e);
 		}
 	}
@@ -198,6 +196,9 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 
 	protected Resource toPage(final HttpRequestBase request, final HttpResponse response)
 			throws IOException, UnsupportedEncodingException {
+
+
+
 		ContentType contentType = getContentType(response);
 
 		ResourceFactory factory = lookupFactory(contentType.getMimeType());
@@ -214,7 +215,7 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		return ContentType.getOrDefault(response.getEntity());
 	}
 
-	protected HttpResponse execute(final HttpClient client, final HttpRequestBase request) throws IOException, ClientProtocolException {
+	protected HttpResponse execute(final HttpClient client, final HttpRequestBase request) throws Exception {
 		for(RequestInterceptor interceptor : filterInterceptors(RequestInterceptor.class))
 			interceptor.intercept(this, request);
 
@@ -226,6 +227,9 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 
 		for(ResponseInterceptor interceptor : filterInterceptors(ResponseInterceptor.class))
 			interceptor.intercept(this, response, request);
+
+		response.setEntity(new BufferedHttpEntity(response.getEntity()));
+
 		return response;
 	}
 

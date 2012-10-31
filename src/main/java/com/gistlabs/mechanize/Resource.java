@@ -7,7 +7,6 @@
  */
 package com.gistlabs.mechanize;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,7 +27,6 @@ import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
-import com.gistlabs.mechanize.util.CopyInputStream;
 import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
 import com.gistlabs.mechanize.util.apache.ContentType;
@@ -47,8 +45,6 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	private final String uri;
 	private final HttpRequestBase request;
 	protected final HttpResponse response;
-
-	private ByteArrayOutputStream originalContent;
 
 	public Resource(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
 		this.agent = agent;
@@ -90,11 +86,7 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	 * @throws IOException
 	 */
 	public InputStream getInputStream() throws IOException {
-		if (this.originalContent==null) {
-			this.originalContent = new ByteArrayOutputStream(getIntContentLength(this.response));
-			return new CopyInputStream(response.getEntity().getContent(), this.originalContent);
-		} else
-			return new ByteArrayInputStream(this.originalContent.toByteArray());
+		return this.response.getEntity().getContent();
 	}
 
 	/**
@@ -152,8 +144,8 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 		return uri;
 	}
 
-	public int size() {
-		return originalContent.size();
+	public long size() {
+		return this.response.getEntity().getContentLength();
 	}
 
 	public HttpRequestBase getRequest() {
@@ -212,7 +204,9 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	 * @return
 	 */
 	public String saveToString() {
-		return new String(this.originalContent.toByteArray());
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		saveTo(baos);
+		return new String(baos.toByteArray());
 	}
 
 	@Override

@@ -23,12 +23,12 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ProtocolVersion;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.entity.BufferedHttpEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
 import org.junit.Assert;
@@ -71,7 +71,7 @@ public class MechanizeMock extends MechanizeAgent {
 	}
 
 	@Override
-	protected HttpResponse execute(final HttpClient client, final HttpRequestBase request) throws IOException, ClientProtocolException {
+	protected HttpResponse execute(final HttpClient client, final HttpRequestBase request) throws Exception {
 		PageRequest pageRequest = nextUnexecutedPageRequest();
 		if(pageRequest != null)
 			return pageRequest.consume(client, request);
@@ -142,7 +142,7 @@ public class MechanizeMock extends MechanizeAgent {
 			this.contentLocation = contentLocation;
 		}
 
-		public HttpResponse consume(final HttpClient client, final HttpRequestBase request) {
+		public HttpResponse consume(final HttpClient client, final HttpRequestBase request) throws Exception {
 			if(!wasExecuted) {
 				this.client = client;
 				this.request = request;
@@ -153,12 +153,12 @@ public class MechanizeMock extends MechanizeAgent {
 				if(request.getURI().toString().equals(uri)) {
 					HttpResponse response = new BasicHttpResponse(new ProtocolVersion("HTTP", 1, 1), 200, "OK");
 					BasicHttpEntity entity = new BasicHttpEntity();
-					response.setEntity(entity);
 					if(contentLocation != null)
 						response.addHeader(new BasicHeader("Content-Location", contentLocation));
 					entity.setContentEncoding(charset);
 					entity.setContentType(this.contentType);
 					entity.setContent(body);
+					response.setEntity(new BufferedHttpEntity(entity));
 
 					assertParameters(request);
 					assertHeaders(request);
