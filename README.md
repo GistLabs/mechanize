@@ -1,12 +1,11 @@
 mechanize for java [![Build Status](https://gistlabs.ci.cloudbees.com/job/mechanize/badge/icon)](https://gistlabs.ci.cloudbees.com/job/mechanize/)
 ==========
 
-mechanize is a stateful HTTP/HTML client library. This implementation of mechanize is 
-written in Java to be available on the JVM. It utilizes 
-[HttpClient](http://hc.apache.org/httpcomponents-client-ga/index.html) for HTTP handling 
-and [JSoup](http://jsoup.org) for HTML parsing. Because mechanize is stateful, it will by 
-default support cookies and hidden form parameters (like Rails CSRF protection). 
-This enables client code to follow links  and behave like a RESTful hypermedia client more easily.
+mechanize is a stateful HTTP client library (RESTful) with support for HTML, JSON, and (soon) XML web services. 
+mechanize can scrape HTML, crawl web pages, and use JSON and XML web services.
+This implementation of mechanize is written in Java to be available on the JVM, and specifically compatible with Android. 
+It utilizes [HttpClient](http://hc.apache.org/httpcomponents-client-ga/index.html) for HTTP handling. 
+Because mechanize is stateful and allow inspection of web resources, it naturally support GET-then-POST semantics.
 
 
 * Project Home Page: http://gistlabs.com/software/mechanize-for-java/
@@ -14,7 +13,7 @@ This enables client code to follow links  and behave like a RESTful hypermedia c
 * Jenkins CI: https://gistlabs.ci.cloudbees.com/job/mechanize/
 * License: [MPL 2.0](http://mozilla.org/MPL/2.0/)
 
-Here is a sample testcase showing mechanize at work:
+Here is a sample testcase showing mechanize at work with HTML:
 ```java
 	@Test public void testGooglePageSearchForm() {
 		MechanizeAgent agent = new MechanizeAgent();
@@ -26,8 +25,25 @@ Here is a sample testcase showing mechanize at work:
 	}
 ```
 
+Here is a sample testcase showing mechanize using a Google JSON web service:
+```java
+	@Test
+	public void testGoogleApi() throws JSONException {
+		MechanizeAgent agent = new MechanizeAgent();
+		JsonDocument json = agent.doRequest(googleUrl).add("shortUrl", shortUrl).add("projection", "FULL").get();
+
+		assertEquals(longUrl, json.getRoot().find("longUrl").getValue());
+
+		String value = json.getRoot().find("analytics month countries#US count").getValue();
+		assertTrue(value, Integer.valueOf(value)>=1);
+	}
+```
+
+What to expect from near future development: #28 [Caching and Conditional GETs](https://github.com/GistLabs/mechanize/issues/18), #61 [XML Support](https://github.com/GistLabs/mechanize/issues/61)
+
 Release log:
 
+* 0.11.0 is pending... See https://github.com/GistLabs/mechanize/issues?milestone=8&state=open
 * 0.10.0 on Oct 22nd, 2012. Support for Android, JSON, and CSS Selectors (even for JSON). See https://github.com/GistLabs/mechanize/issues?milestone=7&page=1&state=closed
 * 0.9.1 on Oct 3rd, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=6&state=closed for list of resolved issues.
 * 0.9.0 on Sept 28th, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=2&page=1&state=closed for list of resolved issues.

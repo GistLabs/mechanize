@@ -15,8 +15,6 @@ import org.junit.Test;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.html.HtmlDocument;
 import com.gistlabs.mechanize.document.json.JsonDocument;
-import com.gistlabs.mechanize.document.json.node.JsonNode;
-import com.gistlabs.mechanize.document.node.Node;
 
 /**
  * 
@@ -36,16 +34,11 @@ public class GoogleApiJsonIT {
 	@Test
 	public void testGoogleApi() throws JSONException {
 		MechanizeAgent agent = new MechanizeAgent();
-		JsonDocument json = agent.doRequest(googleUrl)
-				.add("shortUrl", shortUrl)
-				.add("projection", "FULL")
-				.get();
+		JsonDocument json = agent.doRequest(googleUrl).add("shortUrl", shortUrl).add("projection", "FULL").get();
 
-		JsonNode root = json.getRoot();
-		Node node = root.find("longUrl");
-		assertEquals(longUrl, node.getValue());
+		assertEquals(longUrl, json.getRoot().find("longUrl").getValue());
 
-		String value = root.find("analytics month countries#US count").getValue();
+		String value = json.getRoot().find("analytics month countries#US count").getValue();
 		assertTrue(value, Integer.valueOf(value)>=1);
 	}
 }
