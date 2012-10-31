@@ -37,6 +37,22 @@ public class DefaultMechanizeChainFilter implements MechanizeFilter {
 
 	@Override
 	public HttpResponse execute(final HttpUriRequest request, final HttpContext context) {
-		return theEnd.execute(request, context);
+		return new ExecutionState().execute(request, context);
+	}
+
+	class ExecutionState implements MechanizeFilter {
+		int index=0;
+
+		@Override
+		public HttpResponse execute(final HttpUriRequest request, final HttpContext context) {
+			if (moreFilters())
+				return filters.get(index++).execute(request, context, this);
+			else
+				return theEnd.execute(request, context);
+		}
+
+		public boolean moreFilters() {
+			return index<filters.size();
+		}
 	}
 }
