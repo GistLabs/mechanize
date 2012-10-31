@@ -32,6 +32,7 @@ import org.apache.http.protocol.HttpContext;
 
 import com.gistlabs.mechanize.cookie.Cookies;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
+import com.gistlabs.mechanize.filters.DefaultMechanizeChainFilter;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.requestor.PageRequestor;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
@@ -72,7 +73,8 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		MechanizeInitializer.initialize();
 	}
 
-	private AbstractHttpClient client;
+	private final DefaultMechanizeChainFilter requestChain;
+	private final AbstractHttpClient client;
 	private final Cookies cookies;
 	private final List<Interceptor> interceptors = new ArrayList<Interceptor>();
 	private final History history = new History(this);
@@ -82,12 +84,13 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 	}
 
 	public MechanizeAgent(final AbstractHttpClient client) {
-		setHttpClient(client);
+		this.client = client;
+		setupClient(client);
+		this.requestChain = new DefaultMechanizeChainFilter(new MechanizeHttpClientFilter(client));
 		this.cookies = new Cookies(client);
 	}
 
-	private void setHttpClient(final AbstractHttpClient client) {
-		this.client = client;
+	private void setupClient(final AbstractHttpClient client) {
 		this.client.addResponseInterceptor(new HttpResponseInterceptor() {
 			@Override
 			public void process(final HttpResponse response, final HttpContext context)
@@ -220,7 +223,7 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 			interceptor.intercept(this, request);
 
 		HttpContext context = new BasicHttpContext();
-		HttpResponse response = client.execute(request, context);
+		HttpResponse response = requestChain.execute(request, context);
 
 		if (context.getAttribute("Location")!=null)
 			response.setHeader(MECHANIZE_LOCATION, (String) context.getAttribute("Location"));
