@@ -11,10 +11,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.http.Header;
@@ -76,7 +74,6 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 	private final DefaultMechanizeChainFilter requestChain;
 	private final AbstractHttpClient client;
 	private final Cookies cookies;
-	private final List<Interceptor> interceptors = new ArrayList<Interceptor>();
 	private final History history = new History(this);
 
 	public MechanizeAgent() {
@@ -219,38 +216,15 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 	}
 
 	protected HttpResponse execute(final HttpClient client, final HttpRequestBase request) throws Exception {
-		for(RequestInterceptor interceptor : filterInterceptors(RequestInterceptor.class))
-			interceptor.intercept(this, request);
-
 		HttpContext context = new BasicHttpContext();
 		HttpResponse response = requestChain.execute(request, context);
 
 		if (context.getAttribute("Location")!=null)
 			response.setHeader(MECHANIZE_LOCATION, (String) context.getAttribute("Location"));
 
-		for(ResponseInterceptor interceptor : filterInterceptors(ResponseInterceptor.class))
-			interceptor.intercept(this, response, request);
-
 		response.setEntity(new BufferedHttpEntity(response.getEntity()));
 
 		return response;
-	}
-
-	public void addInterceptor(final Interceptor interceptor) {
-		if(!interceptors.contains(interceptor))
-			interceptors.add(interceptor);
-	}
-
-	public void removeInterceptor(final Interceptor interceptor) {
-		interceptors.remove(interceptor);
-	}
-
-	private <T extends Interceptor> List<T> filterInterceptors(final Class<T> clazz) {
-		List<T> result = new ArrayList<T>();
-		for(Interceptor interceptor : interceptors)
-			if(clazz.isInstance(interceptor))
-				result.add(clazz.cast(interceptor));
-		return result;
 	}
 
 	@Override

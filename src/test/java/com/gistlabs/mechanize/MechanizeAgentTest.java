@@ -15,8 +15,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
@@ -148,31 +146,5 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 		page.saveTo(file);
 		assertEquals(45283, file.length());
 		file.delete();
-	}
-
-	@Test
-	public void testPreAndPostRequestInterceptor() {
-		Interceptor interceptor = new Interceptor();
-		MechanizeAgent agent = agent();
-		agent.addInterceptor(interceptor);
-		agent.get("http://wikipedia.org");
-		assertEquals(2, interceptor.getCount());
-	}
-
-	public static class Interceptor implements RequestInterceptor, ResponseInterceptor {
-		int count = 0;
-		@Override
-		public void intercept(final MechanizeAgent agent, final HttpRequestBase request) {
-			count ++;
-		}
-
-		@Override
-		public void intercept(final MechanizeAgent agent, final HttpResponse response, final HttpRequestBase request) {
-			count ++;
-		}
-
-		public int getCount() {
-			return count;
-		}
 	}
 }

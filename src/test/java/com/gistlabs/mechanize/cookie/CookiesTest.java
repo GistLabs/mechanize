@@ -7,17 +7,11 @@
  */
 package com.gistlabs.mechanize.cookie;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.RequestInterceptor;
-import com.gistlabs.mechanize.cookie.Cookie;
+import static org.junit.Assert.*;
 
-import org.apache.http.client.methods.HttpRequestBase;
 import org.junit.Test;
+
+import com.gistlabs.mechanize.MechanizeAgent;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -26,7 +20,7 @@ public class CookiesTest {
 	@Test
 	public void testWikipediaSendsNoCookies() {
 		MechanizeAgent agent = new MechanizeAgent();
-		
+
 		agent.get("http://www.wikipedia.org");
 		assertEquals(0, agent.cookies().getCount());
 	}
@@ -43,16 +37,14 @@ public class CookiesTest {
 	@Test
 	public void testGoogleComSendsTwoCookies() {
 		MechanizeAgent agent = new MechanizeAgent();
-		agent.addInterceptor(new RequestInterceptor() {
-			public void intercept(MechanizeAgent agent, HttpRequestBase request) {
-				request.addHeader("Accept-Language", "en-US");
-			}
-		});
-		
-		agent.get("https://www.google.co.uk/setprefdomain?prefdom=US&sig=0_iEtQ0487gjqkcvDjBk5XCH1G_WU%3D");
+
+		agent.
+		doRequest("https://www.google.co.uk/setprefdomain?prefdom=US&sig=0_iEtQ0487gjqkcvDjBk5XCH1G_WU%3D").
+		addHeader("Accept-Language", "en-US").
+		get();
 		assertEquals(2, agent.cookies().getCount());
 		assertNotNull(agent.cookies().get("NID", ".google.co.uk"));
-		assertNotNull(agent.cookies().get("PREF", ".google.co.uk")); 
+		assertNotNull(agent.cookies().get("PREF", ".google.co.uk"));
 	}
 
 	@Test
