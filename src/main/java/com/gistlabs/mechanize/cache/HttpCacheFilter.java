@@ -1,5 +1,6 @@
 package com.gistlabs.mechanize.cache;
 
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -9,6 +10,7 @@ import org.apache.http.protocol.HttpContext;
 
 import com.gistlabs.mechanize.filters.MechanizeChainFilter;
 import com.gistlabs.mechanize.filters.MechanizeFilter;
+import com.gistlabs.mechanize.util.Collections;
 
 /**
  * Support for cache and conditional HTTP request/response handling
@@ -18,15 +20,17 @@ import com.gistlabs.mechanize.filters.MechanizeFilter;
  *
  */
 public class HttpCacheFilter implements MechanizeChainFilter {
-	ConcurrentMap<String,CacheEntry> cache = new ConcurrentHashMap<String,CacheEntry>();
+	final static Collection<String> CACHE_METHODS = Collections.collection("GET"); // TODO Add HEAD to this list and cache results
+
+	final ConcurrentMap<String,CacheEntry> cache = new ConcurrentHashMap<String,CacheEntry>();
 
 	@Override
 	public HttpResponse execute(final HttpUriRequest request, final HttpContext context, final MechanizeFilter chain) {
 		String uri = request.getURI().toString();
 
 		// only handle GET requests
-		if (! request.getMethod().equalsIgnoreCase("GET")) {
-			maybeInvalidate(uri, request);
+		if (! CACHE_METHODS.contains(request.getMethod().toUpperCase())) {
+			invalidate(uri, request);
 			return chain.execute(request, context);
 		}
 
@@ -50,8 +54,8 @@ public class HttpCacheFilter implements MechanizeChainFilter {
 		return response;
 	}
 
-	protected void maybeInvalidate(final String uri, final HttpUriRequest request) {
-		// no-op right now, need to read some specs...
+	protected void invalidate(final String uri, final HttpUriRequest request) {
+		cache.remove(uri);
 	}
 
 	protected void store(final String uri, final CacheEntry cachedValue, final CacheEntry maybe) {
