@@ -30,7 +30,7 @@ import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
  * @author jheintz
  *
  */
-public class MechanizeInitializer {
+class MechanizeInitializer {
 	private static final Log log = LogFactory.getLog(MechanizeInitializer.class);
 
 	public static final String MECHANIZE_PAGE_FACTORIES = "mechanize.page.factories";

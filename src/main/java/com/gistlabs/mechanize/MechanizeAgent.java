@@ -28,9 +28,11 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
+import com.gistlabs.mechanize.cache.HttpCacheFilter;
 import com.gistlabs.mechanize.cookie.Cookies;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.filters.DefaultMechanizeChainFilter;
+import com.gistlabs.mechanize.filters.MechanizeChainFilter;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.requestor.PageRequestor;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
@@ -83,10 +85,16 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 	public MechanizeAgent(final AbstractHttpClient client) {
 		this.client = client;
 		setupClient(client);
-		this.requestChain = new DefaultMechanizeChainFilter(new MechanizeHttpClientFilter(client));
-		this.cookies = new Cookies(client);
+
+		this.requestChain = new DefaultMechanizeChainFilter(new MechanizeHttpClientFilter(this.client));
+		addFilter(new HttpCacheFilter());
+
+		this.cookies = new Cookies(this.client);
 	}
 
+	/**
+	 * This method is used to capture Location headers after HttpClient redirect handling.
+	 */
 	private void setupClient(final AbstractHttpClient client) {
 		this.client.addResponseInterceptor(new HttpResponseInterceptor() {
 			@Override
@@ -97,6 +105,11 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 					context.setAttribute("Location", header.getValue());
 			}
 		});
+	}
+
+	public MechanizeAgent addFilter(final MechanizeChainFilter filter) {
+		this.requestChain.add(filter);
+		return this;
 	}
 
 	/**

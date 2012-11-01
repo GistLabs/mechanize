@@ -35,6 +35,7 @@ public class GoogleApiJsonIT {
 	public void testGoogleApi() throws JSONException {
 		MechanizeAgent agent = new MechanizeAgent();
 		JsonDocument json = agent.doRequest(googleUrl).add("shortUrl", shortUrl).add("projection", "FULL").get();
+		//String debug = json.asString();
 
 		assertEquals(longUrl, json.getRoot().find("longUrl").getValue());
 
