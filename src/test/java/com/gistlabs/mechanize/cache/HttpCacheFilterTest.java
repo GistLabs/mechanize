@@ -3,6 +3,7 @@ package com.gistlabs.mechanize.cache;
 import static org.junit.Assert.*;
 
 import java.util.Date;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -31,5 +32,23 @@ public class HttpCacheFilterTest {
 	public void confirmDateUtil() throws DateParseException {
 		Date date = DateUtils.parseDate("Sun, 09 Aug 2009 01:56:14 GMT");
 		assertEquals("9 Aug 2009 01:56:14 GMT", date.toGMTString());
+	}
+
+	@Test
+	public void confirmConcurrentLinkedQueueOfferSemantics() {
+		ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue<String>();
+
+		assertTrue(queue.offer("a"));
+		assertEquals(1, queue.size());
+
+		assertTrue(queue.offer("b"));
+		assertEquals(2, queue.size());
+		assertEquals("a", queue.peek());
+
+		assertTrue(queue.offer("a"));
+		//assertEquals(2, queue.size());
+		//assertEquals("b", queue.peek());
+		assertEquals(3, queue.size());
+		assertEquals("a", queue.peek());
 	}
 }

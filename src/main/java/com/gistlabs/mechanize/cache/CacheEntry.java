@@ -59,6 +59,15 @@ class CacheEntry {
 	}
 
 	/**
+	 * The size of the entity content
+	 * 
+	 * @return
+	 */
+	public long byteCount() {
+		return this.response.getEntity().getContentLength();
+	}
+
+	/**
 	 * 
 	 * @return
 	 */
@@ -163,5 +172,4 @@ class CacheEntry {
 
 		return "";
 	}
-
 }

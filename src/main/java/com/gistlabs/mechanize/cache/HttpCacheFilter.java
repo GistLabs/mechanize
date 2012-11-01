@@ -1,8 +1,6 @@
 package com.gistlabs.mechanize.cache;
 
 import java.util.Collection;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -22,7 +20,15 @@ import com.gistlabs.mechanize.util.Collections;
 public class HttpCacheFilter implements MechanizeChainFilter {
 	final static Collection<String> CACHE_METHODS = Collections.collection("GET"); // TODO Add HEAD to this list and cache results
 
-	final ConcurrentMap<String,CacheEntry> cache = new ConcurrentHashMap<String,CacheEntry>();
+	final HttpCache cache;
+
+	public HttpCacheFilter() {
+		this(new InMemoryHttpCache());
+	}
+
+	public HttpCacheFilter(final HttpCache cache) {
+		this.cache = cache;
+	}
 
 	@Override
 	public HttpResponse execute(final HttpUriRequest request, final HttpContext context, final MechanizeFilter chain) {
