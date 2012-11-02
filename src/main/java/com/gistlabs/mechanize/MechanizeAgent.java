@@ -118,6 +118,12 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		});
 	}
 
+	public MechanizeAgent prefixFilter(final MechanizeChainFilter filter) {
+		this.requestChain.prefix(filter);
+		return this;
+	}
+
+
 	public MechanizeAgent addFilter(final MechanizeChainFilter filter) {
 		this.requestChain.add(filter);
 		return this;

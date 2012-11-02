@@ -8,7 +8,6 @@
 package com.gistlabs.mechanize.filters;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -22,7 +21,7 @@ import org.apache.http.protocol.HttpContext;
  */
 public class DefaultMechanizeChainFilter implements MechanizeFilter {
 	final MechanizeFilter theEnd;
-	final List<MechanizeChainFilter> filters = new LinkedList<MechanizeChainFilter>();
+	final LinkedList<MechanizeChainFilter> filters = new LinkedList<MechanizeChainFilter>();
 
 	public DefaultMechanizeChainFilter(final MechanizeFilter theEnd) {
 		if (theEnd==null)
@@ -30,9 +29,24 @@ public class DefaultMechanizeChainFilter implements MechanizeFilter {
 		this.theEnd = theEnd;
 	}
 
+	/**
+	 * Adds a filter, runs after those added before it
+	 * 
+	 * @param filter
+	 * @return
+	 */
 	public DefaultMechanizeChainFilter add(final MechanizeChainFilter filter) {
 		filters.add(filter);
 		return this;
+	}
+
+	/**
+	 * Adds a filter, to the front of the pipeline
+	 * 
+	 * @param filter
+	 */
+	public void prefix(final MechanizeChainFilter filter) {
+		filters.addFirst(filter);
 	}
 
 	@Override
