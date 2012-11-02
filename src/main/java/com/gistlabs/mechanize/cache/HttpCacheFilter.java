@@ -76,21 +76,12 @@ public class HttpCacheFilter implements MechanizeChainFilter {
 		return response;
 	}
 
-	/**
-	 * This doesn't actually use a cached response yet... but will update cached headers with new details from the HEAD response.
-	 * 
-	 * @param request
-	 * @param context
-	 * @param chain
-	 * @return
-	 */
 	public HttpResponse executeHEAD(final HttpUriRequest request, final HttpContext context, final MechanizeFilter chain) {
 		String uri = request.getURI().toString();
 		CacheEntry previous = cache.get(uri);
 
-		// TODO need to wrap response to look like a HEAD resonse...
-		//		if (previous!=null && previous.isValid())
-		//			return head(previous.response);
+		if (previous!=null && previous.isValid())
+			return previous.head();
 
 		if (previous!=null)
 			previous.prepareConditionalGet(request);

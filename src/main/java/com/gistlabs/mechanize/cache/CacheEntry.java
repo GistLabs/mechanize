@@ -15,8 +15,10 @@ import org.apache.http.HeaderElement;
 import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
+import org.apache.http.message.BasicHttpResponse;
 
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 
@@ -31,7 +33,11 @@ class CacheEntry {
 	final Date date = new Date();
 
 	public CacheEntry(final HttpUriRequest request, final HttpResponse response) {
+		if (request==null)
+			throw new NullPointerException("request can't be null!");
 		this.request = request;
+		if (response==null)
+			throw new NullPointerException("response can't be null!");
 		this.response = response;
 
 	}
@@ -129,6 +135,19 @@ class CacheEntry {
 	public void prepareConditionalGet(final HttpUriRequest newRequest) {
 		transferFirstHeader("E-Tag", "If-None-Match", this.response, newRequest);
 		transferFirstHeader("Last-Modified", "If-None-Match", this.response, newRequest);
+	}
+
+	/**
+	 * Return a response to a HEAD request (status line, headers, no entity body)
+	 * @return
+	 */
+	public HttpResponse head() {
+		BasicHttpResponse response = new BasicHttpResponse(this.response.getStatusLine());
+		Header[] allHeaders = this.response.getAllHeaders();
+		for (Header allHeader : allHeaders)
+			response.addHeader(allHeader);
+		response.setEntity(new ByteArrayEntity(new byte[]{}));
+		return response;
 	}
 
 	protected void transferFirstHeader(final String headerName, final HttpMessage origin, final HttpMessage dest) {
