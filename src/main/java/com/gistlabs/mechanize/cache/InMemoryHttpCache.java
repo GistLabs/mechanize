@@ -41,9 +41,11 @@ public class InMemoryHttpCache implements HttpCache {
 		CacheEntry entry = cache.get(uri);
 
 		if (entry!=null) { // refresh LRU
+			entry.response.setHeader("Via", "mechanize");
 			uriFifo.remove(uri);
 			uriFifo.offer(uri);
 		}
+
 
 		return entry;
 	}

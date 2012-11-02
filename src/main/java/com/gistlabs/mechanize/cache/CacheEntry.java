@@ -46,15 +46,11 @@ class CacheEntry {
 	 * Is this a cacheable response? Does it indicate either caching or conditional checks?
 	 */
 	public boolean isCacheable() {
-		boolean mustNotCache =
-				has("Pragma", "no-cache", this.response)
-				|| has("Cache-Control", "no-cache", this.response);
-
-		if (mustNotCache)
-			return false;
-
 		boolean supportsConditionals = has("Last-Modified", this.response) || has("ETag", this.response);
-		boolean isCacheable = has("Cache-Control", this.response)|| has("Expires", this.response);
+		boolean isCacheable =
+				has("Cache-Control", "s-maxage", this.response)
+				|| has("Cache-Control", "max-age", this.response)
+				|| has("Expires", this.response);
 		return supportsConditionals || isCacheable;
 	}
 
@@ -64,6 +60,13 @@ class CacheEntry {
 	 * @return
 	 */
 	public boolean isValid() {
+		boolean mustNotCache =
+				has("Pragma", "no-cache", this.response)
+				|| has("Cache-Control", "no-cache", this.response);
+
+		if (mustNotCache)
+			return false;
+
 		Date now = new Date();
 		Date cacheControl = getCacheControlExpiresDate();
 		Date expires = getExpiresDate();
@@ -134,7 +137,7 @@ class CacheEntry {
 
 	public void prepareConditionalGet(final HttpUriRequest newRequest) {
 		transferFirstHeader("ETag", "If-None-Match", this.response, newRequest);
-		transferFirstHeader("Last-Modified", "If-None-Match", this.response, newRequest);
+		transferFirstHeader("Last-Modified", "If-Modified-Since", this.response, newRequest);
 	}
 
 	/**
