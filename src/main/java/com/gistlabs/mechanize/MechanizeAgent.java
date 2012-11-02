@@ -28,7 +28,9 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
+import com.gistlabs.mechanize.cache.HttpCache;
 import com.gistlabs.mechanize.cache.HttpCacheFilter;
+import com.gistlabs.mechanize.cache.InMemoryHttpCache;
 import com.gistlabs.mechanize.cookie.Cookies;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.filters.DefaultMechanizeChainFilter;
@@ -83,13 +85,22 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 	}
 
 	public MechanizeAgent(final AbstractHttpClient client) {
+		this(client, new InMemoryHttpCache());
+	}
+
+	public MechanizeAgent(final HttpCache httpCache) {
+		this(buildDefaultHttpClient(), httpCache);
+	}
+
+	public MechanizeAgent(final AbstractHttpClient client, final HttpCache httpCache) {
 		this.client = client;
 		setupClient(client);
 
 		this.requestChain = new DefaultMechanizeChainFilter(new MechanizeHttpClientFilter(this.client));
-		addFilter(new HttpCacheFilter());
+		addFilter(new HttpCacheFilter(httpCache));
 
 		this.cookies = new Cookies(this.client);
+
 	}
 
 	/**
