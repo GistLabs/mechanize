@@ -32,6 +32,11 @@ public class InMemoryHttpCache implements HttpCache {
 	}
 
 	@Override
+	public String toString() {
+		return String.format("InMemoryHttpCache[current=%skb]", currentBytes.get()/1024);
+	}
+
+	@Override
 	public CacheEntry get(final String uri) {
 		CacheEntry entry = cache.get(uri);
 

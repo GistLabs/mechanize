@@ -46,6 +46,12 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	private final HttpRequestBase request;
 	protected final HttpResponse response;
 
+	/**
+	 * this is just to help while debugging, it shows the request/response contents
+	 */
+	@SuppressWarnings("unused")
+	private final Debug debugRequestResponse = new Debug(this);
+
 	public Resource(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
 		this.agent = agent;
 		this.request = request;
