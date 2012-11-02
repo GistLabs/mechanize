@@ -39,14 +39,23 @@ public class HttpCacheFilter implements MechanizeChainFilter {
 
 	@Override
 	public HttpResponse execute(final HttpUriRequest request, final HttpContext context, final MechanizeFilter chain) {
+		String method = request.getMethod().toUpperCase();
+		if (method.equals("GET"))
+			return executeGET(request, context, chain);
+		else if (method.equals("HEAD"))
+			return executeHEAD(request, context, chain);
+		else
+			return executeOther(request, context, chain);
+	}
+
+	public HttpResponse executeOther(final HttpUriRequest request, final HttpContext context, final MechanizeFilter chain) {
 		String uri = request.getURI().toString();
+		invalidate(uri, request);
+		return chain.execute(request, context);
+	}
 
-		// only handle GET requests
-		if (! CACHE_METHODS.contains(request.getMethod().toUpperCase())) {
-			invalidate(uri, request);
-			return chain.execute(request, context);
-		}
-
+	public HttpResponse executeGET(final HttpUriRequest request, final HttpContext context, final MechanizeFilter chain) {
+		String uri = request.getURI().toString();
 		CacheEntry previous = cache.get(uri);
 		if (previous!=null && previous.isValid())
 			return previous.response;
@@ -63,6 +72,33 @@ public class HttpCacheFilter implements MechanizeChainFilter {
 
 		if (maybe.isCacheable())
 			store(uri, previous, maybe);
+
+		return response;
+	}
+
+	/**
+	 * This doesn't actually use a cached response yet... but will update cached headers with new details from the HEAD response.
+	 * 
+	 * @param request
+	 * @param context
+	 * @param chain
+	 * @return
+	 */
+	public HttpResponse executeHEAD(final HttpUriRequest request, final HttpContext context, final MechanizeFilter chain) {
+		String uri = request.getURI().toString();
+		CacheEntry previous = cache.get(uri);
+
+		// TODO need to wrap response to look like a HEAD resonse...
+		//		if (previous!=null && previous.isValid())
+		//			return head(previous.response);
+
+		if (previous!=null)
+			previous.prepareConditionalGet(request);
+
+		HttpResponse response = chain.execute(request, context); // call the chain
+
+		if (previous!=null)
+			previous.updateCacheValues(response);
 
 		return response;
 	}
