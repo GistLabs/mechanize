@@ -12,6 +12,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * An in-memory HttpCache, by default capped to 64MB of response content. (This only counts the entity length).
+ * @author jheintz
+ *
+ */
 public class InMemoryHttpCache implements HttpCache {
 	final ConcurrentMap<String,CacheEntry> cache = new ConcurrentHashMap<String,CacheEntry>(1024);
 	final ConcurrentLinkedQueue<String> uriFifo = new ConcurrentLinkedQueue<String>();
@@ -48,26 +53,29 @@ public class InMemoryHttpCache implements HttpCache {
 	}
 
 	@Override
-	public void putIfAbsent(final String uri, final CacheEntry maybe) {
+	public boolean putIfAbsent(final String uri, final CacheEntry maybe) {
 		if (!ensureCapacity(getByteCount(maybe)))
-			return; // and don't cache
+			return false; // and don't cache
 
 		CacheEntry previous = cache.putIfAbsent(uri, maybe);
 
 		currentBytes.addAndGet(getByteCount(maybe) - getByteCount(previous));
+		return true;
 	}
 
 	@Override
-	public void replace(final String uri, final CacheEntry cachedValue, final CacheEntry maybe) {
+	public boolean replace(final String uri, final CacheEntry cachedValue, final CacheEntry maybe) {
 		if (!ensureCapacity(getByteCount(maybe))) {
 			remove(uri);
-			return; // and don't cache
+			return false; // and don't cache
 		}
 
 		boolean replaced = cache.replace(uri, cachedValue, maybe);
 
 		if (replaced)
 			currentBytes.addAndGet(getByteCount(maybe)-getByteCount(cachedValue));
+
+		return true;
 	}
 
 	protected boolean ensureCapacity(final long byteCount) {

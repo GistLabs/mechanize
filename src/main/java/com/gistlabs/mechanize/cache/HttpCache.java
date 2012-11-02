@@ -13,8 +13,8 @@ public interface HttpCache {
 
 	void remove(String uri);
 
-	void putIfAbsent(String uri, CacheEntry maybe);
+	boolean putIfAbsent(String uri, CacheEntry maybe);
 
-	void replace(String uri, CacheEntry cachedValue, CacheEntry maybe);
+	boolean replace(String uri, CacheEntry cachedValue, CacheEntry maybe);
 
 }

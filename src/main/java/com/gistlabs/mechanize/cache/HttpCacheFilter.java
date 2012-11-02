@@ -71,11 +71,11 @@ public class HttpCacheFilter implements MechanizeChainFilter {
 		cache.remove(uri);
 	}
 
-	protected void store(final String uri, final CacheEntry cachedValue, final CacheEntry maybe) {
+	protected boolean store(final String uri, final CacheEntry cachedValue, final CacheEntry maybe) {
 		if (cachedValue==null)
-			cache.putIfAbsent(uri, maybe);
+			return cache.putIfAbsent(uri, maybe);
 		else
-			cache.replace(uri, cachedValue, maybe);
+			return cache.replace(uri, cachedValue, maybe);
 	}
 
 }
