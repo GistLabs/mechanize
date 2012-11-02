@@ -53,7 +53,7 @@ class CacheEntry {
 		if (mustNotCache)
 			return false;
 
-		boolean supportsConditionals = has("Last-Modified", this.response) || has("E-Tag", this.response);
+		boolean supportsConditionals = has("Last-Modified", this.response) || has("ETag", this.response);
 		boolean isCacheable = has("Cache-Control", this.response)|| has("Expires", this.response);
 		return supportsConditionals || isCacheable;
 	}
@@ -125,7 +125,7 @@ class CacheEntry {
 
 	public CacheEntry updateCacheValues(final HttpResponse response) {
 		transferFirstHeader("Date", response, this.response);
-		transferFirstHeader("E-Tag", response, this.response);
+		transferFirstHeader("ETag", response, this.response);
 		transferFirstHeader("Last-Modified", response, this.response);
 		transferFirstHeader("Cache-Control", response, this.response);
 		transferFirstHeader("Expires", response, this.response);
@@ -133,7 +133,7 @@ class CacheEntry {
 	}
 
 	public void prepareConditionalGet(final HttpUriRequest newRequest) {
-		transferFirstHeader("E-Tag", "If-None-Match", this.response, newRequest);
+		transferFirstHeader("ETag", "If-None-Match", this.response, newRequest);
 		transferFirstHeader("Last-Modified", "If-None-Match", this.response, newRequest);
 	}
 

@@ -18,7 +18,7 @@ import com.gistlabs.mechanize.filters.MechanizeFilter;
  * Support for cache and conditional HTTP request/response handling
  * 
  * Includes support for the following HTTP Headers to support caching: Cache-Control, Expires, Date, Age
- * Includes support for the following HTTP Headers to support conditions: Last-Modified, E-Tag, If-Modified-Since, If-None-Match
+ * Includes support for the following HTTP Headers to support conditions: Last-Modified, ETag, If-Modified-Since, If-None-Match
  *
  */
 public class HttpCacheFilter implements MechanizeChainFilter {
