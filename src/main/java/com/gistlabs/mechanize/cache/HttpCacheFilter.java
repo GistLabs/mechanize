@@ -7,15 +7,12 @@
  */
 package com.gistlabs.mechanize.cache;
 
-import java.util.Collection;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.protocol.HttpContext;
 
 import com.gistlabs.mechanize.filters.MechanizeChainFilter;
 import com.gistlabs.mechanize.filters.MechanizeFilter;
-import com.gistlabs.mechanize.util.Collections;
 
 /**
  * Support for cache and conditional HTTP request/response handling
@@ -25,8 +22,6 @@ import com.gistlabs.mechanize.util.Collections;
  *
  */
 public class HttpCacheFilter implements MechanizeChainFilter {
-	final static Collection<String> CACHE_METHODS = Collections.collection("GET"); // TODO Add HEAD to this list and cache results
-
 	final HttpCache cache;
 
 	public HttpCacheFilter() {
