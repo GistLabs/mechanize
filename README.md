@@ -43,7 +43,7 @@ What to expect from near future development: #28 [Caching and Conditional GETs](
 
 Release log:
 
-* 0.11.0 is pending... See https://github.com/GistLabs/mechanize/issues?milestone=8&state=open
+* 0.11.0 on Nov 12th, 2012. Support for Request Headers, Cache and Conditional loading, and chained filters. See https://github.com/GistLabs/mechanize/issues?milestone=8&state=closed
 * 0.10.0 on Oct 22nd, 2012. Support for Android, JSON, and CSS Selectors (even for JSON). See https://github.com/GistLabs/mechanize/issues?milestone=7&page=1&state=closed
 * 0.9.1 on Oct 3rd, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=6&state=closed for list of resolved issues.
 * 0.9.0 on Sept 28th, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=2&page=1&state=closed for list of resolved issues.
@@ -54,7 +54,7 @@ Download the code from https://github.com/GistLabs/mechanize/downloads, or use a
   <dependency>
     <groupId>com.gistlabs</groupId>
     <artifactId>mechanize</artifactId>
-    <version>0.10.0</version>
+    <version>0.11.0</version>
   </dependency>
 ```
 
