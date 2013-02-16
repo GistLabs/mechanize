@@ -43,11 +43,11 @@ import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
  * Mechanize agent acts as a focal point for HTTP interactions and also as a factory for Page objects from responses.
- * 
+ *
  * <p>Interesting resources: http://en.wikipedia.org/wiki/List_of_HTTP_header_fields</p>
- * 
+ *
  * <p>NOTE: The mechanize library is not synchronized and should be used in a single thread environment or with custom synchronization.</p>
- * 
+ *
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @author John Heintz <john@gistlabs.com>
  */
@@ -78,7 +78,6 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 	private final DefaultMechanizeChainFilter requestChain;
 	private final AbstractHttpClient client;
 	private final Cookies cookies;
-	private final History history = new History(this);
 
 	public MechanizeAgent() {
 		this(buildDefaultHttpClient());
@@ -138,7 +137,7 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 	}
 
 	/**
-	 * 
+	 *
 	 * @param userAgent The value to set User-Agent HTTP parameter to for requests
 	 * @return
 	 */
@@ -148,7 +147,7 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the User-Agent that HttpClient is currently using.
 	 */
 	public String getUserAgent() {
@@ -157,10 +156,6 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 
 	public AbstractHttpClient getClient() {
 		return client;
-	}
-
-	public History history() {
-		return history;
 	}
 
 	@Override
@@ -178,7 +173,6 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		try {
 			HttpResponse response = execute(client, request);
 			Resource resource = toPage(request, response);
-			history.add(resource);
 			return (T)resource;
 		} catch (Exception e) {
 			throw MechanizeExceptionFactory.newException(e);
