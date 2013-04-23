@@ -150,8 +150,10 @@ public class RequestBuilder<Resource> {
 	}
 
 	public <T extends Resource> T post() {
-		HttpPost request = (!hasFiles()) || isMultiPart ? composePostRequest(getBaseUri(), parameters) :
-			composeMultiPartFormRequest(getBaseUri(), parameters, files);
+		//		HttpPost request = (!hasFiles()) || isMultiPart ? composePostRequest(getBaseUri(), parameters) :
+		//			composeMultiPartFormRequest(getBaseUri(), parameters, files);
+		HttpPost request = (hasFiles() || isMultiPart) ? composeMultiPartFormRequest(getBaseUri(), parameters, files) :
+			composePostRequest(getBaseUri(), parameters);
 		buildHeaders(request);
 		return requestor.request(request);
 	}

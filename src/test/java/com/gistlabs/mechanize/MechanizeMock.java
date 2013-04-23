@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -29,6 +30,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.entity.BufferedHttpEntity;
+import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpResponse;
 import org.junit.Assert;
@@ -187,7 +189,7 @@ public class MechanizeMock extends MechanizeAgent {
 			}
 			if(request instanceof HttpPost) {
 				HttpPost post = (HttpPost)request;
-				UrlEncodedFormEntity entity = (UrlEncodedFormEntity)post.getEntity();
+				HttpEntity entity = post.getEntity();
 				Parameters actualParameters = extractParameters(entity);
 
 				String [] expectedNames = parameters.getNames();
@@ -208,7 +210,7 @@ public class MechanizeMock extends MechanizeAgent {
 		private void assertParameters(final HttpRequestBase request) throws ArrayComparisonFailure {
 			if(request instanceof HttpPost) {
 				HttpPost post = (HttpPost)request;
-				UrlEncodedFormEntity entity = (UrlEncodedFormEntity)post.getEntity();
+				HttpEntity entity = post.getEntity();
 				Parameters actualParameters = extractParameters(entity);
 
 				String [] expectedNames = parameters.getNames();
@@ -224,6 +226,22 @@ public class MechanizeMock extends MechanizeAgent {
 					Assert.assertArrayEquals("Expected parameter of next PageRequest '" + uri + "' must match", expectedValue, actualValue);
 				}
 			}
+		}
+
+		private Parameters extractParameters(final HttpEntity entity) {
+			if (entity instanceof UrlEncodedFormEntity)
+				return extractParameters((UrlEncodedFormEntity)entity);
+			if (entity instanceof MultipartEntity)
+				return extractParameters((MultipartEntity)entity);
+			throw new ClassCastException(String.format("Can't convert %s to either UrlEncodedFormEntity or MultipartEntity",entity.getClass()));
+		}
+
+		private Parameters extractParameters(final MultipartEntity entity) {
+			Parameters parameters = new Parameters();
+
+			// appears to be impossible to get parts...?
+
+			return parameters;
 		}
 
 		private Parameters extractParameters(final UrlEncodedFormEntity entity) {
