@@ -1,16 +1,14 @@
 mechanize for java [![Build Status](https://gistlabs.ci.cloudbees.com/job/mechanize/badge/icon)](https://gistlabs.ci.cloudbees.com/job/mechanize/)
 ==========
 
-mechanize is a stateful HTTP client library (RESTful) with support for HTML, JSON, and (soon) XML web services. 
-mechanize can scrape HTML, crawl web pages, and use JSON and XML web services.
-This implementation of mechanize is written in Java to be available on the JVM, and specifically compatible with Android. 
-It utilizes [HttpClient](http://hc.apache.org/httpcomponents-client-ga/index.html) for HTTP handling. 
+mechanize is a stateful HTTP web services client library (RESTful) with support for HTML, JSON, and XML services.
 Because mechanize is stateful and allow inspection of web resources, it naturally support GET-then-POST semantics.
 
 
 * Project Home Page: http://gistlabs.com/software/mechanize-for-java/
 * GitHub: https://github.com/GistLabs/mechanize
 * Jenkins CI: https://gistlabs.ci.cloudbees.com/job/mechanize/
+* Forum: https://groups.google.com/forum/?fromgroups#!forum/mechanize4j
 * License: [MPL 2.0](http://mozilla.org/MPL/2.0/)
 
 Here is a sample testcase showing mechanize at work with HTML:
