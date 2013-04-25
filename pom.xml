@@ -8,8 +8,8 @@
   </parent>
 
   <groupId>com.gistlabs</groupId>
-  <artifactId>mechanize-android</artifactId>
-  <version>0.11.1-SNAPSHOT</version>
+  <artifactId>mechanize</artifactId>
+  <version>0.11.2-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>mechanize</name>
@@ -161,6 +161,9 @@
                     <phase>package</phase>
                     <goals><goal>shade</goal></goals>
                     <configuration>
+                        <shadedArtifactId>mechanize-android</shadedArtifactId>
+                        <shadedArtifactAttached>true</shadedArtifactAttached>
+                        <shadedClassifierName>android</shadedClassifierName>
                         <artifactSet>
                             <includes><include>org.json:json</include></includes>
                         </artifactSet>
