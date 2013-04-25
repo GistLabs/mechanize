@@ -14,10 +14,10 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.protocol.HttpContext;
 
 /**
- * Inprired by Servlet Filters, this represents executing a request and getting a repsonse.
- * 
+ * Inprired by Servlet Filters, this represents executing a request and getting a response.
+ *
  * Each filter in turn is called, and eventually a terminal MechanizeFilter will be called last.
- * 
+ *
  */
 public class DefaultMechanizeChainFilter implements MechanizeFilter {
 	final MechanizeFilter theEnd;
@@ -31,7 +31,7 @@ public class DefaultMechanizeChainFilter implements MechanizeFilter {
 
 	/**
 	 * Adds a filter, runs after those added before it
-	 * 
+	 *
 	 * @param filter
 	 * @return
 	 */
@@ -42,7 +42,7 @@ public class DefaultMechanizeChainFilter implements MechanizeFilter {
 
 	/**
 	 * Adds a filter, to the front of the pipeline
-	 * 
+	 *
 	 * @param filter
 	 */
 	public void prefix(final MechanizeChainFilter filter) {
