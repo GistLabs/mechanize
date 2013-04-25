@@ -37,11 +37,11 @@ Here is a sample testcase showing mechanize using a Google JSON web service:
 	}
 ```
 
-What to expect from near future development: #28 [Caching and Conditional GETs](https://github.com/GistLabs/mechanize/issues/18), #61 [XML Support](https://github.com/GistLabs/mechanize/issues/61)
+What to expect from near future development: #61 [XML Support](https://github.com/GistLabs/mechanize/issues/61)
 
 Release log:
 
-* 0.11.0 on Nov 12th, 2012. Support for Request Headers, Cache and Conditional loading, and chained filters. See https://github.com/GistLabs/mechanize/issues?milestone=8&state=closed
+* 0.11.0 on Nov 12th, 2012. Support for Request Headers, #18 Cache and Conditional loading, and chained filters. See https://github.com/GistLabs/mechanize/issues?milestone=8&state=closed
 * 0.10.0 on Oct 22nd, 2012. Support for Android, JSON, and CSS Selectors (even for JSON). See https://github.com/GistLabs/mechanize/issues?milestone=7&page=1&state=closed
 * 0.9.1 on Oct 3rd, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=6&state=closed for list of resolved issues.
 * 0.9.0 on Sept 28th, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=2&page=1&state=closed for list of resolved issues.

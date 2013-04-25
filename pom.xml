@@ -6,7 +6,7 @@
       <artifactId>oss-parent</artifactId>
       <version>7</version>
   </parent>
-  
+
   <groupId>com.gistlabs</groupId>
   <artifactId>mechanize</artifactId>
   <version>0.11.1-SNAPSHOT</version>
@@ -25,19 +25,19 @@
   		<name>Mozilla Public Licence 2.0</name>
   		<url>http://mozilla.org/MPL/2.0/</url>
   		<distribution>repo</distribution>
-  	</license>  
+  	</license>
   </licenses>
   <scm>
     <connection>scm:git:https://github.com/GistLabs/mechanize.git</connection>
     <url>https://github.com/GistLabs/mechanize</url>
     <developerConnection>scm:git:git@github.com:GistLabs/mechanize.git</developerConnection>
   </scm>
-  
+
   <organization>
   	<name>Gist Labs</name>
   	<url>http://gistlabs.com/</url>
   </organization>
-  
+
   <developers>
     <developer>
         <id>jheintz</id>
@@ -55,7 +55,7 @@
         <email>Martin.Kersten.mk@gmail.com</email>
     </developer>
     </developers>
-  
+
   <distributionManagement>
     <snapshotRepository>
       <id>sonatype-nexus-snapshots</id>
@@ -68,7 +68,7 @@
       <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
-  
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <sonar.exclusions>com/gistlabs/mechanize/util/apache/**/*,com/gistlabs/mechanize/util/css_query/**/*</sonar.exclusions>
@@ -83,7 +83,7 @@
         <filtering>true</filtering>
       </resource>
     </resources>
-    
+
     <plugins>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
@@ -153,7 +153,7 @@
           </executions>
         </plugin>
         </plugins>
-  </build>  
+  </build>
 
   <dependencies>
     <dependency>
@@ -183,7 +183,7 @@
       <version>1.9.5</version>
       <scope>test</scope>
     </dependency>
-            
+
     <dependency>
     	<groupId>org.apache.httpcomponents</groupId>
     	<artifactId>httpclient</artifactId>
@@ -195,7 +195,7 @@
     	<version>4.0.1</version>
     </dependency>
   </dependencies>
-  
+
   <profiles>
       <profile>
           <id>latestHttpClient</id>
