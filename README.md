@@ -11,7 +11,7 @@ Because mechanize is stateful and allow inspection of web resources, it naturall
 * Forum: https://groups.google.com/forum/?fromgroups#!forum/mechanize4j
 * License: [MPL 2.0](http://mozilla.org/MPL/2.0/)
 
-Here is a sample testcase showing mechanize at work with HTML:
+Here is a testcase showing mechanize at work with HTML:
 ```java
 	@Test public void testGooglePageSearchForm() {
 		MechanizeAgent agent = new MechanizeAgent();
@@ -23,7 +23,7 @@ Here is a sample testcase showing mechanize at work with HTML:
 	}
 ```
 
-Here is a sample testcase showing mechanize using a Google JSON web service:
+Here is a testcase showing mechanize using a Google JSON web service:
 ```java
 	@Test
 	public void testGoogleApi() throws JSONException {
@@ -37,7 +37,7 @@ Here is a sample testcase showing mechanize using a Google JSON web service:
 	}
 ```
 
-What to expect from near future development: #61 [XML Support](https://github.com/GistLabs/mechanize/issues/61)
+What to expect from future development: #61 [XML Support](https://github.com/GistLabs/mechanize/issues/61)
 
 Release log:
 
