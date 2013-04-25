@@ -37,7 +37,7 @@ Here is a testcase showing mechanize using a Google JSON web service:
 	}
 ```
 
-What to expect from future development: #61 [XML Support](https://github.com/GistLabs/mechanize/issues/61)
+What to expect from future development: [#61 XML Support](https://github.com/GistLabs/mechanize/issues/61)
 
 Release log:
 
