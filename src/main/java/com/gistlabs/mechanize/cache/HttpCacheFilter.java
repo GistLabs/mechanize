@@ -16,7 +16,7 @@ import com.gistlabs.mechanize.filters.MechanizeFilter;
 
 /**
  * Support for cache and conditional HTTP request/response handling
- * 
+ *
  * Includes support for the following HTTP Headers to support caching: Cache-Control, Expires, Date, Age
  * Includes support for the following HTTP Headers to support conditions: Last-Modified, ETag, If-Modified-Since, If-None-Match
  *
@@ -53,7 +53,7 @@ public class HttpCacheFilter implements MechanizeChainFilter {
 		String uri = request.getURI().toString();
 		CacheEntry previous = cache.get(uri);
 		if (previous!=null && previous.isValid())
-			return previous.response;
+			return previous.getResponse();
 
 		if (previous!=null)
 			previous.prepareConditionalGet(request);
@@ -61,7 +61,7 @@ public class HttpCacheFilter implements MechanizeChainFilter {
 		HttpResponse response = chain.execute(request, context); // call the chain
 
 		if (response.getStatusLine().getStatusCode()==304) // not modified
-			return previous.updateCacheValues(response).response;
+			return previous.updateCacheValues(response).getResponse();
 
 		CacheEntry maybe = new CacheEntry(request, response);
 

@@ -24,8 +24,8 @@ import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 
 class CacheEntry {
 	private static final Date OLD = new Date(0);
-	final HttpUriRequest request;
-	final HttpResponse response;
+	final private HttpUriRequest request;
+	final private HttpResponse response;
 
 	/**
 	 * Used when the response doesn't include a Date header...
@@ -56,7 +56,7 @@ class CacheEntry {
 
 	/**
 	 * Is this cache entry still within valid time checks? (Don't need to call the server...)
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isValid() {
@@ -76,7 +76,7 @@ class CacheEntry {
 
 	/**
 	 * The size of the entity content
-	 * 
+	 *
 	 * @return
 	 */
 	public long byteCount() {
@@ -84,7 +84,14 @@ class CacheEntry {
 	}
 
 	/**
-	 * 
+	 * @return Get the cached response
+	 */
+	public HttpResponse getResponse() {
+		return this.response;
+	}
+
+	/**
+	 *
 	 * @return
 	 */
 	private Date getDate() {
