@@ -63,12 +63,17 @@ public class HttpCacheFilter implements MechanizeChainFilter {
 		if (response.getStatusLine().getStatusCode()==304) // not modified
 			return previous.updateCacheValues(response).getResponse();
 
-		CacheEntry maybe = new CacheEntry(request, response);
+		CacheEntry maybe = generateCacheEntry(request, response);
 
 		if (maybe.isCacheable())
 			store(uri, previous, maybe);
 
 		return response;
+	}
+
+	protected InMemoryCacheEntry generateCacheEntry(
+			final HttpUriRequest request, HttpResponse response) {
+		return new InMemoryCacheEntry(request, response);
 	}
 
 	public HttpResponse executeHEAD(final HttpUriRequest request, final HttpContext context, final MechanizeFilter chain) {
