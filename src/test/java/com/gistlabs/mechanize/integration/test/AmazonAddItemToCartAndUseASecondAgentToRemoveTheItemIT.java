@@ -11,7 +11,7 @@ import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.Test;
+//import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.Document;
@@ -51,9 +51,8 @@ public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends Mozi
 		agentB.cookies().addAllCloned(agentA.cookies().getAll());
 		assertTrue("Ensure session cookies has been transfered", agentB.cookies().getCount() > 0);
 
-		// FRAGILE TEST, no longer works
-		//removeItemFromShoppingCartSequence.run(agentB);
-		//assertTrue(removeItemFromShoppingCartSequence.wasShoppingCartEmpty());
+		removeItemFromShoppingCartSequence.run(agentB);
+		assertTrue(removeItemFromShoppingCartSequence.wasShoppingCartEmpty());
 	}
 
 	private static class AddItemToShoppingCartSequence extends AbstractSequence {
