@@ -33,6 +33,7 @@ public class HtmlNode extends AbstractNode {
 	private final org.jsoup.nodes.Node node;
 
 	public HtmlNode(final HtmlDocument page, final org.jsoup.nodes.Node node) {
+		if (page==null || node==null) throw new NullPointerException(String.format("page=%s,  node=%s", page, node));
 		this.page = page;
 		this.node = node;
 	}
@@ -58,7 +59,8 @@ public class HtmlNode extends AbstractNode {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Node> T find(final String query) {
-		return (T) getPage().htmlElements().getHtmlNode(JsoupNodeHelper.find(node, query));
+		org.jsoup.nodes.Node found = JsoupNodeHelper.find(node, query);
+		return found==null ? null : (T) getPage().htmlElements().getHtmlNode(found);
 	}
 
 	@Override
@@ -142,6 +144,6 @@ public class HtmlNode extends AbstractNode {
 
 	@Override
 	public String toString() {
-		return node.toString();
+		return ""+node;
 	}
 }

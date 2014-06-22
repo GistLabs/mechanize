@@ -8,7 +8,7 @@
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="var" path="M2_REPO/org/jsoup/jsoup/1.7.1/jsoup-1.7.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/json/json/20090211/json-20090211.jar"/>
-  <classpathentry kind="var" path="M2_REPO/se/fishtank/css-selectors/1.0.4/css-selectors-1.0.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/se/fishtank/css-selectors/1.0.5/css-selectors-1.0.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.10/junit-4.10.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mockito/mockito-core/1.9.5/mockito-core-1.9.5.jar"/>

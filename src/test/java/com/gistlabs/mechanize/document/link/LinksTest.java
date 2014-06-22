@@ -7,8 +7,11 @@
  */
 package com.gistlabs.mechanize.document.link;
 
+import static com.gistlabs.mechanize.document.QueryHelper.*;
 import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
+
+import java.util.List;
 
 import org.junit.Test;
 
@@ -17,6 +20,7 @@ import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Document;
 import com.gistlabs.mechanize.document.link.Link;
+import com.gistlabs.mechanize.document.node.Node;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -25,14 +29,26 @@ public class LinksTest extends MechanizeTestCase {
 	@Test
 	public void testFollowingAnAbsoluteLink() {
 		agent.addPageRequest("http://test.com", 
-				newHtml("Test Page", "<a href=\"http://test.com/myPage.html\">myPage</a>"));
+				newHtml("Test Page", "<a id=\"t\" href=\"http://test.com/myPage.html\">myPage</a>"));
 		agent.addPageRequest("http://test.com/myPage.html", newHtml("My Page", ""));
 		
 		Document page = agent.get("http://test.com");
-		Link link = page.links().get(byInnerHtml("myPage"));
+		assertEquals(1, page.links().size());
+		Link link = page.links().find("#t");
 		assertNotNull(link);
 		Resource myPage = link.click();
 		assertEquals("My Page", myPage.getTitle());
+	}
+
+	@Test
+	public void testDontFind() {
+		agent.addPageRequest("http://test.com", 
+				newHtml("Test Page", "<a id=\"t\" href=\"http://test.com/myPage.html\">myPage</a>"));
+		
+		Document page = agent.get("http://test.com");
+		assertEquals(1, page.links().size());
+		Link link = page.links().find("#nothere");
+		assertNull(link);
 	}
 
 	@Test

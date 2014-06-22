@@ -58,6 +58,16 @@ public abstract class DocumentElements<T> implements Iterable<T> {
 
 	protected abstract T newRepresentation(Node element);
 	
+	public T find(String csss) {
+		for(Node node : nodes) {
+			Node find = node.find(csss);
+			if(find!=null)
+				return getCachedOrNewRepresentation(node);
+		}
+
+		return null;		
+	}
+
 	public T get(AbstractQuery<?> query) {
 		if (this.queryStrategy==null)
 			throw new MechanizeException("No Query implementation set!!");

@@ -49,7 +49,7 @@ public class JsoupNodeHelperTest {
 	@Parameters
 	public static Collection<Object[]> data() {
 		Object[][] data = new Object[][] {
-				{ "*", 251 },
+				{ "*", 252 }, // this diverges from webkit tests now, see changes to TagChecker when initialPart
 				{ ":root", 1 },
 				{ ":empty", 2 },
 				{ "div:first-child", 51 },
