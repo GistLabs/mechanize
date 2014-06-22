@@ -7,11 +7,11 @@
  */
 package com.gistlabs.mechanize.document.link;
 
-import static com.gistlabs.mechanize.document.QueryHelper.*;
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
-import static org.junit.Assert.*;
-
-import java.util.List;
+import static com.gistlabs.mechanize.document.QueryHelper.byIdOrClass;
+import static com.gistlabs.mechanize.document.QueryHelper.contains;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -19,9 +19,6 @@ import com.gistlabs.mechanize.MechanizeMock.PageRequest;
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Document;
-import com.gistlabs.mechanize.document.QueryHelper;
-import com.gistlabs.mechanize.document.link.Link;
-import com.gistlabs.mechanize.document.node.Node;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -35,7 +32,7 @@ public class LinksTest extends MechanizeTestCase {
 		
 		Document page = agent.get("http://test.com");
 		assertEquals(1, page.links().size());
-		Link link = page.links().find(QueryHelper.byIdOrClass("t"));
+		Link link = page.links().find(byIdOrClass("t"));
 		assertNotNull(link);
 		Resource myPage = link.click();
 		assertEquals("My Page", myPage.getTitle());
@@ -59,7 +56,7 @@ public class LinksTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com/myPage.html", newHtml("My Page", ""));
 		
 		Document page = agent.get("http://test.com");
-		Link link = page.links().get(byInnerHtml("myPage"));
+		Link link = page.links().find(contains("myPage"));
 		assertNotNull(link);
 		Resource myPage = link.click();
 		assertEquals("My Page", myPage.getTitle());
@@ -86,7 +83,7 @@ public class LinksTest extends MechanizeTestCase {
 		agent.addPageRequest("http://www1.test.com/myPage.html", newHtml("My Page", ""));
 		
 		Document page = agent.get("http://test.com");
-		Link link = page.links().get(byInnerHtml("myPage"));
+		Link link = page.links().find(contains("myPage"));
 		assertNotNull(link);
 		Resource myPage = link.click();
 		assertEquals("My Page", myPage.getTitle());

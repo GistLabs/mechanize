@@ -29,4 +29,7 @@ public class QueryHelper {
 	public static String byIdOrNameWithValue(String idName, String value) {
 		return String.format("#%s[value=\"%s\"], *[name=\"%s\"][value=\"%s\"]", idName, value, idName, value);
 	}
+	public static String contains(String s) {
+		return String.format("*:contains('%s')", s);
+	}
 }
