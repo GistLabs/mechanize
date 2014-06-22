@@ -19,6 +19,7 @@ import com.gistlabs.mechanize.MechanizeMock.PageRequest;
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Document;
+import com.gistlabs.mechanize.document.QueryHelper;
 import com.gistlabs.mechanize.document.link.Link;
 import com.gistlabs.mechanize.document.node.Node;
 
@@ -34,7 +35,7 @@ public class LinksTest extends MechanizeTestCase {
 		
 		Document page = agent.get("http://test.com");
 		assertEquals(1, page.links().size());
-		Link link = page.links().find("#t");
+		Link link = page.links().find(QueryHelper.byIdOrClass("t"));
 		assertNotNull(link);
 		Resource myPage = link.click();
 		assertEquals("My Page", myPage.getTitle());

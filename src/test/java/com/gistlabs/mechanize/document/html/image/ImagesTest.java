@@ -7,7 +7,6 @@
  */
 package com.gistlabs.mechanize.document.html.image;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
