@@ -52,6 +52,17 @@ public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
 	}
 
 	@Override
+	public HtmlElement find(String csss) {
+		return (HtmlElement)super.find(csss);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<? extends HtmlElement> findAll(String csss) {
+		return (List<? extends HtmlElement>) super.findAll(csss);
+	}
+	
+	@Override
 	protected void loadPage() throws Exception {
 		Document jsoup = Jsoup.parse(getInputStream(), getContentEncoding(response), getUri());
 		setBaseUri(jsoup.head().baseUri());

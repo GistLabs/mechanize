@@ -9,6 +9,8 @@ package com.gistlabs.mechanize.document;
 
 import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 
+import java.util.List;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
@@ -39,6 +41,14 @@ public abstract class Document extends Resource {
 	 * @return
 	 */
 	public abstract Node getRoot();
+	
+	public Node find(String csss) {
+		return getRoot().find(csss);
+	}
+	
+	public List<? extends Node> findAll(String csss) {
+		return getRoot().findAll(csss);
+	}
 
 	/**
 	 *  Query for a matching link, find first match by either id or by class attributes.
