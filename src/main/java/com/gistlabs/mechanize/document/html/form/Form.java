@@ -130,6 +130,18 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 		}
 		return null;
 	}
+
+	@SuppressWarnings("unchecked")
+	private <T> T find(String csss, String value, Class<T> clazz) {
+		for(FormElement element : elements) {
+			if ((clazz==null || clazz.isInstance(element)) && element.matches(csss)) {
+				if (value==null || value.equals(element.getValue())) {
+					return (T)element;
+				}
+			}
+		}
+		return null;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public <T> T get(AbstractQuery<?> query, Class<T> clazz) {
@@ -190,6 +202,34 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 
 	public Email findEmail(String csss) {
 		return find(csss, Email.class);
+	}
+
+	public Select findSelect(String csss) {
+		return find(csss, Select.class);
+	}
+
+	public Checkbox findCheckbox(String csss) {
+		return find(csss, Checkbox.class);
+	}
+
+	public RadioButton findRadioButton(String csss) {
+		return find(csss, RadioButton.class);
+	}
+	
+	public Checkbox findCheckbox(String csss, String value) {
+		return find(csss, value, Checkbox.class);
+	}
+	
+	public RadioButton findRadioButton(String csss, String value) {
+		return find(csss, value, RadioButton.class);
+	}
+
+	public TextArea findTextArea(String csss) {
+		return find(csss, TextArea.class);
+	}
+
+	public SubmitButton findSubmitButton(String csss) {
+		return find(csss, SubmitButton.class);
 	}
 	
 	public Email getEmail(AbstractQuery<?> query) {
