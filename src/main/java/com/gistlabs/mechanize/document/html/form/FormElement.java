@@ -66,6 +66,10 @@ public class FormElement extends DocumentElement {
 		return node.hasAttribute("value") ? node.getAttribute("value") : null;
 	}
 
+	public boolean matches(String csss) {
+		return node.find(csss)!=null;
+	}
+	
 	public boolean matches(QueryStrategy queryStrategy, AbstractQuery<?> query) {
 		return query.matches(queryStrategy, getNode());
 	}

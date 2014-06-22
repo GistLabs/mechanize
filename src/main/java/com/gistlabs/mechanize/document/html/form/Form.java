@@ -106,6 +106,13 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 		return get(HtmlQueryBuilder.byNameOrId(nameOrId));
 	}
 	
+	public FormElement find(String csss) {
+		for(FormElement element : elements)
+			if(element.matches(csss))
+				return element;
+		return null;
+	}
+	
 	public FormElement get(AbstractQuery<?> query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(FormElement element : elements)
@@ -115,6 +122,16 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 	}
 
 	@SuppressWarnings("unchecked")
+	public <T> T find(String csss, Class<T> clazz) {
+		for(FormElement element : elements) {
+			if ((clazz==null || clazz.isInstance(element)) && element.matches(csss)) {
+				return (T)element;
+			}
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public <T> T get(AbstractQuery<?> query, Class<T> clazz) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(FormElement element : elements) {
@@ -122,6 +139,17 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 				return (T)element;
 		}
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> List<T> findAll(String csss, Class<T> clazz) {
+		List<T> result = new ArrayList<T>();
+		for(FormElement element : elements) {
+			if ((clazz==null || clazz.isInstance(element)) && element.matches(csss)) {
+				result.add((T)element);
+			}
+		}
+		return result;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -160,6 +188,10 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 		return getAll(query, Search.class);
 	}
 
+	public Email findEmail(String csss) {
+		return find(csss, Email.class);
+	}
+	
 	public Email getEmail(AbstractQuery<?> query) {
 		return get(query, Email.class);
 	}

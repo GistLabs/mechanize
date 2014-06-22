@@ -17,6 +17,7 @@ import org.junit.Test;
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Document;
+import com.gistlabs.mechanize.document.QueryHelper;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -30,7 +31,7 @@ public class FormTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com/form", newHtml("OK", ""));
 
 		Document page = agent.get("http://test.com");
-		Form form = page.forms().get(byId("form"));
+		Form form = page.forms().find("#form");
 		Resource response = form.submit();
 		assertEquals("OK", response.getTitle());
 		assertFalse(form.isDoPost());
@@ -43,7 +44,7 @@ public class FormTest extends MechanizeTestCase {
 		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
 
 		Document page = agent.get("http://test.com");
-		Form form = page.forms().get(byId("form"));
+		Form form = page.forms().find("#form");
 		Document response = form.submit();
 		assertEquals("OK", response.getTitle());
 		assertTrue(form.isDoPost());
@@ -56,7 +57,7 @@ public class FormTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com/form?text=", newHtml("OK", ""));
 
 		Document page = agent.get("http://test.com");
-		Form form = page.forms().get(byId("form"));
+		Form form = page.forms().find("#form");
 		Document response = form.submit();
 		assertEquals("OK", response.getTitle());
 	}
@@ -68,7 +69,7 @@ public class FormTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com/form?text=Text", newHtml("OK", ""));
 
 		Document page = agent.get("http://test.com");
-		Form form = page.forms().get(byId("form"));
+		Form form = page.forms().find("#form");
 		Document response = form.submit();
 		assertEquals("OK", response.getTitle());
 	}
@@ -78,8 +79,8 @@ public class FormTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addText("text", null, 5)));
 		Document page = agent.get("http://test.com");
-		Form form = page.forms().get(byId("form"));
-		form.get("text").set("123456789");
+		Form form = page.forms().find("#form");
+		form.find(QueryHelper.byIdOrName("text")).set("123456789");
 		assertEquals("12345", form.get("text").get());
 	}
 
@@ -90,10 +91,10 @@ public class FormTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com/form?mail=", newHtml("OK", ""));
 
 		Document page = agent.get("http://test.com");
-		Form form = page.forms().get(byId("form"));
-		FormElement email = form.get("mail");
+		Form form = page.forms().find("#form");
+		FormElement email = form.find(QueryHelper.byIdOrName("mail"));
 		assertTrue(email instanceof Email);
-		assertSame(email, form.getEmail(byName("mail")));
+		assertSame(email, form.findEmail(QueryHelper.byName("mail")));
 		assertSame(email, form.getEmailFields(byName("mail")).get(0));
 		Document response = form.submit();
 		assertEquals("OK", response.getTitle());

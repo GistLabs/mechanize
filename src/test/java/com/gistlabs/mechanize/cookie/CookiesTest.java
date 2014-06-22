@@ -17,13 +17,6 @@ import com.gistlabs.mechanize.MechanizeAgent;
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public class CookiesTest {
-//	@Test // no longer working
-	public void testWikipediaSendsNoCookies() {
-		MechanizeAgent agent = new MechanizeAgent();
-
-		agent.get("http://www.wikipedia.org");
-		assertEquals(0, agent.cookies().getCount());
-	}
 
 	@Test
 	public void testCookieRepresentiveIsTheSame() {
@@ -31,20 +24,6 @@ public class CookiesTest {
 		Cookie cookie = agent.cookies().addNewCookie("ID", "Value", ".test.com");
 		assertSame(cookie, agent.cookies().get("ID", ".test.com"));
 		assertSame(cookie, agent.cookies().get("ID", ".test.com"));
-	}
-
-	/** Tests if google stores two cookies. It uses a special link to prevent google form choosing a different homepage depending on the ip being used. */
-	@Test
-	public void testGoogleComSendsTwoCookies() {
-		MechanizeAgent agent = new MechanizeAgent();
-
-		agent.
-		doRequest("https://www.google.co.uk/setprefdomain?prefdom=US&sig=0_iEtQ0487gjqkcvDjBk5XCH1G_WU%3D").
-		addHeader("Accept-Language", "en-US").
-		get();
-		assertEquals(2, agent.cookies().getCount());
-		assertNotNull(agent.cookies().get("NID", ".google.co.uk"));
-		assertNotNull(agent.cookies().get("PREF", ".google.co.uk"));
 	}
 
 	@Test

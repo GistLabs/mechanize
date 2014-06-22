@@ -45,9 +45,17 @@ public class HtmlElements {
 		return root;
 	}
 	
+	public HtmlElement find(String csss) {
+		return root.find(csss);
+	}
+	
 	/** Returns the first element matching the query in a deep first left right search. */ 
 	public HtmlElement get(AbstractQuery<?> query) {
 		return root.get(query);
+	}
+	
+	public List<HtmlElement> findAll(String csss) {
+		return (List<HtmlElement>)root.findAll(csss);
 	}
 	
 	/** Returns the elements matching the query in a deep first left right search. */ 
