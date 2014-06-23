@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.integration.test;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.CSSHelper.*;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
@@ -70,7 +70,7 @@ public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends Mozi
 
 			Document amdProcessorPage = agent.get("http://www.amazon.com/gp/product/" + productCode + "/");
 			agent.idle(250);
-			Form form = amdProcessorPage.forms().get(byName("handleBuy"));
+			Form form = amdProcessorPage.forms().find(byIdOrName("handleBuy"));
 			agent.idle(200);
 
 			form.submit();
@@ -85,8 +85,8 @@ public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends Mozi
 		protected void run() {
 			Document page = agent.get("http://www.amazon.com");
 			agent.idle(200);
-			Document cart = page.links().get(byId("nav-cart")).click();
-			Form cartForm = cart.forms().get(byName("cartViewForm"));
+			Document cart = page.links().find(byIdOrName("nav-cart")).click();
+			Form cartForm = cart.forms().find(byIdOrName("cartViewForm"));
 			cartForm.get("quantity.C35RMYTCMZTEKE").setValue("0");
 			agent.idle(200);
 			HtmlDocument response = (HtmlDocument)cartForm.submit();

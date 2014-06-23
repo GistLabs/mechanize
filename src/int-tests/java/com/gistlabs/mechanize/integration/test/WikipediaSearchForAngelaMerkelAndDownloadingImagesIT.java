@@ -7,10 +7,10 @@
  */
 package com.gistlabs.mechanize.integration.test;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
-import static org.junit.Assert.*;
-
-import java.util.List;
+import static com.gistlabs.mechanize.document.CSSHelper.byIdOrName;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -18,7 +18,6 @@ import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Document;
 import com.gistlabs.mechanize.document.html.form.Form;
-import com.gistlabs.mechanize.document.html.image.Image;
 import com.gistlabs.mechanize.document.link.Link;
 import com.gistlabs.mechanize.document.link.Links;
 
@@ -35,7 +34,7 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 		assertTrue(page.size() > 10000);
 		Links links = page.links();
 		assertTrue(links.size() > 10);
-		assertNotNull(links.get(byTitle(regEx(".*English.*"))));
+		assertNotNull(links.find("*[title*='English']"));
 	}
 
 	@Test
@@ -46,7 +45,7 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 		assertTrue(page.size() > 10000);
 		Links links = page.links();
 		assertTrue(links.size() > 10);
-		Link link = links.get(byTitle(regEx("English.*")));
+		Link link = links.find("*[title*='English']");
 		assertNotNull(link);
 		Resource englishPage = link.click();
 		assertEquals("Wikipedia, the free encyclopedia", englishPage.getTitle());
@@ -56,21 +55,10 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 	public void testSearchingWikipediaForAngelaMerkelInGermanLanguageUtilizingSelectAndTextInput() {
 		MechanizeAgent agent = new MechanizeAgent();
 		Document page = agent.get("http://www.wikipedia.org");
-		Form form = page.forms().get(byClass("search-form"));
-		form.getSelect(byName("language")).getOption("de").select();
-		form.getSearch(byName("search")).set("Angela Merkel");
-		Resource response = form.getSubmitButton(byName("go")).submit();
+		Form form = page.forms().find(".search-form");
+		form.findSelect(byIdOrName("language")).getOption("de").select();
+		form.findSearch(byIdOrName("search")).set("Angela Merkel");
+		Resource response = form.findSubmitButton(byIdOrName("go")).submit();
 		assertTrue(response.getTitle().startsWith("Angela Merkel"));
-	}
-
-//	@Test // no longer working
-	public void testDownloadWikipediaLogoImagesToBuffer() {
-		MechanizeAgent agent = new MechanizeAgent();
-		Document page = agent.get("http://www.wikipedia.org");
-		List<Image> images = page.images().getAll(byHtml(regEx(".*Wikipedia.*")));
-		assertEquals(2, images.size());
-
-		assertTrue(images.get(0).get().getLength() > 2000);
-		assertTrue(images.get(1).get().getLength() > 40000);
 	}
 }
