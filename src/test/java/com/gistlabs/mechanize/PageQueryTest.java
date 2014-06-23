@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.CSSHelper.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -25,7 +25,7 @@ public class PageQueryTest extends MechanizeTestCase {
 				newHtml("Test Page", "<a id=\"foo\" href=\"foo.html\">foo</a>"));
 		
 		Document page = agent.get("http://test.com");
-		Link link = page.links().get(byId("foo"));
+		Link link = page.links().find("#foo");
 		assertNotNull(link);
 		assertEquals("http://test.com/foo.html", link.href());
 	}
@@ -37,13 +37,13 @@ public class PageQueryTest extends MechanizeTestCase {
 		
 		Document page = agent.get("http://test.com");
 		
-		assertNull(page.links().get(byClass("foo"))); // foo class
+		assertNull(page.links().find(".foo")); // foo class
 		
-		Link link1 = page.links().get(byClass("bar"));
+		Link link1 = page.links().find(".bar");
 		assertNotNull(link1);
 		assertEquals("http://test.com/foo.html", link1.href());
 
-		Link link2 = page.links().get(byClass("baz"));
+		Link link2 = page.links().find(".baz");
 		assertNotNull(link2);
 		assertEquals("http://test.com/foo.html", link2.href());
 	}
@@ -54,7 +54,7 @@ public class PageQueryTest extends MechanizeTestCase {
 				newHtml("Test Page", "<a id=\"foo\" href=\"foo.html\">foo</a>"));
 		
 		Document page = agent.get("http://test.com");
-		Link link = page.links().get(byName("foo"));
+		Link link = page.links().find(byName("foo"));
 		assertNull(link);
 	}
 
@@ -65,11 +65,11 @@ public class PageQueryTest extends MechanizeTestCase {
 		
 		Document page = agent.get("http://test.com");
 		
-		assertNotNull(page.links().get(byIdOrClass("foo")));
-		assertNotNull(page.links().get(byIdOrClass("bar")));
-		assertNotNull(page.links().get(byIdOrClass("baz")));
+		assertNotNull(page.links().find(byIdOrClass("foo")));
+		assertNotNull(page.links().find(byIdOrClass("bar")));
+		assertNotNull(page.links().find(byIdOrClass("baz")));
 		
-		assertNull(page.links().get(byIdOrClass("x")));
+		assertNull(page.links().find(byIdOrClass("x")));
 	}
 
 	@Test
