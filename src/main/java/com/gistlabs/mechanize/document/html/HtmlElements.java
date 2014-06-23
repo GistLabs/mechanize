@@ -54,6 +54,7 @@ public class HtmlElements {
 		return root.get(query);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<HtmlElement> findAll(String csss) {
 		return (List<HtmlElement>)root.findAll(csss);
 	}
