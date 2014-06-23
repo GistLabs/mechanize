@@ -18,6 +18,7 @@ import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.Document;
 import com.gistlabs.mechanize.document.QueryHelper;
+import com.gistlabs.mechanize.document.html.form.Select.Option;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -275,14 +276,23 @@ public class FormTest extends MechanizeTestCase {
 		Form form = page.forms().find("#form");
 		Select select = form.findSelect(QueryHelper.byIdOrName("person"));
 		assertFalse(select.isMultiple());
-		assertFalse(select.getOption("Peter").isSelected());
-		assertFalse(select.getOption("John").isSelected());
-		assertTrue(select.getOption("Susanna").isSelected());
 		assertEquals(3, select.getOptions().size());
+		
+		Option peter = select.getOption("Peter");
+		assertEquals("Peter", peter.getText());
+		assertEquals("1", peter.getValue());
+		assertFalse(peter.isSelected());
+		
+		Option john = select.getOption("John");
+		assertEquals("John", john.getText());
+		assertEquals("2", john.getValue());
+		assertFalse(john.isSelected());
+		
+		assertTrue(select.getOption("Susanna").isSelected());
 
-		select.getOption("Peter").select();
-		assertTrue(select.getOption("Peter").isSelected());
-		assertFalse(select.getOption("John").isSelected());
+		peter.select();
+		assertTrue(peter.isSelected());
+		assertFalse(john.isSelected());
 		assertFalse(select.getOption("Susanna").isSelected());
 		Document response = form.submit();
 		assertEquals("OK", response.getTitle());
@@ -295,7 +305,8 @@ public class FormTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com/form?person=2&person=3", newHtml("OK", ""));
 		Document page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
-		Select select = form.getSelect(byName("person"));
+		Select select = form.findSelect(QueryHelper.byIdOrName("person"));
+		
 		assertTrue(select.isMultiple());
 		assertFalse(select.getOption("Peter").isSelected());
 		assertTrue(select.getOption("John").isSelected());
