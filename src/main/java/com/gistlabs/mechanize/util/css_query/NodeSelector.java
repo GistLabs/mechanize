@@ -32,6 +32,7 @@ import se.fishtank.css.selectors.scanner.ScannerException;
 import se.fishtank.css.selectors.specifier.AttributeSpecifier;
 import se.fishtank.css.selectors.specifier.NegationSpecifier;
 import se.fishtank.css.selectors.specifier.PseudoClassSpecifier;
+import se.fishtank.css.selectors.specifier.PseudoContainsSpecifier;
 import se.fishtank.css.selectors.specifier.PseudoNthSpecifier;
 import se.fishtank.css.util.Assert;
 
@@ -111,6 +112,8 @@ public class NodeSelector<Node> {
 							checker = new PseudoClassSpecifierChecker<Node>(helper, (PseudoClassSpecifier) specifier);
 						else if (specifier instanceof PseudoNthSpecifier)
 							checker = new PseudoNthSpecifierChecker<Node>(helper, (PseudoNthSpecifier) specifier);
+						else if (specifier instanceof PseudoContainsSpecifier)
+							checker = new PseudoContainsSpecifierChecker<Node>(helper, (PseudoContainsSpecifier) specifier);
 
 						break;
 
