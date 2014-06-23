@@ -9,8 +9,6 @@ package com.gistlabs.mechanize.document.node;
 
 import java.util.List;
 
-import com.gistlabs.mechanize.document.query.AbstractQuery;
-
 /**
  * Describes a node of a document having attributes and child nodes.
  * 
@@ -27,12 +25,6 @@ public interface Node {
 	/** Returns the name of the node or null if none (similar to getAttribute(SpecialAttribute.SPECIAL_ATTRIBUTE_VALUE)). */
 	String getValue();
 	
-	/** Returns the first child element matching the query by performing a deep first left right search. */
-	Node get(AbstractQuery<?> query);
-
-	/** Returns all child elements matching the query by performing a deep first left right search. */
-	List<? extends Node> getAll(AbstractQuery<?> query);
-
 	/**
 	 * Returns the only child node matching the CSS Selector search query
 	 * See http://www.w3.org/TR/css3-selectors/ for syntax

@@ -19,6 +19,7 @@ import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.document.query.QueryStrategy;
 import com.gistlabs.mechanize.util.Util;
 
+@Deprecated
 public class HtmlQueryStrategy implements QueryStrategy {
 
 	@Override

@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.gistlabs.mechanize.SpecialAttributes;
 
+@Deprecated
 public class AbstractQuery<T extends AbstractQuery<?>> {
 
 	protected final List<QueryPart> parts = new ArrayList<QueryPart>();
