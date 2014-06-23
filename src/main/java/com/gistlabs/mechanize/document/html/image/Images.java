@@ -33,7 +33,7 @@ public class Images extends DocumentElements<Image> {
 	}
 
 	public Images (final Resource page, final List<? extends Node> forms, final QueryStrategy queryStrategy) {
-		super(page, forms, queryStrategy);
+		super(page, forms);
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class Links extends DocumentElements<Link> {
 	}
 	
 	public Links(Resource page, List<? extends Node> links, QueryStrategy queryStrategy) {
-		super(page, links, queryStrategy);
+		super(page, links);
 	}
 	
 	@Override

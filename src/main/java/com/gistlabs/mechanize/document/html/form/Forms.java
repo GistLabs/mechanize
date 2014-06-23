@@ -32,7 +32,7 @@ public class Forms extends DocumentElements<Form> {
 
 
 	public Forms(Resource page, List<? extends Node> forms, QueryStrategy queryStrategy) {
-		super(page, forms, queryStrategy);
+		super(page, forms);
 	}
 	
 	@Override

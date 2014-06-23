@@ -31,9 +31,16 @@ public abstract class DocumentElements<T> implements Iterable<T> {
 	protected final List<? extends Node> nodes;
 	
 	@Deprecated
-	protected final QueryStrategy queryStrategy;
+	protected QueryStrategy queryStrategy;
 	
 	private final Map<Node, T> representations = new HashMap<Node, T>();
+	
+	public DocumentElements(Resource page, List<? extends Node> nodes) {
+		Assert.notNull(nodes, "Nodes may not be null");
+		
+		this.page = page;
+		this.nodes = nodes;
+	}
 	
 	public DocumentElements(Resource page, List<? extends Node> nodes, QueryStrategy queryStrategy) {
 		Assert.notNull(nodes, "Nodes may not be null");

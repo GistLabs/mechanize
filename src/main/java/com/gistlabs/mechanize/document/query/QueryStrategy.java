@@ -13,6 +13,7 @@ import java.util.List;
  * Describes a query matching strategy for extracting attributes form a given object.
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
+@Deprecated
 public interface QueryStrategy {
 	/** A comma separated list of class names without white spaces (no trim needed). */
 	String SPECIAL_ATTRIBUTE_CLASS_NAMES = "${classNames}";
