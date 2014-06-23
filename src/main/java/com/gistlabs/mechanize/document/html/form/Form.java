@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.document.html.form;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.CSSHelper.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.documentElements.DocumentElement;
-import com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder;
 import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.document.query.AbstractQuery;
@@ -38,7 +37,7 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 	}
 
 	private void analyse() {
-		List<? extends Node> nodes = getNode().getAll(byTag("input").or.byTag("textarea").or.byTag("select"));
+		List<? extends Node> nodes = getNode().findAll("input, textarea, select");
 		for(Node node : nodes) {
 			FormElement formElement = newFormElement(node);
 			if(formElement != null)
@@ -103,7 +102,7 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 	
 	/** Returns the element with the given name (case sensitive) or null. */
 	public FormElement get(String nameOrId) {
-		return get(HtmlQueryBuilder.byNameOrId(nameOrId));
+		return find(byIdOrName(nameOrId));
 	}
 	
 	public FormElement find(String csss) {

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gistlabs.mechanize.document.CSSHelper;
-import com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder;
 import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.document.query.AbstractQuery;
@@ -30,7 +29,7 @@ public class Select extends FormElement {
 		isMultiple = node.hasAttribute("multiple");
 		options = new ArrayList<Option>();
 		
-		for(Node optionNode : node.getAll(HtmlQueryBuilder.byTag("option")))
+		for(Node optionNode : node.findAll("option"))
 			options.add(new Option(optionNode));
 	}
 	

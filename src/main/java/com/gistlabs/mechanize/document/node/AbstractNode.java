@@ -16,11 +16,13 @@ import com.gistlabs.mechanize.util.css_query.NodeSelector;
 public abstract class AbstractNode implements Node {
 
 	@Override
+	@Deprecated
 	public Node get(AbstractQuery<?> query) {
 		return null;
 	}
 
 	@Override
+	@Deprecated
 	public List<? extends Node> getAll(AbstractQuery<?> query) {
 		return Collections.emptyList();
 	}

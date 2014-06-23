@@ -17,6 +17,7 @@ import com.gistlabs.mechanize.document.query.Pattern;
  *  
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
+@Deprecated
 public class HtmlQueryBuilder extends AbstractQueryBuilder {
 	
 	public static HtmlQuery everything() {

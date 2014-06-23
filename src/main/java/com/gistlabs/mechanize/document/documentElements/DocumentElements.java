@@ -29,6 +29,8 @@ import com.gistlabs.mechanize.util.Assert;
 public abstract class DocumentElements<T> implements Iterable<T> {
 	protected final Resource page;
 	protected final List<? extends Node> nodes;
+	
+	@Deprecated
 	protected final QueryStrategy queryStrategy;
 	
 	private final Map<Node, T> representations = new HashMap<Node, T>();
@@ -68,6 +70,7 @@ public abstract class DocumentElements<T> implements Iterable<T> {
 		return null;		
 	}
 
+	@Deprecated
 	public T get(AbstractQuery<?> query) {
 		if (this.queryStrategy==null)
 			throw new MechanizeException("No Query implementation set!!");
@@ -79,6 +82,7 @@ public abstract class DocumentElements<T> implements Iterable<T> {
 		return null;
 	}
 	
+	@Deprecated
 	public List<T> getAll(AbstractQuery<?> query) {
 		if (this.queryStrategy==null)
 			throw new MechanizeException("No Query implementation set!!");

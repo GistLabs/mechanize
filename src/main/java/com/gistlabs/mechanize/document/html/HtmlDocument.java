@@ -7,8 +7,6 @@
  */
 package com.gistlabs.mechanize.document.html;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -81,19 +79,19 @@ public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
 
 	@Override
 	protected Links loadLinks() {
-		List<? extends Node> links = htmlElements().getAll(byTag("a"));
+		List<? extends Node> links = htmlElements().findAll("a");
 		return new Links(this, links, new HtmlQueryStrategy());
 	}
 
 	@Override
 	protected Forms loadForms() {
-		List<? extends Node> forms = htmlElements().getAll(byTag("form"));
+		List<? extends Node> forms = htmlElements().findAll("form");
 		return new Forms(this, forms, new HtmlQueryStrategy());
 	}
 
 	@Override
 	protected Images loadImages() {
-		List<HtmlElement> images = htmlElements().getAll(byTag("img"));
+		List<HtmlElement> images = htmlElements().findAll("img");
 		return new Images(this, images, new HtmlQueryStrategy());
 	}
 
@@ -113,7 +111,7 @@ public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
 	 */
 	@Override
 	public String getTitle() {
-		HtmlElement title = htmlElements().get(byTag("title"));
+		HtmlElement title = htmlElements().find("title");
 		return title != null ? title.getText() : null;
 	}
 

@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.document;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.document.CSSHelper.*;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public abstract class Document extends Resource {
 	 * @return first Link found
 	 */
 	public Link link(String query) {
-		return links().get(byIdOrClass(query));
+		return links().find(byIdOrClass(query));
 	}
 	
 	public Links links() {
@@ -78,7 +78,7 @@ public abstract class Document extends Resource {
 	 * @return first Form found
 	 */
 	public Form form(String query) {
-		return forms().get(byIdOrClassOrName(query));
+		return forms().find(byIdOrClassOrName(query));
 	}
 
 	public Forms forms() {
