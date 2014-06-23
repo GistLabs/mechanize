@@ -9,7 +9,7 @@
 
   <groupId>com.gistlabs</groupId>
   <artifactId>mechanize</artifactId>
-  <version>0.11.3-SNAPSHOT</version>
+  <version>0.12.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>mechanize</name>
@@ -194,7 +194,7 @@
     <dependency>
       <groupId>se.fishtank</groupId>
       <artifactId>css-selectors</artifactId>
-      <version>1.0.4</version>
+      <version>1.0.5</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
