@@ -9,8 +9,6 @@ package com.gistlabs.mechanize.document.html.form;
 
 import com.gistlabs.mechanize.document.documentElements.DocumentElement;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.query.AbstractQuery;
-import com.gistlabs.mechanize.document.query.QueryStrategy;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
