@@ -69,9 +69,4 @@ public class FormElement extends DocumentElement {
 	public boolean matches(String csss) {
 		return node.find(csss)!=null;
 	}
-	
-	@Deprecated
-	public boolean matches(QueryStrategy queryStrategy, AbstractQuery<?> query) {
-		return query.matches(queryStrategy, getNode());
-	}
 }

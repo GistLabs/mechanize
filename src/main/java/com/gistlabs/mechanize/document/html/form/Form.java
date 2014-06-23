@@ -16,9 +16,7 @@ import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.documentElements.DocumentElement;
-import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 
@@ -135,17 +133,6 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Deprecated
-	public <T> T get(AbstractQuery<?> query, Class<T> clazz) {
-		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
-		for(FormElement element : elements) {
-			if(clazz == null || clazz.isInstance(element) && element.matches(queryStrategy, query))
-				return (T)element;
-		}
-		return null;
-	}
-
-	@SuppressWarnings("unchecked")
 	public <T> List<T> findAll(String csss, Class<T> clazz) {
 		List<T> result = new ArrayList<T>();
 		for(FormElement element : elements) {
@@ -154,33 +141,6 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 			}
 		}
 		return result;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Deprecated
-	public <T> List<T> getAll(AbstractQuery<?> query, Class<T> clazz) {
-		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
-		List<T> result = new ArrayList<T>();
-		for(FormElement element : elements)
-			if((clazz == null || clazz.isInstance(element)) && element.matches(queryStrategy, query))
-				result.add((T)element);
-		return result;
-	}
-	
-	public Text getText(AbstractQuery<?> query) {
-		return get(query, Text.class);
-	}
-	
-	public List<Text> getTextFields(AbstractQuery<?> query) {
-		return getAll(query, Text.class);
-	}
-
-	public Search getSearch(AbstractQuery<?> query) {
-		return get(query, Search.class);
-	}
-
-	public List<Search> getSearchFields(AbstractQuery<?> query) {
-		return getAll(query, Search.class);
 	}
 
 	public Email findEmail(String csss) {
@@ -227,80 +187,13 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 		return find(csss, SubmitButton.class);
 	}
 	
-	public Email getEmail(AbstractQuery<?> query) {
-		return get(query, Email.class);
-	}
-	
-	public List<Email> getEmailFields(AbstractQuery<?> query) {
-		return getAll(query, Email.class);
-	}
-
-	public TextArea getTextArea(AbstractQuery<?> query) {
-		return get(query, TextArea.class);
-	}
-
-	public List<TextArea> getTextAreas(AbstractQuery<?> query) {
-		return getAll(query, TextArea.class);
-	}
-	
-	public Password getPassword(AbstractQuery<?> query) {
-		return get(query, Password.class);
-	}
-	
-	public List<Search> getPasswords(AbstractQuery<?> query) {
-		return getAll(query, Search.class);
-	}
-	
-	public Upload getUpload(AbstractQuery<?> query) {
-		return get(query, Upload.class);
-	}
-
-	public List<Search> getUploads(AbstractQuery<?> query) {
-		return getAll(query, Search.class);
-	}
-	
-	public Hidden getHidden(AbstractQuery<?> query) {
-		return get(query, Hidden.class);
-	}
-
-	public List<Search> getHiddenFields(AbstractQuery<?> query) {
-		return getAll(query, Search.class);
-	}
-	
-	public SubmitButton getSubmitButton(AbstractQuery<?> query) {
-		return get(query, SubmitButton.class);
-	}
-
-	public List<SubmitButton> getSubmitButtons(AbstractQuery<?> query) {
-		return getAll(query, SubmitButton.class);
-	}
-	
-	public SubmitImage getSubmitImage(AbstractQuery<?> query) {
-		return get(query, SubmitImage.class);
-	}
-
-	public List<SubmitImage> getSubmitImages(AbstractQuery<?> query) {
-		return getAll(query, SubmitImage.class);
-	}
-	
-	public Checkbox getCheckbox(AbstractQuery<?> query) {
-		return get(query, Checkbox.class);
-	}
 
 	public Checkbox getCheckbox(String nameOrId, String value) {
 		return get(nameOrId, value, Checkbox.class);
 	}
 
-	public List<Checkbox> getCheckboxes(AbstractQuery<?> query) {
-		return getAll(query, Checkbox.class);
-	}
-
 	public RadioButton getRadioButton(String nameOrId) {
 		return get(nameOrId, RadioButton.class);
-	}
-	
-	public List<RadioButton> getRadioButtons(AbstractQuery<?> query) {
-		return getAll(query, RadioButton.class);
 	}
 	
 	public RadioButton getRadioButton(String nameOrId, String value) {
@@ -309,14 +202,6 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 	
 	public List<RadioButton> getRadioButtons(String nameOrId) {
 		return getAll(nameOrId, RadioButton.class);
-	}
-	
-	public Select getSelect(AbstractQuery<?> query) {
-		return get(query, Select.class);
-	}
-
-	public List<Select> getSelects(AbstractQuery<?> query) {
-		return getAll(query, Select.class);
 	}
 	
 	@SuppressWarnings("unchecked")
