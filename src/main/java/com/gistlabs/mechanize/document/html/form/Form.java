@@ -112,6 +112,7 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 		return null;
 	}
 	
+	@Deprecated
 	public FormElement get(AbstractQuery<?> query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(FormElement element : elements)
@@ -143,6 +144,7 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Deprecated
 	public <T> T get(AbstractQuery<?> query, Class<T> clazz) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		for(FormElement element : elements) {
@@ -164,6 +166,7 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Deprecated
 	public <T> List<T> getAll(AbstractQuery<?> query, Class<T> clazz) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		List<T> result = new ArrayList<T>();
@@ -173,6 +176,7 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 		return result;
 	}
 	
+	@Deprecated
 	public List<FormElement> getAll(AbstractQuery<?> query) {
 		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
 		

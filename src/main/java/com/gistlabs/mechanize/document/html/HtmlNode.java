@@ -131,11 +131,13 @@ public class HtmlNode extends AbstractNode {
 	}
 
 	@Override
+	@Deprecated
 	public HtmlElement get(final AbstractQuery<?> query) {
 		return HtmlElements.get(getPage(), query, node.childNodes());
 	}
 
 	@Override
+	@Deprecated
 	public List<HtmlElement> getAll(final AbstractQuery<?> query) {
 		List<HtmlElement> result = new ArrayList<HtmlElement>();
 		HtmlElements.getAll(getPage(), result, query, node.childNodes());

@@ -50,6 +50,7 @@ public class HtmlElements {
 	}
 	
 	/** Returns the first element matching the query in a deep first left right search. */ 
+	@Deprecated
 	public HtmlElement get(AbstractQuery<?> query) {
 		return root.get(query);
 	}
@@ -60,6 +61,7 @@ public class HtmlElements {
 	}
 	
 	/** Returns the elements matching the query in a deep first left right search. */ 
+	@Deprecated
 	public List<HtmlElement> getAll(AbstractQuery<?> query) {
 		return root.getAll(query);
 	}
@@ -101,10 +103,12 @@ public class HtmlElements {
 		return get(page, query, jsoupNodes);
 	}
 	
+	@Deprecated
 	public static HtmlElement get(HtmlDocument page, AbstractQuery<?> query, List<org.jsoup.nodes.Node> nodes) {
 		return get(page, query, new HtmlQueryStrategy(), nodes);
 	}
 	
+	@Deprecated
 	public static HtmlElement get(HtmlDocument page, AbstractQuery<?> query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
 		for(org.jsoup.nodes.Node node : nodes) {
 			if(node instanceof Element) {
@@ -118,10 +122,12 @@ public class HtmlElements {
 		return null;
 	}
 
+	@Deprecated
 	public static void getAll(HtmlDocument page, List<HtmlElement> result, AbstractQuery<?> query, List<org.jsoup.nodes.Node> nodes) {
 		getAll(page, result, query, new HtmlQueryStrategy(), nodes);
 	}
 	
+	@Deprecated
 	public static void getAll(HtmlDocument page, List<HtmlElement> result, AbstractQuery<?> query, QueryStrategy queryStrategy, List<org.jsoup.nodes.Node> nodes) {
 		for(org.jsoup.nodes.Node node : nodes) {
 			if(node instanceof Element) {

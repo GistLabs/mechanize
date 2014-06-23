@@ -41,11 +41,13 @@ public class HtmlElement extends HtmlNode implements Node {
 	}
 
 	@Override
+	@Deprecated
 	public HtmlElement get(AbstractQuery<?> query) {
 		return super.get(query);
 	}
 	
 	@Override
+	@Deprecated
 	public List<HtmlElement> getAll(AbstractQuery<?> query) {
 		return super.getAll(query);
 	}

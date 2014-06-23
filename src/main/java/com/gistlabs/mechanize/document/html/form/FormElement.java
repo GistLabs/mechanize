@@ -70,6 +70,7 @@ public class FormElement extends DocumentElement {
 		return node.find(csss)!=null;
 	}
 	
+	@Deprecated
 	public boolean matches(QueryStrategy queryStrategy, AbstractQuery<?> query) {
 		return query.matches(queryStrategy, getNode());
 	}
