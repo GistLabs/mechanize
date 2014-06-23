@@ -13,7 +13,7 @@ package com.gistlabs.mechanize.document;
  * @author John Heintz
  *
  */
-public class QueryHelper {
+public class CSSHelper {
 	public static String byName(String s) {
 		return String.format("*[name=\"%s\"]", s);
 	}

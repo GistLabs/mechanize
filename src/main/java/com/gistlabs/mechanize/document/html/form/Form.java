@@ -212,6 +212,14 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 		return find(csss, Checkbox.class);
 	}
 
+	public SubmitImage findSubmitImage(String csss) {
+		return find(csss, SubmitImage.class);
+	}
+
+	public Upload findUpload(String csss) {
+		return find(csss, Upload.class);
+	}
+
 	public RadioButton findRadioButton(String csss) {
 		return find(csss, RadioButton.class);
 	}

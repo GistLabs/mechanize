@@ -10,7 +10,7 @@ package com.gistlabs.mechanize.document.html.form;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gistlabs.mechanize.document.QueryHelper;
+import com.gistlabs.mechanize.document.CSSHelper;
 import com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder;
 import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.document.node.Node;
@@ -41,7 +41,7 @@ public class Select extends FormElement {
 	/** Returns the option representing the given value or inner-HTML text. */
 	public Option getOption(String valueOrText) {
 		for(Option option : options) {
-			if (option.matches(QueryHelper.contains(valueOrText))) {
+			if (option.matches(CSSHelper.contains(valueOrText))) {
 				return option;
 			}
 		}

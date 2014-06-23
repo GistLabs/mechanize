@@ -7,8 +7,8 @@
  */
 package com.gistlabs.mechanize.document.link;
 
-import static com.gistlabs.mechanize.document.QueryHelper.byIdOrClass;
-import static com.gistlabs.mechanize.document.QueryHelper.contains;
+import static com.gistlabs.mechanize.document.CSSHelper.byIdOrClass;
+import static com.gistlabs.mechanize.document.CSSHelper.contains;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
