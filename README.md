@@ -1,6 +1,10 @@
 mechanize for java [![Build Status](https://gistlabs.ci.cloudbees.com/job/mechanize/badge/icon)](https://gistlabs.ci.cloudbees.com/job/mechanize/)
 ==========
 
+Note: This branch is working under the code name "lawnchair", as in RESTing in a lawn chair is nice. :)
+
+==========
+
 mechanize is a stateful HTTP web services client library (RESTful) with support for HTML, JSON, and XML services.
 Because mechanize is stateful and allow inspection of web resources, it naturally support GET-then-POST semantics.
 
