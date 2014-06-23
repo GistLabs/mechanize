@@ -18,7 +18,6 @@ import org.jsoup.nodes.Document;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.html.form.Forms;
 import com.gistlabs.mechanize.document.html.image.Images;
-import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.document.link.Links;
 import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
@@ -80,19 +79,19 @@ public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
 	@Override
 	protected Links loadLinks() {
 		List<? extends Node> links = htmlElements().findAll("a");
-		return new Links(this, links, new HtmlQueryStrategy());
+		return new Links(this, links);
 	}
 
 	@Override
 	protected Forms loadForms() {
 		List<? extends Node> forms = htmlElements().findAll("form");
-		return new Forms(this, forms, new HtmlQueryStrategy());
+		return new Forms(this, forms);
 	}
 
 	@Override
 	protected Images loadImages() {
 		List<HtmlElement> images = htmlElements().findAll("img");
-		return new Images(this, images, new HtmlQueryStrategy());
+		return new Images(this, images);
 	}
 
 

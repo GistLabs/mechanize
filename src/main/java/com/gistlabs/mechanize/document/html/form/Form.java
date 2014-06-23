@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.document.html.form;
 
-import static com.gistlabs.mechanize.document.CSSHelper.*;
+import static com.gistlabs.mechanize.document.CSSHelper.byIdOrName;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -112,15 +112,6 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 		return null;
 	}
 	
-	@Deprecated
-	public FormElement get(AbstractQuery<?> query) {
-		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
-		for(FormElement element : elements)
-			if(element.matches(queryStrategy, query))
-				return element;
-		return null;
-	}
-
 	@SuppressWarnings("unchecked")
 	public <T> T find(String csss, Class<T> clazz) {
 		for(FormElement element : elements) {
@@ -176,17 +167,6 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 		return result;
 	}
 	
-	@Deprecated
-	public List<FormElement> getAll(AbstractQuery<?> query) {
-		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
-		
-		List<FormElement> result = new ArrayList<FormElement>();
-		for(FormElement element : elements)
-			if(element.matches(queryStrategy, query))
-				result.add(element);
-		return result;
-	}
-
 	public Text getText(AbstractQuery<?> query) {
 		return get(query, Text.class);
 	}

@@ -7,7 +7,6 @@
  */
 package com.gistlabs.mechanize.requestor;
 
-import com.gistlabs.mechanize.requestor.RequestBuilder;
 
 
 public interface RequestBuilderFactory<Resource> {

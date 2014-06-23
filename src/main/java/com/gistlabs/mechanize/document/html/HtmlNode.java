@@ -16,7 +16,6 @@ import org.jsoup.nodes.Element;
 
 import com.gistlabs.mechanize.document.node.AbstractNode;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Util;
 import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
@@ -128,20 +127,6 @@ public class HtmlNode extends AbstractNode {
 			return ((Element)node).tagName();
 		else
 			return null;
-	}
-
-	@Override
-	@Deprecated
-	public HtmlElement get(final AbstractQuery<?> query) {
-		return HtmlElements.get(getPage(), query, node.childNodes());
-	}
-
-	@Override
-	@Deprecated
-	public List<HtmlElement> getAll(final AbstractQuery<?> query) {
-		List<HtmlElement> result = new ArrayList<HtmlElement>();
-		HtmlElements.getAll(getPage(), result, query, node.childNodes());
-		return result;
 	}
 
 	@Override

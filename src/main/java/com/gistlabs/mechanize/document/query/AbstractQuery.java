@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.document.query;
 
-import static com.gistlabs.mechanize.document.query.AbstractQueryBuilder.*;
+import static com.gistlabs.mechanize.document.query.AbstractQueryBuilder.attributes;
 
 import java.util.ArrayList;
 import java.util.List;

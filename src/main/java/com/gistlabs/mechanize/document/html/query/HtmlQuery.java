@@ -8,7 +8,7 @@
 package com.gistlabs.mechanize.document.html.query;
 
 
-import static com.gistlabs.mechanize.document.query.AbstractQueryBuilder.*;
+import static com.gistlabs.mechanize.document.query.AbstractQueryBuilder.attributes;
 
 import com.gistlabs.mechanize.document.html.HtmlSpecialAttributes;
 import com.gistlabs.mechanize.document.query.AbstractQuery;
