@@ -176,7 +176,32 @@
                     </configuration>
                 </execution>
             </executions>
-        </plugin>
+          </plugin>
+          <plugin>
+    <groupId>org.pitest</groupId>
+    <artifactId>classycle-maven-plugin</artifactId>
+    <version>0.4</version>
+    <executions>
+        <execution>
+            <id>verify</id>
+            <phase>verify</phase>
+            <goals>
+                <goal>check</goal>
+            </goals>
+            <configuration>
+                <dependencyDefinition>
+                    show allResults
+                    check absenceOfPackageCycles > 1 in com.example*
+                </dependencyDefinition>
+
+                <!-- This can be classycle.dependency.DefaultResultRenderer 
+                    for text (the default if omitted) or 
+                    classycle.dependency.XMLResultRenderer for xml -->
+                <resultRenderer>classycle.dependency.DefaultResultRenderer</resultRenderer>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
         </plugins>
   </build>
 
