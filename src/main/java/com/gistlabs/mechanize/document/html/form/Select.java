@@ -10,8 +10,8 @@ package com.gistlabs.mechanize.document.html.form;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gistlabs.mechanize.document.CSSHelper;
 import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.util.css.CSSHelper;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>

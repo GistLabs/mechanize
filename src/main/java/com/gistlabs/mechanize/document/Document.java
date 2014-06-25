@@ -7,8 +7,8 @@
  */
 package com.gistlabs.mechanize.document;
 
-import static com.gistlabs.mechanize.document.CSSHelper.byIdOrClass;
-import static com.gistlabs.mechanize.document.CSSHelper.byIdOrClassOrName;
+import static com.gistlabs.mechanize.util.css.CSSHelper.byIdOrClass;
+import static com.gistlabs.mechanize.util.css.CSSHelper.byIdOrClassOrName;
 
 import java.util.List;
 

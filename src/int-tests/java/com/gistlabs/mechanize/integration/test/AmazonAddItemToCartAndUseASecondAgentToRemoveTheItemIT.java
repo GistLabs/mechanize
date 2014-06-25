@@ -7,11 +7,12 @@
  */
 package com.gistlabs.mechanize.integration.test;
 
-import static com.gistlabs.mechanize.document.CSSHelper.*;
+import static com.gistlabs.mechanize.util.css.CSSHelper.*;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 //import org.junit.Test;
+
 
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.Document;

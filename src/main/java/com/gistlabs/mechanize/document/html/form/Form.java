@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.document.html.form;
 
-import static com.gistlabs.mechanize.document.CSSHelper.byIdOrName;
+import static com.gistlabs.mechanize.util.css.CSSHelper.byIdOrName;
 
 import java.io.File;
 import java.util.ArrayList;

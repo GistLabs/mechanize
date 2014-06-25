@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.document.html.form;
 
-import static com.gistlabs.mechanize.document.CSSHelper.*;
+import static com.gistlabs.mechanize.util.css.CSSHelper.*;
 import static org.junit.Assert.*;
 
 import java.io.File;

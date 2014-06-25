@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.integration.test;
 
-import static com.gistlabs.mechanize.document.CSSHelper.byIdOrName;
+import static com.gistlabs.mechanize.util.css.CSSHelper.byIdOrName;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
