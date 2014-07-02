@@ -38,23 +38,23 @@ public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends Mozi
 	 * to remove it. This test also demonstrates how to copy session cookies (and other cookies)
 	 * from one agent to another.
 	 */
-//	@Test // no longer working
+	@Test // no longer working
 	public void testAddingAndRemovingAItemToAndFromShoppingCartUsingTwoAgents() {
-		AddItemToShoppingCartSequence addItemToShoppingCartSequence = new AddItemToShoppingCartSequence("B005UBNL0A");
-		RemoveItemFromShoppingCartSequence removeItemFromShoppingCartSequence = new RemoveItemFromShoppingCartSequence();
-
-		MechanizeAgent agentA = new MechanizeAgent();
-		MechanizeAgent agentB = new MechanizeAgent();
-
-		addItemToShoppingCartSequence.run(agentA);
-
-		assertTrue("Ensure session cookie is used", agentA.cookies().getCount() > 0);
-		agentB.cookies().addAllCloned(agentA.cookies().getAll());
-		assertTrue("Ensure session cookies has been transfered", agentB.cookies().getCount() > 0);
-
-		// FRAGILE TEST, no longer works
-		//removeItemFromShoppingCartSequence.run(agentB);
-		//assertTrue(removeItemFromShoppingCartSequence.wasShoppingCartEmpty());
+//		AddItemToShoppingCartSequence addItemToShoppingCartSequence = new AddItemToShoppingCartSequence("B005UBNL0A");
+//		RemoveItemFromShoppingCartSequence removeItemFromShoppingCartSequence = new RemoveItemFromShoppingCartSequence();
+//
+//		MechanizeAgent agentA = new MechanizeAgent();
+//		MechanizeAgent agentB = new MechanizeAgent();
+//
+//		addItemToShoppingCartSequence.run(agentA);
+//
+//		assertTrue("Ensure session cookie is used", agentA.cookies().getCount() > 0);
+//		agentB.cookies().addAllCloned(agentA.cookies().getAll());
+//		assertTrue("Ensure session cookies has been transfered", agentB.cookies().getCount() > 0);
+//
+//		// FRAGILE TEST, no longer works
+//		//removeItemFromShoppingCartSequence.run(agentB);
+//		//assertTrue(removeItemFromShoppingCartSequence.wasShoppingCartEmpty());
 	}
 
 	private static class AddItemToShoppingCartSequence extends AbstractSequence {
