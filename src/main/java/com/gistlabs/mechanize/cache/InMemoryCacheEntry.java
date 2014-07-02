@@ -24,6 +24,7 @@ import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 
 public class InMemoryCacheEntry implements CacheEntry {
 	private static final Date OLD = new Date(0);
+	@SuppressWarnings("unused")
 	final private HttpUriRequest request;
 	final private HttpResponse response;
 
