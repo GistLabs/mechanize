@@ -9,7 +9,7 @@
 
   <groupId>com.gistlabs</groupId>
   <artifactId>mechanize</artifactId>
-  <version>0.13.0-SNAPSHOT</version>
+  <version>0.13.0</version>
   <packaging>jar</packaging>
 
   <name>mechanize</name>
@@ -191,7 +191,7 @@
             <configuration>
                 <dependencyDefinition>
                     show allResults
-                    check absenceOfPackageCycles > 1 in com.example*
+                    check absenceOfPackageCycles &gt; 1 in com.example*
                 </dependencyDefinition>
 
                 <!-- This can be classycle.dependency.DefaultResultRenderer 
