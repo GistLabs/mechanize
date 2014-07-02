@@ -9,7 +9,7 @@
 
   <groupId>com.gistlabs</groupId>
   <artifactId>mechanize</artifactId>
-  <version>0.13.1-SNAPSHOT</version>
+  <version>0.13.0</version>
   <packaging>jar</packaging>
 
   <name>mechanize</name>
