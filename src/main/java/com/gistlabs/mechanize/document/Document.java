@@ -16,7 +16,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
 import com.gistlabs.mechanize.Mechanize;
-import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.AbstractResource;
 import com.gistlabs.mechanize.document.html.form.Form;
 import com.gistlabs.mechanize.document.html.form.Forms;
 import com.gistlabs.mechanize.document.html.image.Images;
@@ -28,7 +28,7 @@ import com.gistlabs.mechanize.document.node.Node;
  * Represents a single or multiple-page document having a root node.
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
-public abstract class Document extends Resource {
+public abstract class Document extends AbstractResource {
 	private Links links;
 	private Forms forms;
 	private Images images;

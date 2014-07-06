@@ -15,7 +15,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import com.gistlabs.mechanize.util.Collections;
 import com.gistlabs.mechanize.util.apache.ContentType;
 
-public class DefaultResource extends Resource {
+public class DefaultResource extends AbstractResource {
 	public static Collection<String> CONTENT_MATCHERS = 
 		Collections.collection(
 				ContentType.WILDCARD.getMimeType(), 
