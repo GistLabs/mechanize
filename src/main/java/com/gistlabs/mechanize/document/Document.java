@@ -15,6 +15,7 @@ import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
+import com.gistlabs.mechanize.Mechanize;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.html.form.Form;
 import com.gistlabs.mechanize.document.html.form.Forms;
@@ -22,7 +23,6 @@ import com.gistlabs.mechanize.document.html.image.Images;
 import com.gistlabs.mechanize.document.link.Link;
 import com.gistlabs.mechanize.document.link.Links;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.impl.MechanizeAgent;
 
 /**
  * Represents a single or multiple-page document having a root node.
@@ -33,7 +33,7 @@ public abstract class Document extends Resource {
 	private Forms forms;
 	private Images images;
 
-	public Document(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
+	public Document(Mechanize agent, HttpRequestBase request, HttpResponse response) {
 		super(agent, request, response);
 	}
 

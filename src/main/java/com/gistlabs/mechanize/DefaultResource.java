@@ -12,7 +12,6 @@ import java.util.Collection;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
-import com.gistlabs.mechanize.impl.MechanizeAgent;
 import com.gistlabs.mechanize.util.Collections;
 import com.gistlabs.mechanize.util.apache.ContentType;
 
@@ -24,7 +23,7 @@ public class DefaultResource extends Resource {
 				ContentType.DEFAULT_BINARY.getMimeType(), 
 				ContentType.DEFAULT_TEXT.getMimeType());
 	
-	public DefaultResource(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
+	public DefaultResource(Mechanize agent, HttpRequestBase request, HttpResponse response) {
 		super(agent, request, response);
 	}
 }

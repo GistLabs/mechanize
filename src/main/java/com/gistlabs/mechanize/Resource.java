@@ -25,7 +25,6 @@ import org.apache.http.client.methods.HttpRequestBase;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
-import com.gistlabs.mechanize.impl.MechanizeAgent;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 import com.gistlabs.mechanize.util.NullOutputStream;
@@ -42,7 +41,7 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	@SuppressWarnings("unchecked")
 	public static Collection<String> CONTENT_MATCHERS = Collections.EMPTY_LIST;
 
-	private final MechanizeAgent agent;
+	private final Mechanize agent;
 	private final String uri;
 	private final HttpRequestBase request;
 	protected final HttpResponse response;
@@ -53,7 +52,7 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 	@SuppressWarnings("unused")
 	private final Debug debugRequestResponse = new Debug(this);
 
-	public Resource(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
+	public Resource(final Mechanize agent, final HttpRequestBase request, final HttpResponse response) {
 		this.agent = agent;
 		this.request = request;
 		this.response = response;
@@ -163,7 +162,7 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 		return response;
 	}
 
-	public MechanizeAgent getAgent() {
+	public Mechanize getAgent() {
 		return agent;
 	}
 
