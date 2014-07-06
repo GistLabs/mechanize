@@ -39,6 +39,6 @@ public abstract class AbstractNode implements Node {
 	
 	@Override
 	public List<? extends Node> getChildren() {
-		return getChildren(new String[]{});
+		return getChildren(new String[]{}); //TODO figure out why this arg is this way... why not just abstract this method here?
 	}
 }
