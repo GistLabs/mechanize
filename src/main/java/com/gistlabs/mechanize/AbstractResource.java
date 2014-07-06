@@ -14,12 +14,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
 
 import org.apache.http.Header;
+import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
@@ -45,12 +48,6 @@ public abstract class AbstractResource implements RequestBuilderFactory<Resource
 	private final String uri;
 	private final HttpRequestBase request;
 	protected final HttpResponse response;
-
-	/**
-	 * this is just to help while debugging, it shows the request/response contents
-	 */
-	@SuppressWarnings("unused")
-	private final Debug debugRequestResponse = new Debug(this);
 
 	public AbstractResource(final Mechanize agent, final HttpRequestBase request, final HttpResponse response) {
 		this.agent = agent;
@@ -243,4 +240,28 @@ public abstract class AbstractResource implements RequestBuilderFactory<Resource
 			throw MechanizeExceptionFactory.newException(e);
 		}
 	}
+
+	@Override
+	public String toString() {
+		StringWriter result = new StringWriter();
+		PrintWriter writer = new PrintWriter(result);
+
+		writer.println("== Request ==");
+		writer.println(getRequest().getRequestLine().toString());
+		write(getRequest(), writer);
+
+		writer.println();
+		writer.println("== Response ==");
+		writer.println(getResponse().getStatusLine().toString());
+		write(getResponse(), writer);
+
+		return result.toString();
+	}
+
+	private void write(final HttpMessage message, final PrintWriter writer) {
+		Header[] headers = message.getAllHeaders();
+		for (Header header : headers)
+			writer.println(header.toString());
+	}
+
 }
