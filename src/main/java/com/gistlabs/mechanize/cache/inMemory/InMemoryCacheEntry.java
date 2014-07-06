@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.cache;
+package com.gistlabs.mechanize.cache.inMemory;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +20,7 @@ import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
 import org.apache.http.message.BasicHttpResponse;
 
+import com.gistlabs.mechanize.cache.api.CacheEntry;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 
 public class InMemoryCacheEntry implements CacheEntry {

@@ -1,4 +1,4 @@
-package com.gistlabs.mechanize.cache;
+package com.gistlabs.mechanize.cache.api;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;

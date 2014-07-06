@@ -5,12 +5,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.cache;
+package com.gistlabs.mechanize.cache.inMemory;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
+
+import com.gistlabs.mechanize.cache.api.CacheEntry;
+import com.gistlabs.mechanize.cache.api.HttpCache;
 
 /**
  * An in-memory HttpCache, by default capped to 64MB of response content. (This only counts the entity length).
