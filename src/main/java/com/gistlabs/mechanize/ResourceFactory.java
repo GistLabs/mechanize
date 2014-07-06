@@ -12,8 +12,6 @@ import java.util.Collection;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
-import com.gistlabs.mechanize.impl.MechanizeAgent;
-
 /**
  * This is a page factory, that can be registered 
  * 
@@ -23,5 +21,5 @@ import com.gistlabs.mechanize.impl.MechanizeAgent;
  */
 public interface ResourceFactory {
 	Collection<String> getContentMatches();
-	Resource buildPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response);
+	Resource buildPage(Mechanize agent, HttpRequestBase request, HttpResponse response);
 }

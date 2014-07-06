@@ -12,9 +12,9 @@ import java.util.Collection;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
+import com.gistlabs.mechanize.Mechanize;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.ResourceFactory;
-import com.gistlabs.mechanize.impl.MechanizeAgent;
 
 public class JsonDocumentFactory implements ResourceFactory {
 
@@ -24,7 +24,7 @@ public class JsonDocumentFactory implements ResourceFactory {
 	}
 
 	@Override
-	public Resource buildPage(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
+	public Resource buildPage(final Mechanize agent, final HttpRequestBase request, final HttpResponse response) {
 		return new JsonDocument(agent, request, response);
 	}
 

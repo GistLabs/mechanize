@@ -12,8 +12,6 @@ import java.util.Collection;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
-import com.gistlabs.mechanize.impl.MechanizeAgent;
-
 public class DefaultResourceFactory implements ResourceFactory {
 
 	@Override
@@ -22,7 +20,7 @@ public class DefaultResourceFactory implements ResourceFactory {
 	}
 
 	@Override
-	public Resource buildPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
+	public Resource buildPage(Mechanize agent, HttpRequestBase request, HttpResponse response) {
 		return new DefaultResource(agent, request, response);
 	}
 
