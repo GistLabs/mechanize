@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 
 import org.junit.Test;
 
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
@@ -26,13 +27,13 @@ import com.gistlabs.mechanize.parameters.Parameters;
 public class MechanizeAgentIntTest extends MechanizeTestCase {
 	static final String firefoxUserAgent = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.1) Gecko/20100122 firefox/3.6.1";
 
-	protected MechanizeAgent agent() {
+	protected Mechanize agent() {
 		return new MechanizeAgent().setUserAgent(firefoxUserAgent);
 	}
 
 	@Test
 	public void testPostMethod() {
-		MechanizeAgent agent = agent();
+		Mechanize agent = agent();
 		Parameters parameters = new Parameters().add("param1", "value").add("param2", "value2");
 		Resource page = agent.post("http://posttestserver.com/post.php", parameters);
 		String pageString = page.asString();

@@ -12,9 +12,10 @@ import static org.junit.Assert.*;
 import org.json.JSONException;
 import org.junit.Test;
 
-import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Mechanize;
 import com.gistlabs.mechanize.document.html.HtmlDocument;
 import com.gistlabs.mechanize.document.json.JsonDocument;
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 
 /**
  *
@@ -26,7 +27,7 @@ public class GoogleApiJsonIT {
 
 	@Test
 	public void testShortUrl() throws JSONException {
-		MechanizeAgent agent = new MechanizeAgent();
+		Mechanize agent = new MechanizeAgent();
 		HtmlDocument html = agent.get(shortUrl);
 		assertEquals(longUrl, html.getUri());
 	}

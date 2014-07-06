@@ -7,7 +7,8 @@
  */
 package com.gistlabs.mechanize.sequence;
 
-import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Mechanize;
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 
 /**
  * Base implementation stub for a Sequence. The default name of the sequence it the canonical name of the 
@@ -32,7 +33,7 @@ public abstract class AbstractSequence implements Sequence {
 		this.agent = null;
 	}
 	
-	public MechanizeAgent getAgent() {
+	public Mechanize getAgent() {
 		return agent;
 	}
 	

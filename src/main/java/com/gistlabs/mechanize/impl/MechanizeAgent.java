@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize;
+package com.gistlabs.mechanize.impl;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -28,6 +28,9 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
+import com.gistlabs.mechanize.Mechanize;
+import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.ResourceFactory;
 import com.gistlabs.mechanize.cache.HttpCache;
 import com.gistlabs.mechanize.cache.HttpCacheFilter;
 import com.gistlabs.mechanize.cache.InMemoryHttpCache;
@@ -51,11 +54,9 @@ import com.gistlabs.mechanize.util.apache.ContentType;
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @author John Heintz <john@gistlabs.com>
  */
-public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFactory<Resource> {
+public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFactory<Resource>, Mechanize {
 
 	static final Map<String,ResourceFactory> PAGE_FACTORIES = new HashMap<String, ResourceFactory>();
-
-	static final String MECHANIZE_LOCATION = "MechanizeLocation";
 
 	static ResourceFactory lookupFactory(final String mimeType) {
 		return PAGE_FACTORIES.get(mimeType);
@@ -117,13 +118,13 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		});
 	}
 
-	public MechanizeAgent prefixFilter(final MechanizeChainFilter filter) {
+	public Mechanize prefixFilter(final MechanizeChainFilter filter) {
 		this.requestChain.prefix(filter);
 		return this;
 	}
 
 
-	public MechanizeAgent addFilter(final MechanizeChainFilter filter) {
+	public Mechanize addFilter(final MechanizeChainFilter filter) {
 		this.requestChain.add(filter);
 		return this;
 	}
@@ -141,7 +142,7 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 	 * @param userAgent The value to set User-Agent HTTP parameter to for requests
 	 * @return
 	 */
-	public MechanizeAgent setUserAgent(final String userAgent) {
+	public Mechanize setUserAgent(final String userAgent) {
 		HttpProtocolParams.setUserAgent(this.client.getParams(), userAgent);
 		return this;
 	}
@@ -154,10 +155,17 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		return HttpProtocolParams.getUserAgent(this.client.getParams());
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gistlabs.mechanize.Mechanize#getClient()
+	 */
+	@Override
 	public AbstractHttpClient getClient() {
 		return client;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gistlabs.mechanize.Mechanize#doRequest(java.lang.String)
+	 */
 	@Override
 	public RequestBuilder<Resource> doRequest(final String uri) {
 		return new RequestBuilder<Resource>(this, uri);
@@ -179,10 +187,18 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gistlabs.mechanize.Mechanize#get(java.lang.String)
+	 */
+	@Override
 	public <T extends Resource> T get(final String uri) {
 		return doRequest(uri).get();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gistlabs.mechanize.Mechanize#post(java.lang.String, java.util.Map)
+	 */
+	@Override
 	public <T extends Resource> T post(final String uri, final Map<String, String> params) throws UnsupportedEncodingException {
 		return post(uri, new Parameters(unsafeCast(params)));
 	}
@@ -192,12 +208,10 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		return (Map)params;
 	}
 
-	/**
-	 * POST either URL encoded or multi-part encoded content body, based on presence of file content body parameters
-	 * @param uri
-	 * @param params
-	 * @return
+	/* (non-Javadoc)
+	 * @see com.gistlabs.mechanize.Mechanize#post(java.lang.String, com.gistlabs.mechanize.parameters.Parameters)
 	 */
+	@Override
 	public <T extends Resource> T post(final String uri, final Parameters params) {
 		return doRequest(uri).set(params).post();
 	}
@@ -214,6 +228,10 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gistlabs.mechanize.Mechanize#cookies()
+	 */
+	@Override
 	public Cookies cookies() {
 		return cookies;
 	}

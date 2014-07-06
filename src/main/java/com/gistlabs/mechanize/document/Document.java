@@ -15,7 +15,6 @@ import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
-import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.html.form.Form;
 import com.gistlabs.mechanize.document.html.form.Forms;
@@ -23,6 +22,7 @@ import com.gistlabs.mechanize.document.html.image.Images;
 import com.gistlabs.mechanize.document.link.Link;
 import com.gistlabs.mechanize.document.link.Links;
 import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 
 /**
  * Represents a single or multiple-page document having a root node.

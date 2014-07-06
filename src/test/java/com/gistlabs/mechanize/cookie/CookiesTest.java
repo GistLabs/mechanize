@@ -11,7 +11,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Mechanize;
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -20,7 +21,7 @@ public class CookiesTest {
 
 	@Test
 	public void testCookieRepresentiveIsTheSame() {
-		MechanizeAgent agent = new MechanizeAgent();
+		Mechanize agent = new MechanizeAgent();
 		Cookie cookie = agent.cookies().addNewCookie("ID", "Value", ".test.com");
 		assertSame(cookie, agent.cookies().get("ID", ".test.com"));
 		assertSame(cookie, agent.cookies().get("ID", ".test.com"));
@@ -28,7 +29,7 @@ public class CookiesTest {
 
 	@Test
 	public void testRemovingASingleCookie() {
-		MechanizeAgent agent = new MechanizeAgent();
+		Mechanize agent = new MechanizeAgent();
 		Cookie cookie1 = agent.cookies().addNewCookie("ID", "MyID", ".wikipedia.org");
 		Cookie cookie2 = agent.cookies().addNewCookie("ID2", "MySecondID", "wikipedia.org");
 

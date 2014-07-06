@@ -19,10 +19,10 @@ import org.apache.http.protocol.HttpContext;
 import org.json.JSONException;
 import org.junit.Test;
 
-import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.filters.MechanizeChainFilter;
 import com.gistlabs.mechanize.filters.MechanizeFilter;
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 
 /**
  * Test a well known and http cachable resource

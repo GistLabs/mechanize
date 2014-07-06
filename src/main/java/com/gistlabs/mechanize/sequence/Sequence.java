@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.sequence;
 
-import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 
 /**
  * Describes a named sequence of actions using an agent.

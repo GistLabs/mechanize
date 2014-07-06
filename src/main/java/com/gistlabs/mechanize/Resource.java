@@ -25,6 +25,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 
 import com.gistlabs.mechanize.exceptions.MechanizeException;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 import com.gistlabs.mechanize.util.NullOutputStream;
@@ -122,7 +123,7 @@ public abstract class Resource implements RequestBuilderFactory<Resource> {
 		if (contentLocation != null && contentLocation.getValue() != null)
 			return contentLocation.getValue();
 
-		Header mechanizeLocation = Util.findHeader(response, MechanizeAgent.MECHANIZE_LOCATION);
+		Header mechanizeLocation = Util.findHeader(response, Mechanize.MECHANIZE_LOCATION);
 		if (mechanizeLocation!=null && mechanizeLocation.getValue()!=null)
 			return mechanizeLocation.getValue();
 

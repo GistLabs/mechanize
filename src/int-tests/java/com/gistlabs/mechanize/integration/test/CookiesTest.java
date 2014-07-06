@@ -12,7 +12,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Mechanize;
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
@@ -20,7 +21,7 @@ import com.gistlabs.mechanize.MechanizeAgent;
 public class CookiesTest {
 	@Test // no longer working
 	public void testWikipediaSendsNoCookies() {
-		MechanizeAgent agent = new MechanizeAgent();
+		Mechanize agent = new MechanizeAgent();
 
 		agent.get("http://www.wikipedia.org");
 		assertEquals(0, agent.cookies().getCount());

@@ -14,10 +14,13 @@ import org.junit.Before;
 //import org.junit.Test;
 
 
-import com.gistlabs.mechanize.MechanizeAgent;
+
+
+import com.gistlabs.mechanize.Mechanize;
 import com.gistlabs.mechanize.document.Document;
 import com.gistlabs.mechanize.document.html.HtmlDocument;
 import com.gistlabs.mechanize.document.html.form.Form;
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 import com.gistlabs.mechanize.sequence.AbstractSequence;
 
 /**
@@ -25,7 +28,7 @@ import com.gistlabs.mechanize.sequence.AbstractSequence;
  */
 public class AmazonAddItemToCartAndUseASecondAgentToRemoveTheItemIT extends MozillaUserAgentTestClass {
 	static final String firefoxUserAgent = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.1) Gecko/20100122 firefox/3.6.1";
-	MechanizeAgent agent;
+	Mechanize agent;
 
 	@Before
 	public void setUp() throws Exception {
