@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 
 import org.junit.Test;
 
+import com.gistlabs.mechanize.impl.DefaultResource;
 import com.gistlabs.mechanize.impl.MechanizeAgent;
 import com.gistlabs.mechanize.parameters.Parameters;
 

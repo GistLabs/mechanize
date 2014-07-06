@@ -36,7 +36,7 @@ class MechanizeInitializer {
 
 	public static final String MECHANIZE_PAGE_FACTORIES = "mechanize.page.factories";
 	public static final String MECHANIZE_PAGE_FACTORIES_EXT = "mechanize.page.factories.ext";
-	public static final String DEFAULT_FACTORIES = "com.gistlabs.mechanize.document.html.HtmlDocumentFactory, com.gistlabs.mechanize.DefaultResourceFactory, com.gistlabs.mechanize.document.json.JsonDocumentFactory";
+	public static final String DEFAULT_FACTORIES = "com.gistlabs.mechanize.document.html.HtmlDocumentFactory, com.gistlabs.mechanize.impl.DefaultResourceFactory, com.gistlabs.mechanize.document.json.JsonDocumentFactory";
 
 
 	static void initialize() {
