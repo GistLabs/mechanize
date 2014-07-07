@@ -12,7 +12,7 @@ import java.util.Collection;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
-import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Mechanize;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.ResourceFactory;
 
@@ -24,7 +24,7 @@ public class HtmlDocumentFactory implements ResourceFactory {
 	}
 
 	@Override
-	public Resource buildPage(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
+	public Resource buildPage(Mechanize agent, HttpRequestBase request, HttpResponse response) {
 		return new HtmlDocument(agent, request, response);
 	}
 

@@ -4,3 +4,4 @@ release.properties
 dependency-reduced-pom.xml
 .DS_Store
 *~
+*.graphml

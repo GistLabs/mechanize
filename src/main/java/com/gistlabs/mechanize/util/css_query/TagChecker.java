@@ -31,6 +31,9 @@ public class TagChecker<Node> extends AbstractChecker<Node> {
 
 	/** The selector to check against. */
 	protected final Selector selector;
+	
+	/** Is this the initial part of a group of tag checkers? */
+	protected final boolean initialPart;
 
 	/** The set of nodes to check. */
 	protected Collection<Node> nodes;
@@ -43,10 +46,11 @@ public class TagChecker<Node> extends AbstractChecker<Node> {
 	 * 
 	 * @param selector The selector to check against.
 	 */
-	public TagChecker(final NodeHelper<Node> helper, final Selector selector) {
+	public TagChecker(final NodeHelper<Node> helper, final Selector selector, boolean initialPart) {
 		super(helper);
 		Assert.notNull(selector, "selector is null!");
 		this.selector = selector;
+		this.initialPart = initialPart;
 	}
 
 	/**
@@ -87,6 +91,10 @@ public class TagChecker<Node> extends AbstractChecker<Node> {
 		for (Node node : nodes) {
 			Collection<Node> nodes = new LinkedHashSet<Node>();
 
+			if (initialPart) {
+				nodes.add(node);
+			}
+			
 			nodes.addAll(helper.getDescendentNodes(node));
 
 			for(Node n : nodes)

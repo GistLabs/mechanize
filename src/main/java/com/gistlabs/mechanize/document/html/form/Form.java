@@ -7,7 +7,7 @@
  */
 package com.gistlabs.mechanize.document.html.form;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.util.css.CSSHelper.byIdOrName;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,10 +16,7 @@ import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.documentElements.DocumentElement;
-import com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder;
-import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
 
@@ -38,7 +35,7 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 	}
 
 	private void analyse() {
-		List<? extends Node> nodes = getNode().getAll(byTag("input").or.byTag("textarea").or.byTag("select"));
+		List<? extends Node> nodes = getNode().findAll("input, textarea, select");
 		for(Node node : nodes) {
 			FormElement formElement = newFormElement(node);
 			if(formElement != null)
@@ -103,137 +100,100 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 	
 	/** Returns the element with the given name (case sensitive) or null. */
 	public FormElement get(String nameOrId) {
-		return get(HtmlQueryBuilder.byNameOrId(nameOrId));
+		return find(byIdOrName(nameOrId));
 	}
 	
-	public FormElement get(AbstractQuery<?> query) {
-		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
+	public FormElement find(String csss) {
 		for(FormElement element : elements)
-			if(element.matches(queryStrategy, query))
+			if(element.matches(csss))
 				return element;
 		return null;
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	public <T> T get(AbstractQuery<?> query, Class<T> clazz) {
-		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
+	public <T> T find(String csss, Class<T> clazz) {
 		for(FormElement element : elements) {
-			if(clazz == null || clazz.isInstance(element) && element.matches(queryStrategy, query))
+			if ((clazz==null || clazz.isInstance(element)) && element.matches(csss)) {
 				return (T)element;
+			}
 		}
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> List<T> getAll(AbstractQuery<?> query, Class<T> clazz) {
-		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
+	private <T> T find(String csss, String value, Class<T> clazz) {
+		for(FormElement element : elements) {
+			if ((clazz==null || clazz.isInstance(element)) && element.matches(csss)) {
+				if (value==null || value.equals(element.getValue())) {
+					return (T)element;
+				}
+			}
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> List<T> findAll(String csss, Class<T> clazz) {
 		List<T> result = new ArrayList<T>();
-		for(FormElement element : elements)
-			if((clazz == null || clazz.isInstance(element)) && element.matches(queryStrategy, query))
+		for(FormElement element : elements) {
+			if ((clazz==null || clazz.isInstance(element)) && element.matches(csss)) {
 				result.add((T)element);
-		return result;
-	}
-	
-	public List<FormElement> getAll(AbstractQuery<?> query) {
-		HtmlQueryStrategy queryStrategy = new HtmlQueryStrategy();
-		
-		List<FormElement> result = new ArrayList<FormElement>();
-		for(FormElement element : elements)
-			if(element.matches(queryStrategy, query))
-				result.add(element);
+			}
+		}
 		return result;
 	}
 
-	public Text getText(AbstractQuery<?> query) {
-		return get(query, Text.class);
-	}
-	
-	public List<Text> getTextFields(AbstractQuery<?> query) {
-		return getAll(query, Text.class);
+	public Email findEmail(String csss) {
+		return find(csss, Email.class);
 	}
 
-	public Search getSearch(AbstractQuery<?> query) {
-		return get(query, Search.class);
+	public Select findSelect(String csss) {
+		return find(csss, Select.class);
 	}
 
-	public List<Search> getSearchFields(AbstractQuery<?> query) {
-		return getAll(query, Search.class);
+	public Checkbox findCheckbox(String csss) {
+		return find(csss, Checkbox.class);
 	}
 
-	public Email getEmail(AbstractQuery<?> query) {
-		return get(query, Email.class);
-	}
-	
-	public List<Email> getEmailFields(AbstractQuery<?> query) {
-		return getAll(query, Email.class);
+	public Search findSearch(String csss) {
+		return find(csss, Search.class);
 	}
 
-	public TextArea getTextArea(AbstractQuery<?> query) {
-		return get(query, TextArea.class);
+	public SubmitImage findSubmitImage(String csss) {
+		return find(csss, SubmitImage.class);
 	}
 
-	public List<TextArea> getTextAreas(AbstractQuery<?> query) {
-		return getAll(query, TextArea.class);
-	}
-	
-	public Password getPassword(AbstractQuery<?> query) {
-		return get(query, Password.class);
-	}
-	
-	public List<Search> getPasswords(AbstractQuery<?> query) {
-		return getAll(query, Search.class);
-	}
-	
-	public Upload getUpload(AbstractQuery<?> query) {
-		return get(query, Upload.class);
+	public Upload findUpload(String csss) {
+		return find(csss, Upload.class);
 	}
 
-	public List<Search> getUploads(AbstractQuery<?> query) {
-		return getAll(query, Search.class);
+	public RadioButton findRadioButton(String csss) {
+		return find(csss, RadioButton.class);
 	}
 	
-	public Hidden getHidden(AbstractQuery<?> query) {
-		return get(query, Hidden.class);
+	public Checkbox findCheckbox(String csss, String value) {
+		return find(csss, value, Checkbox.class);
+	}
+	
+	public RadioButton findRadioButton(String csss, String value) {
+		return find(csss, value, RadioButton.class);
 	}
 
-	public List<Search> getHiddenFields(AbstractQuery<?> query) {
-		return getAll(query, Search.class);
-	}
-	
-	public SubmitButton getSubmitButton(AbstractQuery<?> query) {
-		return get(query, SubmitButton.class);
+	public TextArea findTextArea(String csss) {
+		return find(csss, TextArea.class);
 	}
 
-	public List<SubmitButton> getSubmitButtons(AbstractQuery<?> query) {
-		return getAll(query, SubmitButton.class);
+	public SubmitButton findSubmitButton(String csss) {
+		return find(csss, SubmitButton.class);
 	}
 	
-	public SubmitImage getSubmitImage(AbstractQuery<?> query) {
-		return get(query, SubmitImage.class);
-	}
-
-	public List<SubmitImage> getSubmitImages(AbstractQuery<?> query) {
-		return getAll(query, SubmitImage.class);
-	}
-	
-	public Checkbox getCheckbox(AbstractQuery<?> query) {
-		return get(query, Checkbox.class);
-	}
 
 	public Checkbox getCheckbox(String nameOrId, String value) {
 		return get(nameOrId, value, Checkbox.class);
 	}
 
-	public List<Checkbox> getCheckboxes(AbstractQuery<?> query) {
-		return getAll(query, Checkbox.class);
-	}
-
 	public RadioButton getRadioButton(String nameOrId) {
 		return get(nameOrId, RadioButton.class);
-	}
-	
-	public List<RadioButton> getRadioButtons(AbstractQuery<?> query) {
-		return getAll(query, RadioButton.class);
 	}
 	
 	public RadioButton getRadioButton(String nameOrId, String value) {
@@ -242,14 +202,6 @@ public class Form extends DocumentElement implements Iterable<FormElement> {
 	
 	public List<RadioButton> getRadioButtons(String nameOrId) {
 		return getAll(nameOrId, RadioButton.class);
-	}
-	
-	public Select getSelect(AbstractQuery<?> query) {
-		return get(query, Select.class);
-	}
-
-	public List<Select> getSelects(AbstractQuery<?> query) {
-		return getAll(query, Select.class);
 	}
 	
 	@SuppressWarnings("unchecked")

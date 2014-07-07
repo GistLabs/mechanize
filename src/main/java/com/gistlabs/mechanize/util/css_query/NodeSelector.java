@@ -98,8 +98,9 @@ public class NodeSelector<Node> {
 		Collection<Node> result = new LinkedHashSet<Node>();
 		result.add(root);
 
+		boolean initialPart=true;
 		for (Selector selector : parts) {
-			Checker<Node> checker = new TagChecker<Node>(helper, selector);
+			Checker<Node> checker = new TagChecker<Node>(helper, selector, initialPart);
 			result = checker.check(result);
 			if (selector.hasSpecifiers())
 				for (Specifier specifier : selector.getSpecifiers()) {
@@ -135,6 +136,7 @@ public class NodeSelector<Node> {
 						// Bail out early.
 						return result;
 				}
+			initialPart=false;
 		}
 
 		return result;

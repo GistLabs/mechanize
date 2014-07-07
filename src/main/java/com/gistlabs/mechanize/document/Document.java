@@ -7,13 +7,16 @@
  */
 package com.gistlabs.mechanize.document;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
+import static com.gistlabs.mechanize.util.css.CSSHelper.byIdOrClass;
+import static com.gistlabs.mechanize.util.css.CSSHelper.byIdOrClassOrName;
+
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 
-import com.gistlabs.mechanize.MechanizeAgent;
-import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.Mechanize;
+import com.gistlabs.mechanize.AbstractResource;
 import com.gistlabs.mechanize.document.html.form.Form;
 import com.gistlabs.mechanize.document.html.form.Forms;
 import com.gistlabs.mechanize.document.html.image.Images;
@@ -25,12 +28,12 @@ import com.gistlabs.mechanize.document.node.Node;
  * Represents a single or multiple-page document having a root node.
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
-public abstract class Document extends Resource {
+public abstract class Document extends AbstractResource {
 	private Links links;
 	private Forms forms;
 	private Images images;
 
-	public Document(MechanizeAgent agent, HttpRequestBase request, HttpResponse response) {
+	public Document(Mechanize agent, HttpRequestBase request, HttpResponse response) {
 		super(agent, request, response);
 	}
 
@@ -39,6 +42,14 @@ public abstract class Document extends Resource {
 	 * @return
 	 */
 	public abstract Node getRoot();
+	
+	public Node find(String csss) {
+		return getRoot().find(csss);
+	}
+	
+	public List<? extends Node> findAll(String csss) {
+		return getRoot().findAll(csss);
+	}
 
 	/**
 	 *  Query for a matching link, find first match by either id or by class attributes.
@@ -47,7 +58,7 @@ public abstract class Document extends Resource {
 	 * @return first Link found
 	 */
 	public Link link(String query) {
-		return links().get(byIdOrClass(query));
+		return links().find(byIdOrClass(query));
 	}
 	
 	public Links links() {
@@ -68,7 +79,7 @@ public abstract class Document extends Resource {
 	 * @return first Form found
 	 */
 	public Form form(String query) {
-		return forms().get(byIdOrClassOrName(query));
+		return forms().find(byIdOrClassOrName(query));
 	}
 
 	public Forms forms() {

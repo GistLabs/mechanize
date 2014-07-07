@@ -16,7 +16,6 @@ import org.jsoup.nodes.Element;
 
 import com.gistlabs.mechanize.document.node.AbstractNode;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Util;
 import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
@@ -33,6 +32,7 @@ public class HtmlNode extends AbstractNode {
 	private final org.jsoup.nodes.Node node;
 
 	public HtmlNode(final HtmlDocument page, final org.jsoup.nodes.Node node) {
+		if (page==null || node==null) throw new NullPointerException(String.format("page=%s,  node=%s", page, node));
 		this.page = page;
 		this.node = node;
 	}
@@ -58,7 +58,8 @@ public class HtmlNode extends AbstractNode {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Node> T find(final String query) {
-		return (T) getPage().htmlElements().getHtmlNode(JsoupNodeHelper.find(node, query));
+		org.jsoup.nodes.Node found = JsoupNodeHelper.find(node, query);
+		return found==null ? null : (T) getPage().htmlElements().getHtmlNode(found);
 	}
 
 	@Override
@@ -129,19 +130,7 @@ public class HtmlNode extends AbstractNode {
 	}
 
 	@Override
-	public HtmlElement get(final AbstractQuery<?> query) {
-		return HtmlElements.get(getPage(), query, node.childNodes());
-	}
-
-	@Override
-	public List<HtmlElement> getAll(final AbstractQuery<?> query) {
-		List<HtmlElement> result = new ArrayList<HtmlElement>();
-		HtmlElements.getAll(getPage(), result, query, node.childNodes());
-		return result;
-	}
-
-	@Override
 	public String toString() {
-		return node.toString();
+		return ""+node;
 	}
 }

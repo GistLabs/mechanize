@@ -7,8 +7,8 @@
  */
 package com.gistlabs.mechanize.document.html;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class HtmlNodeTest extends MechanizeTestCase {
 				newHtml("Test Page", "<a href=\"link\">link</a>"));
 		
 		HtmlDocument page = agent.get("http://test.com");
-		HtmlElement element = page.getRoot().get(byHRef(regEx("link")));
+		HtmlElement element = page.find("a[href*='link']");
 		assertEquals("body", element.getParent().getName());
 		assertEquals("html", element.getParent().getParent().getName());
 		assertNull(element.getParent().getParent().getParent().getParent());

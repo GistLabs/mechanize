@@ -39,6 +39,7 @@ import org.junit.internal.ArrayComparisonFailure;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.headers.Header;
 import com.gistlabs.mechanize.headers.Headers;
+import com.gistlabs.mechanize.impl.MechanizeAgent;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.util.apache.ContentType;
 import com.gistlabs.mechanize.util.apache.URLEncodedUtils;

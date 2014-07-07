@@ -7,7 +7,6 @@
  */
 package com.gistlabs.mechanize.document.html.image;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -27,7 +26,7 @@ public class ImagesTest extends MechanizeTestCase {
 				newHtml("Test Page", "<img src=\"test.png\"/>"));
 		
 		Document page = agent.get("http://www.test.com");
-		Image image = page.images().get(bySrc("test.png")); 
+		Image image = page.images().find("*[src='test.png']"); 
 		assertEquals("http://www.test.com/test.png", image.getAbsoluteSrc());
 	}
 	

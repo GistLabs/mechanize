@@ -7,8 +7,6 @@
  */
 package com.gistlabs.mechanize.document.html;
 
-import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.*;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -17,10 +15,9 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.Mechanize;
 import com.gistlabs.mechanize.document.html.form.Forms;
 import com.gistlabs.mechanize.document.html.image.Images;
-import com.gistlabs.mechanize.document.html.query.HtmlQueryStrategy;
 import com.gistlabs.mechanize.document.link.Links;
 import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
@@ -42,7 +39,7 @@ public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
 
 	private String baseUri;
 
-	public HtmlDocument(final MechanizeAgent agent, final HttpRequestBase request, final HttpResponse response) {
+	public HtmlDocument(final Mechanize agent, final HttpRequestBase request, final HttpResponse response) {
 		super(agent, request, response);
 	}
 
@@ -51,6 +48,17 @@ public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
 		return htmlElements().getRoot();
 	}
 
+	@Override
+	public HtmlElement find(String csss) {
+		return (HtmlElement)super.find(csss);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<? extends HtmlElement> findAll(String csss) {
+		return (List<? extends HtmlElement>) super.findAll(csss);
+	}
+	
 	@Override
 	protected void loadPage() throws Exception {
 		Document jsoup = Jsoup.parse(getInputStream(), getContentEncoding(response), getUri());
@@ -70,20 +78,20 @@ public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
 
 	@Override
 	protected Links loadLinks() {
-		List<? extends Node> links = htmlElements().getAll(byTag("a"));
-		return new Links(this, links, new HtmlQueryStrategy());
+		List<? extends Node> links = htmlElements().findAll("a");
+		return new Links(this, links);
 	}
 
 	@Override
 	protected Forms loadForms() {
-		List<? extends Node> forms = htmlElements().getAll(byTag("form"));
-		return new Forms(this, forms, new HtmlQueryStrategy());
+		List<? extends Node> forms = htmlElements().findAll("form");
+		return new Forms(this, forms);
 	}
 
 	@Override
 	protected Images loadImages() {
-		List<HtmlElement> images = htmlElements().getAll(byTag("img"));
-		return new Images(this, images, new HtmlQueryStrategy());
+		List<HtmlElement> images = htmlElements().findAll("img");
+		return new Images(this, images);
 	}
 
 
@@ -102,7 +110,7 @@ public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
 	 */
 	@Override
 	public String getTitle() {
-		HtmlElement title = htmlElements().get(byTag("title"));
+		HtmlElement title = htmlElements().find("title");
 		return title != null ? title.getText() : null;
 	}
 

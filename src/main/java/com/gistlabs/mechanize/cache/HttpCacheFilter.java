@@ -11,6 +11,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.protocol.HttpContext;
 
+import com.gistlabs.mechanize.cache.api.CacheEntry;
+import com.gistlabs.mechanize.cache.api.HttpCache;
+import com.gistlabs.mechanize.cache.inMemory.InMemoryCacheEntry;
+import com.gistlabs.mechanize.cache.inMemory.InMemoryHttpCache;
 import com.gistlabs.mechanize.filters.MechanizeChainFilter;
 import com.gistlabs.mechanize.filters.MechanizeFilter;
 

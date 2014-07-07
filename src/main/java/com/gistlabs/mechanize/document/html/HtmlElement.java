@@ -13,7 +13,6 @@ import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Element;
 
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.document.query.AbstractQuery;
 import com.gistlabs.mechanize.util.Util;
 
 /**
@@ -39,17 +38,7 @@ public class HtmlElement extends HtmlNode implements Node {
 	public String getValue() {
 		return getAttribute(HtmlSpecialAttributes.SPECIAL_ATTRIBUTE_NODE_VALUE);
 	}
-
-	@Override
-	public HtmlElement get(AbstractQuery<?> query) {
-		return super.get(query);
-	}
-	
-	@Override
-	public List<HtmlElement> getAll(AbstractQuery<?> query) {
-		return super.getAll(query);
-	}
-	
+		
 	@Override
 	public boolean hasAttribute(String attributeKey) {
 		return !isSupportedSpecialAttribute(attributeKey) ? getJsoupElement().hasAttr(attributeKey) : true;

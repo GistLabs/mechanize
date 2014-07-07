@@ -7,13 +7,21 @@
  */
 package com.gistlabs.mechanize.document.html;
 
-import com.gistlabs.mechanize.SpecialAttributes;
 
 /**
  * Defines supported special attributes for html elements.
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
-public interface HtmlSpecialAttributes extends SpecialAttributes {
+public interface HtmlSpecialAttributes {
+
+	/**
+	 * The name of the node. In the HTML / XML domain this is the tag-name of the element represented by the node. 
+	 * In the JSON domain the ${name} refers to the attribute name of the object node containing this node / attribute. 
+	 */
+	String SPECIAL_ATTRIBUTE_NODE_NAME = "${nodeName}"; 
+
+	/** The value of the node. In HTML / XML the value of a node is the text representation of the node without tag information. */
+	String SPECIAL_ATTRIBUTE_NODE_VALUE = "${nodeValue}"; //TODO check for a chance to find a better name to differenciate between name (tag) and name attribute
 
 	/** A comma separated list of class names without white spaces (no trim needed). */
 	String SPECIAL_ATTRIBUTE_CLASS_NAMES = "${classNames}";
