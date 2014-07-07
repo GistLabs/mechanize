@@ -9,7 +9,7 @@
 
   <groupId>com.gistlabs</groupId>
   <artifactId>mechanize</artifactId>
-  <version>1.0.0-RC1-SNAPSHOT</version>
+  <version>1.0.0-RC1</version>
   <packaging>jar</packaging>
 
   <name>mechanize</name>
@@ -31,6 +31,7 @@
     <connection>scm:git:https://github.com/GistLabs/mechanize.git</connection>
     <url>https://github.com/GistLabs/mechanize</url>
     <developerConnection>scm:git:git@github.com:GistLabs/mechanize.git</developerConnection>
+    <tag>v1.0.0-RC1</tag>
   </scm>
 
   <organization>
