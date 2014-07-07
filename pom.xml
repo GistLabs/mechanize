@@ -114,6 +114,14 @@
             <artifactId>maven-license-plugin</artifactId>
             <configuration>
                 <header>src/etc/header.txt</header>
+                <excludes>
+                	<exclude>degraph/*</exclude>
+                	<exclude>*.*</exclude>
+                	<exclude>src/main/java/com/gistlabs/mechanize/util/apache/**</exclude>
+                	<exclude>src/main/java/com/gistlabs/mechanize/util/css_query/**</exclude>
+                	<exclude>src/test/resources/**</exclude>
+                	<exclude>src/main/resources/**</exclude>
+                </excludes>
             </configuration>
         </plugin>
         <plugin>
