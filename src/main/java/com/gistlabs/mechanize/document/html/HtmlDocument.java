@@ -7,6 +7,7 @@
  */
 package com.gistlabs.mechanize.document.html;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,15 +22,13 @@ import com.gistlabs.mechanize.document.html.image.Images;
 import com.gistlabs.mechanize.document.link.Links;
 import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
-import com.gistlabs.mechanize.util.Collections;
 import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
 public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
-	public static Collection<String> CONTENT_MATCHERS =
-			Collections.collection(
+	public static Collection<String> CONTENT_MATCHERS = Arrays.asList(
 					ContentType.TEXT_HTML.getMimeType(),
 					ContentType.APPLICATION_ATOM_XML.getMimeType(),
 					ContentType.APPLICATION_XHTML_XML.getMimeType(),

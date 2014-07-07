@@ -8,6 +8,7 @@
 package com.gistlabs.mechanize.document.json;
 
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.http.HttpResponse;
@@ -20,12 +21,11 @@ import com.gistlabs.mechanize.document.Document;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
 import com.gistlabs.mechanize.document.json.node.impl.ObjectNodeImpl;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
-import com.gistlabs.mechanize.util.Collections;
 import com.gistlabs.mechanize.util.apache.ContentType;
 
 public class JsonDocument extends Document {
 	public static Collection<String> CONTENT_MATCHERS =
-			Collections.collection(
+			Arrays.asList(
 					ContentType.APPLICATION_JSON.getMimeType());
 
 	private JsonNode json;
