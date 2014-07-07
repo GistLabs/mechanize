@@ -19,8 +19,8 @@ import com.gistlabs.mechanize.impl.MechanizeAgent;
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public class CookiesTest {
-	@Test // no longer working
-	public void testWikipediaSendsNoCookies() {
+	//@Test // no longer working
+	public void xtestWikipediaSendsNoCookies() {
 		Mechanize agent = new MechanizeAgent();
 
 		agent.get("http://www.wikipedia.org");
