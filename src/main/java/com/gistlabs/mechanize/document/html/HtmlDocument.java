@@ -17,6 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import com.gistlabs.mechanize.Mechanize;
+import com.gistlabs.mechanize.document.AbstractDocument;
 import com.gistlabs.mechanize.document.html.form.Forms;
 import com.gistlabs.mechanize.document.html.image.Images;
 import com.gistlabs.mechanize.document.link.Links;
@@ -27,7 +28,7 @@ import com.gistlabs.mechanize.util.apache.ContentType;
 /**
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
-public class HtmlDocument extends com.gistlabs.mechanize.document.Document {
+public class HtmlDocument extends AbstractDocument {
 	public static Collection<String> CONTENT_MATCHERS = Arrays.asList(
 					ContentType.TEXT_HTML.getMimeType(),
 					ContentType.APPLICATION_ATOM_XML.getMimeType(),

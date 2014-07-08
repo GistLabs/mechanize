@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.document.Document;
+import com.gistlabs.mechanize.document.AbstractDocument;
 import com.gistlabs.mechanize.document.link.Link;
 
 public class PageQueryTest extends MechanizeTestCase {
@@ -24,7 +24,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" href=\"foo.html\">foo</a>"));
 		
-		Document page = agent.get("http://test.com");
+		AbstractDocument page = agent.get("http://test.com");
 		Link link = page.links().find("#foo");
 		assertNotNull(link);
 		assertEquals("http://test.com/foo.html", link.href());
@@ -35,7 +35,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" class=\"bar baz\" href=\"foo.html\">foo</a>"));
 		
-		Document page = agent.get("http://test.com");
+		AbstractDocument page = agent.get("http://test.com");
 		
 		assertNull(page.links().find(".foo")); // foo class
 		
@@ -53,7 +53,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" href=\"foo.html\">foo</a>"));
 		
-		Document page = agent.get("http://test.com");
+		AbstractDocument page = agent.get("http://test.com");
 		Link link = page.links().find(byName("foo"));
 		assertNull(link);
 	}
@@ -63,7 +63,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" class=\"bar baz\" href=\"foo.html\">foo</a>"));
 		
-		Document page = agent.get("http://test.com");
+		AbstractDocument page = agent.get("http://test.com");
 		
 		assertNotNull(page.links().find(byIdOrClass("foo")));
 		assertNotNull(page.links().find(byIdOrClass("bar")));
@@ -77,7 +77,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" class=\"bar baz\" href=\"foo.html\">foo</a>"));
 		
-		Document page = agent.get("http://test.com");
+		AbstractDocument page = agent.get("http://test.com");
 		
 		assertNotNull(page.link("foo"));
 		assertNotNull(page.link("bar"));
@@ -92,7 +92,7 @@ public class PageQueryTest extends MechanizeTestCase {
 		agent.addPageRequest("http://test.com", 
 				newHtml("Test Page", newForm("form").id("form")));
 		
-		Document page = agent.get("http://test.com");
+		AbstractDocument page = agent.get("http://test.com");
 		
 		assertNull(page.form("foo"));
 		assertNotNull(page.form("form"));

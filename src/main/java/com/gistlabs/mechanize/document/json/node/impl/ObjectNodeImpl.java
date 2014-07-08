@@ -22,7 +22,7 @@ import com.gistlabs.mechanize.document.json.exceptions.JsonArrayException;
 import com.gistlabs.mechanize.document.json.exceptions.JsonException;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
 
-public class ObjectNodeImpl extends AbstractNode {
+public class ObjectNodeImpl extends AbstractJsonNode {
 
 	private final JSONObject obj;
 	private final Map<String,List<JsonNode>> children = new HashMap<String, List<JsonNode>>();

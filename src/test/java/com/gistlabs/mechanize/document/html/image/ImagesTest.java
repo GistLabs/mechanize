@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
-import com.gistlabs.mechanize.document.Document;
+import com.gistlabs.mechanize.document.AbstractDocument;
 import com.gistlabs.mechanize.document.html.image.Image;
 import com.gistlabs.mechanize.document.html.image.ImageCollection;
 
@@ -25,7 +25,7 @@ public class ImagesTest extends MechanizeTestCase {
 		agent.addPageRequest("http://www.test.com", 
 				newHtml("Test Page", "<img src=\"test.png\"/>"));
 		
-		Document page = agent.get("http://www.test.com");
+		AbstractDocument page = agent.get("http://www.test.com");
 		Image image = page.images().find("*[src='test.png']"); 
 		assertEquals("http://www.test.com/test.png", image.getAbsoluteSrc());
 	}
@@ -37,7 +37,7 @@ public class ImagesTest extends MechanizeTestCase {
 		agent.addPageRequest("http://www.test.com/test.png", "ImageContent");
 		agent.addPageRequest("http://www.test.com/test2.png", "ImageContent");
 		
-		Document page = agent.get("http://www.test.com");
+		AbstractDocument page = agent.get("http://www.test.com");
 		ImageCollection imageCollection = page.images().loadAll();
 		assertEquals(2, imageCollection.size());
 		assertTrue(imageCollection.hasLoaded(page.images().get(0)));
@@ -56,7 +56,7 @@ public class ImagesTest extends MechanizeTestCase {
 
 		agent.addPageRequest("http://www.test.com/test2.png", "ImageContent");
 		
-		Document page = agent.get("http://www.test.com");
+		AbstractDocument page = agent.get("http://www.test.com");
 		ImageCollection imageCollection = new ImageCollection();
 		page.images().loadAllMissing(imageCollection);
 		assertEquals(1, imageCollection.size());

@@ -18,8 +18,6 @@ import org.apache.http.client.methods.HttpRequestBase;
 
 /**
  * Represents a resource being reseived by a request.
- * 
- * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public interface Resource {
 

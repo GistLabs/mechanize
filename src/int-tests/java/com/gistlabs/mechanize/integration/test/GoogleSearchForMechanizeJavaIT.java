@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.Mechanize;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.Document;
+import com.gistlabs.mechanize.document.AbstractDocument;
 import com.gistlabs.mechanize.document.html.form.Form;
 import com.gistlabs.mechanize.impl.MechanizeAgent;
 
@@ -25,7 +25,7 @@ public class GoogleSearchForMechanizeJavaIT {
 	@Test
 	public void testGooglePageSearchForm() {
 		Mechanize agent = new MechanizeAgent();
-		Document page = agent.get("http://www.google.com");
+		AbstractDocument page = agent.get("http://www.google.com");
 		Form form = page.form("f");
 		form.get("q").set("mechanize java");
 		Resource response = form.submit();

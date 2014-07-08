@@ -17,13 +17,13 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import com.gistlabs.mechanize.Mechanize;
-import com.gistlabs.mechanize.document.Document;
+import com.gistlabs.mechanize.document.AbstractDocument;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
 import com.gistlabs.mechanize.document.json.node.impl.ObjectNodeImpl;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.util.apache.ContentType;
 
-public class JsonDocument extends Document {
+public class JsonDocument extends AbstractDocument {
 	public static Collection<String> CONTENT_MATCHERS =
 			Arrays.asList(
 					ContentType.APPLICATION_JSON.getMimeType());

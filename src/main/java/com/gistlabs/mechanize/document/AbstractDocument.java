@@ -28,12 +28,12 @@ import com.gistlabs.mechanize.document.node.Node;
  * Represents a single or multiple-page document having a root node.
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
-public abstract class Document extends AbstractResource {
+public abstract class AbstractDocument extends AbstractResource {
 	private Links links;
 	private Forms forms;
 	private Images images;
 
-	public Document(Mechanize agent, HttpRequestBase request, HttpResponse response) {
+	public AbstractDocument(Mechanize agent, HttpRequestBase request, HttpResponse response) {
 		super(agent, request, response);
 	}
 

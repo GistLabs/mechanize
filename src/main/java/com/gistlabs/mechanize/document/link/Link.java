@@ -8,7 +8,7 @@
 package com.gistlabs.mechanize.document.link;
 
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.documentElements.DocumentElement;
+import com.gistlabs.mechanize.document.documentElements.AbstractDocumentElement;
 import com.gistlabs.mechanize.document.node.Node;
 
 /** 
@@ -16,7 +16,7 @@ import com.gistlabs.mechanize.document.node.Node;
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public class Link extends DocumentElement {
+public class Link extends AbstractDocumentElement {
 	public Link(Resource page, Node link) {
 		super(page, link);
 	}

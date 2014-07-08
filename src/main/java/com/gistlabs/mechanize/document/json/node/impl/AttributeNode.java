@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import com.gistlabs.mechanize.document.json.exceptions.JsonException;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
 
-public class AttributeNode extends AbstractNode {
+public class AttributeNode extends AbstractJsonNode {
 
 	public AttributeNode(final JsonNode parent, final String name) {
 		super(parent, name);

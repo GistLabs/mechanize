@@ -8,7 +8,7 @@
 package com.gistlabs.mechanize.document.html.image;
 
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.documentElements.DocumentElement;
+import com.gistlabs.mechanize.document.documentElements.AbstractDocumentElement;
 import com.gistlabs.mechanize.document.node.Node;
 
 /** 
@@ -16,7 +16,7 @@ import com.gistlabs.mechanize.document.node.Node;
  * 
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public class Image extends DocumentElement {
+public class Image extends AbstractDocumentElement {
 	
 	public Image(Resource page, Node node) {
 		super(page, node);
