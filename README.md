@@ -15,6 +15,15 @@ Because mechanize is stateful and allow inspection of web resources, it naturall
 * Forum: https://groups.google.com/forum/?fromgroups#!forum/mechanize4j
 * License: [MPL 2.0](http://mozilla.org/MPL/2.0/)
 
+======
+Releases:
+
+* 1.x is the original port of mechanize to java. This will be maintained for bug fixes and possibly other enhancements.
+* 2.x is the modularized version to separate HTML, JSON, and XML into separate a la carte packages. Also the JSON linking dev will be here.
+
+========
+
+
 Here is a testcase showing mechanize at work with HTML:
 ```java
 	@Test public void testGooglePageSearchForm() {
@@ -40,8 +49,6 @@ Here is a testcase showing mechanize using a Google JSON web service:
 		assertTrue(value, Integer.valueOf(value)>=1);
 	}
 ```
-
-What to expect from future development: [#61 XML Support](https://github.com/GistLabs/mechanize/issues/61)
 
 Release log:
 
