@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.Mechanize;
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.Document;
+import com.gistlabs.mechanize.document.AbstractDocument;
 import com.gistlabs.mechanize.document.html.form.Form;
 import com.gistlabs.mechanize.document.link.Link;
 import com.gistlabs.mechanize.document.link.Links;
@@ -30,7 +30,7 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 	@Test
 	public void testLoadWikipediaIndexPage() {
 		Mechanize agent = new MechanizeAgent();
-		Document page = agent.get("http://www.wikipedia.org");
+		AbstractDocument page = agent.get("http://www.wikipedia.org");
 		assertNotNull(page);
 		assertTrue(page.size() > 10000);
 		Links links = page.links();
@@ -41,7 +41,7 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 	@Test
 	public void testClickingEnglishWikipediaVersionLink() {
 		Mechanize agent = new MechanizeAgent();
-		Document page = agent.get("http://www.wikipedia.org");
+		AbstractDocument page = agent.get("http://www.wikipedia.org");
 		assertNotNull(page);
 		assertTrue(page.size() > 10000);
 		Links links = page.links();
@@ -55,7 +55,7 @@ public class WikipediaSearchForAngelaMerkelAndDownloadingImagesIT {
 	@Test
 	public void testSearchingWikipediaForAngelaMerkelInGermanLanguageUtilizingSelectAndTextInput() {
 		Mechanize agent = new MechanizeAgent();
-		Document page = agent.get("http://www.wikipedia.org");
+		AbstractDocument page = agent.get("http://www.wikipedia.org");
 		Form form = page.forms().find(".search-form");
 		form.findSelect(byIdOrName("language")).getOption("de").select();
 		form.findSearch(byIdOrName("search")).set("Angela Merkel");

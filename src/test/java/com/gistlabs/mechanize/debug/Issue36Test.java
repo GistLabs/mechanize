@@ -16,7 +16,7 @@ import org.apache.http.impl.conn.ProxySelectorRoutePlanner;
 import com.gistlabs.mechanize.Mechanize;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.cookie.Cookie;
-import com.gistlabs.mechanize.document.Document;
+import com.gistlabs.mechanize.document.AbstractDocument;
 import com.gistlabs.mechanize.document.html.form.Checkable;
 import com.gistlabs.mechanize.document.html.form.Form;
 import com.gistlabs.mechanize.impl.MechanizeAgent;
@@ -30,7 +30,7 @@ public class Issue36Test {
 		Mechanize agent = new MechanizeAgent(buildClient());
 
 		String manageKindleUrl = "http://www.amazon.com/gp/digital/fiona/manage/ref=gno_yam_myk";
-		Document signinPage = agent.get(manageKindleUrl);
+		AbstractDocument signinPage = agent.get(manageKindleUrl);
 
 		debug(signinPage);
 
