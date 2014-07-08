@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.document.link;
+package com.gistlabs.mechanize.document.html;
 
 import static com.gistlabs.mechanize.util.css.CSSHelper.byIdOrClass;
 import static com.gistlabs.mechanize.util.css.CSSHelper.contains;
@@ -19,6 +19,7 @@ import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.PageRequest;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.AbstractDocument;
+import com.gistlabs.mechanize.document.link.Link;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
