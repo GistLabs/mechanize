@@ -7,13 +7,11 @@
  */
 package com.gistlabs.mechanize.document.html.image;
 
-import java.io.OutputStream;
 import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.documentElements.DocumentElements;
 import com.gistlabs.mechanize.document.node.Node;
-import com.gistlabs.mechanize.util.NullOutputStream;
 import com.gistlabs.mechanize.util.Util;
 
 /**
@@ -38,21 +36,5 @@ public class Images extends DocumentElements<Image> {
 	@Override
 	protected Image newRepresentation(final Node node) {
 		return new Image(page, node);
-	}
-
-	public ImageCollection loadAll() {
-		return loadAllMissing(new ImageCollection());
-	}
-
-	/** Returns the given image collection after loading all missing images that are present within the
-	 *  page but not marked as being already loaded within the image collection. */
-	public ImageCollection loadAllMissing(final ImageCollection imageCollection) {
-		for(Image image : this)
-			if(!imageCollection.hasLoaded(image)) {
-				OutputStream out = new NullOutputStream();
-				getPage().getAgent().get(image.getAbsoluteSrc()).saveTo(out);
-				imageCollection.markAsLoaded(image);
-			}
-		return imageCollection;
 	}
 }
