@@ -90,7 +90,7 @@ public class PageQueryTest extends MechanizeTestCase {
 	@Test
 	public void testFormQueryById() {
 		agent.addPageRequest("http://test.com", 
-				newHtml("Test Page", newForm("form").id("form")));
+				newHtml("Test Page", "<form action=\"form\" id=\"form\"></form>"));
 		
 		AbstractDocument page = agent.get("http://test.com");
 		
