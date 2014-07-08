@@ -24,7 +24,7 @@ public class HtmlElementTest extends MechanizeTestCase {
 	
 	@Test
 	public void testFindingALink() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"http://test.com/myPage.html\">myPage</a>"));
 		
 		Resource page = agent.get("http://test.com");
@@ -35,7 +35,7 @@ public class HtmlElementTest extends MechanizeTestCase {
 
 	@Test
 	public void testFindingTwoLinks() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"link1\">link1</a><a href=\"link2\">link2</a>"));
 		
 		Resource page = agent.get("http://test.com");

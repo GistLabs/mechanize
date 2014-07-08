@@ -243,9 +243,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testEmptyFormWithGetMethod() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form")));
-		agent.addPageRequest("http://test.com/form", newHtml("OK", ""));
+		addPageRequest("http://test.com/form", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -256,9 +256,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testEmptyFormWithPostMethod() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form", "post").id("form")));
-		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
+		addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -269,9 +269,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testSimpleInputNoText() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addText("text", null)));
-		agent.addPageRequest("http://test.com/form?text=", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?text=", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -281,9 +281,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testSimpleInputWithDefaultText() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addText("text", "Text")));
-		agent.addPageRequest("http://test.com/form?text=Text", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?text=Text", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -293,7 +293,7 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testSimpleInputSettingValueToValueBiggerThanMaxLengthWillGetAutomaticallyTruncated() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addText("text", null, 5)));
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -303,9 +303,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testEmailInputFieldWithNoText() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addInput("mail", "email", null)));
-		agent.addPageRequest("http://test.com/form?mail=", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?mail=", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -319,9 +319,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testUnrecognizedInputFieldWithNoText() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addInput("unknown", "unknownType", null)));
-		agent.addPageRequest("http://test.com/form?unknown=test", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?unknown=test", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -337,7 +337,7 @@ public class FormTest extends MechanizeTestCase {
 	public void testInputTextWithName() {
 		String newHtml = newHtml("Test Page", newForm("form").id("form")
 				.addRaw("<input type=\"text\" class=\"txt\" name=\"login\" size=\"30\" onfocus=\"hlFF(this, true);\" onblur=\"hlFF(this);\">"));
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml);
 
 		AbstractDocument page = agent.get("http://test.com");
@@ -350,9 +350,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testTextAreaInputWithDefaultText() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addTextArea("text", "Text")));
-		agent.addPageRequest("http://test.com/form?text=Text", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?text=Text", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -361,9 +361,9 @@ public class FormTest extends MechanizeTestCase {
 	}
 
 	public void testTextAreaInputWithChangedValue() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addTextArea("text", "Text")));
-		agent.addPageRequest("http://test.com/form?text=differentText", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?text=differentText", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -374,9 +374,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testHiddenInput() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addHidden("hidden", "Text")));
-		agent.addPageRequest("http://test.com/form?hidden=Text", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?hidden=Text", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -386,7 +386,7 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testSettingValueOfSubmitButtonFails() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addSubmitButton("button", "Text")));
 
 		AbstractDocument page = agent.get("http://test.com");
@@ -396,9 +396,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testSimpleLoginFormWithTextAndPasswordAndSubmitButtonSubmittingByButton() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addText("user", null).addPassword("pass", null).addSubmitButton("submit", "pressed")));
-		agent.addPageRequest("http://test.com/form?user=username&pass=password&submit=pressed", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?user=username&pass=password&submit=pressed", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -410,9 +410,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testSimpleLoginFormWithTextAndPasswordAndSubmitButtonSubmittingByPressingEnter() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addText("user", null).addPassword("pass", null).addSubmitButton("submit", "pressed")));
-		agent.addPageRequest("http://test.com/form?user=username&pass=password", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?user=username&pass=password", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -424,9 +424,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testCheckboxForm() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addCheckbox("box", "value1").addCheckedCheckbox("box", "value2").addCheckedCheckbox("box", "value3")));
-		agent.addPageRequest("http://test.com/form?box=value1&box=value3", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?box=value1&box=value3", newHtml("OK", ""));
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
 		assertFalse(form.findCheckbox(byIdOrName("box"), "value1").isChecked());
@@ -442,7 +442,7 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testSettingValueOfCheckboxFails() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addCheckbox("box", "value")));
 
 		AbstractDocument page = agent.get("http://test.com");
@@ -452,10 +452,10 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testRadioButtonForm() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addRadioButton("button", "value1").
 						addCheckedRadioButton("button", "value2").addRadioButton("button", "value3")));
-		agent.addPageRequest("http://test.com/form?button=value3", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?button=value3", newHtml("OK", ""));
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
 
@@ -475,7 +475,7 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testSettingValueOfRadioButtonFails() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addRadioButton("button", "value")));
 
 		AbstractDocument page = agent.get("http://test.com");
@@ -485,9 +485,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testSingleElementSelect() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").beginSelect("person").addOption("Peter", "1").addOption("John", "2").addSelectedOption("Susanna", "3").end()));
-		agent.addPageRequest("http://test.com/form?person=1", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?person=1", newHtml("OK", ""));
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
 		Select select = form.findSelect(byIdOrName("person"));
@@ -516,9 +516,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testMultipleElementSelect() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").beginMultiSelect("person").addOption("Peter", "1").addSelectedOption("John", "2").addOption("Susanna", "3").end()));
-		agent.addPageRequest("http://test.com/form?person=2&person=3", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?person=2&person=3", newHtml("OK", ""));
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
 		Select select = form.findSelect(byIdOrName("person"));
@@ -546,7 +546,7 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testSettingValueOfSelectFails() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").beginSelect("person").addOption("Peter", "1").addOption("John", "2").addSelectedOption("Susanna", "3").end()));
 
 		AbstractDocument page = agent.get("http://test.com");
@@ -556,9 +556,9 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test
 	public void testImageToSubmitForm() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addSubmitImage("submitImage", "value")));
-		agent.addPageRequest("http://test.com/form?submitImage=value&submitImage.x=20&submitImage.y=10", newHtml("OK", ""));
+		addPageRequest("http://test.com/form?submitImage=value&submitImage.x=20&submitImage.y=10", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -568,7 +568,7 @@ public class FormTest extends MechanizeTestCase {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testSettingValueOfSubmitImageFails() {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").id("form").addSubmitImage("submitImage", "value")));
 
 		AbstractDocument page = agent.get("http://test.com");
@@ -580,9 +580,9 @@ public class FormTest extends MechanizeTestCase {
 	public void testSimpleFileUpload() throws Exception {
 		File tmpFile = File.createTempFile("mechanize", "tmp");
 
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").method("post").id("form").enctype("multipart/form-data").addFileInput("fileUpload", "")));
-		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
+		addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");
@@ -597,9 +597,9 @@ public class FormTest extends MechanizeTestCase {
 	 */
 	@Test
 	public void testFileUploadWithNoFile() throws Exception {
-		agent.addPageRequest("http://test.com",
+		addPageRequest("http://test.com",
 				newHtml("Test Page", newForm("form").method("post").id("form").enctype("multipart/form-data").addFileInput("fileUpload", null)));
-		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
+		addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
 
 		AbstractDocument page = agent.get("http://test.com");
 		Form form = page.forms().find("#form");

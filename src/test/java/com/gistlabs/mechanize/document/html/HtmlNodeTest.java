@@ -22,7 +22,7 @@ import com.gistlabs.mechanize.document.node.NodeVisitor;
 public class HtmlNodeTest extends MechanizeTestCase {
 	@Test
 	public void testGettingTheParent() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"link\">link</a>"));
 		
 		HtmlDocument page = agent.get("http://test.com");
@@ -34,7 +34,7 @@ public class HtmlNodeTest extends MechanizeTestCase {
 
 	@Test
 	public void testVisitWithNodeVisitor() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"link\">link</a>"));
 		
 		HtmlDocument page = agent.get("http://test.com");

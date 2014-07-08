@@ -21,7 +21,7 @@ public class PageQueryTest extends MechanizeTestCase {
 
 	@Test
 	public void testLinkQueryById() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" href=\"foo.html\">foo</a>"));
 		
 		AbstractDocument page = agent.get("http://test.com");
@@ -32,7 +32,7 @@ public class PageQueryTest extends MechanizeTestCase {
 
 	@Test
 	public void testLinkQueryByClass() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" class=\"bar baz\" href=\"foo.html\">foo</a>"));
 		
 		AbstractDocument page = agent.get("http://test.com");
@@ -50,7 +50,7 @@ public class PageQueryTest extends MechanizeTestCase {
 
 	@Test
 	public void testLinkQueryByNameNotFound() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" href=\"foo.html\">foo</a>"));
 		
 		AbstractDocument page = agent.get("http://test.com");
@@ -60,7 +60,7 @@ public class PageQueryTest extends MechanizeTestCase {
 
 	@Test
 	public void testLinkQueryByIdOrClass() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" class=\"bar baz\" href=\"foo.html\">foo</a>"));
 		
 		AbstractDocument page = agent.get("http://test.com");
@@ -74,7 +74,7 @@ public class PageQueryTest extends MechanizeTestCase {
 
 	@Test
 	public void testPageLinkQueryIsByIdOrClass() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"foo\" class=\"bar baz\" href=\"foo.html\">foo</a>"));
 		
 		AbstractDocument page = agent.get("http://test.com");
@@ -89,7 +89,7 @@ public class PageQueryTest extends MechanizeTestCase {
 	
 	@Test
 	public void testFormQueryById() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<form action=\"form\" id=\"form\"></form>"));
 		
 		AbstractDocument page = agent.get("http://test.com");

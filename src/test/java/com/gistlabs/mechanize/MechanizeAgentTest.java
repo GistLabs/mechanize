@@ -27,14 +27,14 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 
 	@Test
 	public void testReceivingAPage() {
-		agent.addPageRequest("http://test.com", newHtml("Test Page", ""));
+		addPageRequest("http://test.com", newHtml("Test Page", ""));
 		Resource page = agent.get("http://test.com");
 		assertEquals("Test Page", page.getTitle());
 	}
 
 	@Test(expected=MechanizeException.class)
 	public void testExpectPostButReceiveGetRequestFails() throws Exception {
-		agent.addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
+		addPageRequest("POST", "http://test.com/form", newHtml("OK", ""));
 		disableAfterTest();
 
 		Resource result = agent.get("http://test.com/form");
@@ -50,14 +50,14 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 
 	@Test
 	public void testDoRequestGet() {
-		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", ""));
+		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", ""));
 		Resource page = agent.doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").get();
 		assertEquals("Test Page", page.getTitle());
 	}
 
 	@Test
 	public void testDoRequestGetWithExistingQueryParameters() {
-		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=2", newHtml("Test Page", ""));
+		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=2", newHtml("Test Page", ""));
 		Resource page = agent.doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").get();
 		assertEquals("Test Page", page.getTitle());
 	}
@@ -65,28 +65,28 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 	@Test
 	public void testDoRequestPostWithExistingQueryParameters() {
 		Parameters expectedParameters = new Parameters().add("query","ab cd").add("page", "2");
-		agent.addPageRequest("Post", "http://test.com/index.html", expectedParameters, newHtml("Test Page", ""));
+		addPageRequest("Post", "http://test.com/index.html", expectedParameters, newHtml("Test Page", ""));
 		Resource page = agent.doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").post();
 		assertEquals("Test Page", page.getTitle());
 	}
 
 	@Test
 	public void testDoRequestWithSetHeader() {
-		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("foo", "bar");
+		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("foo", "bar");
 		Resource page = agent.doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").setHeader("foo", "x").setHeader("foo", "bar").get();
 		assertEquals("Test Page", page.getTitle());
 	}
 
 	@Test
 	public void testDoRequestWithAddHeaders() {
-		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("foo", "bar", "baz");
+		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("foo", "bar", "baz");
 		Resource page = agent.doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").addHeader("foo", "bar", "baz").get();
 		assertEquals("Test Page", page.getTitle());
 	}
 
 	@Test
 	public void testDoRequestWithAccept() {
-		agent.addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("Accept", "application/json");
+		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("Accept", "application/json");
 		Resource page = agent.doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").accept("application/json").get();
 		assertEquals("Test Page", page.getTitle());
 	}

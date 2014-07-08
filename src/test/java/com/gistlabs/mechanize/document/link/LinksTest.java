@@ -15,8 +15,8 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import com.gistlabs.mechanize.MechanizeMock.PageRequest;
 import com.gistlabs.mechanize.MechanizeTestCase;
+import com.gistlabs.mechanize.PageRequest;
 import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.AbstractDocument;
 
@@ -26,9 +26,9 @@ import com.gistlabs.mechanize.document.AbstractDocument;
 public class LinksTest extends MechanizeTestCase {
 	@Test
 	public void testFollowingAnAbsoluteLink() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"t\" href=\"http://test.com/myPage.html\">myPage</a>"));
-		agent.addPageRequest("http://test.com/myPage.html", newHtml("My Page", ""));
+		addPageRequest("http://test.com/myPage.html", newHtml("My Page", ""));
 		
 		AbstractDocument page = agent.get("http://test.com");
 		assertEquals(1, page.links().size());
@@ -40,7 +40,7 @@ public class LinksTest extends MechanizeTestCase {
 
 	@Test
 	public void testDontFind() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"t\" href=\"http://test.com/myPage.html\">myPage</a>"));
 		
 		AbstractDocument page = agent.get("http://test.com");
@@ -51,9 +51,9 @@ public class LinksTest extends MechanizeTestCase {
 
 	@Test
 	public void testFollowingAnRelativeLink() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"myPage.html\">myPage</a>"));
-		agent.addPageRequest("http://test.com/myPage.html", newHtml("My Page", ""));
+		addPageRequest("http://test.com/myPage.html", newHtml("My Page", ""));
 		
 		AbstractDocument page = agent.get("http://test.com");
 		Link link = page.links().find(contains("myPage"));
@@ -64,9 +64,9 @@ public class LinksTest extends MechanizeTestCase {
 	
 	@Test
 	public void testFollowingAnRelativeLinkWithBaseSetInHtmlPage() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				"<html><head><base href=\"http://www1.test.com\"/></head><body><a href=\"myPage.html\">myPage</a></body></html>");
-		agent.addPageRequest("http://www1.test.com/myPage.html", newHtml("My Page", ""));
+		addPageRequest("http://www1.test.com/myPage.html", newHtml("My Page", ""));
 		
 		AbstractDocument page = agent.get("http://test.com");
 		Link link = page.links().get(0);
@@ -77,10 +77,10 @@ public class LinksTest extends MechanizeTestCase {
 
 	@Test
 	public void testFollowingAnRelativeLinkWithContentLocationSetInHtmlResponseHeader() {
-		PageRequest pageRequest = agent.addPageRequest("http://test.com", 
+		PageRequest pageRequest = addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"myPage.html\">myPage</a>"));
 		pageRequest.setContentLocation("http://www1.test.com");
-		agent.addPageRequest("http://www1.test.com/myPage.html", newHtml("My Page", ""));
+		addPageRequest("http://www1.test.com/myPage.html", newHtml("My Page", ""));
 		
 		AbstractDocument page = agent.get("http://test.com");
 		Link link = page.links().find(contains("myPage"));

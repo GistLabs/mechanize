@@ -7,6 +7,7 @@
  */
 package com.gistlabs.mechanize;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +17,14 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.junit.After;
 
-import com.gistlabs.mechanize.MechanizeMock.PageRequest;
+import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public class MechanizeTestCase {
-	protected MechanizeMock agent = new MechanizeMock();
+	protected MechanizeMock agent2 = new MechanizeMock();
+	protected Mechanize agent = agent2;
 	protected boolean doAfterTest = true;
 
 	public void disableAfterTest() {
@@ -32,10 +34,32 @@ public class MechanizeTestCase {
 	@After
 	public void afterTest() {
 		if(doAfterTest) {
-			PageRequest next = agent.nextUnexecutedPageRequest();
+			PageRequest next = agent2.nextUnexecutedPageRequest();
 			if(next != null)
 				Assert.fail("Unexecuted page request: " + next.toString());
 		}
+	}
+
+	public PageRequest addPageRequest(final String uri, final String body) {
+		return addPageRequest("GET", uri, body);
+	}
+
+	public PageRequest addPageRequest(final String method, final String uri, final String body) {
+		PageRequest request = new PageRequest(method, uri, body);
+		agent2.requests.add(request);
+		return request;
+	}
+
+	public PageRequest addPageRequest(final String method, final String uri, final InputStream body) {
+		PageRequest request = new PageRequest(method, uri, body);
+		agent2.requests.add(request);
+		return request;
+	}
+
+	public PageRequest addPageRequest(final String method, final String uri, final Parameters parameters, final String body) {
+		PageRequest request = new PageRequest(method, uri, parameters, body);
+		agent2.requests.add(request);
+		return request;
 	}
 
 	protected String newHtml(final String title, final String bodyHtml) {

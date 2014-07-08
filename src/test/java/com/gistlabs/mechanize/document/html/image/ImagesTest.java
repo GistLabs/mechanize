@@ -20,7 +20,7 @@ import com.gistlabs.mechanize.document.AbstractDocument;
 public class ImagesTest extends MechanizeTestCase {
 	@Test
 	public void testFollowingAnAbsoluteLink() {
-		agent.addPageRequest("http://www.test.com", 
+		addPageRequest("http://www.test.com", 
 				newHtml("Test Page", "<img src=\"test.png\"/>"));
 		
 		AbstractDocument page = agent.get("http://www.test.com");

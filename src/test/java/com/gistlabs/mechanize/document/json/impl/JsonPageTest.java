@@ -23,7 +23,7 @@ public class JsonPageTest extends MechanizeTestCase {
 
 	@Test
 	public void testLoadJson() {
-		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
+		addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
 		Resource page = agent.get("http://test.com");
 		assertNotNull(page);
 		assertEquals(JsonDocument.class, page.getClass());
@@ -31,7 +31,7 @@ public class JsonPageTest extends MechanizeTestCase {
 
 	@Test
 	public void testParseJson() {
-		agent.addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
+		addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
 		JsonDocument page = (JsonDocument) agent.get("http://test.com");
 		assertNotNull(page.getRoot());
 
