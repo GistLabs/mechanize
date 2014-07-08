@@ -23,7 +23,7 @@ public class ImagesTest extends MechanizeTestCase {
 		addPageRequest("http://www.test.com", 
 				newHtml("Test Page", "<img src=\"test.png\"/>"));
 		
-		AbstractDocument page = agent.get("http://www.test.com");
+		AbstractDocument page = agent().get("http://www.test.com");
 		Image image = page.images().find("*[src='test.png']"); 
 		assertEquals("http://www.test.com/test.png", image.getAbsoluteSrc());
 	}

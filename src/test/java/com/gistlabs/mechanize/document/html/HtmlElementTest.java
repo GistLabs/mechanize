@@ -27,7 +27,7 @@ public class HtmlElementTest extends MechanizeTestCase {
 		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"http://test.com/myPage.html\">myPage</a>"));
 		
-		Resource page = agent.get("http://test.com");
+		Resource page = agent().get("http://test.com");
 		HtmlElement htmlElement = ((HtmlDocument)page).htmlElements().find("body *[href$='myPage.html']");
 		assertNotNull(htmlElement);
 		assertEquals("http://test.com/myPage.html", htmlElement.getAttribute("href"));
@@ -38,7 +38,7 @@ public class HtmlElementTest extends MechanizeTestCase {
 		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"link1\">link1</a><a href=\"link2\">link2</a>"));
 		
-		Resource page = agent.get("http://test.com");
+		Resource page = agent().get("http://test.com");
 		List<HtmlElement> elements = ((HtmlDocument)page).htmlElements().findAll("body a[href*='link']");
 		assertNotNull(elements);
 		assertEquals(2, elements.size());

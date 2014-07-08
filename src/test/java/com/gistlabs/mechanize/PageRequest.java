@@ -37,7 +37,8 @@ import com.gistlabs.mechanize.util.apache.URLEncodedUtils;
 public class PageRequest {
 	public final String httpMethod;
 	public final String uri;
-	public final Parameters parameters;
+	public Parameters parameters;
+
 	public Headers headers = new Headers();
 	public final InputStream body;
 	public boolean wasExecuted = false;
@@ -68,6 +69,14 @@ public class PageRequest {
 		this.uri = uri;
 		this.parameters = parameters;
 		this.body = body;
+	}
+
+	public PageRequest setParameters(Parameters parameters) {
+		this.parameters = parameters;
+		return this;
+	}
+	public Parameters getParameters() {
+		return parameters;
 	}
 
 	public PageRequest addHeader(final String header, final String... values) {

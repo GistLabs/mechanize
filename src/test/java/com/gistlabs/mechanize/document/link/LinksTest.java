@@ -30,7 +30,7 @@ public class LinksTest extends MechanizeTestCase {
 				newHtml("Test Page", "<a id=\"t\" href=\"http://test.com/myPage.html\">myPage</a>"));
 		addPageRequest("http://test.com/myPage.html", newHtml("My Page", ""));
 		
-		AbstractDocument page = agent.get("http://test.com");
+		AbstractDocument page = agent().get("http://test.com");
 		assertEquals(1, page.links().size());
 		Link link = page.links().find(byIdOrClass("t"));
 		assertNotNull(link);
@@ -43,7 +43,7 @@ public class LinksTest extends MechanizeTestCase {
 		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a id=\"t\" href=\"http://test.com/myPage.html\">myPage</a>"));
 		
-		AbstractDocument page = agent.get("http://test.com");
+		AbstractDocument page = agent().get("http://test.com");
 		assertEquals(1, page.links().size());
 		Link link = page.links().find("#nothere");
 		assertNull(link);
@@ -55,7 +55,7 @@ public class LinksTest extends MechanizeTestCase {
 				newHtml("Test Page", "<a href=\"myPage.html\">myPage</a>"));
 		addPageRequest("http://test.com/myPage.html", newHtml("My Page", ""));
 		
-		AbstractDocument page = agent.get("http://test.com");
+		AbstractDocument page = agent().get("http://test.com");
 		Link link = page.links().find(contains("myPage"));
 		assertNotNull(link);
 		Resource myPage = link.click();
@@ -68,7 +68,7 @@ public class LinksTest extends MechanizeTestCase {
 				"<html><head><base href=\"http://www1.test.com\"/></head><body><a href=\"myPage.html\">myPage</a></body></html>");
 		addPageRequest("http://www1.test.com/myPage.html", newHtml("My Page", ""));
 		
-		AbstractDocument page = agent.get("http://test.com");
+		AbstractDocument page = agent().get("http://test.com");
 		Link link = page.links().get(0);
 		assertNotNull(link);
 		Resource myPage = link.click();
@@ -82,7 +82,7 @@ public class LinksTest extends MechanizeTestCase {
 		pageRequest.setContentLocation("http://www1.test.com");
 		addPageRequest("http://www1.test.com/myPage.html", newHtml("My Page", ""));
 		
-		AbstractDocument page = agent.get("http://test.com");
+		AbstractDocument page = agent().get("http://test.com");
 		Link link = page.links().find(contains("myPage"));
 		assertNotNull(link);
 		Resource myPage = link.click();

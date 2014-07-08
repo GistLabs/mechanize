@@ -17,16 +17,18 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.junit.After;
 
-import com.gistlabs.mechanize.parameters.Parameters;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public class MechanizeTestCase {
-	protected MechanizeMock agent2 = new MechanizeMock();
-	protected Mechanize agent = agent2;
+	private MechanizeMock agent = new MechanizeMock();
 	protected boolean doAfterTest = true;
-
+	
+	protected String contentType() {
+		return ContentType.TEXT_HTML.getMimeType();
+	}
 	public void disableAfterTest() {
 		doAfterTest = false;
 	}
@@ -34,7 +36,7 @@ public class MechanizeTestCase {
 	@After
 	public void afterTest() {
 		if(doAfterTest) {
-			PageRequest next = agent2.nextUnexecutedPageRequest();
+			PageRequest next = agent.nextUnexecutedPageRequest();
 			if(next != null)
 				Assert.fail("Unexecuted page request: " + next.toString());
 		}
@@ -45,20 +47,14 @@ public class MechanizeTestCase {
 	}
 
 	public PageRequest addPageRequest(final String method, final String uri, final String body) {
-		PageRequest request = new PageRequest(method, uri, body);
-		agent2.requests.add(request);
+		PageRequest request = new PageRequest(method, uri, body).setContentType(contentType());
+		agent.requests.add(request);
 		return request;
 	}
 
 	public PageRequest addPageRequest(final String method, final String uri, final InputStream body) {
-		PageRequest request = new PageRequest(method, uri, body);
-		agent2.requests.add(request);
-		return request;
-	}
-
-	public PageRequest addPageRequest(final String method, final String uri, final Parameters parameters, final String body) {
-		PageRequest request = new PageRequest(method, uri, parameters, body);
-		agent2.requests.add(request);
+		PageRequest request = new PageRequest(method, uri, body).setContentType(contentType());
+		agent.requests.add(request);
 		return request;
 	}
 
@@ -70,5 +66,9 @@ public class MechanizeTestCase {
 		List<NameValuePair> result = new ArrayList<NameValuePair>();
 		result.add(new BasicNameValuePair(name, value));
 		return result;
+	}
+
+	protected Mechanize agent() {
+		return agent;
 	}
 }

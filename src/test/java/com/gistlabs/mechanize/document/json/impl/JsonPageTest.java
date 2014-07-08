@@ -7,12 +7,12 @@
  */
 package com.gistlabs.mechanize.document.json.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
-import com.gistlabs.mechanize.Resource;
 import com.gistlabs.mechanize.document.json.JsonDocument;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
 import com.gistlabs.mechanize.util.apache.ContentType;
@@ -21,18 +21,23 @@ import com.gistlabs.mechanize.util.apache.ContentType;
  */
 public class JsonPageTest extends MechanizeTestCase {
 
+	@Override
+	protected String contentType() {
+		return ContentType.APPLICATION_JSON.getMimeType();
+	}
+	
 	@Test
 	public void testLoadJson() {
-		addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
-		Resource page = agent.get("http://test.com");
+		addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json"));
+		JsonDocument page = agent().get("http://test.com");
 		assertNotNull(page);
 		assertEquals(JsonDocument.class, page.getClass());
 	}
 
 	@Test
 	public void testParseJson() {
-		addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json")).setContentType(ContentType.APPLICATION_JSON.getMimeType());
-		JsonDocument page = (JsonDocument) agent.get("http://test.com");
+		addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json"));
+		JsonDocument page = (JsonDocument) agent().get("http://test.com");
 		assertNotNull(page.getRoot());
 
 		assertEquals("US", page.getRoot().getAttribute("country"));
