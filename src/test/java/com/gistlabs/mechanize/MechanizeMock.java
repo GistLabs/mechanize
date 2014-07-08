@@ -7,9 +7,8 @@
  */
 package com.gistlabs.mechanize;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.fail;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,40 +17,13 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpRequestBase;
 
 import com.gistlabs.mechanize.impl.MechanizeAgent;
-import com.gistlabs.mechanize.parameters.Parameters;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public class MechanizeMock extends MechanizeAgent {
+class MechanizeMock extends MechanizeAgent {
 
 	final List<PageRequest> requests = new ArrayList<PageRequest>();
-
-	@Deprecated
-	public PageRequest addPageRequest(final String uri, final String body) {
-		return addPageRequest("GET", uri, body);
-	}
-
-	@Deprecated
-	public PageRequest addPageRequest(final String method, final String uri, final String body) {
-		PageRequest request = new PageRequest(method, uri, body);
-		requests.add(request);
-		return request;
-	}
-
-	@Deprecated
-	public PageRequest addPageRequest(final String method, final String uri, final InputStream body) {
-		PageRequest request = new PageRequest(method, uri, body);
-		requests.add(request);
-		return request;
-	}
-
-	@Deprecated
-	public PageRequest addPageRequest(final String method, final String uri, final Parameters parameters, final String body) {
-		PageRequest request = new PageRequest(method, uri, parameters, body);
-		requests.add(request);
-		return request;
-	}
 
 	@Override
 	protected HttpResponse execute(final HttpClient client, final HttpRequestBase request) throws Exception {
