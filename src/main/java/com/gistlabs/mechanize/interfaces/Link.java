@@ -7,6 +7,7 @@
  */
 package com.gistlabs.mechanize.interfaces;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,15 +38,15 @@ public interface Link {
 	public <T extends Resource> T follow();
 
 	/**
-	 * Set values for a template link.
+	 * Set value(s) for a template link.
 	 * @param name
 	 * @param value
 	 */
-	public void set(String name, Object value);
+	public void set(String name, Object... value);
 
 	/**
 	 * Set multiple values for a template link
 	 * @param values
 	 */
-	public void setAll(Map<String, Object> values);
+	public void setAll(Map<String, List<Object>> values);
 }

@@ -15,8 +15,6 @@ import java.util.List;
  * 
  * <p>To support additional interpreted attributes special attribute names can be used following the notation ${attributeName}.
  *    Refer to the current node implementation for supported special attributes (e.g <code>HtmlElement.getAttribute("${text}")</code>)</p>
- * 
- * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
 public interface Node {
 

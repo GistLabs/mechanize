@@ -14,7 +14,6 @@ import com.gistlabs.mechanize.interfaces.Resource;
 
 /**
  * Represents a single or multiple-page document having a root node.
- * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
 public interface Document extends Resource {
 

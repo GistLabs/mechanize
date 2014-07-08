@@ -8,17 +8,11 @@
 package com.gistlabs.mechanize.interfaces.document;
 
 import com.gistlabs.mechanize.interfaces.Link;
-import com.gistlabs.mechanize.interfaces.Resource;
 
 /**
  * Represents a link within a page.
- * 
- * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public interface NodeLink extends Link {
-
-	@Override
-	public <T extends Resource> T resource();
 
 	public Node node();
 }
