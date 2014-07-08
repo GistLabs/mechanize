@@ -15,11 +15,11 @@ import com.gistlabs.mechanize.requestor.RequestBuilderFactory;
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
-public abstract class DocumentElement implements RequestBuilderFactory<Resource> {
+public abstract class AbstractDocumentElement implements RequestBuilderFactory<Resource> {
 	protected final Resource page;
 	protected final Node node;
 	
-	public DocumentElement(Resource page, Node node) {
+	public AbstractDocumentElement(Resource page, Node node) {
 		this.page = page;
 		this.node = node;
 	}

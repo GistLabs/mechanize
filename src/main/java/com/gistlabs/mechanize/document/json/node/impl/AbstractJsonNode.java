@@ -19,13 +19,14 @@ import org.json.JSONObject;
 import com.gistlabs.mechanize.document.json.exceptions.JsonArrayException;
 import com.gistlabs.mechanize.document.json.exceptions.JsonException;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
+import com.gistlabs.mechanize.document.node.AbstractNode;
 import com.gistlabs.mechanize.util.css_query.NodeSelector;
 
-public abstract class AbstractNode extends com.gistlabs.mechanize.document.node.AbstractNode implements JsonNode {
+public abstract class AbstractJsonNode extends AbstractNode implements JsonNode {
 	protected final String name;
 	protected final JsonNode parent;
 
-	public AbstractNode(final JsonNode parent, final String name) {
+	public AbstractJsonNode(final JsonNode parent, final String name) {
 		this.parent = parent;
 		this.name = name;
 	}

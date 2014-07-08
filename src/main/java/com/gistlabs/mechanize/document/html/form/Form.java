@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.gistlabs.mechanize.Resource;
-import com.gistlabs.mechanize.document.documentElements.DocumentElement;
+import com.gistlabs.mechanize.document.documentElements.AbstractDocumentElement;
 import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.parameters.Parameters;
 import com.gistlabs.mechanize.requestor.RequestBuilder;
@@ -26,7 +26,7 @@ import com.gistlabs.mechanize.requestor.RequestBuilder;
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  * @since 2012-09-12
  */
-public class Form extends DocumentElement implements Iterable<FormElement> {
+public class Form extends AbstractDocumentElement implements Iterable<FormElement> {
 	private List<FormElement> elements = new ArrayList<FormElement>();
 	
 	public Form(Resource page, Node formNode) {

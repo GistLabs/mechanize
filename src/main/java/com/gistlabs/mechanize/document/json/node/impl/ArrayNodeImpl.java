@@ -20,7 +20,7 @@ import com.gistlabs.mechanize.document.json.node.JsonNode;
 /**
  * Support for nested arrays
  */
-public class ArrayNodeImpl extends AbstractNode {
+public class ArrayNodeImpl extends AbstractJsonNode {
 	private final JSONArray array;
 	private List<JsonNode> children;
 
