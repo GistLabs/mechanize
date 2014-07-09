@@ -21,9 +21,9 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 
 	@Test
 	public void testReceivingAPage() {
-		addPageRequest("http://test.com", newHtml("Test Page", ""));
+		addPageRequest("http://test.com", "Test Page");
 		Resource page = agent().get("http://test.com");
-		assertEquals("Test Page", page.getTitle());
+		assertEquals("Test Page", page.asString());
 	}
 
 	@Test(expected=MechanizeException.class)
@@ -44,44 +44,44 @@ public class MechanizeAgentTest extends MechanizeTestCase {
 
 	@Test
 	public void testDoRequestGet() {
-		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", ""));
+		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", "Test Page");
 		Resource page = agent().doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").get();
-		assertEquals("Test Page", page.getTitle());
+		assertEquals("Test Page", page.asString());
 	}
 
 	@Test
 	public void testDoRequestGetWithExistingQueryParameters() {
-		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=2", newHtml("Test Page", ""));
+		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=2", "Test Page");
 		Resource page = agent().doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").get();
-		assertEquals("Test Page", page.getTitle());
+		assertEquals("Test Page", page.asString());
 	}
 
 	@Test
 	public void testDoRequestPostWithExistingQueryParameters() {
 		Parameters expectedParameters = new Parameters().add("query","ab cd").add("page", "2");
-		addPageRequest("Post", "http://test.com/index.html", newHtml("Test Page", "")).setParameters(expectedParameters);
+		addPageRequest("Post", "http://test.com/index.html", "Test Page").setParameters(expectedParameters);
 		Resource page = agent().doRequest("http://test.com/index.html?query=ab+cd&page=1").set("page", "2").post();
-		assertEquals("Test Page", page.getTitle());
+		assertEquals("Test Page", page.asString());
 	}
 
 	@Test
 	public void testDoRequestWithSetHeader() {
-		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("foo", "bar");
+		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", "Test Page").addHeader("foo", "bar");
 		Resource page = agent().doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").setHeader("foo", "x").setHeader("foo", "bar").get();
-		assertEquals("Test Page", page.getTitle());
+		assertEquals("Test Page", page.asString());
 	}
 
 	@Test
 	public void testDoRequestWithAddHeaders() {
-		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("foo", "bar", "baz");
+		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", "Test Page").addHeader("foo", "bar", "baz");
 		Resource page = agent().doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").addHeader("foo", "bar", "baz").get();
-		assertEquals("Test Page", page.getTitle());
+		assertEquals("Test Page", page.asString());
 	}
 
 	@Test
 	public void testDoRequestWithAccept() {
-		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", newHtml("Test Page", "")).addHeader("Accept", "application/json");
+		addPageRequest("GET", "http://test.com/index.html?query=ab+cd&page=1", "Test Page").addHeader("Accept", "application/json");
 		Resource page = agent().doRequest("http://test.com/index.html").add("query", "ab cd").add("page", "1").accept("application/json").get();
-		assertEquals("Test Page", page.getTitle());
+		assertEquals("Test Page", page.asString());
 	}
 }

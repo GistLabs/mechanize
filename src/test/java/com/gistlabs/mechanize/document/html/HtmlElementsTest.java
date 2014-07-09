@@ -16,11 +16,17 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public class HtmlElementsTest extends MechanizeTestCase {
+
+	protected String contentType() {
+		return ContentType.TEXT_HTML.getMimeType();
+	}
+
 	
 	@Test
 	public void testFindingALink() {

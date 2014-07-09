@@ -27,8 +27,9 @@ public class MechanizeTestCase {
 	protected boolean doAfterTest = true;
 	
 	protected String contentType() {
-		return ContentType.TEXT_HTML.getMimeType();
+		return ContentType.TEXT_PLAIN.getMimeType();
 	}
+	
 	public void disableAfterTest() {
 		doAfterTest = false;
 	}

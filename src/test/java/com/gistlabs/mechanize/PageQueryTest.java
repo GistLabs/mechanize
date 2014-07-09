@@ -16,8 +16,14 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.document.AbstractDocument;
 import com.gistlabs.mechanize.document.link.Link;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 public class PageQueryTest extends MechanizeTestCase {
+
+	protected String contentType() {
+		return ContentType.TEXT_HTML.getMimeType();
+	}
+	
 
 	@Test
 	public void testLinkQueryById() {
