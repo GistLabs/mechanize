@@ -16,18 +16,23 @@ import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.Resource;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
  * @author Martin Kersten<Martin.Kersten.mk@gmail.com>
  */
 public class HtmlElementTest extends MechanizeTestCase {
-	
+
+	protected String contentType() {
+		return ContentType.TEXT_HTML.getMimeType();
+	}
+
 	@Test
 	public void testFindingALink() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"http://test.com/myPage.html\">myPage</a>"));
 		
-		Resource page = agent.get("http://test.com");
+		Resource page = agent().get("http://test.com");
 		HtmlElement htmlElement = ((HtmlDocument)page).htmlElements().find("body *[href$='myPage.html']");
 		assertNotNull(htmlElement);
 		assertEquals("http://test.com/myPage.html", htmlElement.getAttribute("href"));
@@ -35,10 +40,10 @@ public class HtmlElementTest extends MechanizeTestCase {
 
 	@Test
 	public void testFindingTwoLinks() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"link1\">link1</a><a href=\"link2\">link2</a>"));
 		
-		Resource page = agent.get("http://test.com");
+		Resource page = agent().get("http://test.com");
 		List<HtmlElement> elements = ((HtmlDocument)page).htmlElements().findAll("body a[href*='link']");
 		assertNotNull(elements);
 		assertEquals(2, elements.size());

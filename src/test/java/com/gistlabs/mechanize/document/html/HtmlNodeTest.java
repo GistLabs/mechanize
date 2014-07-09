@@ -15,17 +15,23 @@ import org.junit.Test;
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.document.node.NodeVisitor;
+import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
  * @author Martin Kersten <Martin.Kersten.mk@gmail.com>
  */
 public class HtmlNodeTest extends MechanizeTestCase {
+
+	protected String contentType() {
+		return ContentType.TEXT_HTML.getMimeType();
+	}
+
 	@Test
 	public void testGettingTheParent() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"link\">link</a>"));
 		
-		HtmlDocument page = agent.get("http://test.com");
+		HtmlDocument page = agent().get("http://test.com");
 		HtmlElement element = page.find("a[href*='link']");
 		assertEquals("body", element.getParent().getName());
 		assertEquals("html", element.getParent().getParent().getName());
@@ -34,10 +40,10 @@ public class HtmlNodeTest extends MechanizeTestCase {
 
 	@Test
 	public void testVisitWithNodeVisitor() {
-		agent.addPageRequest("http://test.com", 
+		addPageRequest("http://test.com", 
 				newHtml("Test Page", "<a href=\"link\">link</a>"));
 		
-		HtmlDocument page = agent.get("http://test.com");
+		HtmlDocument page = agent().get("http://test.com");
 		MyNodeVisitor visitor = new MyNodeVisitor();
 		page.getRoot().visit(visitor);
 		assertEquals("<#root<html<head<title<null>>><body<a>>>>", visitor.result.toString());
