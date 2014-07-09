@@ -1,0 +1,16 @@
+{
+	"simple": {
+		"href": "http://example.com",
+		"expected": "http://example.com"
+	},
+	"relative": {
+		"href": "./bar",
+		"baseUrl": "http://example.com/foo/",
+		"expected": "http://example.com/foo/bar"
+	},
+	"template": {
+		"href": "http://example.com/{a}",
+		"a": "foo",
+		"expected": "http://example.com/foo"
+	}
+}
