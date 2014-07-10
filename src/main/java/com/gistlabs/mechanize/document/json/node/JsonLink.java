@@ -23,6 +23,8 @@ public class JsonLink {
 	}
 
 	public JsonLink(String baseUrl, JsonNode node) {
+		if (node==null) throw new NullPointerException(String.format("baseUrl=%s, node=%s", baseUrl, node));
+		
 		this.node = node;
 		this.baseUrl = baseUrl(baseUrl);
 	}
@@ -51,8 +53,10 @@ public class JsonLink {
 			UriTemplate template = UriTemplate.fromTemplate(combined);
 			
 			String[] variables = template.getVariables();
-			for (String var : variables) {
-				template.set(var, node.getAttribute(var));
+			if (variables.length>0) {
+				for (String var : variables) {
+					template.set(var, node.getAttribute(var));
+				}				
 			}
 			
 			return template.expand();

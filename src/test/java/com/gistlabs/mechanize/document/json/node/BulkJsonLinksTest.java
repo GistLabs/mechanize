@@ -1,0 +1,59 @@
+/**
+ * Copyright (C) 2012-2014 Gist Labs, LLC. (http://gistlabs.com)
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+package com.gistlabs.mechanize.document.json.node;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+import com.gistlabs.mechanize.util.Util;
+
+@RunWith(value = Parameterized.class)
+public class BulkJsonLinksTest extends JsonNodeTestCase {
+	JsonNode node;
+	String name;
+	
+	public static JsonNode parseJson() {
+		String jsonString = Util.getStringFromInputStream(BulkJsonLinksTest.class.getResourceAsStream("links.json"));
+		return from(jsonString);
+	}
+
+	@Parameters(name="{index} {1}")
+	public static Collection<Object[]> data() {
+		List<Object[]> results = new ArrayList<Object[]>();
+		
+		List<? extends JsonNode> children = parseJson().getChildren();
+		for (JsonNode jsonNode : children) {
+			results.add(new Object[] {jsonNode, jsonNode.getName()});
+		}
+		
+		return results;
+	}
+	
+	public BulkJsonLinksTest(JsonNode node, String name) {
+		this.node = node;
+	}
+		
+	@Test
+	public void testLinkResolution() {
+		String baseUrl = node.hasAttribute("baseUrl") ? node.getAttribute("baseUrl") : null; // optionally use data supplied for baseUrl
+		JsonLink link = new JsonLink(baseUrl, node);
+		assertExpectedUri(link);
+	}
+	
+	private void assertExpectedUri(JsonLink link) {
+		assertEquals(node.getName(), link.node().getAttribute("expected"), link.uri());
+	}
+}

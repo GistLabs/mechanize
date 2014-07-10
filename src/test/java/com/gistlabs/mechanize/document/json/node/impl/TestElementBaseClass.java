@@ -18,7 +18,7 @@ public abstract class TestElementBaseClass {
 		super();
 	}
 
-	protected JSONObject parseJson(final String json) {
+	protected static JSONObject parseJson(final String json) {
 		try {
 			return new JSONObject(json);
 		} catch (JSONException e) {

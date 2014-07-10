@@ -8,9 +8,26 @@
 		"baseUrl": "http://example.com/foo/",
 		"expected": "http://example.com/foo/bar"
 	},
-	"template": {
+	"trivial-template": {
 		"href": "http://example.com/{a}",
 		"a": "foo",
 		"expected": "http://example.com/foo"
+	},
+	"template-path-segments" : {
+		"href": "http://example.com{/a,b}/baz",
+		"a": "foo",
+		"b": "bar",
+		"expected": "http://example.com/foo/bar/baz"
+	},
+	"template-form-style" : {
+		"href": "http://example.com{?a,b}",
+		"a": "foo",
+		"b": "bar",
+		"expected": "http://example.com?a=foo&b=bar"
+	},
+	"template-list" : {
+		"href": "http://example.com{/list*}",
+		"list": ["a", "b", "c"],
+		"expected": "http://example.com/a/b/c"
 	}
 }

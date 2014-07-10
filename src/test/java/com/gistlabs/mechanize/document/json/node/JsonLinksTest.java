@@ -7,8 +7,6 @@
  */
 package com.gistlabs.mechanize.document.json.node;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,31 +22,11 @@ public class JsonLinksTest extends JsonNodeTestCase {
 	}
 	
 	@Test
-	public void testSimple() {
-		JsonNode node = json.find("simple");
-		assertEquals("simple", node.getName());
-		
-		JsonLink link = new JsonLink(node);
-		assertExpectedUri(link);
-	}
-	
-	@Test
-	public void testRelative() {
-		JsonNode node = json.find("relative");
-		
-		JsonLink link = new JsonLink(node.getAttribute("baseUrl"), node);
-		assertExpectedUri(link);		
-	}
-	
-	@Test
-	public void testTemplate() {
-		JsonNode node = json.find("template");
-		
-		JsonLink link = new JsonLink(node);
-		assertExpectedUri(link);
-	}
-	
-	private void assertExpectedUri(JsonLink link) {
-		assertEquals(link.node().getAttribute("expected"), link.uri());
-	}
+	public void debug() {
+//		JsonNode node = json.find("template-list");
+//		Object o = node.getAttribute("list");
+//		Object c = node.getChildren("list");
+//		List<? extends JsonNode> children = node.getChildren();
+//		System.out.println();
+	}	
 }
