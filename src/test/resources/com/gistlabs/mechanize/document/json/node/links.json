@@ -29,5 +29,16 @@
 		"href": "http://example.com{/list*}",
 		"list": ["a", "b", "c"],
 		"expected": "http://example.com/a/b/c"
+	},
+	"template-keys" : {
+		"href": "http://example.com{?keys*}",
+		"keys": { "a": "1", "b": "2" },
+		"expected": "http://example.com?a=1&b=2"
+	},
+	"template-keys-order" : {
+		"href": "http://example.com{?keys*}",
+		"keys": { "b": "2", "a": "1" },
+		"expected": "http://example.com?a=1&b=2",
+		"comment": "We decided to always sort the keys... made testing easier but may need to revisit"
 	}
 }

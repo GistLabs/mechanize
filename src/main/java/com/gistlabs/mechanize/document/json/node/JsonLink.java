@@ -10,7 +10,10 @@ package com.gistlabs.mechanize.document.json.node;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.damnhandy.uri.template.UriTemplate;
 
@@ -74,14 +77,26 @@ public class JsonLink {
 	 */
 	protected Object lookupVar(String var) {
 		List<? extends JsonNode> children = node.getChildren(var);
-		if (children.size()>1) { // multiple with name
+		if (children.size()>1) { // multiple with name, treat as list of values
 			List<String> result = new ArrayList<String>();
 			for (JsonNode child : children) {
 				result.add(child.getValue());
 			}
 			return result;
-		} else if (children.size()==1) { // treat a single as an attribute
-			return children.get(0).getValue();
+		} else if (children.size()==1) {
+			JsonNode child = children.get(0);
+			List<String> attributeNames = child.getAttributeNames();
+			Collections.sort(attributeNames);
+
+			if (attributeNames.size()==0) { // treat child as the attribute value
+				return child.getValue();
+			} else { // treat child as object with map values
+				Map<String, String> result = new LinkedHashMap<String, String>();
+				for (String attrName : attributeNames) {
+					result.put(attrName, child.getAttribute(attrName));
+				}
+				return result;
+			}
 		} else { // return null
 			return null;
 		}

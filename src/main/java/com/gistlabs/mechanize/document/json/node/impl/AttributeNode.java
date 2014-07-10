@@ -7,6 +7,7 @@
  */
 package com.gistlabs.mechanize.document.json.node.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class AttributeNode extends AbstractJsonNode {
 
 	@Override
 	public List<String> getAttributeNames() {
-		return null;
+		return new ArrayList<String>();
 	}
 
 	@Override

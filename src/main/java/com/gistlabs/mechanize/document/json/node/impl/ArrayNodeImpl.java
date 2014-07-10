@@ -53,7 +53,7 @@ public class ArrayNodeImpl extends AbstractJsonNode {
 
 	@Override
 	public List<String> getAttributeNames() {
-		return null;
+		return new ArrayList<String>();
 	}
 
 	@Override

@@ -23,10 +23,13 @@ public class JsonLinksTest extends JsonNodeTestCase {
 	
 	@Test
 	public void debug() {
-//		JsonNode node = json.find("template-list");
-//		Object o = node.getAttribute("list");
-//		Object c = node.getChildren("list");
-//		List<? extends JsonNode> children = node.getChildren();
-//		System.out.println();
+//		JsonNode keys = json.<JsonNode>find("template-keys").getChild("keys");
+//		List<String> attributeNames = keys.getAttributeNames();
+//		
+//		List<? extends JsonNode> children = json.<JsonNode>find("template-list").getChildren("list");
+//		List<String> attributeNames2 = children.get(0).getAttributeNames();
+//		
+//		JsonLink link = BulkJsonLinksTest.link(json.<JsonNode>find("template-keys"));
+//		BulkJsonLinksTest.assertExpectedUri(link);
 	}	
 }

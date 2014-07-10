@@ -48,12 +48,20 @@ public class BulkJsonLinksTest extends JsonNodeTestCase {
 		
 	@Test
 	public void testLinkResolution() {
-		String baseUrl = node.hasAttribute("baseUrl") ? node.getAttribute("baseUrl") : null; // optionally use data supplied for baseUrl
-		JsonLink link = new JsonLink(baseUrl, node);
+		JsonLink link = link(node);
 		assertExpectedUri(link);
 	}
+
+	static JsonLink link(JsonNode node) {
+		String baseUrl = node.hasAttribute("baseUrl") ? node.getAttribute("baseUrl") : null; // optionally use data supplied for baseUrl
+		JsonLink link = new JsonLink(baseUrl, node);
+		return link;
+	}
 	
-	private void assertExpectedUri(JsonLink link) {
-		assertEquals(node.getName(), link.node().getAttribute("expected"), link.uri());
+	static void assertExpectedUri(JsonLink link) {
+		String name = link.node().getName();
+		String expected = link.node().getAttribute("expected");
+		String uri = link.uri();
+		assertEquals(name, expected, uri);
 	}
 }

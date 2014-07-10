@@ -11,11 +11,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.junit.After;
+import org.junit.Assert;
 
 import com.gistlabs.mechanize.util.apache.ContentType;
 

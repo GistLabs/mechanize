@@ -37,7 +37,7 @@ public class JsonPageTest extends MechanizeTestCase {
 	@Test
 	public void testParseJson() {
 		addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("dropbox.account.info.json"));
-		JsonDocument page = (JsonDocument) agent().get("http://test.com");
+		JsonDocument page = agent().get("http://test.com");
 		assertNotNull(page.getRoot());
 
 		assertEquals("US", page.getRoot().getAttribute("country"));
