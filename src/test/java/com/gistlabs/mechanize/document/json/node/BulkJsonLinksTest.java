@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.util.Util;
 
 @RunWith(value = Parameterized.class)
@@ -48,10 +49,19 @@ public class BulkJsonLinksTest extends JsonNodeTestCase {
 		
 	@Test
 	public void testLinkResolution() {
-		JsonLink link = link(node);
+		JsonLink link = link(find(node));
 		assertExpectedUri(link);
 	}
 
+	static JsonNode find(JsonNode node) {
+		Node nested = node.find("nested-query");
+		if (nested==null) {
+			return node;
+		} else {
+			return node.find(nested.getValue());
+		}
+	}
+	
 	static JsonLink link(JsonNode node) {
 		String baseUrl = node.hasAttribute("baseUrl") ? node.getAttribute("baseUrl") : null; // optionally use data supplied for baseUrl
 		JsonLink link = new JsonLink(baseUrl, node);

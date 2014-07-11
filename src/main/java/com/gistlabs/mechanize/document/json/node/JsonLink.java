@@ -71,11 +71,34 @@ public class JsonLink {
 	}
 
 	/**
-	 * Return an Object that is either String or List<String>
+	 * Return an Object that is either String or List<String> or Map<String, String>.
+	 * 
+	 * 
+	 * 
 	 * @param var maybe null if not found
 	 * @return
 	 */
 	protected Object lookupVar(String var) {
+		JsonNode current = node;
+		while (current!=null) {
+			Object result = lookupVar(current, var);
+			if (result!=null) return result;
+			
+			if (current.hasAttribute("inheritProperties")) {
+				current = current.getParent();				
+			} else {
+				current = null;
+			}
+		}
+		return lookupVar(node, var);
+	}
+	
+	/**
+	 * Return an Object that is either String or List<String> or Map<String, String>
+	 * @param var maybe null if not found
+	 * @return
+	 */
+	protected Object lookupVar(JsonNode node, String var) {
 		List<? extends JsonNode> children = node.getChildren(var);
 		if (children.size()>1) { // multiple with name, treat as list of values
 			List<String> result = new ArrayList<String>();

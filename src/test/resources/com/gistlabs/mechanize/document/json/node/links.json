@@ -39,19 +39,50 @@
 		"href": "http://example.com{?keys*}",
 		"keys": { "b": "2", "a": "1" },
 		"expected": "http://example.com?a=1&b=2",
-		"comment": "We decided to always sort the keys... made testing easier but may need to revisit"
+		"comment": "Decided to always sort the keys... made testing easier but may need to revisit"
 	},
-	"template-keys-and-private" : {
-		"href": "http://example.com{?keys*,private*}",
+	"template-keys-and-keys2" : {
+		"href": "http://example.com{?keys*,keys2*}",
 		"keys": { "b": "2", "a": "1" },
-		"private": { "x": "3", "y": "4"},
+		"keys2": { "x": "3", "y": "4"},
 		"expected": "http://example.com?a=1&b=2&x=3&y=4",
 	},
-	"template-comples" : {
-		"href": "http://example.com{/list*}{?keys*,private*}",
+	"template-complex" : {
+		"href": "http://example.com{/list*}{?keys*,keys2*}",
 		"list": ["a", "b", "c"],
 		"keys": { "b": "2", "a": "1" },
-		"private": { "x": "3", "y": "4"},
+		"keys2": { "x": "3", "y": "4"},
 		"expected": "http://example.com/a/b/c?a=1&b=2&x=3&y=4",
+	},
+	"nested-search-up-into-parent" : {
+		"nested-query": "link",
+		"a": "foo",
+		"link": {
+			"href": "http://example.com/{a}",
+			"inheritProperties": "",
+			"expected": "http://example.com/foo"
+		}
+	},
+	"nested-search-local-over-parent" : {
+		"nested-query": "link",
+		"a": "foo",
+		"link": {
+			"href": "http://example.com/{a}",
+			"a": "bar",
+			"inheritProperties": "",
+			"expected": "http://example.com/bar"
+		}
+	},
+	"nested-search-up-into-grandparent" : {
+		"nested-query": "link",
+		"a": "foo",
+		"parent": {
+			"inheritProperties": "",
+			"link": {
+				"href": "http://example.com/{a}",
+				"inheritProperties": "",
+				"expected": "http://example.com/foo"
+			}
+		}
 	}
 }
