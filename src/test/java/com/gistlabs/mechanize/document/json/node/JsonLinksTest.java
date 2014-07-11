@@ -7,6 +7,11 @@
  */
 package com.gistlabs.mechanize.document.json.node;
 
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +24,34 @@ public class JsonLinksTest extends JsonNodeTestCase {
 	public void parseJson() {
 		String jsonString = Util.getStringFromInputStream(getClass().getResourceAsStream("links.json"));
 		json = from(jsonString);
+	}
+	
+	@Test
+	public void testLinkNames() {
+		JsonNode simple = json.find("simple");
+		assertEquals("self", new JsonLink(simple).name());
+		
+		JsonNode relative = json.find("relative");
+		assertEquals("relative", new JsonLink(relative).name());
+	}
+	
+	@Test
+	public void setVariableProgramatically() {
+		JsonNode node = json.find("trivial-template");
+		JsonLink link = new JsonLink(node);
+		link.set("a", "aaa");
+		assertEquals("http://example.com/aaa", link.uri());
+	}
+	
+	@Test
+	public void setAllVariableProgramatically() {
+		JsonNode node = json.find("template-path-segments");
+		JsonLink link = new JsonLink(node);
+		Map<String, Object> variables = new HashMap<String, Object>();
+		variables.put("a", "aaa");
+		variables.put("b", "bbb");
+		link.setAll(variables);
+		assertEquals("http://example.com/aaa/bbb/baz", link.uri());
 	}
 	
 	@Test

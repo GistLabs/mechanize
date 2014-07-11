@@ -27,21 +27,31 @@ public interface Link {
 	public String name();
 
 	/**
-	 * The uri representation for this link (this won't be resolved or template substituted)
+	 * The uri representation for this link (after resoloving and substituting tempaltes)
 	 */
 	public String uri();
 
+	/**
+	 * The uri representation for this link (this won't be resolved or template substituted)
+	 */
+	public String raw();
+
+	/**
+	 * Return list of String template variable names, if uri template 
+	 */
+	public String[] getVariables();
+	
 	/**
 	 * Follows the link (using the Resource and Mechanize objects it came from) resolving URITemplates.
 	 */
 	public <T extends Resource> T follow();
 
 	/**
-	 * Set value for a template link. Can be List<Object> and Map<Object>, objects need to have .toString() method.
+	 * Set value for a template link. Can be Object, List<String> and Map<String,String>, objects need to have .toString() method.
 	 * @param name
 	 * @param value
 	 */
-	public void set(String name, Object... value);
+	public void set(String name, Object value);
 
 	/**
 	 * Set multiple values for a template link. Values in Map can be List<Object> and Map<Object>, objects need to have .toString() method.

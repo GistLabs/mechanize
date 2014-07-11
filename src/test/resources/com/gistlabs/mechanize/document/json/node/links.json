@@ -1,6 +1,7 @@
 {
 	"simple": {
 		"href": "http://example.com",
+		"rel": "self",
 		"expected": "http://example.com"
 	},
 	"relative": {

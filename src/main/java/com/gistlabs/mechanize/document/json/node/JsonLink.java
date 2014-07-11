@@ -11,17 +11,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.damnhandy.uri.template.UriTemplate;
 
-
+/**
+ * Wraps a JSON node with Link generatation behavior. See <a href="https://github.com/GistLabs/mechanize/wiki/JSON-Linking">https://github.com/GistLabs/mechanize/wiki/JSON-Linking</a>
+ *
+ */
 public class JsonLink {
 
 	private final JsonNode node;
 	private final URL baseUrl;
+	private Map<String, Object> variables = new HashMap<String, Object>();
 
 	public JsonLink(JsonNode node) {
 		this(null, node);
@@ -34,6 +39,13 @@ public class JsonLink {
 		this.baseUrl = baseUrl(baseUrl);
 	}
 
+	public String name() {
+		if (node.hasAttribute("rel")) return node.getAttribute("rel");
+		
+		//else 
+		return node.getName();
+	}
+	
 	protected URL baseUrl(String baseUrl) {
 		if (baseUrl==null) return null;
 		
@@ -45,18 +57,19 @@ public class JsonLink {
 	}
 
 	public String uri() {
-		String raw = raw();
-		String combined = combine(raw);
-		
-		String expanded = template(combined);
-		
-		return expanded;
+		return template(buildTemplate());
 	}
 
-	protected String template(String combined) {
+	protected UriTemplate buildTemplate() {
 		try {
-			UriTemplate template = UriTemplate.fromTemplate(combined);
-			
+			return UriTemplate.fromTemplate(combine(raw()));
+		} catch (Exception e) {
+			throw new RuntimeException(String.format("Problem building UriTemplate"), e);
+		}
+	}
+	
+	protected String template(UriTemplate template) {
+		try {			
 			String[] variables = template.getVariables();
 			if (variables.length>0) {
 				for (String var : variables) {
@@ -66,19 +79,29 @@ public class JsonLink {
 			
 			return template.expand();
 		} catch (Exception e) {
-			throw new RuntimeException(String.format("Problem processing %s", combined), e);
+			throw new RuntimeException(String.format("Problem processing %s", template), e);
 		}
 	}
 
+	public String[] getVariables() {
+		return buildTemplate().getVariables();
+	}
+
+	protected Object lookupVar(String var) {
+		if (variables.containsKey(var)) {
+			return variables.get(var);
+		} else {
+			return lookupWalkForVar(var);
+		}
+	}
+	
 	/**
 	 * Return an Object that is either String or List<String> or Map<String, String>.
-	 * 
-	 * 
 	 * 
 	 * @param var maybe null if not found
 	 * @return
 	 */
-	protected Object lookupVar(String var) {
+	protected Object lookupWalkForVar(String var) {
 		JsonNode current = node;
 		while (current!=null) {
 			Object result = lookupVar(current, var);
@@ -92,7 +115,24 @@ public class JsonLink {
 		}
 		return lookupVar(node, var);
 	}
-	
+
+	/**
+	 * Set value for a template link. Can be Object, List<String> and Map<String,String>, objects need to have .toString() method.
+	 * @param name
+	 * @param value
+	 */
+	public void set(String name, Object value) {
+		this.variables.put(name, value);
+	}
+
+	/**
+	 * Set multiple values for a template link. Values in Map can be List<Object> and Map<Object>, objects need to have .toString() method.
+	 * @param values
+	 */
+	public void setAll(Map<String, Object> values) {
+		this.variables.putAll(values);
+	}
+
 	/**
 	 * Return an Object that is either String or List<String> or Map<String, String>
 	 * @param var maybe null if not found
