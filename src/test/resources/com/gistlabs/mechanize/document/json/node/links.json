@@ -26,6 +26,12 @@
 		"b": "bar",
 		"expected": "http://example.com/foo/bar/baz"
 	},
+	"relative-path-segments" : {
+		"href": ".{/a,b}/baz",
+		"a": "foo",
+		"b": "bar",
+		"expected": "./foo/bar/baz"
+	},
 	"template-form-style" : {
 		"href": "http://example.com{?a,b}",
 		"a": "foo",
