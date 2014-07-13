@@ -1,4 +1,20 @@
 {
+	"example-of-test-cases": {
+		"comment": "
+		
+		How to read this test data:
+		* By default href is the input, and expected is the output.
+		* Other data values can be template parameters.
+		* inheritProperties tells the engine to look for values in also in the parent.
+		* The use-attr value can change the href to another name, like uri.
+		* The nested-query value can be used to find a link object buried beneath the current one.
+		
+		",
+		"href": "",
+		"use-attr": "href",
+		"rel": "",
+		"expected": ""
+	},
 	"simple": {
 		"href": "http://example.com",
 		"rel": "self",
