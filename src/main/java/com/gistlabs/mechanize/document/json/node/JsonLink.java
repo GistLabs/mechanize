@@ -25,18 +25,21 @@ import com.damnhandy.uri.template.UriTemplate;
 public class JsonLink {
 
 	private final JsonNode node;
+	private final String attrName;
 	private final URL baseUrl;
 	private Map<String, Object> variables = new HashMap<String, Object>();
 
 	public JsonLink(JsonNode node) {
-		this(null, node);
+		this(null, node, "href");
 	}
 
-	public JsonLink(String baseUrl, JsonNode node) {
-		if (node==null) throw new NullPointerException(String.format("baseUrl=%s, node=%s", baseUrl, node));
+	public JsonLink(String baseUrl, JsonNode node, String attrName) {
+		if (node==null || attrName==null) throw new NullPointerException(String.format("baseUrl=%s, node=%s, attributeName=%s", baseUrl, node, attrName));
+		if (!node.hasAttribute(attrName)) throw new IllegalArgumentException(String.format("Node %s does not have an attribute named %s", node, attrName));
 		
 		this.node = node;
 		this.baseUrl = baseUrl(baseUrl);
+		this.attrName = attrName;
 	}
 
 	public String name() {
@@ -178,7 +181,7 @@ public class JsonLink {
 	}
 
 	public String raw() {
-		return node.getAttribute("href");
+		return node.getAttribute(attrName);
 	}
 
 	public JsonNode node() {

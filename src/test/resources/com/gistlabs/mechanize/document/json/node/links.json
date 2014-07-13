@@ -4,6 +4,12 @@
 		"rel": "self",
 		"expected": "http://example.com"
 	},
+	"use-uri": {
+		"uri": "http://example.com",
+		"use-attr": "uri",
+		"rel": "self",
+		"expected": "http://example.com"
+	},
 	"relative": {
 		"href": "bar",
 		"baseUrl": "http://example.com/foo/",

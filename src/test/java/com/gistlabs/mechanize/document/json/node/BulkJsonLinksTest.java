@@ -64,7 +64,8 @@ public class BulkJsonLinksTest extends JsonNodeTestCase {
 	
 	static JsonLink link(JsonNode node) {
 		String baseUrl = node.hasAttribute("baseUrl") ? node.getAttribute("baseUrl") : null; // optionally use data supplied for baseUrl
-		JsonLink link = new JsonLink(baseUrl, node);
+		String attrName = node.hasAttribute("use-attr") ? node.getAttribute("use-attr") : "href"; // optionally use data supplied to find link attribute
+		JsonLink link = new JsonLink(baseUrl, node, attrName);
 		return link;
 	}
 	
