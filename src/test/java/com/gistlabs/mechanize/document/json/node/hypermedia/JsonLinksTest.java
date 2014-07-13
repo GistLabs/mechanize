@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.document.json.node;
+package com.gistlabs.mechanize.document.json.node.hypermedia;
 
 import static org.junit.Assert.*;
 
@@ -15,6 +15,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gistlabs.mechanize.document.json.hypermedia.JsonLink;
+import com.gistlabs.mechanize.document.json.node.JsonNode;
+import com.gistlabs.mechanize.document.json.node.JsonNodeTestCase;
 import com.gistlabs.mechanize.util.Util;
 
 public class JsonLinksTest extends JsonNodeTestCase {

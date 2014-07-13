@@ -5,7 +5,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-package com.gistlabs.mechanize.document.json.node;
+package com.gistlabs.mechanize.document.json.hypermedia;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.damnhandy.uri.template.UriTemplate;
+import com.gistlabs.mechanize.document.json.node.JsonNode;
 
 /**
  * Wraps a JSON node with Link generatation behavior. See <a href="https://github.com/GistLabs/mechanize/wiki/JSON-Linking">https://github.com/GistLabs/mechanize/wiki/JSON-Linking</a>
