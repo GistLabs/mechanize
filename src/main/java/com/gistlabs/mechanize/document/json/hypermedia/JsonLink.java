@@ -33,6 +33,10 @@ public class JsonLink {
 	public JsonLink(JsonNode node) {
 		this(null, node, "href");
 	}
+	
+	public JsonLink(JsonNode node, String attrName) {
+		this(null, node, attrName);
+	}
 
 	public JsonLink(String baseUrl, JsonNode node, String attrName) {
 		if (node==null || attrName==null) throw new NullPointerException(String.format("baseUrl=%s, node=%s, attributeName=%s", baseUrl, node, attrName));
@@ -43,6 +47,10 @@ public class JsonLink {
 		this.attrName = attrName;
 	}
 
+	public String attrName() {
+		return this.attrName;
+	}
+	
 	public String name() {
 		if (node.hasAttribute("rel")) return node.getAttribute("rel");
 		

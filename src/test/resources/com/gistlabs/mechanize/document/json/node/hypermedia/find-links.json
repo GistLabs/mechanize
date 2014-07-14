@@ -1,0 +1,14 @@
+{
+	"one": {
+		"href": "http://example.com",
+	},
+	"two": {
+		"href": "http://example.com",
+		"uri": "htt://foo.com"
+	},
+	"three": {
+		"href": "http://example.com",
+		"uri": "htt://foo.com",
+		"bar-href": "http://bar.com"
+	}
+}
