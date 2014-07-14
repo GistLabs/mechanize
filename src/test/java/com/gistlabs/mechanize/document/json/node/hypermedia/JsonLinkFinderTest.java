@@ -112,6 +112,9 @@ public class JsonLinkFinderTest extends JsonNodeTestCase {
 		JsonNode node = json.find("nested-links");
 		List<JsonLink> links = finder.findWithChildren(node);
 		assertEquals(3, links.size());
+		
+		JsonLink next = links.get(1); // this index is dependent on ordering of children
+		assertEquals("next", next.linkRel());
 	}
 	
 	@Test
