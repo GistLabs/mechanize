@@ -96,5 +96,29 @@ public class JsonLinkFinderTest extends JsonNodeTestCase {
 		JsonLink hrefLink = links.get(0);
 		assertEquals("prefix", hrefLink.linkRel());
 	}
+	
+	@Test
+	public void testNestedLinksDepthOne() {
+		JsonNode node = json.find("nested-links");
+		List<JsonLink> links = finder.findOn(node);
+		assertEquals(1, links.size());
+		
+		JsonLink hrefLink = links.get(0);
+		assertEquals("self", hrefLink.linkRel());
+	}
+	
+	@Test
+	public void testNestedLinksDepthChildren() {
+		JsonNode node = json.find("nested-links");
+		List<JsonLink> links = finder.findWithChildren(node);
+		assertEquals(3, links.size());
+	}
+	
+	@Test
+	public void testNestedLinksRecursive() {
+		JsonNode node = json.find("nested-links");
+		List<JsonLink> links = finder.findRecursive(node);
+		assertEquals(5, links.size());
+	}
 
 }

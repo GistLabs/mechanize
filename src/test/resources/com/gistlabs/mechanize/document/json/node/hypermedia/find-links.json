@@ -21,6 +21,20 @@
 	"rel-is-prefix": {
 		"prefix-href": "http://example.com",
 	},
-	
-	
+	"nested-links": {
+		"uri": "/id/42",
+		"rel": "self",
+		"next": {
+			"uri": "/id/43",
+			"about": {
+				"href": "a"
+			}
+		},
+		"prev": {
+			"uri": "/id/42",
+			"about": {
+				"href": "a"
+			}
+		}
+	}	
 }

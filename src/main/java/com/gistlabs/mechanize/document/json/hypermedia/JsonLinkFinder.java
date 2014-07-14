@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.gistlabs.mechanize.document.json.node.JsonNode;
+import com.gistlabs.mechanize.document.node.Node;
+import com.gistlabs.mechanize.document.node.NodeVisitor;
 
 /**
  * Search JSON nodes to find hyperlink defintions in the data. This is based on pattern matching attribute names.
@@ -39,11 +41,53 @@ public class JsonLinkFinder {
 	
 	private final Set<String> linkingNames = new HashSet<String>(Arrays.asList("href", "uri"));
 
+	public List<JsonLink> findRecursive(JsonNode node) {
+		if (node==null) throw new NullPointerException(String.format("root=%s", node));
+
+		final List<JsonLink> result = new ArrayList<JsonLink>();
+		
+		node.visit(new NodeVisitor() {
+
+			@Override
+			public boolean beginNode(Node node) {
+				findOn((JsonNode)node, result);
+				return true;
+			}
+
+			@Override
+			public void endNode(Node node) {
+				// no op
+			}
+			
+		});
+		
+		return result;
+	}
+	
+	public List<JsonLink> findWithChildren(JsonNode node) {
+		if (node==null) throw new NullPointerException(String.format("root=%s", node));
+
+		List<JsonLink> result = new ArrayList<JsonLink>();
+		
+		findOn(node, result);
+		for (JsonNode child : node.getChildren()) {
+			findOn(child, result);
+		}
+		
+		return result;
+	}
+	
 	public List<JsonLink> findOn(JsonNode node) {
 		if (node==null) throw new NullPointerException(String.format("root=%s", node));
 		
 		List<JsonLink> result = new ArrayList<JsonLink>();
 		
+		findOn(node, result);
+
+		return result;
+	}
+	
+	void findOn(JsonNode node, List<JsonLink> result) {
 		List<String> attributeNames = node.getAttributeNames();
 		for (String attrName : attributeNames) {
 			Match match = matches(attrName);
@@ -51,8 +95,6 @@ public class JsonLinkFinder {
 				result.add(build(node, match));
 			}
 		}
-		
-		return result;
 	}
 
 	Match matches(String attrName) {
