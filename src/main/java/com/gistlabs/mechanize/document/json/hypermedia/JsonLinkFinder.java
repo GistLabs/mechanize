@@ -17,8 +17,26 @@ import com.gistlabs.mechanize.document.json.node.JsonNode;
 
 /**
  * Search JSON nodes to find hyperlink defintions in the data. This is based on pattern matching attribute names.
+ * 
+ * This class will find attributes that match either exact string (i.e. "href"), or patterns (i.e. "more-href").
+ * 
+ * Also, in the case of exact matches then the link relation will be looked up by heuristic. Either the "rel" 
+ * attribute is used, if found, or the name of the containing json object if present. For pattern matched attributes
+ * the prefix before the pattern is used as the rel.
+ * 
  */
 public class JsonLinkFinder {
+
+	static class Match {
+		final String attrName;
+		final String rel;
+
+		public Match(String attrName, String rel) {
+			this.attrName = attrName;
+			this.rel = rel;
+		}
+	}
+	
 	private final Set<String> linkingNames = new HashSet<String>(Arrays.asList("href", "uri"));
 
 	public List<JsonLink> findOn(JsonNode node) {
@@ -28,32 +46,41 @@ public class JsonLinkFinder {
 		
 		List<String> attributeNames = node.getAttributeNames();
 		for (String attrName : attributeNames) {
-			if (matches(attrName)) {
-				result.add(build(node, attrName));
+			Match match = matches(attrName);
+			if (match!=null) {
+				result.add(build(node, match));
 			}
 		}
 		
 		return result;
 	}
 
-	boolean matches(String attrName) {
-		return exactMatch(attrName) || patternMatch(attrName);
+	Match matches(String attrName) {
+		Match exactMatch = exactMatch(attrName);
+		if (exactMatch!=null) return exactMatch;
+		
+		return patternMatch(attrName);
 	}
 
-	boolean exactMatch(String attrName) {
-		return linkingNames.contains(attrName.toLowerCase());
+	Match exactMatch(String attrName) {
+		if (linkingNames.contains(attrName.toLowerCase())) {
+			return new Match(attrName, null);
+		} else {
+			return null;
+		}
 	}
 
-	boolean patternMatch(String attrName) {
+	Match patternMatch(String attrName) {
 		for (String linkingName : linkingNames) {
 			if (attrName.endsWith("-"+linkingName) || attrName.endsWith("_"+linkingName)) {
-				return true;
+				String prefix = attrName.substring(0, attrName.length()-linkingName.length()-1); // subtract the last one for the - or _
+				return new Match(attrName, prefix);
 			}
 		}
-		return false;
+		return null;
 	}
 
-	JsonLink build(JsonNode node, String attrName) {
-		return new JsonLink(node, attrName);
+	JsonLink build(JsonNode node, Match match) {
+		return new JsonLink(null, node, match.attrName, match.rel);
 	}
 }

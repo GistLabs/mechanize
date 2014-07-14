@@ -32,10 +32,10 @@ public class JsonLinksTest extends JsonNodeTestCase {
 	@Test
 	public void testLinkNames() {
 		JsonNode simple = json.find("simple");
-		assertEquals("self", new JsonLink(simple).name());
+		assertEquals("self", new JsonLink(simple).linkRel());
 		
 		JsonNode relative = json.find("relative");
-		assertEquals("relative", new JsonLink(relative).name());
+		assertEquals("relative", new JsonLink(relative).linkRel());
 	}
 	
 	@Test

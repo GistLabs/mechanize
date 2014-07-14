@@ -66,4 +66,35 @@ public class JsonLinkFinderTest extends JsonNodeTestCase {
 		List<JsonLink> links = finder.findOn(three);
 		assertEquals(3, links.size());
 	}
+	
+	@Test
+	public void testLinkRelIsName() {
+		JsonNode one = json.find("rel-is-name");
+		List<JsonLink> links = finder.findOn(one);
+		assertEquals(1, links.size());
+		
+		JsonLink hrefLink = links.get(0);
+		assertEquals("rel-is-name", hrefLink.linkRel());
+	}
+	
+	@Test
+	public void testLinkRelIsRel() {
+		JsonNode one = json.find("rel-is-rel");
+		List<JsonLink> links = finder.findOn(one);
+		assertEquals(1, links.size());
+		
+		JsonLink hrefLink = links.get(0);
+		assertEquals("self", hrefLink.linkRel());
+	}
+	
+	@Test
+	public void testLinkRelIsPrefix() {
+		JsonNode one = json.find("rel-is-prefix");
+		List<JsonLink> links = finder.findOn(one);
+		assertEquals(1, links.size());
+		
+		JsonLink hrefLink = links.get(0);
+		assertEquals("prefix", hrefLink.linkRel());
+	}
+
 }

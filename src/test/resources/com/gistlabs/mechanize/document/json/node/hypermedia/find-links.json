@@ -10,5 +10,17 @@
 		"href": "http://example.com",
 		"uri": "htt://foo.com",
 		"bar-href": "http://bar.com"
-	}
+	},
+	"rel-is-name": {
+		"href": "http://example.com",
+	},
+	"rel-is-rel": {
+		"href": "http://example.com",
+		"rel": "self"
+	},
+	"rel-is-prefix": {
+		"prefix-href": "http://example.com",
+	},
+	
+	
 }

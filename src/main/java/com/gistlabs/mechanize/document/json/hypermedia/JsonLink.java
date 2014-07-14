@@ -28,30 +28,39 @@ public class JsonLink {
 	private final JsonNode node;
 	private final String attrName;
 	private final URL baseUrl;
+	private final String linkRel;
 	private Map<String, Object> variables = new HashMap<String, Object>();
 
 	public JsonLink(JsonNode node) {
-		this(null, node, "href");
+		this(null, node, "href", null);
 	}
 	
 	public JsonLink(JsonNode node, String attrName) {
-		this(null, node, attrName);
+		this(null, node, attrName, null);
 	}
 
-	public JsonLink(String baseUrl, JsonNode node, String attrName) {
-		if (node==null || attrName==null) throw new NullPointerException(String.format("baseUrl=%s, node=%s, attributeName=%s", baseUrl, node, attrName));
+	public JsonLink(String baseUrl, JsonNode node, String attrName, String linkRel) {
+		if (node==null || attrName==null) throw new NullPointerException(String.format("baseUrl=%s, node=%s, attributeName=%s, linkRel=%s", baseUrl, node, attrName, linkRel));
 		if (!node.hasAttribute(attrName)) throw new IllegalArgumentException(String.format("Node %s does not have an attribute named %s", node, attrName));
 		
 		this.node = node;
 		this.baseUrl = baseUrl(baseUrl);
 		this.attrName = attrName;
+		this.linkRel = linkRel;
 	}
 
 	public String attrName() {
 		return this.attrName;
 	}
 	
-	public String name() {
+	/**
+	 * the String name of the link relationship from this resource to the resource identified by the link
+	 * 
+	 * @return Either the linkRel arg at construction, the value of the "rel" attribute, or the name of the node itself.
+	 */
+	public String linkRel() {
+		if (this.linkRel!=null) return this.linkRel;
+		
 		if (node.hasAttribute("rel")) return node.getAttribute("rel");
 		
 		//else 
