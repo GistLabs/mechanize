@@ -10,11 +10,14 @@ package com.gistlabs.mechanize.document.json.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import com.gistlabs.mechanize.MechanizeTestCase;
 import com.gistlabs.mechanize.document.json.JsonDocument;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
+import com.gistlabs.mechanize.document.node.Node;
 import com.gistlabs.mechanize.util.apache.ContentType;
 
 /**
@@ -44,5 +47,18 @@ public class JsonPageTest extends MechanizeTestCase {
 
 		JsonNode node = page.getRoot().find("quota_info");
 		assertEquals("107374182400000", node.getAttribute("quota"));
+	}
+
+	
+	@Test
+	public void testTwitterJson() {
+		addPageRequest("GET", "http://test.com", getClass().getResourceAsStream("twitter.json"));
+		JsonDocument page = agent().get("http://test.com");
+		assertNotNull(page);
+		assertEquals(JsonDocument.class, page.getClass());
+		JsonNode root = page.getRoot();
+		List<? extends JsonNode> children = root.getChildren();
+		List<? extends Node> users = page.findAll("user");
+		assertEquals(17, users.size());
 	}
 }

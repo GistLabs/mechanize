@@ -13,12 +13,14 @@ import java.util.Collection;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import com.gistlabs.mechanize.Mechanize;
 import com.gistlabs.mechanize.document.AbstractDocument;
 import com.gistlabs.mechanize.document.json.node.JsonNode;
+import com.gistlabs.mechanize.document.json.node.impl.ArrayNodeImpl;
 import com.gistlabs.mechanize.document.json.node.impl.ObjectNodeImpl;
 import com.gistlabs.mechanize.exceptions.MechanizeExceptionFactory;
 import com.gistlabs.mechanize.util.apache.ContentType;
@@ -37,7 +39,19 @@ public class JsonDocument extends AbstractDocument {
 	@Override
 	protected void loadPage() throws Exception {
 		try {
-			this.json = new ObjectNodeImpl(new JSONObject(new JSONTokener(new InputStreamReader(getInputStream()))));
+			JSONTokener jsonTokener = new JSONTokener(new InputStreamReader(getInputStream()));
+			char nextClean = jsonTokener.nextClean(); jsonTokener.back();
+			
+			switch (nextClean) {
+			case '{':
+				this.json = new ObjectNodeImpl(new JSONObject(jsonTokener));
+				break;
+			case '[':
+				this.json = new ArrayNodeImpl(new JSONArray(jsonTokener));
+				break;
+			default:
+				throw new IllegalStateException(String.format("Error processing token=%s from request=%s",nextClean, this.getRequest()));
+			}
 		} catch (Exception e) {
 			throw MechanizeExceptionFactory.newException(e);
 		}

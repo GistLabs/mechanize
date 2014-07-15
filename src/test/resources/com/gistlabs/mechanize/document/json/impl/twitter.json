@@ -1,0 +1,2032 @@
+[
+    {
+        "contributors": null,
+        "coordinates": null,
+        "created_at": "Sat Jul 12 17:21:29 +0000 2014",
+        "entities": {
+            "hashtags": [],
+            "symbols": [],
+            "urls": [
+                {
+                    "display_url": "elixir-lang.org/getting_starte\u2026",
+                    "expanded_url": "http://elixir-lang.org/getting_started/mix_otp/1.html",
+                    "indices": [
+                        93,
+                        115
+                    ],
+                    "url": "http://t.co/2OdTcWo20h"
+                }
+            ],
+            "user_mentions": [
+                {
+                    "id": 10230812,
+                    "id_str": "10230812",
+                    "indices": [
+                        3,
+                        13
+                    ],
+                    "name": "Jos\u00e9 Valim",
+                    "screen_name": "josevalim"
+                },
+                {
+                    "id": 16143891,
+                    "id_str": "16143891",
+                    "indices": [
+                        30,
+                        42
+                    ],
+                    "name": "Ernie Miller",
+                    "screen_name": "erniemiller"
+                }
+            ]
+        },
+        "favorite_count": 0,
+        "favorited": false,
+        "geo": null,
+        "id": 488010267544940544,
+        "id_str": "488010267544940544",
+        "in_reply_to_screen_name": null,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "lang": "en",
+        "place": null,
+        "possibly_sensitive": false,
+        "retweet_count": 10,
+        "retweeted": true,
+        "retweeted_status": {
+            "contributors": null,
+            "coordinates": null,
+            "created_at": "Sun Jul 06 19:51:40 +0000 2014",
+            "entities": {
+                "hashtags": [],
+                "symbols": [],
+                "urls": [
+                    {
+                        "display_url": "elixir-lang.org/getting_starte\u2026",
+                        "expanded_url": "http://elixir-lang.org/getting_started/mix_otp/1.html",
+                        "indices": [
+                            78,
+                            100
+                        ],
+                        "url": "http://t.co/2OdTcWo20h"
+                    }
+                ],
+                "user_mentions": [
+                    {
+                        "id": 16143891,
+                        "id_str": "16143891",
+                        "indices": [
+                            15,
+                            27
+                        ],
+                        "name": "Ernie Miller",
+                        "screen_name": "erniemiller"
+                    }
+                ]
+            },
+            "favorite_count": 14,
+            "favorited": false,
+            "geo": null,
+            "id": 485873735350898689,
+            "id_str": "485873735350898689",
+            "in_reply_to_screen_name": null,
+            "in_reply_to_status_id": null,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "in_reply_to_user_id_str": null,
+            "lang": "en",
+            "place": null,
+            "possibly_sensitive": false,
+            "retweet_count": 10,
+            "retweeted": true,
+            "source": "<a href=\"http://twitter.com\" rel=\"nofollow\">Twitter Web Client</a>",
+            "text": "Huge thanks to @erniemiller for revising/editing the whole Mix and OTP guide! http://t.co/2OdTcWo20h &lt;3",
+            "truncated": false,
+            "user": {
+                "contributors_enabled": false,
+                "created_at": "Tue Nov 13 23:23:25 +0000 2007",
+                "default_profile": false,
+                "default_profile_image": false,
+                "description": "@plataformatec founder, Open Source developer, Rails Core Team Member and creator of Elixir, code available at http://t.co/h0xF2qZ0OM",
+                "entities": {
+                    "description": {
+                        "urls": [
+                            {
+                                "display_url": "github.com/josevalim",
+                                "expanded_url": "http://github.com/josevalim",
+                                "indices": [
+                                    111,
+                                    133
+                                ],
+                                "url": "http://t.co/h0xF2qZ0OM"
+                            }
+                        ]
+                    },
+                    "url": {
+                        "urls": [
+                            {
+                                "display_url": "plataformatec.com",
+                                "expanded_url": "http://plataformatec.com/",
+                                "indices": [
+                                    0,
+                                    22
+                                ],
+                                "url": "http://t.co/hyDOV1vUWI"
+                            }
+                        ]
+                    }
+                },
+                "favourites_count": 229,
+                "follow_request_sent": false,
+                "followers_count": 14702,
+                "following": true,
+                "friends_count": 363,
+                "geo_enabled": false,
+                "id": 10230812,
+                "id_str": "10230812",
+                "is_translation_enabled": false,
+                "is_translator": false,
+                "lang": "en",
+                "listed_count": 882,
+                "location": "Krak\u00f3w, Poland",
+                "name": "Jos\u00e9 Valim",
+                "notifications": false,
+                "profile_background_color": "022330",
+                "profile_background_image_url": "http://abs.twimg.com/images/themes/theme15/bg.png",
+                "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme15/bg.png",
+                "profile_background_tile": false,
+                "profile_image_url": "http://pbs.twimg.com/profile_images/2156708631/Cropped_normal.png",
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/2156708631/Cropped_normal.png",
+                "profile_link_color": "0084B4",
+                "profile_sidebar_border_color": "000000",
+                "profile_sidebar_fill_color": "C0DFEC",
+                "profile_text_color": "333333",
+                "profile_use_background_image": true,
+                "protected": false,
+                "screen_name": "josevalim",
+                "statuses_count": 12601,
+                "time_zone": "Rome",
+                "url": "http://t.co/hyDOV1vUWI",
+                "utc_offset": 7200,
+                "verified": false
+            }
+        },
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "text": "RT @josevalim: Huge thanks to @erniemiller for revising/editing the whole Mix and OTP guide! http://t.co/2OdTcWo20h &lt;3",
+        "truncated": false,
+        "user": {
+            "contributors_enabled": false,
+            "created_at": "Mon Mar 10 17:12:18 +0000 2008",
+            "default_profile": true,
+            "default_profile_image": false,
+            "description": "Agile/Lean/Kanban coach. RESTful Web architect. Chief Engineer. Language student Java, Elixir, Erlang, Python.",
+            "entities": {
+                "description": {
+                    "urls": []
+                },
+                "url": {
+                    "urls": [
+                        {
+                            "display_url": "gistlabs.com",
+                            "expanded_url": "http://gistlabs.com",
+                            "indices": [
+                                0,
+                                22
+                            ],
+                            "url": "http://t.co/C8grYCRjI0"
+                        }
+                    ]
+                }
+            },
+            "favourites_count": 1057,
+            "follow_request_sent": false,
+            "followers_count": 434,
+            "following": false,
+            "friends_count": 151,
+            "geo_enabled": false,
+            "id": 14115504,
+            "id_str": "14115504",
+            "is_translation_enabled": false,
+            "is_translator": false,
+            "lang": "en",
+            "listed_count": 42,
+            "location": "Austin, TX",
+            "name": "John Heintz",
+            "notifications": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_link_color": "0084B4",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "protected": false,
+            "screen_name": "jheintz",
+            "statuses_count": 1185,
+            "time_zone": "Central Time (US & Canada)",
+            "url": "http://t.co/C8grYCRjI0",
+            "utc_offset": -18000,
+            "verified": false
+        }
+    },
+    {
+        "contributors": null,
+        "coordinates": null,
+        "created_at": "Sat Jul 12 17:20:30 +0000 2014",
+        "entities": {
+            "hashtags": [],
+            "symbols": [],
+            "urls": [],
+            "user_mentions": [
+                {
+                    "id": 10626512,
+                    "id_str": "10626512",
+                    "indices": [
+                        3,
+                        11
+                    ],
+                    "name": "Jabe Bloom",
+                    "screen_name": "cyetain"
+                }
+            ]
+        },
+        "favorite_count": 0,
+        "favorited": true,
+        "geo": null,
+        "id": 488010020060033026,
+        "id_str": "488010020060033026",
+        "in_reply_to_screen_name": null,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "lang": "en",
+        "place": null,
+        "retweet_count": 3,
+        "retweeted": true,
+        "retweeted_status": {
+            "contributors": null,
+            "coordinates": null,
+            "created_at": "Sun Jul 06 17:40:09 +0000 2014",
+            "entities": {
+                "hashtags": [],
+                "symbols": [],
+                "urls": [],
+                "user_mentions": []
+            },
+            "favorite_count": 3,
+            "favorited": true,
+            "geo": null,
+            "id": 485840637434937344,
+            "id_str": "485840637434937344",
+            "in_reply_to_screen_name": null,
+            "in_reply_to_status_id": null,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "in_reply_to_user_id_str": null,
+            "lang": "en",
+            "place": null,
+            "retweet_count": 3,
+            "retweeted": true,
+            "source": "<a href=\"http://itunes.apple.com/us/app/twitter/id409789998?mt=12\" rel=\"nofollow\">Twitter for Mac</a>",
+            "text": "Cultures and organizations differ in whether they live in the past, present, near future, or far future. -Schein",
+            "truncated": false,
+            "user": {
+                "contributors_enabled": false,
+                "created_at": "Mon Nov 26 18:16:29 +0000 2007",
+                "default_profile": false,
+                "default_profile_image": false,
+                "description": "Meliorist, Management as Design, Complexity, Proprioception, Tuning in Weak Signals, Abduction, Interested in Strange Problems, PhD Transition @cmudesign 2018",
+                "entities": {
+                    "description": {
+                        "urls": []
+                    },
+                    "url": {
+                        "urls": [
+                            {
+                                "display_url": "jabe.co",
+                                "expanded_url": "http://jabe.co",
+                                "indices": [
+                                    0,
+                                    22
+                                ],
+                                "url": "http://t.co/fboPT2ysYx"
+                            }
+                        ]
+                    }
+                },
+                "favourites_count": 17062,
+                "follow_request_sent": false,
+                "followers_count": 3476,
+                "following": false,
+                "friends_count": 2931,
+                "geo_enabled": true,
+                "id": 10626512,
+                "id_str": "10626512",
+                "is_translation_enabled": false,
+                "is_translator": false,
+                "lang": "en",
+                "listed_count": 239,
+                "location": "",
+                "name": "Jabe Bloom",
+                "notifications": false,
+                "profile_background_color": "FFFFFF",
+                "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/768192843/91f32921604d9f9fead313f6dc62b310.png",
+                "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/768192843/91f32921604d9f9fead313f6dc62b310.png",
+                "profile_background_tile": false,
+                "profile_banner_url": "https://pbs.twimg.com/profile_banners/10626512/1404853877",
+                "profile_image_url": "http://pbs.twimg.com/profile_images/486618375561682944/graerT95_normal.jpeg",
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/486618375561682944/graerT95_normal.jpeg",
+                "profile_link_color": "FF3300",
+                "profile_sidebar_border_color": "FFFFFF",
+                "profile_sidebar_fill_color": "A0C5C7",
+                "profile_text_color": "333333",
+                "profile_use_background_image": false,
+                "protected": false,
+                "screen_name": "cyetain",
+                "statuses_count": 19073,
+                "time_zone": "Eastern Time (US & Canada)",
+                "url": "http://t.co/fboPT2ysYx",
+                "utc_offset": -14400,
+                "verified": false
+            }
+        },
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "text": "RT @cyetain: Cultures and organizations differ in whether they live in the past, present, near future, or far future. -Schein",
+        "truncated": false,
+        "user": {
+            "contributors_enabled": false,
+            "created_at": "Mon Mar 10 17:12:18 +0000 2008",
+            "default_profile": true,
+            "default_profile_image": false,
+            "description": "Agile/Lean/Kanban coach. RESTful Web architect. Chief Engineer. Language student Java, Elixir, Erlang, Python.",
+            "entities": {
+                "description": {
+                    "urls": []
+                },
+                "url": {
+                    "urls": [
+                        {
+                            "display_url": "gistlabs.com",
+                            "expanded_url": "http://gistlabs.com",
+                            "indices": [
+                                0,
+                                22
+                            ],
+                            "url": "http://t.co/C8grYCRjI0"
+                        }
+                    ]
+                }
+            },
+            "favourites_count": 1057,
+            "follow_request_sent": false,
+            "followers_count": 434,
+            "following": false,
+            "friends_count": 151,
+            "geo_enabled": false,
+            "id": 14115504,
+            "id_str": "14115504",
+            "is_translation_enabled": false,
+            "is_translator": false,
+            "lang": "en",
+            "listed_count": 42,
+            "location": "Austin, TX",
+            "name": "John Heintz",
+            "notifications": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_link_color": "0084B4",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "protected": false,
+            "screen_name": "jheintz",
+            "statuses_count": 1185,
+            "time_zone": "Central Time (US & Canada)",
+            "url": "http://t.co/C8grYCRjI0",
+            "utc_offset": -18000,
+            "verified": false
+        }
+    },
+    {
+        "contributors": null,
+        "coordinates": null,
+        "created_at": "Sat Jul 05 14:44:25 +0000 2014",
+        "entities": {
+            "hashtags": [],
+            "symbols": [],
+            "urls": [],
+            "user_mentions": []
+        },
+        "favorite_count": 1,
+        "favorited": false,
+        "geo": null,
+        "id": 485434024710512640,
+        "id_str": "485434024710512640",
+        "in_reply_to_screen_name": null,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "lang": "en",
+        "place": null,
+        "retweet_count": 1,
+        "retweeted": false,
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "text": "It's not what you already know, it's only how fast you can learn what's next.",
+        "truncated": false,
+        "user": {
+            "contributors_enabled": false,
+            "created_at": "Mon Mar 10 17:12:18 +0000 2008",
+            "default_profile": true,
+            "default_profile_image": false,
+            "description": "Agile/Lean/Kanban coach. RESTful Web architect. Chief Engineer. Language student Java, Elixir, Erlang, Python.",
+            "entities": {
+                "description": {
+                    "urls": []
+                },
+                "url": {
+                    "urls": [
+                        {
+                            "display_url": "gistlabs.com",
+                            "expanded_url": "http://gistlabs.com",
+                            "indices": [
+                                0,
+                                22
+                            ],
+                            "url": "http://t.co/C8grYCRjI0"
+                        }
+                    ]
+                }
+            },
+            "favourites_count": 1057,
+            "follow_request_sent": false,
+            "followers_count": 434,
+            "following": false,
+            "friends_count": 151,
+            "geo_enabled": false,
+            "id": 14115504,
+            "id_str": "14115504",
+            "is_translation_enabled": false,
+            "is_translator": false,
+            "lang": "en",
+            "listed_count": 42,
+            "location": "Austin, TX",
+            "name": "John Heintz",
+            "notifications": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_link_color": "0084B4",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "protected": false,
+            "screen_name": "jheintz",
+            "statuses_count": 1185,
+            "time_zone": "Central Time (US & Canada)",
+            "url": "http://t.co/C8grYCRjI0",
+            "utc_offset": -18000,
+            "verified": false
+        }
+    },
+    {
+        "contributors": null,
+        "coordinates": null,
+        "created_at": "Wed Jul 02 14:07:47 +0000 2014",
+        "entities": {
+            "hashtags": [],
+            "symbols": [],
+            "urls": [],
+            "user_mentions": [
+                {
+                    "id": 42469463,
+                    "id_str": "42469463",
+                    "indices": [
+                        3,
+                        19
+                    ],
+                    "name": "Bob Marshall",
+                    "screen_name": "flowchainsensei"
+                }
+            ]
+        },
+        "favorite_count": 0,
+        "favorited": true,
+        "geo": null,
+        "id": 484337641609908225,
+        "id_str": "484337641609908225",
+        "in_reply_to_screen_name": null,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "lang": "en",
+        "place": null,
+        "retweet_count": 12,
+        "retweeted": true,
+        "retweeted_status": {
+            "contributors": null,
+            "coordinates": null,
+            "created_at": "Wed Jul 02 08:13:05 +0000 2014",
+            "entities": {
+                "hashtags": [],
+                "symbols": [],
+                "urls": [],
+                "user_mentions": []
+            },
+            "favorite_count": 3,
+            "favorited": true,
+            "geo": null,
+            "id": 484248381603450880,
+            "id_str": "484248381603450880",
+            "in_reply_to_screen_name": null,
+            "in_reply_to_status_id": null,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "in_reply_to_user_id_str": null,
+            "lang": "en",
+            "place": null,
+            "retweet_count": 12,
+            "retweeted": true,
+            "source": "<a href=\"http://tapbots.com/software/tweetbot/mac\" rel=\"nofollow\">Tweetbot for Mac</a>",
+            "text": "\u201cFeeling cared for by one\u2019s supervisor has a [bigger] impact on people\u2019s sense of trust and safety than any other behavior by a leader.\u201d",
+            "truncated": false,
+            "user": {
+                "contributors_enabled": false,
+                "created_at": "Mon May 25 19:30:05 +0000 2009",
+                "default_profile": false,
+                "default_profile_image": false,
+                "description": "Chaos Monkey. Omega Wolf.\nTour guide to effective organisations.\n'Do nothing that isn't play.'",
+                "entities": {
+                    "description": {
+                        "urls": []
+                    },
+                    "url": {
+                        "urls": [
+                            {
+                                "display_url": "flowchainsensei.wordpress.com",
+                                "expanded_url": "http://flowchainsensei.wordpress.com/",
+                                "indices": [
+                                    0,
+                                    22
+                                ],
+                                "url": "http://t.co/FgFw5jz0vB"
+                            }
+                        ]
+                    }
+                },
+                "favourites_count": 742,
+                "follow_request_sent": false,
+                "followers_count": 10117,
+                "following": false,
+                "friends_count": 3946,
+                "geo_enabled": true,
+                "id": 42469463,
+                "id_str": "42469463",
+                "is_translation_enabled": false,
+                "is_translator": false,
+                "lang": "en",
+                "listed_count": 751,
+                "location": "London, UK and Global",
+                "name": "Bob Marshall",
+                "notifications": false,
+                "profile_background_color": "384381",
+                "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/17151845/Logo-1600x1200-4.jpg",
+                "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/17151845/Logo-1600x1200-4.jpg",
+                "profile_background_tile": false,
+                "profile_banner_url": "https://pbs.twimg.com/profile_banners/42469463/1385791507",
+                "profile_image_url": "http://pbs.twimg.com/profile_images/1900744429/_U7S3252-2_normal.jpg",
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/1900744429/_U7S3252-2_normal.jpg",
+                "profile_link_color": "A8A8FF",
+                "profile_sidebar_border_color": "FFFFFF",
+                "profile_sidebar_fill_color": "384381",
+                "profile_text_color": "455875",
+                "profile_use_background_image": true,
+                "protected": false,
+                "screen_name": "flowchainsensei",
+                "statuses_count": 86030,
+                "time_zone": "London",
+                "url": "http://t.co/FgFw5jz0vB",
+                "utc_offset": 3600,
+                "verified": false
+            }
+        },
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "text": "RT @flowchainsensei: \u201cFeeling cared for by one\u2019s supervisor has a [bigger] impact on people\u2019s sense of trust and safety than any other beha\u2026",
+        "truncated": false,
+        "user": {
+            "contributors_enabled": false,
+            "created_at": "Mon Mar 10 17:12:18 +0000 2008",
+            "default_profile": true,
+            "default_profile_image": false,
+            "description": "Agile/Lean/Kanban coach. RESTful Web architect. Chief Engineer. Language student Java, Elixir, Erlang, Python.",
+            "entities": {
+                "description": {
+                    "urls": []
+                },
+                "url": {
+                    "urls": [
+                        {
+                            "display_url": "gistlabs.com",
+                            "expanded_url": "http://gistlabs.com",
+                            "indices": [
+                                0,
+                                22
+                            ],
+                            "url": "http://t.co/C8grYCRjI0"
+                        }
+                    ]
+                }
+            },
+            "favourites_count": 1057,
+            "follow_request_sent": false,
+            "followers_count": 434,
+            "following": false,
+            "friends_count": 151,
+            "geo_enabled": false,
+            "id": 14115504,
+            "id_str": "14115504",
+            "is_translation_enabled": false,
+            "is_translator": false,
+            "lang": "en",
+            "listed_count": 42,
+            "location": "Austin, TX",
+            "name": "John Heintz",
+            "notifications": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_link_color": "0084B4",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "protected": false,
+            "screen_name": "jheintz",
+            "statuses_count": 1185,
+            "time_zone": "Central Time (US & Canada)",
+            "url": "http://t.co/C8grYCRjI0",
+            "utc_offset": -18000,
+            "verified": false
+        }
+    },
+    {
+        "contributors": null,
+        "coordinates": null,
+        "created_at": "Wed Jul 02 13:58:41 +0000 2014",
+        "entities": {
+            "hashtags": [
+                {
+                    "indices": [
+                        103,
+                        109
+                    ],
+                    "text": "agile"
+                },
+                {
+                    "indices": [
+                        110,
+                        116
+                    ],
+                    "text": "scrum"
+                },
+                {
+                    "indices": [
+                        117,
+                        124
+                    ],
+                    "text": "kanban"
+                }
+            ],
+            "media": [
+                {
+                    "display_url": "pic.twitter.com/N45aX3dHDP",
+                    "expanded_url": "http://twitter.com/gclaps/status/484213549078941696/photo/1",
+                    "id": 484213547871010816,
+                    "id_str": "484213547871010816",
+                    "indices": [
+                        139,
+                        140
+                    ],
+                    "media_url": "http://pbs.twimg.com/media/BrhFqARIgAAp5SK.png",
+                    "media_url_https": "https://pbs.twimg.com/media/BrhFqARIgAAp5SK.png",
+                    "sizes": {
+                        "large": {
+                            "h": 410,
+                            "resize": "fit",
+                            "w": 1024
+                        },
+                        "medium": {
+                            "h": 240,
+                            "resize": "fit",
+                            "w": 600
+                        },
+                        "small": {
+                            "h": 136,
+                            "resize": "fit",
+                            "w": 340
+                        },
+                        "thumb": {
+                            "h": 150,
+                            "resize": "crop",
+                            "w": 150
+                        }
+                    },
+                    "source_status_id": 484213549078941696,
+                    "source_status_id_str": "484213549078941696",
+                    "type": "photo",
+                    "url": "http://t.co/N45aX3dHDP"
+                }
+            ],
+            "symbols": [],
+            "urls": [
+                {
+                    "display_url": "buff.ly/1iTQafX",
+                    "expanded_url": "http://buff.ly/1iTQafX",
+                    "indices": [
+                        64,
+                        86
+                    ],
+                    "url": "http://t.co/dODsgy8blM"
+                }
+            ],
+            "user_mentions": [
+                {
+                    "id": 12677692,
+                    "id_str": "12677692",
+                    "indices": [
+                        3,
+                        14
+                    ],
+                    "name": "Karl Scotland",
+                    "screen_name": "kjscotland"
+                },
+                {
+                    "id": 433079688,
+                    "id_str": "433079688",
+                    "indices": [
+                        17,
+                        24
+                    ],
+                    "name": "Gerry Claps",
+                    "screen_name": "gclaps"
+                },
+                {
+                    "id": 571202103,
+                    "id_str": "571202103",
+                    "indices": [
+                        93,
+                        100
+                    ],
+                    "name": "Medium",
+                    "screen_name": "Medium"
+                }
+            ]
+        },
+        "extended_entities": {
+            "media": [
+                {
+                    "display_url": "pic.twitter.com/N45aX3dHDP",
+                    "expanded_url": "http://twitter.com/gclaps/status/484213549078941696/photo/1",
+                    "id": 484213547871010816,
+                    "id_str": "484213547871010816",
+                    "indices": [
+                        139,
+                        140
+                    ],
+                    "media_url": "http://pbs.twimg.com/media/BrhFqARIgAAp5SK.png",
+                    "media_url_https": "https://pbs.twimg.com/media/BrhFqARIgAAp5SK.png",
+                    "sizes": {
+                        "large": {
+                            "h": 410,
+                            "resize": "fit",
+                            "w": 1024
+                        },
+                        "medium": {
+                            "h": 240,
+                            "resize": "fit",
+                            "w": 600
+                        },
+                        "small": {
+                            "h": 136,
+                            "resize": "fit",
+                            "w": 340
+                        },
+                        "thumb": {
+                            "h": 150,
+                            "resize": "crop",
+                            "w": 150
+                        }
+                    },
+                    "source_status_id": 484213549078941696,
+                    "source_status_id_str": "484213549078941696",
+                    "type": "photo",
+                    "url": "http://t.co/N45aX3dHDP"
+                }
+            ]
+        },
+        "favorite_count": 0,
+        "favorited": true,
+        "geo": null,
+        "id": 484335352392318977,
+        "id_str": "484335352392318977",
+        "in_reply_to_screen_name": null,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "lang": "en",
+        "place": null,
+        "possibly_sensitive": false,
+        "retweet_count": 18,
+        "retweeted": true,
+        "retweeted_status": {
+            "contributors": null,
+            "coordinates": null,
+            "created_at": "Wed Jul 02 08:02:31 +0000 2014",
+            "entities": {
+                "hashtags": [
+                    {
+                        "indices": [
+                            87,
+                            93
+                        ],
+                        "text": "agile"
+                    },
+                    {
+                        "indices": [
+                            94,
+                            100
+                        ],
+                        "text": "scrum"
+                    },
+                    {
+                        "indices": [
+                            101,
+                            108
+                        ],
+                        "text": "kanban"
+                    }
+                ],
+                "media": [
+                    {
+                        "display_url": "pic.twitter.com/N45aX3dHDP",
+                        "expanded_url": "http://twitter.com/gclaps/status/484213549078941696/photo/1",
+                        "id": 484213547871010816,
+                        "id_str": "484213547871010816",
+                        "indices": [
+                            109,
+                            131
+                        ],
+                        "media_url": "http://pbs.twimg.com/media/BrhFqARIgAAp5SK.png",
+                        "media_url_https": "https://pbs.twimg.com/media/BrhFqARIgAAp5SK.png",
+                        "sizes": {
+                            "large": {
+                                "h": 410,
+                                "resize": "fit",
+                                "w": 1024
+                            },
+                            "medium": {
+                                "h": 240,
+                                "resize": "fit",
+                                "w": 600
+                            },
+                            "small": {
+                                "h": 136,
+                                "resize": "fit",
+                                "w": 340
+                            },
+                            "thumb": {
+                                "h": 150,
+                                "resize": "crop",
+                                "w": 150
+                            }
+                        },
+                        "source_status_id": 484213549078941696,
+                        "source_status_id_str": "484213549078941696",
+                        "type": "photo",
+                        "url": "http://t.co/N45aX3dHDP"
+                    }
+                ],
+                "symbols": [],
+                "urls": [
+                    {
+                        "display_url": "buff.ly/1iTQafX",
+                        "expanded_url": "http://buff.ly/1iTQafX",
+                        "indices": [
+                            48,
+                            70
+                        ],
+                        "url": "http://t.co/dODsgy8blM"
+                    }
+                ],
+                "user_mentions": [
+                    {
+                        "id": 433079688,
+                        "id_str": "433079688",
+                        "indices": [
+                            1,
+                            8
+                        ],
+                        "name": "Gerry Claps",
+                        "screen_name": "gclaps"
+                    },
+                    {
+                        "id": 571202103,
+                        "id_str": "571202103",
+                        "indices": [
+                            77,
+                            84
+                        ],
+                        "name": "Medium",
+                        "screen_name": "Medium"
+                    }
+                ]
+            },
+            "extended_entities": {
+                "media": [
+                    {
+                        "display_url": "pic.twitter.com/N45aX3dHDP",
+                        "expanded_url": "http://twitter.com/gclaps/status/484213549078941696/photo/1",
+                        "id": 484213547871010816,
+                        "id_str": "484213547871010816",
+                        "indices": [
+                            109,
+                            131
+                        ],
+                        "media_url": "http://pbs.twimg.com/media/BrhFqARIgAAp5SK.png",
+                        "media_url_https": "https://pbs.twimg.com/media/BrhFqARIgAAp5SK.png",
+                        "sizes": {
+                            "large": {
+                                "h": 410,
+                                "resize": "fit",
+                                "w": 1024
+                            },
+                            "medium": {
+                                "h": 240,
+                                "resize": "fit",
+                                "w": 600
+                            },
+                            "small": {
+                                "h": 136,
+                                "resize": "fit",
+                                "w": 340
+                            },
+                            "thumb": {
+                                "h": 150,
+                                "resize": "crop",
+                                "w": 150
+                            }
+                        },
+                        "source_status_id": 484213549078941696,
+                        "source_status_id_str": "484213549078941696",
+                        "type": "photo",
+                        "url": "http://t.co/N45aX3dHDP"
+                    }
+                ]
+            },
+            "favorite_count": 25,
+            "favorited": true,
+            "geo": null,
+            "id": 484245723064860672,
+            "id_str": "484245723064860672",
+            "in_reply_to_screen_name": "gclaps",
+            "in_reply_to_status_id": 484213549078941696,
+            "in_reply_to_status_id_str": "484213549078941696",
+            "in_reply_to_user_id": 433079688,
+            "in_reply_to_user_id_str": "433079688",
+            "lang": "en",
+            "place": null,
+            "possibly_sensitive": false,
+            "retweet_count": 18,
+            "retweeted": true,
+            "source": "<a href=\"http://itunes.apple.com/us/app/twitter/id409789998?mt=12\" rel=\"nofollow\">Twitter for Mac</a>",
+            "text": "\u201c@gclaps: Designing Features? Use Job Stories \u2014 http://t.co/dODsgy8blM \u2014 via @Medium \u2014 #agile #scrum #kanban http://t.co/N45aX3dHDP\u201d",
+            "truncated": false,
+            "user": {
+                "contributors_enabled": false,
+                "created_at": "Fri Jan 25 10:25:27 +0000 2008",
+                "default_profile": false,
+                "default_profile_image": false,
+                "description": "",
+                "entities": {
+                    "description": {
+                        "urls": []
+                    },
+                    "url": {
+                        "urls": [
+                            {
+                                "display_url": "availagility.co.uk",
+                                "expanded_url": "http://availagility.co.uk",
+                                "indices": [
+                                    0,
+                                    22
+                                ],
+                                "url": "http://t.co/JC2Pd9FEkK"
+                            }
+                        ]
+                    }
+                },
+                "favourites_count": 65,
+                "follow_request_sent": false,
+                "followers_count": 3126,
+                "following": false,
+                "friends_count": 108,
+                "geo_enabled": false,
+                "id": 12677692,
+                "id_str": "12677692",
+                "is_translation_enabled": false,
+                "is_translator": false,
+                "lang": "en",
+                "listed_count": 257,
+                "location": "Brighton, UK",
+                "name": "Karl Scotland",
+                "notifications": false,
+                "profile_background_color": "9AE4E8",
+                "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+                "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+                "profile_background_tile": false,
+                "profile_image_url": "http://pbs.twimg.com/profile_images/59035524/photo_normal.jpg",
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/59035524/photo_normal.jpg",
+                "profile_link_color": "0084B4",
+                "profile_sidebar_border_color": "BDDCAD",
+                "profile_sidebar_fill_color": "DDFFCC",
+                "profile_text_color": "333333",
+                "profile_use_background_image": false,
+                "protected": false,
+                "screen_name": "kjscotland",
+                "statuses_count": 5505,
+                "time_zone": "London",
+                "url": "http://t.co/JC2Pd9FEkK",
+                "utc_offset": 3600,
+                "verified": false
+            }
+        },
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "text": "RT @kjscotland: \u201c@gclaps: Designing Features? Use Job Stories \u2014 http://t.co/dODsgy8blM \u2014 via @Medium \u2014 #agile #scrum #kanban http://t.co/N4\u2026",
+        "truncated": false,
+        "user": {
+            "contributors_enabled": false,
+            "created_at": "Mon Mar 10 17:12:18 +0000 2008",
+            "default_profile": true,
+            "default_profile_image": false,
+            "description": "Agile/Lean/Kanban coach. RESTful Web architect. Chief Engineer. Language student Java, Elixir, Erlang, Python.",
+            "entities": {
+                "description": {
+                    "urls": []
+                },
+                "url": {
+                    "urls": [
+                        {
+                            "display_url": "gistlabs.com",
+                            "expanded_url": "http://gistlabs.com",
+                            "indices": [
+                                0,
+                                22
+                            ],
+                            "url": "http://t.co/C8grYCRjI0"
+                        }
+                    ]
+                }
+            },
+            "favourites_count": 1057,
+            "follow_request_sent": false,
+            "followers_count": 434,
+            "following": false,
+            "friends_count": 151,
+            "geo_enabled": false,
+            "id": 14115504,
+            "id_str": "14115504",
+            "is_translation_enabled": false,
+            "is_translator": false,
+            "lang": "en",
+            "listed_count": 42,
+            "location": "Austin, TX",
+            "name": "John Heintz",
+            "notifications": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_link_color": "0084B4",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "protected": false,
+            "screen_name": "jheintz",
+            "statuses_count": 1185,
+            "time_zone": "Central Time (US & Canada)",
+            "url": "http://t.co/C8grYCRjI0",
+            "utc_offset": -18000,
+            "verified": false
+        }
+    },
+    {
+        "contributors": null,
+        "coordinates": null,
+        "created_at": "Wed Jul 02 05:05:36 +0000 2014",
+        "entities": {
+            "hashtags": [],
+            "symbols": [],
+            "urls": [
+                {
+                    "display_url": "ow.ly/yxAsK",
+                    "expanded_url": "http://ow.ly/yxAsK",
+                    "indices": [
+                        108,
+                        130
+                    ],
+                    "url": "http://t.co/o4HCuEzPyO"
+                }
+            ],
+            "user_mentions": [
+                {
+                    "id": 1880540190,
+                    "id_str": "1880540190",
+                    "indices": [
+                        3,
+                        15
+                    ],
+                    "name": "Conteneo ",
+                    "screen_name": "ConteneoInc"
+                },
+                {
+                    "id": 8454142,
+                    "id_str": "8454142",
+                    "indices": [
+                        53,
+                        65
+                    ],
+                    "name": "lukehohmann",
+                    "screen_name": "lukehohmann"
+                },
+                {
+                    "id": 14115504,
+                    "id_str": "14115504",
+                    "indices": [
+                        84,
+                        92
+                    ],
+                    "name": "John Heintz",
+                    "screen_name": "jheintz"
+                }
+            ]
+        },
+        "favorite_count": 0,
+        "favorited": true,
+        "geo": null,
+        "id": 484201200598806528,
+        "id_str": "484201200598806528",
+        "in_reply_to_screen_name": null,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "lang": "en",
+        "place": null,
+        "possibly_sensitive": false,
+        "retweet_count": 1,
+        "retweeted": true,
+        "retweeted_status": {
+            "contributors": null,
+            "coordinates": null,
+            "created_at": "Tue Jul 01 19:02:15 +0000 2014",
+            "entities": {
+                "hashtags": [],
+                "symbols": [],
+                "urls": [
+                    {
+                        "display_url": "ow.ly/yxAsK",
+                        "expanded_url": "http://ow.ly/yxAsK",
+                        "indices": [
+                            91,
+                            113
+                        ],
+                        "url": "http://t.co/o4HCuEzPyO"
+                    }
+                ],
+                "user_mentions": [
+                    {
+                        "id": 8454142,
+                        "id_str": "8454142",
+                        "indices": [
+                            36,
+                            48
+                        ],
+                        "name": "lukehohmann",
+                        "screen_name": "lukehohmann"
+                    },
+                    {
+                        "id": 14115504,
+                        "id_str": "14115504",
+                        "indices": [
+                            67,
+                            75
+                        ],
+                        "name": "John Heintz",
+                        "screen_name": "jheintz"
+                    }
+                ]
+            },
+            "favorite_count": 1,
+            "favorited": true,
+            "geo": null,
+            "id": 484049362134515712,
+            "id_str": "484049362134515712",
+            "in_reply_to_screen_name": null,
+            "in_reply_to_status_id": null,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "in_reply_to_user_id_str": null,
+            "lang": "en",
+            "place": null,
+            "possibly_sensitive": false,
+            "retweet_count": 1,
+            "retweeted": true,
+            "source": "<a href=\"http://www.hootsuite.com\" rel=\"nofollow\">Hootsuite</a>",
+            "text": "Become a better story listener with @lukehohmann, Paul Mantey, and @jheintz. Check it out: http://t.co/o4HCuEzPyO",
+            "truncated": false,
+            "user": {
+                "contributors_enabled": false,
+                "created_at": "Wed Sep 18 19:17:30 +0000 2013",
+                "default_profile": false,
+                "default_profile_image": false,
+                "description": "Conteneo help companies create, market and sell innovative products and services through collaborative, social, serious games",
+                "entities": {
+                    "description": {
+                        "urls": []
+                    },
+                    "url": {
+                        "urls": [
+                            {
+                                "display_url": "conteneo.co",
+                                "expanded_url": "http://conteneo.co",
+                                "indices": [
+                                    0,
+                                    22
+                                ],
+                                "url": "http://t.co/AMJz92mgiG"
+                            }
+                        ]
+                    }
+                },
+                "favourites_count": 8,
+                "follow_request_sent": false,
+                "followers_count": 61,
+                "following": false,
+                "friends_count": 29,
+                "geo_enabled": false,
+                "id": 1880540190,
+                "id_str": "1880540190",
+                "is_translation_enabled": false,
+                "is_translator": false,
+                "lang": "en",
+                "listed_count": 4,
+                "location": "Mountain View, CA",
+                "name": "Conteneo ",
+                "notifications": false,
+                "profile_background_color": "F2A721",
+                "profile_background_image_url": "http://abs.twimg.com/images/themes/theme19/bg.gif",
+                "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme19/bg.gif",
+                "profile_background_tile": false,
+                "profile_image_url": "http://pbs.twimg.com/profile_images/378800000606541958/2c32599c182503393ce8957349f29149_normal.jpeg",
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/378800000606541958/2c32599c182503393ce8957349f29149_normal.jpeg",
+                "profile_link_color": "0099CC",
+                "profile_sidebar_border_color": "000000",
+                "profile_sidebar_fill_color": "DDEEF6",
+                "profile_text_color": "333333",
+                "profile_use_background_image": false,
+                "protected": false,
+                "screen_name": "ConteneoInc",
+                "statuses_count": 324,
+                "time_zone": "Arizona",
+                "url": "http://t.co/AMJz92mgiG",
+                "utc_offset": -25200,
+                "verified": false
+            }
+        },
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "text": "RT @ConteneoInc: Become a better story listener with @lukehohmann, Paul Mantey, and @jheintz. Check it out: http://t.co/o4HCuEzPyO",
+        "truncated": false,
+        "user": {
+            "contributors_enabled": false,
+            "created_at": "Mon Mar 10 17:12:18 +0000 2008",
+            "default_profile": true,
+            "default_profile_image": false,
+            "description": "Agile/Lean/Kanban coach. RESTful Web architect. Chief Engineer. Language student Java, Elixir, Erlang, Python.",
+            "entities": {
+                "description": {
+                    "urls": []
+                },
+                "url": {
+                    "urls": [
+                        {
+                            "display_url": "gistlabs.com",
+                            "expanded_url": "http://gistlabs.com",
+                            "indices": [
+                                0,
+                                22
+                            ],
+                            "url": "http://t.co/C8grYCRjI0"
+                        }
+                    ]
+                }
+            },
+            "favourites_count": 1057,
+            "follow_request_sent": false,
+            "followers_count": 434,
+            "following": false,
+            "friends_count": 151,
+            "geo_enabled": false,
+            "id": 14115504,
+            "id_str": "14115504",
+            "is_translation_enabled": false,
+            "is_translator": false,
+            "lang": "en",
+            "listed_count": 42,
+            "location": "Austin, TX",
+            "name": "John Heintz",
+            "notifications": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_link_color": "0084B4",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "protected": false,
+            "screen_name": "jheintz",
+            "statuses_count": 1185,
+            "time_zone": "Central Time (US & Canada)",
+            "url": "http://t.co/C8grYCRjI0",
+            "utc_offset": -18000,
+            "verified": false
+        }
+    },
+    {
+        "contributors": null,
+        "coordinates": null,
+        "created_at": "Wed Jul 02 04:59:03 +0000 2014",
+        "entities": {
+            "hashtags": [
+                {
+                    "indices": [
+                        23,
+                        28
+                    ],
+                    "text": "SAFe"
+                }
+            ],
+            "symbols": [],
+            "urls": [],
+            "user_mentions": [
+                {
+                    "id": 32163649,
+                    "id_str": "32163649",
+                    "indices": [
+                        3,
+                        15
+                    ],
+                    "name": "Matt Barcomb",
+                    "screen_name": "mattbarcomb"
+                }
+            ]
+        },
+        "favorite_count": 0,
+        "favorited": false,
+        "geo": null,
+        "id": 484199550052098048,
+        "id_str": "484199550052098048",
+        "in_reply_to_screen_name": null,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "lang": "en",
+        "place": null,
+        "retweet_count": 4,
+        "retweeted": true,
+        "retweeted_status": {
+            "contributors": null,
+            "coordinates": null,
+            "created_at": "Wed Jul 02 02:43:33 +0000 2014",
+            "entities": {
+                "hashtags": [
+                    {
+                        "indices": [
+                            6,
+                            11
+                        ],
+                        "text": "SAFe"
+                    }
+                ],
+                "symbols": [],
+                "urls": [],
+                "user_mentions": []
+            },
+            "favorite_count": 1,
+            "favorited": false,
+            "geo": null,
+            "id": 484165449232314369,
+            "id_str": "484165449232314369",
+            "in_reply_to_screen_name": null,
+            "in_reply_to_status_id": null,
+            "in_reply_to_status_id_str": null,
+            "in_reply_to_user_id": null,
+            "in_reply_to_user_id_str": null,
+            "lang": "en",
+            "place": null,
+            "retweet_count": 4,
+            "retweeted": true,
+            "source": "<a href=\"http://itunes.apple.com/us/app/twitter/id409789998?mt=12\" rel=\"nofollow\">Twitter for Mac</a>",
+            "text": "How's #SAFe help you know if you're building the right product? Or building the product right? What is it helping scale? Just more process?",
+            "truncated": false,
+            "user": {
+                "contributors_enabled": false,
+                "created_at": "Thu Apr 16 21:37:59 +0000 2009",
+                "default_profile": false,
+                "default_profile_image": false,
+                "description": "Organizational Design, Portfolio Management, Product Development & Software Delivery | Sailing, Scuba, Hiking, Homesteading",
+                "entities": {
+                    "description": {
+                        "urls": []
+                    },
+                    "url": {
+                        "urls": [
+                            {
+                                "display_url": "blog.risingtideharbor.com",
+                                "expanded_url": "http://blog.risingtideharbor.com",
+                                "indices": [
+                                    0,
+                                    22
+                                ],
+                                "url": "http://t.co/PeYhDPTq1t"
+                            }
+                        ]
+                    }
+                },
+                "favourites_count": 544,
+                "follow_request_sent": false,
+                "followers_count": 1215,
+                "following": true,
+                "friends_count": 221,
+                "geo_enabled": true,
+                "id": 32163649,
+                "id_str": "32163649",
+                "is_translation_enabled": false,
+                "is_translator": false,
+                "lang": "en",
+                "listed_count": 104,
+                "location": "Wakefield MA",
+                "name": "Matt Barcomb",
+                "notifications": false,
+                "profile_background_color": "B2DFDA",
+                "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/231093971/painted-sun-dl.jpg",
+                "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/231093971/painted-sun-dl.jpg",
+                "profile_background_tile": false,
+                "profile_banner_url": "https://pbs.twimg.com/profile_banners/32163649/1399901567",
+                "profile_image_url": "http://pbs.twimg.com/profile_images/2686938506/e8ba19b0517cd2d8601d7dbcceda869f_normal.png",
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/2686938506/e8ba19b0517cd2d8601d7dbcceda869f_normal.png",
+                "profile_link_color": "93A644",
+                "profile_sidebar_border_color": "EEEEEE",
+                "profile_sidebar_fill_color": "FFFFFF",
+                "profile_text_color": "333333",
+                "profile_use_background_image": true,
+                "protected": false,
+                "screen_name": "mattbarcomb",
+                "statuses_count": 9895,
+                "time_zone": "Eastern Time (US & Canada)",
+                "url": "http://t.co/PeYhDPTq1t",
+                "utc_offset": -14400,
+                "verified": false
+            }
+        },
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "text": "RT @mattbarcomb: How's #SAFe help you know if you're building the right product? Or building the product right? What is it helping scale? J\u2026",
+        "truncated": false,
+        "user": {
+            "contributors_enabled": false,
+            "created_at": "Mon Mar 10 17:12:18 +0000 2008",
+            "default_profile": true,
+            "default_profile_image": false,
+            "description": "Agile/Lean/Kanban coach. RESTful Web architect. Chief Engineer. Language student Java, Elixir, Erlang, Python.",
+            "entities": {
+                "description": {
+                    "urls": []
+                },
+                "url": {
+                    "urls": [
+                        {
+                            "display_url": "gistlabs.com",
+                            "expanded_url": "http://gistlabs.com",
+                            "indices": [
+                                0,
+                                22
+                            ],
+                            "url": "http://t.co/C8grYCRjI0"
+                        }
+                    ]
+                }
+            },
+            "favourites_count": 1057,
+            "follow_request_sent": false,
+            "followers_count": 434,
+            "following": false,
+            "friends_count": 151,
+            "geo_enabled": false,
+            "id": 14115504,
+            "id_str": "14115504",
+            "is_translation_enabled": false,
+            "is_translator": false,
+            "lang": "en",
+            "listed_count": 42,
+            "location": "Austin, TX",
+            "name": "John Heintz",
+            "notifications": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_link_color": "0084B4",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "protected": false,
+            "screen_name": "jheintz",
+            "statuses_count": 1185,
+            "time_zone": "Central Time (US & Canada)",
+            "url": "http://t.co/C8grYCRjI0",
+            "utc_offset": -18000,
+            "verified": false
+        }
+    },
+    {
+        "contributors": null,
+        "coordinates": null,
+        "created_at": "Mon Jun 30 17:14:01 +0000 2014",
+        "entities": {
+            "hashtags": [],
+            "symbols": [],
+            "urls": [
+                {
+                    "display_url": "speakerdeck.com/lauraxt/minimu\u2026",
+                    "expanded_url": "https://speakerdeck.com/lauraxt/minimum-viable-bureaucracy-june-2014-edition",
+                    "indices": [
+                        34,
+                        57
+                    ],
+                    "url": "https://t.co/sGxUZZRy3T"
+                }
+            ],
+            "user_mentions": [
+                {
+                    "id": 17270001,
+                    "id_str": "17270001",
+                    "indices": [
+                        3,
+                        18
+                    ],
+                    "name": "Alistair Cockburn",
+                    "screen_name": "TotherAlistair"
+                },
+                {
+                    "id": 7813142,
+                    "id_str": "7813142",
+                    "indices": [
+                        21,
+                        32
+                    ],
+                    "name": "John Barton",
+                    "screen_name": "johnbarton"
+                },
+                {
+                    "id": 3058771,
+                    "id_str": "3058771",
+                    "indices": [
+                        63,
+                        67
+                    ],
+                    "name": "Laura Thomson",
+                    "screen_name": "lxt"
+                }
+            ]
+        },
+        "favorite_count": 0,
+        "favorited": true,
+        "geo": null,
+        "id": 483659735422361600,
+        "id_str": "483659735422361600",
+        "in_reply_to_screen_name": null,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "lang": "en",
+        "place": null,
+        "possibly_sensitive": false,
+        "retweet_count": 13,
+        "retweeted": true,
+        "retweeted_status": {
+            "contributors": null,
+            "coordinates": null,
+            "created_at": "Mon Jun 30 00:10:45 +0000 2014",
+            "entities": {
+                "hashtags": [],
+                "symbols": [],
+                "urls": [
+                    {
+                        "display_url": "speakerdeck.com/lauraxt/minimu\u2026",
+                        "expanded_url": "https://speakerdeck.com/lauraxt/minimum-viable-bureaucracy-june-2014-edition",
+                        "indices": [
+                            14,
+                            37
+                        ],
+                        "url": "https://t.co/sGxUZZRy3T"
+                    }
+                ],
+                "user_mentions": [
+                    {
+                        "id": 7813142,
+                        "id_str": "7813142",
+                        "indices": [
+                            1,
+                            12
+                        ],
+                        "name": "John Barton",
+                        "screen_name": "johnbarton"
+                    },
+                    {
+                        "id": 3058771,
+                        "id_str": "3058771",
+                        "indices": [
+                            43,
+                            47
+                        ],
+                        "name": "Laura Thomson",
+                        "screen_name": "lxt"
+                    }
+                ]
+            },
+            "favorite_count": 16,
+            "favorited": true,
+            "geo": null,
+            "id": 483402223054237696,
+            "id_str": "483402223054237696",
+            "in_reply_to_screen_name": "johnbarton",
+            "in_reply_to_status_id": 483374630787219459,
+            "in_reply_to_status_id_str": "483374630787219459",
+            "in_reply_to_user_id": 7813142,
+            "in_reply_to_user_id_str": "7813142",
+            "lang": "en",
+            "place": null,
+            "possibly_sensitive": false,
+            "retweet_count": 13,
+            "retweeted": true,
+            "source": "<a href=\"http://twitter.com/#!/download/ipad\" rel=\"nofollow\">Twitter for iPad</a>",
+            "text": "\u201c@johnbarton: https://t.co/sGxUZZRy3T from @lxt on Minimum Viable Bureaucracy\".. This is a great slide deck. Lots of tiny advice capsules",
+            "truncated": false,
+            "user": {
+                "contributors_enabled": false,
+                "created_at": "Sun Nov 09 16:03:16 +0000 2008",
+                "default_profile": false,
+                "default_profile_image": false,
+                "description": "Chaotic Good Lawful Neutral Project Witchdoctor; Initial Response Technique massage, swimmer, poet. Wreaks havoc on the unsuspecting.",
+                "entities": {
+                    "description": {
+                        "urls": []
+                    },
+                    "url": {
+                        "urls": [
+                            {
+                                "display_url": "Alistair.Cockburn.us",
+                                "expanded_url": "http://Alistair.Cockburn.us",
+                                "indices": [
+                                    0,
+                                    22
+                                ],
+                                "url": "http://t.co/kCUxVcZohO"
+                            }
+                        ]
+                    }
+                },
+                "favourites_count": 251,
+                "follow_request_sent": false,
+                "followers_count": 9141,
+                "following": true,
+                "friends_count": 46,
+                "geo_enabled": false,
+                "id": 17270001,
+                "id_str": "17270001",
+                "is_translation_enabled": false,
+                "is_translator": false,
+                "lang": "en",
+                "listed_count": 746,
+                "location": "Salt Lake City",
+                "name": "Alistair Cockburn",
+                "notifications": false,
+                "profile_background_color": "EBEBEB",
+                "profile_background_image_url": "http://pbs.twimg.com/profile_background_images/136707539/2009.11.11_collage_wtf.jpg",
+                "profile_background_image_url_https": "https://pbs.twimg.com/profile_background_images/136707539/2009.11.11_collage_wtf.jpg",
+                "profile_background_tile": true,
+                "profile_image_url": "http://pbs.twimg.com/profile_images/1585361090/kiev_view_from_floor_Twitter_normal.png",
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/1585361090/kiev_view_from_floor_Twitter_normal.png",
+                "profile_link_color": "990000",
+                "profile_sidebar_border_color": "DFDFDF",
+                "profile_sidebar_fill_color": "F3F3F3",
+                "profile_text_color": "333333",
+                "profile_use_background_image": true,
+                "protected": false,
+                "screen_name": "TotherAlistair",
+                "statuses_count": 13315,
+                "time_zone": "Pacific Time (US & Canada)",
+                "url": "http://t.co/kCUxVcZohO",
+                "utc_offset": -25200,
+                "verified": false
+            }
+        },
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "text": "RT @TotherAlistair: \u201c@johnbarton: https://t.co/sGxUZZRy3T from @lxt on Minimum Viable Bureaucracy\".. This is a great slide deck. Lots of ti\u2026",
+        "truncated": false,
+        "user": {
+            "contributors_enabled": false,
+            "created_at": "Mon Mar 10 17:12:18 +0000 2008",
+            "default_profile": true,
+            "default_profile_image": false,
+            "description": "Agile/Lean/Kanban coach. RESTful Web architect. Chief Engineer. Language student Java, Elixir, Erlang, Python.",
+            "entities": {
+                "description": {
+                    "urls": []
+                },
+                "url": {
+                    "urls": [
+                        {
+                            "display_url": "gistlabs.com",
+                            "expanded_url": "http://gistlabs.com",
+                            "indices": [
+                                0,
+                                22
+                            ],
+                            "url": "http://t.co/C8grYCRjI0"
+                        }
+                    ]
+                }
+            },
+            "favourites_count": 1057,
+            "follow_request_sent": false,
+            "followers_count": 434,
+            "following": false,
+            "friends_count": 151,
+            "geo_enabled": false,
+            "id": 14115504,
+            "id_str": "14115504",
+            "is_translation_enabled": false,
+            "is_translator": false,
+            "lang": "en",
+            "listed_count": 42,
+            "location": "Austin, TX",
+            "name": "John Heintz",
+            "notifications": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_link_color": "0084B4",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "protected": false,
+            "screen_name": "jheintz",
+            "statuses_count": 1185,
+            "time_zone": "Central Time (US & Canada)",
+            "url": "http://t.co/C8grYCRjI0",
+            "utc_offset": -18000,
+            "verified": false
+        }
+    },
+    {
+        "contributors": null,
+        "coordinates": null,
+        "created_at": "Mon Jun 30 12:37:36 +0000 2014",
+        "entities": {
+            "hashtags": [],
+            "symbols": [],
+            "urls": [],
+            "user_mentions": [
+                {
+                    "id": 38170859,
+                    "id_str": "38170859",
+                    "indices": [
+                        0,
+                        12
+                    ],
+                    "name": "Al Shalloway",
+                    "screen_name": "alshalloway"
+                }
+            ]
+        },
+        "favorite_count": 0,
+        "favorited": false,
+        "geo": null,
+        "id": 483590170625572865,
+        "id_str": "483590170625572865",
+        "in_reply_to_screen_name": "alshalloway",
+        "in_reply_to_status_id": 483477606097248256,
+        "in_reply_to_status_id_str": "483477606097248256",
+        "in_reply_to_user_id": 38170859,
+        "in_reply_to_user_id_str": "38170859",
+        "lang": "en",
+        "place": null,
+        "retweet_count": 0,
+        "retweeted": false,
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "text": "@alshalloway between the principles and practices there might be a half-abstract layer of ideas we could measure...",
+        "truncated": false,
+        "user": {
+            "contributors_enabled": false,
+            "created_at": "Mon Mar 10 17:12:18 +0000 2008",
+            "default_profile": true,
+            "default_profile_image": false,
+            "description": "Agile/Lean/Kanban coach. RESTful Web architect. Chief Engineer. Language student Java, Elixir, Erlang, Python.",
+            "entities": {
+                "description": {
+                    "urls": []
+                },
+                "url": {
+                    "urls": [
+                        {
+                            "display_url": "gistlabs.com",
+                            "expanded_url": "http://gistlabs.com",
+                            "indices": [
+                                0,
+                                22
+                            ],
+                            "url": "http://t.co/C8grYCRjI0"
+                        }
+                    ]
+                }
+            },
+            "favourites_count": 1057,
+            "follow_request_sent": false,
+            "followers_count": 434,
+            "following": false,
+            "friends_count": 151,
+            "geo_enabled": false,
+            "id": 14115504,
+            "id_str": "14115504",
+            "is_translation_enabled": false,
+            "is_translator": false,
+            "lang": "en",
+            "listed_count": 42,
+            "location": "Austin, TX",
+            "name": "John Heintz",
+            "notifications": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_link_color": "0084B4",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "protected": false,
+            "screen_name": "jheintz",
+            "statuses_count": 1185,
+            "time_zone": "Central Time (US & Canada)",
+            "url": "http://t.co/C8grYCRjI0",
+            "utc_offset": -18000,
+            "verified": false
+        }
+    },
+    {
+        "contributors": null,
+        "coordinates": null,
+        "created_at": "Mon Jun 30 12:35:52 +0000 2014",
+        "entities": {
+            "hashtags": [],
+            "symbols": [],
+            "urls": [],
+            "user_mentions": [
+                {
+                    "id": 38170859,
+                    "id_str": "38170859",
+                    "indices": [
+                        0,
+                        12
+                    ],
+                    "name": "Al Shalloway",
+                    "screen_name": "alshalloway"
+                }
+            ]
+        },
+        "favorite_count": 1,
+        "favorited": false,
+        "geo": null,
+        "id": 483589736183783425,
+        "id_str": "483589736183783425",
+        "in_reply_to_screen_name": "alshalloway",
+        "in_reply_to_status_id": 483477526757801984,
+        "in_reply_to_status_id_str": "483477526757801984",
+        "in_reply_to_user_id": 38170859,
+        "in_reply_to_user_id_str": "38170859",
+        "lang": "en",
+        "place": null,
+        "retweet_count": 1,
+        "retweeted": false,
+        "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+        "text": "@alshalloway I like in the preface of Toyota Kata: \"manage by means\" not \"manage by results\"",
+        "truncated": false,
+        "user": {
+            "contributors_enabled": false,
+            "created_at": "Mon Mar 10 17:12:18 +0000 2008",
+            "default_profile": true,
+            "default_profile_image": false,
+            "description": "Agile/Lean/Kanban coach. RESTful Web architect. Chief Engineer. Language student Java, Elixir, Erlang, Python.",
+            "entities": {
+                "description": {
+                    "urls": []
+                },
+                "url": {
+                    "urls": [
+                        {
+                            "display_url": "gistlabs.com",
+                            "expanded_url": "http://gistlabs.com",
+                            "indices": [
+                                0,
+                                22
+                            ],
+                            "url": "http://t.co/C8grYCRjI0"
+                        }
+                    ]
+                }
+            },
+            "favourites_count": 1057,
+            "follow_request_sent": false,
+            "followers_count": 434,
+            "following": false,
+            "friends_count": 151,
+            "geo_enabled": false,
+            "id": 14115504,
+            "id_str": "14115504",
+            "is_translation_enabled": false,
+            "is_translator": false,
+            "lang": "en",
+            "listed_count": 42,
+            "location": "Austin, TX",
+            "name": "John Heintz",
+            "notifications": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/900394730/johnheintz-medium-bw_normal.jpg",
+            "profile_link_color": "0084B4",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "protected": false,
+            "screen_name": "jheintz",
+            "statuses_count": 1185,
+            "time_zone": "Central Time (US & Canada)",
+            "url": "http://t.co/C8grYCRjI0",
+            "utc_offset": -18000,
+            "verified": false
+        }
+    }
+]

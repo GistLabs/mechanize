@@ -24,6 +24,9 @@ public class ArrayNodeImpl extends AbstractJsonNode {
 	private final JSONArray array;
 	private List<JsonNode> children;
 
+	public ArrayNodeImpl(final JSONArray array) {
+		this(null, "", array);
+	}
 
 	public ArrayNodeImpl(final JsonNode parent, final String key, final JSONArray array) {
 		super(parent, key);
@@ -70,6 +73,11 @@ public class ArrayNodeImpl extends AbstractJsonNode {
 		return null;
 	}
 
+	@Override
+	public List<JsonNode> getChildren() {
+		return getChildren("*");
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<JsonNode> getChildren(final String... names) {
