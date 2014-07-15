@@ -15,6 +15,10 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.junit.Test;
 
+/**
+ * TODO: consolodate all of the build/parse logic into a single function
+ *
+ */
 public class JsonTest {
 
 	/**

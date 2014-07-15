@@ -56,8 +56,6 @@ public class JsonPageTest extends MechanizeTestCase {
 		JsonDocument page = agent().get("http://test.com");
 		assertNotNull(page);
 		assertEquals(JsonDocument.class, page.getClass());
-		JsonNode root = page.getRoot();
-		List<? extends JsonNode> children = root.getChildren();
 		List<? extends Node> users = page.findAll("user");
 		assertEquals(17, users.size());
 	}
