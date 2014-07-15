@@ -118,13 +118,13 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 		});
 	}
 
-	public Mechanize prefixFilter(final MechanizeChainFilter filter) {
+	public MechanizeAgent prefixFilter(final MechanizeChainFilter filter) {
 		this.requestChain.prefix(filter);
 		return this;
 	}
 
 
-	public Mechanize addFilter(final MechanizeChainFilter filter) {
+	public MechanizeAgent addFilter(final MechanizeChainFilter filter) {
 		this.requestChain.add(filter);
 		return this;
 	}
@@ -142,7 +142,7 @@ public class MechanizeAgent implements PageRequestor<Resource>, RequestBuilderFa
 	 * @param userAgent The value to set User-Agent HTTP parameter to for requests
 	 * @return
 	 */
-	public Mechanize setUserAgent(final String userAgent) {
+	public MechanizeAgent setUserAgent(final String userAgent) {
 		HttpProtocolParams.setUserAgent(this.client.getParams(), userAgent);
 		return this;
 	}
