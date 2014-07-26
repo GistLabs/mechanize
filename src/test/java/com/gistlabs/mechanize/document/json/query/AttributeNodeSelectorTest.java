@@ -35,6 +35,14 @@ public class AttributeNodeSelectorTest {
 		assertEquals(1, result.size());
 		assertEquals("y", result.get(0).getValue());
 	}
+	
+	@Test
+	public void testAnyWithAttribute() throws Exception {
+		NodeSelector<JsonNode> selector = build("{ \"a\" : 2, \"b\" : { \"x\" : \"y\" }, \"results\" : [ { \"x\" : 1 }, { \"b\" : 2, \"c\" : 3 } ] }");
+
+		List<JsonNode> result = selector.findAll("[x]");
+		assertEquals(2, result.size());
+	}
 
 	@Test
 	public void testSpecificChildWithAttributeAsNode() throws Exception {
