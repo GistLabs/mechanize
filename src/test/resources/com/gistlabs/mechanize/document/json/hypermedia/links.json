@@ -9,6 +9,7 @@
 		* The use-attr value can change the href to another name, like uri.
 		* The nested-query value can be used to find a link object buried beneath the current one.
 		
+		See https://github.com/GistLabs/mechanize/wiki/JSON-Linking for more details.
 		",
 		"href": "",
 		"use-attr": "href",
