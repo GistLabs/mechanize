@@ -58,13 +58,6 @@ Release log:
 * 0.9.0 on Sept 28th, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=2&page=1&state=closed for list of resolved issues.
 * 0.8.0 on Sept 20th, 2012.
 
-Download the code from https://github.com/GistLabs/mechanize/downloads, or use a Maven repository client:
-```
-  <dependency>
-    <groupId>com.gistlabs</groupId>
-    <artifactId>mechanize</artifactId>
-    <version>0.11.0</version>
-  </dependency>
-```
+Include this library (or download) from the Maven repository: http://search.maven.org/#browse%7C687823805
 
 See the [Mechanize Wiki](https://github.com/GistLabs/mechanize/wiki) for more details!
