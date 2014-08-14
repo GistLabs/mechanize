@@ -1,12 +1,8 @@
-mechanize for java [![Build Status](https://gistlabs.ci.cloudbees.com/job/mechanize/badge/icon)](https://gistlabs.ci.cloudbees.com/job/mechanize/)
-==========
-
-Note: This branch is working under the code name "lawnchair", as in RESTing in a lawn chair is nice. :)
-
+mechanize for java
 ==========
 
 mechanize is a stateful HTTP web services client library (RESTful) with support for HTML, JSON, and XML services.
-Because mechanize is stateful and allow inspection of web resources, it naturally support GET-then-POST semantics.
+Because mechanize is stateful and allow inspection of web resources, it naturally support GET-then-POST semantics and helps avoid hard-coding clients.
 
 
 * Project Home Page: http://gistlabs.com/software/mechanize-for-java/
@@ -14,6 +10,9 @@ Because mechanize is stateful and allow inspection of web resources, it naturall
 * Jenkins CI: https://gistlabs.ci.cloudbees.com/job/mechanize/
 * Forum: https://groups.google.com/forum/?fromgroups#!forum/mechanize4j
 * License: [MPL 2.0](http://mozilla.org/MPL/2.0/)
+
+
+See the [Mechanize Wiki](https://github.com/GistLabs/mechanize/wiki) for more details and opinions on how RESTful clients should behave.
 
 ======
 Releases:
@@ -50,14 +49,6 @@ Here is a testcase showing mechanize using a Google JSON web service:
 	}
 ```
 
-Release log:
-
-* 0.11.0 on Nov 12th, 2012. Support for Request Headers, #18 Cache and Conditional loading, and chained filters. See https://github.com/GistLabs/mechanize/issues?milestone=8&state=closed
-* 0.10.0 on Oct 22nd, 2012. Support for Android, JSON, and CSS Selectors (even for JSON). See https://github.com/GistLabs/mechanize/issues?milestone=7&page=1&state=closed
-* 0.9.1 on Oct 3rd, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=6&state=closed for list of resolved issues.
-* 0.9.0 on Sept 28th, 2012. See https://github.com/GistLabs/mechanize/issues?milestone=2&page=1&state=closed for list of resolved issues.
-* 0.8.0 on Sept 20th, 2012.
+=========
 
 Include this library (or download) from the Maven repository: http://search.maven.org/#browse%7C687823805
-
-See the [Mechanize Wiki](https://github.com/GistLabs/mechanize/wiki) for more details!
