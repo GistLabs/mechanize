@@ -281,8 +281,11 @@ public class Form extends AbstractDocumentElement implements Iterable<FormElemen
 			else if(element instanceof Select) {
 				Select select = (Select)element;
 				for(Select.Option option : select.getOptions())
-					if(option.isSelected())
-						params.add(select.getName(), option.getValue() != null ? option.getValue() : "");
+					if(option.isSelected()) {
+						if (select.getName() != null) {
+							params.add(select.getName(), option.getValue() != null ? option.getValue() : "");
+						}
+					}
 			}
 			else if(!(element instanceof SubmitButton) && !(element instanceof SubmitImage) && !(element instanceof Upload)) {
 				if(name != null)
