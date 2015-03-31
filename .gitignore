@@ -5,3 +5,5 @@ dependency-reduced-pom.xml
 .DS_Store
 *~
 *.graphml
+.idea
+*.iml
