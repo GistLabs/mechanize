@@ -153,7 +153,7 @@ public class RequestBuilder<Resource> {
 		//		HttpPost request = (!hasFiles()) || isMultiPart ? composePostRequest(getBaseUri(), parameters) :
 		//			composeMultiPartFormRequest(getBaseUri(), parameters, files);
 		HttpPost request = (hasFiles() || isMultiPart) ? composeMultiPartFormRequest(getBaseUri(), parameters, files) :
-			composePostRequest(getBaseUri(), parameters);
+			composePostRequest(uri, parameters);
 		buildHeaders(request);
 		return requestor.request(request);
 	}
